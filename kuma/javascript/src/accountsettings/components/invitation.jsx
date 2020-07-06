@@ -9,20 +9,16 @@ type Props = {
 
 const Invitation = ({ locale }: Props) => {
     return (
-        <div className="active-subscriptions">
-            <p>
-                <Interpolated
-                    id={gettext(
-                        'You have no active subscription. Why not <signupLink />?'
-                    )}
-                    signupLink={
-                        <a href={`/${locale}/payments/`}>
-                            {gettext('set one up')}
-                        </a>
-                    }
-                />
-            </p>
-        </div>
+        <p>
+            <Interpolated
+                id={gettext(
+                    'You have no active subscription. Why not <signupLink />?'
+                )}
+                signupLink={
+                    <a href={`/${locale}/payments/`}>{gettext('set one up')}</a>
+                }
+            />
+        </p>
     );
 };
 

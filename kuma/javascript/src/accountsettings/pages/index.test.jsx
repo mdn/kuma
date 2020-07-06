@@ -61,6 +61,22 @@ describe('Account Settings Landing Page', () => {
         ).toBeInTheDocument();
     });
 
+    it('renders the close account component for authenticated users', () => {
+        const mockData = getTestData({
+            isAuthenticated: true,
+        });
+
+        render(
+            <UserProvider.context.Provider value={mockData.mockUserData}>
+                <AccountSettingsLandingPage {...mockData.mockProps} />
+            </UserProvider.context.Provider>
+        );
+
+        expect(
+            screen.getByRole('region', { name: /Close Account/i })
+        ).toBeInTheDocument();
+    });
+
     it('show singin link for unauthticated users', () => {
         const mockData = getTestData();
 

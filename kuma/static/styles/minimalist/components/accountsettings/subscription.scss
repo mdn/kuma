@@ -3,20 +3,14 @@
 
 @import '../../atoms/notifications';
 
-@import './cancel-subscription-form';
+@import './confirmation-form';
 
 .subscription {
     margin-bottom: 60px;
 
-    p,
     ul {
         max-width: 670px;
     }
-}
-
-.subscription-status {
-    border-top: 1px solid $neutral-500;
-    padding: 24px 10px 0;
 
     .cta {
         display: block;
@@ -25,15 +19,17 @@
         @media #{$mq-tablet-and-up} {
             display: inline-block;
             margin-top: inherit;
-            margin-left: 40px;
         }
+    }
+
+    .subscription-footer {
+        margin-top: 24px;
     }
 }
 
 .active-subscriptions {
     margin-bottom: 24px;
     padding: 24px 10px;
-    border-top: 1px solid $neutral-500;
     border-bottom: 1px solid $neutral-500;
 
     li {

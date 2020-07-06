@@ -3,7 +3,6 @@
 @import '../../minimalist/atoms/buttons.scss';
 
 @import '../../minimalist/components/accountsettings/subscription.scss';
-@import '../../minimalist/components/accountsettings/cancel-subscription-form';
 
 .subheader-container {
     min-width: 320px;
@@ -72,6 +71,20 @@
             @media #{$mq-tablet-and-up} {
                 display: flex;
             }
+        }
+    }
+
+    .lead-in {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid $neutral-500;
+        border-bottom: 1px solid $neutral-500;
+        padding: 24px 10px 24px;
+        max-width: 670px;
+
+        p {
+            margin-bottom: 0;
         }
     }
 
