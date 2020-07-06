@@ -91,7 +91,7 @@
         "pretty-quick": "2.0.1",
         "react-svg-loader": "3.0.3",
         "react-test-renderer": "^16.8.4",
-        "stylelint": "^13.5.0",
+        "stylelint": "^13.6.1",
         "supertest": "^4.0.2",
         "svgo": "1.2.2",
         "uglify-js": "2.8.29",
