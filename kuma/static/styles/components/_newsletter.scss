@@ -59,7 +59,7 @@ input.newsletter-input-email {
 
 .newsletter-submit {
     position: relative;
-    width: 100%;
+    width: 90%;
     padding: ($grid-spacing / 2);
     @include bidi(((text-align, left, right),));
 
