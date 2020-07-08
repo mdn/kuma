@@ -202,7 +202,7 @@ function L10NSurveyBanner() {
                 '👋 Do you use Chrome’s automatic translation tool on MDN? Help us improve by answering a short 5-minute survey.'
             )}
             cta={gettext('Take the survey')}
-            url={'#TODO'}
+            url="https://s2.userzoom.com/m/MSBDNTgxMlMxMzMg"
             newWindow
         />
     );
