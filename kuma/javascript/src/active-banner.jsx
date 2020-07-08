@@ -120,7 +120,7 @@ export type BannerProps = {
     // for styling purposes.
     classname: string,
     // The banner title. e.g. "MDN Survey"
-    title: string,
+    title?: string,
     // The banner description. e.g. "Help us understand the top 10 needs..."
     // Could also be a React Element such as that returned by `<Interpolated />`
     copy: Object | string,
@@ -152,7 +152,11 @@ function Banner(props: BannerProps) {
         <div className={containerClassNames}>
             <div id="mdn-cta-content" className="mdn-cta-content">
                 <div id={props.id} className="mdn-cta-content-container">
-                    <h2 className="mdn-cta-title slab-text">{props.title}</h2>
+                    {props.title && (
+                        <h2 className="mdn-cta-title slab-text">
+                            {props.title}
+                        </h2>
+                    )}
                     <p className="mdn-cta-copy">{props.copy}</p>
                 </div>
                 <p className="mdn-cta-button-container">
@@ -186,7 +190,23 @@ function Banner(props: BannerProps) {
 }
 
 export const DEVELOPER_NEEDS_ID = 'developer_needs';
+export const L10N_SURVEY_ID = 'l10n_survey';
 export const SUBSCRIPTION_ID = 'subscription_banner';
+
+function L10NSurveyBanner() {
+    return (
+        <Banner
+            id={L10N_SURVEY_ID}
+            classname="l10n-survey"
+            copy={gettext(
+                '👋 Do you use Chrome’s automatic translation tool on MDN? Help us improve by answering a short 5-minute survey.'
+            )}
+            cta={gettext('Take the survey')}
+            url={'#TODO'}
+            newWindow
+        />
+    );
+}
 
 function DeveloperNeedsBanner() {
     return (
@@ -260,6 +280,9 @@ export default function ActiveBanner() {
         }
 
         switch (id) {
+            case L10N_SURVEY_ID:
+                return <L10NSurveyBanner />;
+
             case DEVELOPER_NEEDS_ID:
                 return <DeveloperNeedsBanner />;
 
