@@ -1,0 +1,51 @@
+@import '../../includes/vars';
+@import '../../minimalist/vars/vars-color-palette';
+
+.l10n-survey {
+
+    .mdn-cta-content {
+        align-items: center;
+        margin: 0 auto;
+        max-width: 820px;
+
+        @media #{$mq-large-desktop-and-up} {
+            max-width: 1220px;
+        }
+    }
+
+    .mdn-cta-content-container {
+        flex-basis: 70%;
+
+        @media #{$mq-large-desktop-and-up} {
+            flex-basis: 80%;
+        }
+
+        p {
+            font-family: ZillaSlab;
+            padding-left: 24px;
+        }
+    }
+
+    .mdn-cta-button-container {
+        flex-basis: 30%;
+
+        @media #{$mq-large-desktop-and-up} {
+            flex-basis: 20%;
+        }
+    }
+
+
+    .mdn-cta-button,
+    .mdn-cta-button:link,
+    .mdn-cta-button:visited {
+        box-sizing: border-box;
+        background-color: #fff;
+        color: $banner-button-text-color;
+        padding: 12px;
+        border: 2px solid $banner-button-border-color;
+        border-radius: 3px;
+        max-width: 185px;
+        height: 45px;
+        line-height: 1;
+    }
+}
