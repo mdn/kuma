@@ -4,6 +4,7 @@
 Styling that is shared across the wiki and read-only sites
 ====================================================================== */
 @import '../includes/_vars.scss';
+@import '../minimalist/vars/_vars-color-palette.scss';
 @import './vars/_vars-paths.scss';
 @import '../includes/_mixins.scss';
 @import '../includes/_mixins_indicators.scss';
@@ -70,3 +71,6 @@ Styling for article content
 
 @import './structure/_article.scss';
 @import './structure/_sidebar.scss';
+
+@import './components/banners/_in-page-callout.scss';
+@import './components/banners/_learning-pathways.scss';
