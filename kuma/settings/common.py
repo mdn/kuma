@@ -443,6 +443,9 @@ if ENABLE_QUERYCOUNT:
     }
     MIDDLEWARE += ("querycount.middleware.QueryCountMiddleware",)
 
+if DEBUG:
+    MIDDLEWARE += ("kuma.core.middleware.DevOriginMiddleware",)
+
 # Auth
 AUTHENTICATION_BACKENDS = (
     "kuma.users.auth_backends.KumaAuthBackend",  # Handles User Bans

@@ -1,4 +1,4 @@
-from urllib.parse import urlsplit
+from urllib.parse import urlencode, urlparse, urlsplit
 
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -352,3 +352,43 @@ class WaffleWithCookieDomainMiddleware(WaffleMiddleware):
             for key in keys_after - keys_before:
                 response.cookies[key]["domain"] = settings.WAFFLE_COOKIE_DOMAIN
         return response
+
+
+class DevOriginMiddleware(MiddlewareBase):
+    """
+    This middleware should only be used in dev, for interop with Yari.
+    Yari redirects to Kuma for some routes it can not handle. Those redirects will include a query
+    param called DEV_ORIGIN. This middleware strips that param and saves it to a cookie.
+    Once a user visit a document page the middleware redirects back to that saved origin and clears
+    the storage again.
+    This solution is not perfect as cookies are not tied to the current tab, so having multiple kuma
+    tabs open might lead to surprises.
+    """
+
+    def __call__(self, request):
+        origin_key = "DEV_ORIGIN"
+
+        query_host = request.GET.get(origin_key, None)
+        if query_host:
+            url = urlparse(request.build_absolute_uri())
+
+            query_params = request.GET.copy()
+            del query_params[origin_key]
+            query_string = urlencode(query_params)
+
+            response = HttpResponseRedirect(
+                f"{url.scheme}://{url.netloc}{url.path}{('?' + query_string) if query_params else ''}"
+            )
+
+            response.set_cookie(origin_key, query_host)
+
+            return response
+
+        cookie_host = request.COOKIES.get(origin_key, None)
+        if cookie_host and resolve(request.path).url_name == "wiki.document":
+            url = urlparse(request.build_absolute_uri())
+            response = HttpResponseRedirect(cookie_host + url.path)
+            response.delete_cookie(origin_key)
+            return response
+
+        return self.get_response(request)
