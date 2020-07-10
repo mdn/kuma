@@ -1157,11 +1157,23 @@ webextensions_redirectpatterns = [
     )
 ]
 
+firefox_accounts_redirectpatterns = [
+    external_redirect(
+        r"(?:docs/)?Mozilla/(?:Tech/)?Firefox_Accounts(?:/|$)",
+        "https://mozilla.github.io/ecosystem-platform/docs/welcome",
+    ),
+    external_redirect(
+        r"(?:docs/)?Archive/Mozilla/Firefox/Accounts(?:/|$)",
+        "https://mozilla.github.io/ecosystem-platform/docs/welcome",
+    ),
+]
+
 redirectpatterns = (
     scl3_redirectpatterns
     + zone_redirectpatterns
     + marionette_redirectpatterns
     + webextensions_redirectpatterns
+    + firefox_accounts_redirectpatterns
     + [
         locale_redirect(
             r"^fellowship", "/docs/Archive/2015_MDN_Fellowship_Program", permanent=True
