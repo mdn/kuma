@@ -105,7 +105,10 @@ services:
       - esdata:/usr/share/elasticsearch/data
 
   redis:
-    image: redis
+    # The version of this Redis image should be kept synchronized with production. It
+    # should match the "redis_engine_version" variable in the following Terraform file:
+    # https://github.com/mdn/infra/blob/master/apps/mdn/mdn-aws/infra/modules/multi_region/redis/variables.tf
+    image: redis:5.0.6
 
   kumascript:
     image: mdnwebdocs/kumascript
