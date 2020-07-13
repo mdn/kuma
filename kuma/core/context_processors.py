@@ -62,6 +62,19 @@ def next_url(request):
     def inner():
         if hasattr(request, "path"):
             if request.GET.get("next"):
+                # Make a special exception for 'next' URLs that are absolute but
+                # who's host is in a known list.
+                if (
+                    "://" in request.GET["next"]
+                    and settings.DEBUG
+                    and settings.ADDITIONAL_NEXT_URL_ALLOWED_HOSTS
+                    and settings.ADDITIONAL_NEXT_URL_ALLOWED_HOSTS
+                    in request.GET["next"]
+                ):
+                    # The reason we don't need to make a much more elaborate
+                    # comparison of the host and the 'ADDITIONAL_NEXT_URL_ALLOWED_HOSTS'
+                    # setting is because this will only ever happen in DEBUG anyway.
+                    return request.GET["next"]
                 if "://" not in request.GET["next"]:
                     return request.GET["next"]
             elif reverse(settings.LOGIN_URL) != request.get_full_path():
