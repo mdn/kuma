@@ -7,11 +7,13 @@ from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.socialaccount.models import SocialLogin
 from django import forms
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.utils.cache import add_never_cache_headers
+from django.utils.http import is_safe_url
 from django.utils.translation import gettext_lazy as _
 from redo import retrying
 from waffle import switch_is_active
@@ -53,6 +55,17 @@ class KumaAccountAdapter(DefaultAccountAdapter):
         (for now)
         """
         return False
+
+    def is_safe_url(self, url):
+        """This method override exists for 1 single purpose; to make an exception
+        for the Yari development server."""
+        # The only difference between our override and the one in allauth is that
+        # we inject the extra `allowed_hosts=` which, in allauth, is hardcoded to
+        # be `allowed_hosts=None`.
+        allowed_hosts = None
+        if settings.DEBUG:
+            allowed_hosts = settings.ADDITIONAL_NEXT_URL_ALLOWED_HOSTS
+        return is_safe_url(url, allowed_hosts=allowed_hosts)
 
     def clean_username(self, username):
         """

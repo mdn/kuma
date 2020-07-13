@@ -1896,3 +1896,12 @@ SENDINBLUE_API_KEY = config("SENDINBLUE_API_KEY", default=None)
 SENDINBLUE_LIST_ID = config("SENDINBLUE_LIST_ID", default=None)
 
 SITEMAP_USE_S3 = config("SITEMAP_USE_S3", cast=bool, default=True)
+
+# When doing local development with Yari, if you want to have `?next=...` redirects
+# work when you sign in on Yari, this needs to be set to `localhost.org:3000` in your
+# .env file. That tells, Kuma that if the `?next` URL is an absolute URL, that
+# it's safe to use and redirect to.
+# This additional host is always, also, dependent on settings.DEBUG==True.
+ADDITIONAL_NEXT_URL_ALLOWED_HOSTS = config(
+    "ADDITIONAL_NEXT_URL_ALLOWED_HOSTS", default=None
+)
