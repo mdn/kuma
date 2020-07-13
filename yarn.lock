@@ -1351,17 +1351,17 @@
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.11.3.tgz#a759863867befa7e583400d322652a3f44820924"
   integrity sha512-0o4l6pZC+hI88+bzuaX/6BgOvQVhbt2PfmxauVaYOGgbsAw14wdKyvMCZXnsnsHys94iadcF+RG/wZyx6+ZZBw==
 
-"@grpc/grpc-js@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.0.3.tgz#7fa2ba293ccc1e91b24074c2628c8c68336e18c4"
-  integrity sha512-JKV3f5Bv2TZxK6eJSB9EarsZrnLxrvcFNwI9goq0YRXa3S6NNoCSnI3cG3lkXVIJ03Wng1WXe76kc2JQtRe7AQ==
+"@grpc/grpc-js@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.0.5.tgz#09948c0810e62828fdd61455b2eb13d7879888b0"
+  integrity sha512-Hm+xOiqAhcpT9RYM8lc15dbQD7aQurM7ZU8ulmulepiPlN7iwBXXwP3vSBUimoFoApRqz7pSIisXU8pZaCB4og==
   dependencies:
     semver "^6.2.0"
 
-"@grpc/proto-loader@^0.5.3":
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/@grpc/proto-loader/-/proto-loader-0.5.4.tgz#038a3820540f621eeb1b05d81fbedfb045e14de0"
-  integrity sha512-HTM4QpI9B2XFkPz7pjwMyMgZchJ93TVkL3kWPW8GDMDKYxsMnmf4w2TNMJK7+KNiYHS5cJrCEAFlF+AwtXWVPA==
+"@grpc/proto-loader@^0.5.4":
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/@grpc/proto-loader/-/proto-loader-0.5.5.tgz#6725e7a1827bdf8e92e29fbf4e9ef0203c0906a9"
+  integrity sha512-WwN9jVNdHRQoOBo9FDH7qU+mgfjPc8GygPYms3M+y3fbQLfnCe/Kv/E01t7JRgnrsOHH8euvSbed3mIalXhwqQ==
   dependencies:
     lodash.camelcase "^4.3.0"
     protobufjs "^6.8.6"
@@ -4028,18 +4028,6 @@ escape-string-regexp@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz#a30304e99daa32e23b2fd20f51babd07cffca344"
   integrity sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==
-
-escodegen@^1.11.1:
-  version "1.14.1"
-  resolved "https://registry.yarnpkg.com/escodegen/-/escodegen-1.14.1.tgz#ba01d0c8278b5e95a9a45350142026659027a457"
-  integrity sha512-Bmt7NcRySdIfNPfU2ZoXDrrXsG9ZjvDxcAlMfDUgRBjLOWTuIACXPBFJH7Z+cLb40JeQco5toikyc9t9P8E9SQ==
-  dependencies:
-    esprima "^4.0.1"
-    estraverse "^4.2.0"
-    esutils "^2.0.2"
-    optionator "^0.8.1"
-  optionalDependencies:
-    source-map "~0.6.1"
 
 escodegen@^1.14.1:
   version "1.14.3"
@@ -6922,24 +6910,22 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
-newrelic@^6.8.0:
-  version "6.8.0"
-  resolved "https://registry.yarnpkg.com/newrelic/-/newrelic-6.8.0.tgz#ecba7e6689c5fb38557b543e12a7bd0dc895c7e9"
-  integrity sha512-uc/+7L/dx4LdFobplVfP1Ed9uolcJ86pSjkK8ozlkCJIai4IrCa+YVrmZ2qJRX2o06yKLG6hzTrTAQDtDxzEEQ==
+newrelic@^6.11.0:
+  version "6.11.0"
+  resolved "https://registry.yarnpkg.com/newrelic/-/newrelic-6.11.0.tgz#eb17483f62b09e65eaebd0b32e61d396e7fe0f3a"
+  integrity sha512-+GaI6yfn/ge7zIy2lMUr5yF3VHd6lHtm2wjWPyEHxbseyJhVN3vJWcKMtBnwCFK161AxFrXLcn50Cr22fb38bQ==
   dependencies:
-    "@grpc/grpc-js" "1.0.3"
-    "@grpc/proto-loader" "^0.5.3"
+    "@grpc/grpc-js" "1.0.5"
+    "@grpc/proto-loader" "^0.5.4"
     "@newrelic/aws-sdk" "^1.1.1"
     "@newrelic/koa" "^3.0.0"
     "@newrelic/superagent" "^2.0.1"
     "@tyriar/fibonacci-heap" "^2.0.7"
     async "^2.1.4"
     concat-stream "^2.0.0"
-    escodegen "^1.11.1"
-    esprima "^4.0.1"
     https-proxy-agent "^4.0.0"
     json-stringify-safe "^5.0.0"
-    readable-stream "^3.1.1"
+    readable-stream "^3.6.0"
     semver "^5.3.0"
   optionalDependencies:
     "@newrelic/native-metrics" "^5.1.0"
@@ -8171,7 +8157,7 @@ read-pkg@^5.2.0:
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-readable-stream@^3.0.2, readable-stream@^3.1.1:
+readable-stream@^3.0.2, readable-stream@^3.1.1, readable-stream@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.6.0.tgz#337bbda3adc0706bd3e024426a286d4b4b2c9198"
   integrity sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==
