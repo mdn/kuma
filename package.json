@@ -44,7 +44,7 @@
         "pretty-staged": "pretty-quick --staged"
     },
     "dependencies": {
-        "@babel/runtime": "^7.10.3",
+        "@babel/runtime": "^7.10.4",
         "@sentry/node": "^5.19.0",
         "express": "^4.16.4",
         "jsesc": "3.0.1",
