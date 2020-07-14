@@ -1,3 +1,5 @@
+import logging
+from ipaddress import ip_address
 from urllib.parse import urlsplit
 
 from django.conf import settings
@@ -24,6 +26,9 @@ from .i18n import (
 )
 from .utils import is_untrusted, urlparams
 from .views import handler403
+
+
+log = logging.getLogger(__name__)
 
 
 class MiddlewareBase(object):
@@ -296,9 +301,22 @@ class SetRemoteAddrFromForwardedFor(MiddlewareBase):
             pass
         else:
             # HTTP_X_FORWARDED_FOR can be a comma-separated list of IPs.
-            # The client's IP will be the first one.
-            forwarded_for = forwarded_for.split(",")[0].strip()
-            request.META["REMOTE_ADDR"] = forwarded_for
+            forwarded_for_ips = forwarded_for.replace(",", " ").split()
+            if forwarded_for_ips and len(forwarded_for_ips) >= settings.PROXY_DEPTH:
+                # The trusted client IP is selected relative to the end of the list,
+                # depending on settings.PROXY_DEPTH. For example, if we received:
+                #     ["1.1.1.1", "2.2.2.2", "3.3.3.3", "4.4.4.4"]
+                # and the PROXY_DEPTH was set to 2, the trusted client IP would be
+                # second from the end, or "3.3.3.3". This is because intermediate
+                # proxies (like our CDN and our ELB) append the actual client IP
+                # of their connection to the end of the header.
+                client_ip = forwarded_for_ips[-1 * settings.PROXY_DEPTH]
+                try:
+                    request.META["REMOTE_ADDR"] = str(ip_address(client_ip))
+                except ValueError as e:
+                    log.info(
+                        f'Invalid client IP "{client_ip}" in X-Forwarded-For ({e})'
+                    )
 
         return self.get_response(request)
 

@@ -1905,3 +1905,9 @@ SITEMAP_USE_S3 = config("SITEMAP_USE_S3", cast=bool, default=True)
 ADDITIONAL_NEXT_URL_ALLOWED_HOSTS = config(
     "ADDITIONAL_NEXT_URL_ALLOWED_HOSTS", default=None
 )
+
+# The PROXY_DEPTH is used to avoid client IP spoofing by extracting a trustworthy
+# client IP from the X-Forwarded-For header. For stage and production, there are
+# two proxies, the CDN and the public-facing ELB. If set to zero, the first IP
+# in the X-Forwarded-For header is selected as the client IP.
+PROXY_DEPTH = config("PROXY_DEPTH", cast=int, default=0)

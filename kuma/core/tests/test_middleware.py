@@ -43,11 +43,26 @@ def test_slash_middleware_retains_querystring(client, db):
 
 
 @pytest.mark.parametrize(
-    "forwarded_for,remote_addr",
-    (("1.1.1.1", "1.1.1.1"), ("2.2.2.2", "2.2.2.2"), ("3.3.3.3, 4.4.4.4", "3.3.3.3")),
+    "proxy_depth,forwarded_for,remote_addr",
+    (
+        (0, " ", "127.0.0.1"),
+        (0, "1.1.1.1", "1.1.1.1"),
+        (0, "684D:1:2:3:4:55:6:7", "684d:1:2:3:4:55:6:7"),
+        (0, "3.3.3.3, 2001:db8::ff00:42:8329", "3.3.3.3"),
+        (1, "3.3.3.3,2001:DB8::FF00:42:8329", "2001:db8::ff00:42:8329"),
+        (2, "3.3.3.3,  4.4.4.4", "3.3.3.3"),
+        (3, "3.3.3.3, 4.4.4.4", "127.0.0.1"),
+        (2, "3.3.3.3, 4.4.4.4,5.5.5.5", "4.4.4.4"),
+        (0, "999.255.255.1, 5.5.5.5", "127.0.0.1"),
+        (1, " yädâ ,yädâ.ÿådá.😜.🤪 ", "127.0.0.1"),
+        (1, " yädâ, yädâ.ÿådá.😜.🤪 ,1.1.1.1", "1.1.1.1"),
+    ),
 )
-def test_set_remote_addr_from_forwarded_for(rf, forwarded_for, remote_addr):
+def test_set_remote_addr_from_forwarded_for(
+    rf, settings, proxy_depth, forwarded_for, remote_addr
+):
     """SetRemoteAddrFromForwardedFor parses the X-Forwarded-For Header."""
+    settings.PROXY_DEPTH = proxy_depth
     rf = RequestFactory()
     middleware = SetRemoteAddrFromForwardedFor(lambda req: None)
     request = rf.get("/", HTTP_X_FORWARDED_FOR=forwarded_for)
