@@ -1159,6 +1159,10 @@ webextensions_redirectpatterns = [
 
 firefox_accounts_redirectpatterns = [
     external_redirect(
+        r"(?:docs/)?Mozilla/Firefox_Accounts_OAuth_Dashboard(?:/|$)",
+        "https://mozilla.github.io/ecosystem-platform/docs/welcome",
+    ),
+    external_redirect(
         r"(?:docs/)?Mozilla/(?:Tech/)?Firefox_Accounts(?:/|$)",
         "https://mozilla.github.io/ecosystem-platform/docs/welcome",
     ),
