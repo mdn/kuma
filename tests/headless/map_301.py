@@ -939,3 +939,22 @@ WEBEXT_URLS = list(
         )
     )
 )
+
+FIREFOX_ACCOUNTS_URLS = list(
+    flatten(
+        (
+            url_test(
+                "{/en-US,}/{docs/,}Mozilla/Firefox_Accounts_OAuth_Dashboard{/,}",
+                "https://mozilla.github.io/ecosystem-platform/docs/welcome",
+            ),
+            url_test(
+                "{/en-US,/pl,}/{docs/,}Mozilla/{Tech/,}Firefox_Accounts{/Introduction,/Atttached_APIs,/WebExtensions,}",
+                "https://mozilla.github.io/ecosystem-platform/docs/welcome",
+            ),
+            url_test(
+                "{/en-US,/pl,}/{docs/,}Archive/Mozilla/Firefox/Accounts{/Introduction,/Atttached_APIs,/WebExtensions,}",
+                "https://mozilla.github.io/ecosystem-platform/docs/welcome",
+            ),
+        )
+    )
+)
