@@ -1907,7 +1907,7 @@ ADDITIONAL_NEXT_URL_ALLOWED_HOSTS = config(
 )
 
 # The PROXY_DEPTH is used to avoid client IP spoofing by extracting a trustworthy
-# client IP from the X-Forwarded-For header. For stage and production, there are
-# two proxies, the CDN and the public-facing ELB. If set to zero, the first IP
-# in the X-Forwarded-For header is selected as the client IP.
-PROXY_DEPTH = config("PROXY_DEPTH", cast=int, default=0)
+# client IP from the X-Forwarded-For header. For stage and production, there are two
+# proxies, the CDN and the public-facing ELB, so the default is 2. If set to zero, the
+# X-Forwarded-For header will be ignored.
+PROXY_DEPTH = config("PROXY_DEPTH", cast=int, default=2)

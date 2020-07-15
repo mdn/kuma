@@ -302,7 +302,9 @@ class SetRemoteAddrFromForwardedFor(MiddlewareBase):
         else:
             # HTTP_X_FORWARDED_FOR can be a comma-separated list of IPs.
             forwarded_for_ips = forwarded_for.replace(",", " ").split()
-            if forwarded_for_ips and len(forwarded_for_ips) >= settings.PROXY_DEPTH:
+            if (settings.PROXY_DEPTH > 0) and len(
+                forwarded_for_ips
+            ) >= settings.PROXY_DEPTH:
                 # The trusted client IP is selected relative to the end of the list,
                 # depending on settings.PROXY_DEPTH. For example, if we received:
                 #     ["1.1.1.1", "2.2.2.2", "3.3.3.3", "4.4.4.4"]
@@ -310,12 +312,12 @@ class SetRemoteAddrFromForwardedFor(MiddlewareBase):
                 # second from the end, or "3.3.3.3". This is because intermediate
                 # proxies (like our CDN and our ELB) append the actual client IP
                 # of their connection to the end of the header.
-                client_ip = forwarded_for_ips[-1 * settings.PROXY_DEPTH]
+                client_ip = forwarded_for_ips[-settings.PROXY_DEPTH]
                 try:
                     request.META["REMOTE_ADDR"] = str(ip_address(client_ip))
                 except ValueError as e:
                     log.info(
-                        f'Invalid client IP "{client_ip}" in X-Forwarded-For ({e})'
+                        f'Invalid client IP "{client_ip!r}" in X-Forwarded-For ({e})'
                     )
 
         return self.get_response(request)
