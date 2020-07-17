@@ -3,7 +3,7 @@ import hashlib
 import logging
 import os
 from itertools import islice
-from smtplib import SMTPServerDisconnected
+from smtplib import SMTPConnectError, SMTPServerDisconnected
 from urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
 
 import requests
@@ -586,6 +586,7 @@ class EmailMultiAlternativesRetrying(EmailMultiAlternatives):
     we're very explicit about the of exceptions we treat as retry'able.
     The list of exceptions we use to trigger a retry are:
 
+        * smtplib.SMTPConnectError
         * smtplib.SMTPServerDisconnected
 
     Only list exceptions that have been known to happen and are safe.
@@ -596,7 +597,7 @@ class EmailMultiAlternativesRetrying(EmailMultiAlternatives):
         # for a list of the default options to the redo.retry function
         # which the redo.retrying context manager wraps.
         retry_options = retry_options or {
-            "retry_exceptions": (SMTPServerDisconnected,),
+            "retry_exceptions": (SMTPConnectError, SMTPServerDisconnected),
             # The default in redo is 60 seconds. Let's tone that down.
             "sleeptime": 3,
             "attempts": 10,

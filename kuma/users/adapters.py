@@ -1,4 +1,4 @@
-from smtplib import SMTPServerDisconnected
+from smtplib import SMTPConnectError, SMTPServerDisconnected
 
 from allauth.account.adapter import DefaultAccountAdapter, get_adapter
 from allauth.account.models import EmailAddress
@@ -157,7 +157,7 @@ class KumaAccountAdapter(DefaultAccountAdapter):
 
     def send_mail(self, *args, **kwargs):
         retry_options = {
-            "retry_exceptions": (SMTPServerDisconnected,),
+            "retry_exceptions": (SMTPConnectError, SMTPServerDisconnected),
             # The default in redo is 60 seconds. Let's tone that down.
             "sleeptime": 3,
             "attempts": 10,
