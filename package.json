@@ -45,7 +45,7 @@
     },
     "dependencies": {
         "@babel/runtime": "^7.10.4",
-        "@sentry/node": "^5.19.0",
+        "@sentry/node": "^5.20.1",
         "express": "^4.16.4",
         "jsesc": "3.0.1",
         "morgan": "^1.9.1",
