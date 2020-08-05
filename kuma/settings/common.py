@@ -692,9 +692,9 @@ PIPELINE_CSS = {
         "source_filenames": ("styles/components/banners/developer-needs.scss",),
         "output_filename": "build/styles/developer-needs.css",
     },
-    "banner_l10n_survey": {
-        "source_filenames": ("styles/components/banners/l10n-survey.scss",),
-        "output_filename": "build/styles/l10n-survey.css",
+    "banner_user_interviews": {
+        "source_filenames": ("styles/components/banners/user-interviews.scss",),
+        "output_filename": "build/styles/user-interviews.css",
     },
     "banner_mdn_subscriptions": {
         "source_filenames": ("styles/components/banners/mdn-subscriptions.scss",),

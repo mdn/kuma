@@ -190,19 +190,22 @@ function Banner(props: BannerProps) {
 }
 
 export const DEVELOPER_NEEDS_ID = 'developer_needs';
-export const L10N_SURVEY_ID = 'l10n_survey';
 export const SUBSCRIPTION_ID = 'subscription_banner';
+export const USER_INTERVIEWS_ID = 'user_interviews';
 
-function L10NSurveyBanner() {
+function UserInterviewsBanner() {
     return (
         <Banner
-            id={L10N_SURVEY_ID}
-            classname="l10n-survey"
+            id={USER_INTERVIEWS_ID}
+            classname="user-interviews"
+            title={gettext('Help us improve MDN')}
             copy={gettext(
-                '👋 Do you use Chrome’s automatic translation tool on MDN? Help us improve by answering a short 5-minute survey.'
+                'Sign up to participate in a 30-minute desktop interview session'
             )}
-            cta={gettext('Take the survey')}
-            url="https://s2.userzoom.com/m/MSBDNTgxMlMxMzMg"
+            cta={gettext('Sign up')}
+            url={
+                'https://validately.com/moderated/e9086e05-092b-4453-8efd-360f434bf820'
+            }
             newWindow
         />
     );
@@ -280,8 +283,8 @@ export default function ActiveBanner() {
         }
 
         switch (id) {
-            case L10N_SURVEY_ID:
-                return <L10NSurveyBanner />;
+            case USER_INTERVIEWS_ID:
+                return <UserInterviewsBanner />;
 
             case DEVELOPER_NEEDS_ID:
                 return <DeveloperNeedsBanner />;
