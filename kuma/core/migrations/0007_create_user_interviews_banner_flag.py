@@ -8,7 +8,9 @@ def create_user_interviews_banner_flag(apps, schema_editor):
     Flag = apps.get_model("waffle", "Flag")
     if not Flag.objects.filter(name="user_interviews").exists():
         Flag.objects.create(
-            name="user_interviews", staff=True, note="Shows the user interviews invitation banner"
+            name="user_interviews",
+            staff=True,
+            note="Shows the user interviews invitation banner",
         )
 
 
