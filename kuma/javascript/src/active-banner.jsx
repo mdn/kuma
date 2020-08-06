@@ -277,23 +277,17 @@ export default function ActiveBanner() {
         return null;
     }
 
-    for (const id in userData.waffle.flags) {
-        if (!userData.waffle.flags[id] || isEmbargoed(id)) {
-            continue;
-        }
+    const isEnabled = (id) => userData.waffle.flags[id] && !isEmbargoed(id);
 
-        switch (id) {
-            case USER_INTERVIEWS_ID:
-                return <UserInterviewsBanner />;
-
-            case DEVELOPER_NEEDS_ID:
-                return <DeveloperNeedsBanner />;
-
-            case SUBSCRIPTION_ID:
-                return userData.isSubscriber ? null : <SubscriptionBanner />;
-        }
+    // The order of the if statements is important and it's our source of
+    // truth about which banner is "more important" than the other.
+    if (isEnabled(USER_INTERVIEWS_ID)) {
+        return <UserInterviewsBanner />;
+    } else if (isEnabled(DEVELOPER_NEEDS_ID)) {
+        return <DeveloperNeedsBanner />;
+    } else if (isEnabled(SUBSCRIPTION_ID) && !userData.isSubscriber) {
+        return <SubscriptionBanner />;
     }
-
     // No banner found in the waffle flags, so we have nothing to render
     return null;
 }
