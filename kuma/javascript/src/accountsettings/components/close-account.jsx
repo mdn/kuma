@@ -1,13 +1,16 @@
 // @flow
 import * as React from 'react';
-import { useState } from 'react';
 
+import { type UserData } from '../../user-provider.jsx';
 import { gettext } from '../../l10n.js';
 
-import CloseAccountForm from './close-account-form.jsx';
+type Props = {
+    locale: string,
+    userData: UserData,
+};
 
-const CloseAccount = () => {
-    const [showForm, setShowForm] = useState<boolean>(false);
+const CloseAccount = ({ locale, userData }: Props) => {
+    const { username }: any = userData;
 
     return (
         <section
@@ -18,20 +21,13 @@ const CloseAccount = () => {
 
             <div className="lead-in">
                 <p>{gettext('Delete your account and account data.')}</p>
-                <button
+                <a
+                    href={`/${locale}/profiles/${username}/delete`}
                     className="cta negative"
-                    type="button"
-                    onClick={() => {
-                        setShowForm(true);
-                    }}
                 >
                     {gettext('Close account')}
-                </button>
+                </a>
             </div>
-
-            {showForm && (
-                <CloseAccountForm onCancel={() => setShowForm(false)} />
-            )}
         </section>
     );
 };

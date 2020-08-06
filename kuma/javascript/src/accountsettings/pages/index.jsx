@@ -49,7 +49,7 @@ export default function LandingPage({ data, locale }: RouteComponentProps) {
                         userData={userData}
                         contributionSupportEmail={contributionSupportEmail}
                     />
-                    <CloseAccount />
+                    <CloseAccount locale={locale} userData={userData} />
                 </>
             )}
         </main>
