@@ -33,6 +33,7 @@ describe('Account Settings Landing Page', () => {
     it('renders the account settings form for authenticated users', () => {
         const mockData = getTestData({
             isAuthenticated: true,
+            username: 'something',
         });
 
         render(
@@ -48,6 +49,7 @@ describe('Account Settings Landing Page', () => {
     it('renders the subscription component for authenticated users', () => {
         const mockData = getTestData({
             isAuthenticated: true,
+            username: 'something',
         });
 
         render(
@@ -64,6 +66,7 @@ describe('Account Settings Landing Page', () => {
     it('renders the close account component for authenticated users', () => {
         const mockData = getTestData({
             isAuthenticated: true,
+            username: 'something',
         });
 
         render(
