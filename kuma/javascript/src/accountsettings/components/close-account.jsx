@@ -1,17 +1,14 @@
 // @flow
 import * as React from 'react';
 
-import { type UserData } from '../../user-provider.jsx';
 import { gettext } from '../../l10n.js';
 
 type Props = {
     locale: string,
-    userData: UserData,
+    username: string,
 };
 
-const CloseAccount = ({ locale, userData }: Props) => {
-    const { username }: any = userData;
-
+const CloseAccount = ({ locale, username }: Props) => {
     return (
         <section
             className="subscription account-girdle"

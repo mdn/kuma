@@ -18,6 +18,7 @@ const pageSubtitle = gettext('Update your details and manage your preferences');
 export default function LandingPage({ data, locale }: RouteComponentProps) {
     const contributionSupportEmail = data.contributionSupportEmail;
     const userData = useContext(UserProvider.context);
+    const { username }: any = userData;
 
     return (
         <main id="content" role="main" data-testid="landing-page">
@@ -49,7 +50,7 @@ export default function LandingPage({ data, locale }: RouteComponentProps) {
                         userData={userData}
                         contributionSupportEmail={contributionSupportEmail}
                     />
-                    <CloseAccount locale={locale} userData={userData} />
+                    <CloseAccount locale={locale} username={username} />
                 </>
             )}
         </main>
