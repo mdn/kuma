@@ -32,7 +32,7 @@ export default function LandingPage({ data, locale }: RouteComponentProps) {
                 </p>
             )}
 
-            {userData && userData.isAuthenticated && (
+            {userData && userData.isAuthenticated && userData.username && (
                 <>
                     <Titlebar
                         pageTitle={pageTitle}
@@ -49,7 +49,10 @@ export default function LandingPage({ data, locale }: RouteComponentProps) {
                         userData={userData}
                         contributionSupportEmail={contributionSupportEmail}
                     />
-                    <CloseAccount />
+                    <CloseAccount
+                        locale={locale}
+                        username={userData.username}
+                    />
                 </>
             )}
         </main>
