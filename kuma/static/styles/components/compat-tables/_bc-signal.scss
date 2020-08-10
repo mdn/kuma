@@ -116,11 +116,10 @@ div.signal-link-container {
 }
 
 div.bc-signal-block {
+    display: none;
     background-color: $blue-light;
     box-sizing: border-box;
-    max-height: 0;
     overflow: hidden;
-    transition: max-height .3s ease-out, padding-top .1s ease .3s;
 
     &:not(.complete) {
         padding-top: 0;
@@ -529,13 +528,8 @@ div.bc-signal-block {
 }
 
 @media #{$mq-tablet-and-down} {
-    div.bc-signal-block {
-        transition: max-height .8s ease-out, padding-top .1s ease .7s;
-    }
-
     div.bc-signal-block.open {
         max-height: 1800px;
-        transition: max-height .8s ease-out, padding-top 0s ease-out 0s;
     }
 
     textarea#brief-explanation,
@@ -557,21 +551,17 @@ div.bc-signal-block {
             max-height: 700px;
             display: flex;
             align-items: stretch;
-            transition: max-height .3s ease-out, padding-top 0s ease-out 0s;
         }
     }
 
     div.bc-signal-block.complete {
         padding: 0 100px;
-        transition: max-height .3s ease-out, padding .1s ease .18s;
-        display: flex;
         align-items: center;
 
         &.open {
             padding: 53px 100px;
             box-sizing: border-box;
             display: flex;
-            transition: max-height .3s ease-out, padding-top 0s ease-out 0s;
         }
     }
 
