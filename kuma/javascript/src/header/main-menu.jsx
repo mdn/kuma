@@ -16,6 +16,7 @@ type Props = {
 // in this plain way first. See bottom of file for the final memo() and export.
 const _MainMenu = ({ documentData, locale }: Props) => {
     const mainMenuToggleRef = useRef(null);
+    const previousActiveElement = useRef(null);
     const [showMainMenu, setShowMainMenu] = useState(false);
     const [showSubMenu, setShowSubMenu] = useState(null);
     const ga = useContext(GAProvider.context);
@@ -38,17 +39,42 @@ const _MainMenu = ({ documentData, locale }: Props) => {
 
     function hideSubMenuIfVisible() {
         if (showSubMenu) {
+            if (previousActiveElement.current) {
+                previousActiveElement.current.focus();
+            }
             setShowSubMenu(false);
         }
     }
 
     function toggleMainMenu() {
+        const pageOverlay = document.querySelector('.page-overlay');
         let mainMenuButton = mainMenuToggleRef.current;
 
         if (mainMenuButton) {
             mainMenuButton.classList.toggle('expanded');
             setShowMainMenu(!showMainMenu);
         }
+
+        if (pageOverlay) {
+            pageOverlay.classList.toggle('hidden');
+        }
+    }
+
+    /**
+     * Show and hide submenus in the main menu, send GA events and updates
+     * the ARIA state.
+     * @param {Object} event - onClick event triggered on top-level menu item
+     * @param {String} menuLabel - The current top-level menu item label
+     */
+    function toggleSubMenu(event, menuLabel) {
+        const expandedState = showSubMenu === menuLabel ? false : true;
+
+        // store the current activeElement
+        previousActiveElement.current = event.target;
+        event.target.setAttribute('aria-expanded', expandedState);
+
+        setShowSubMenu(showSubMenu === menuLabel ? null : menuLabel);
+        sendMenuItemInteraction(event);
     }
 
     useEffect(() => {
@@ -79,6 +105,7 @@ const _MainMenu = ({ documentData, locale }: Props) => {
         () => [
             {
                 label: gettext('Technologies'),
+                labelId: 'technologies',
                 items: [
                     {
                         url: `/${locale}/docs/Web`,
@@ -120,6 +147,7 @@ const _MainMenu = ({ documentData, locale }: Props) => {
             },
             {
                 label: gettext('References & Guides'),
+                labelId: 'references-guides',
                 items: [
                     {
                         url: `/${locale}/docs/Learn`,
@@ -153,6 +181,7 @@ const _MainMenu = ({ documentData, locale }: Props) => {
             },
             {
                 label: gettext('Feedback'),
+                labelId: 'feedback',
                 items: [
                     {
                         url: `/${locale}/docs/MDN/Feedback`,
@@ -217,16 +246,13 @@ const _MainMenu = ({ documentData, locale }: Props) => {
                         className="top-level-entry-container"
                     >
                         <button
+                            id={`${menuEntry.labelId}-button`}
                             type="button"
                             className="top-level-entry"
                             aria-haspopup="true"
-                            onFocus={sendMenuItemInteraction}
-                            onClick={() => {
-                                setShowSubMenu(
-                                    showSubMenu === menuEntry.label
-                                        ? null
-                                        : menuEntry.label
-                                );
+                            aria-expanded="false"
+                            onClick={(event) => {
+                                toggleSubMenu(event, menuEntry.label);
                             }}
                         >
                             {menuEntry.label}
@@ -235,17 +261,14 @@ const _MainMenu = ({ documentData, locale }: Props) => {
                             className={
                                 menuEntry.label === showSubMenu ? 'show' : null
                             }
-                            aria-expanded={
-                                menuEntry.label === showSubMenu
-                                    ? 'true'
-                                    : 'false'
-                            }
+                            role="menu"
+                            aria-labelledby={`${menuEntry.labelId}-button`}
                         >
                             {menuEntry.items.map((item) => (
                                 <li
                                     key={item.url}
                                     data-item={menuEntry.label}
-                                    role="menuitem"
+                                    role="none"
                                 >
                                     {item.external ? (
                                         <a
@@ -259,6 +282,7 @@ const _MainMenu = ({ documentData, locale }: Props) => {
                                             onContextMenu={
                                                 sendMenuItemInteraction
                                             }
+                                            role="menuitem"
                                         >
                                             {item.label} &#x1f310;
                                         </a>
@@ -269,6 +293,7 @@ const _MainMenu = ({ documentData, locale }: Props) => {
                                             onContextMenu={
                                                 sendMenuItemInteraction
                                             }
+                                            role="menuitem"
                                         >
                                             {item.label}
                                         </a>

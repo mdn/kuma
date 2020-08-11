@@ -1,4 +1,8 @@
-@import '../vars/vars-nav';
+$menu-zindex: 500;
+$menu-box-shadow: 0 2px 8px 0 $neutral-500;
+$menu-border: solid 1px $neutral-400;
+$menu-border-radius: 4px;
+$dropdown-item-background-color: $primary-200;
 
 .dropdown-container {
     /* We use relative here not because we need to tweak positioning

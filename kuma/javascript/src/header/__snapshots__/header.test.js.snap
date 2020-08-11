@@ -30,122 +30,133 @@ exports[`Header snapshot 1`] = `
         className="top-level-entry-container"
       >
         <button
+          aria-expanded="false"
           aria-haspopup="true"
           className="top-level-entry"
+          id="technologies-button"
           onClick={[Function]}
-          onFocus={[Function]}
           type="button"
         >
           Technologies
         </button>
         <ul
-          aria-expanded="false"
+          aria-labelledby="technologies-button"
           className={null}
+          role="menu"
         >
           <li
             data-item="Technologies"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Web"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               Technologies Overview
             </a>
           </li>
           <li
             data-item="Technologies"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Web/HTML"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               HTML
             </a>
           </li>
           <li
             data-item="Technologies"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Web/CSS"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               CSS
             </a>
           </li>
           <li
             data-item="Technologies"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Web/JavaScript"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               JavaScript
             </a>
           </li>
           <li
             data-item="Technologies"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Web/Guide/Graphics"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               Graphics
             </a>
           </li>
           <li
             data-item="Technologies"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Web/HTTP"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               HTTP
             </a>
           </li>
           <li
             data-item="Technologies"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Web/API"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               APIs / DOM
             </a>
           </li>
           <li
             data-item="Technologies"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Mozilla/Add-ons/WebExtensions"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               Browser Extensions
             </a>
           </li>
           <li
             data-item="Technologies"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Web/MathML"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               MathML
             </a>
@@ -156,98 +167,107 @@ exports[`Header snapshot 1`] = `
         className="top-level-entry-container"
       >
         <button
+          aria-expanded="false"
           aria-haspopup="true"
           className="top-level-entry"
+          id="references-guides-button"
           onClick={[Function]}
-          onFocus={[Function]}
           type="button"
         >
           References & Guides
         </button>
         <ul
-          aria-expanded="false"
+          aria-labelledby="references-guides-button"
           className={null}
+          role="menu"
         >
           <li
             data-item="References & Guides"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Learn"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               Learn web development
             </a>
           </li>
           <li
             data-item="References & Guides"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Web/Tutorials"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               Tutorials
             </a>
           </li>
           <li
             data-item="References & Guides"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Web/Reference"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               References
             </a>
           </li>
           <li
             data-item="References & Guides"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Web/Guide"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               Developer Guides
             </a>
           </li>
           <li
             data-item="References & Guides"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Web/Accessibility"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               Accessibility
             </a>
           </li>
           <li
             data-item="References & Guides"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Games"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               Game development
             </a>
           </li>
           <li
             data-item="References & Guides"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/Web"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               ...more docs
             </a>
@@ -258,39 +278,43 @@ exports[`Header snapshot 1`] = `
         className="top-level-entry-container"
       >
         <button
+          aria-expanded="false"
           aria-haspopup="true"
           className="top-level-entry"
+          id="feedback-button"
           onClick={[Function]}
-          onFocus={[Function]}
           type="button"
         >
           Feedback
         </button>
         <ul
-          aria-expanded="false"
+          aria-labelledby="feedback-button"
           className={null}
+          role="menu"
         >
           <li
             data-item="Feedback"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/MDN/Feedback"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               Send Feedback
             </a>
           </li>
           <li
             data-item="Feedback"
-            role="menuitem"
+            role="none"
           >
             <a
               href="https://support.mozilla.org/"
               onClick={[Function]}
               onContextMenu={[Function]}
               rel="noopener noreferrer"
+              role="menuitem"
               target="_blank"
             >
               Get Firefox help
@@ -299,13 +323,14 @@ exports[`Header snapshot 1`] = `
           </li>
           <li
             data-item="Feedback"
-            role="menuitem"
+            role="none"
           >
             <a
               href="https://stackoverflow.com/"
               onClick={[Function]}
               onContextMenu={[Function]}
               rel="noopener noreferrer"
+              role="menuitem"
               target="_blank"
             >
               Get web development help
@@ -314,25 +339,27 @@ exports[`Header snapshot 1`] = `
           </li>
           <li
             data-item="Feedback"
-            role="menuitem"
+            role="none"
           >
             <a
               href="/en-US/docs/MDN/Community"
               onClick={[Function]}
               onContextMenu={[Function]}
+              role="menuitem"
             >
               Join the MDN community
             </a>
           </li>
           <li
             data-item="Feedback"
-            role="menuitem"
+            role="none"
           >
             <a
               href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=http://localhost/[fake%20absolute%20url]"
               onClick={[Function]}
               onContextMenu={[Function]}
               rel="noopener noreferrer"
+              role="menuitem"
               target="_blank"
             >
               Report a content problem
@@ -341,13 +368,14 @@ exports[`Header snapshot 1`] = `
           </li>
           <li
             data-item="Feedback"
-            role="menuitem"
+            role="none"
           >
             <a
               href="https://github.com/mdn/kuma/issues/new/choose"
               onClick={[Function]}
               onContextMenu={[Function]}
               rel="noopener noreferrer"
+              role="menuitem"
               target="_blank"
             >
               Report an issue
