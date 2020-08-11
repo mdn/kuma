@@ -1,4 +1,34 @@
-@import '../vars/vars-nav';
+@import '../vars/vars-color-palette';
+
+$menu-zindex: 500;
+$menu-box-shadow: 0 2px 8px 0 $neutral-400;
+$menu-border: solid 1px $neutral-400;
+$menu-border-radius: 4px;
+$dropdown-item-background-color: $primary-200;
+$overlay-background-color: rgba(0, 0, 0, 0.5);
+
+.main-menu-toggle {
+    background: none;
+    padding: 10px 20px;
+
+    &::before {
+        display: block;
+        content: '';
+        background: transparent url('../../../navigation/menu-open.svg') 0 0
+            no-repeat;
+        background-size: 21px;
+        width: 21px;
+        height: 21px;
+    }
+
+    &.expanded::before {
+        background-image: url('../../../navigation/menu-close.svg');
+    }
+
+    @media #{$mq-tablet-and-up} {
+        display: none;
+    }
+}
 
 /*
 [mdn-static] ~ main navigation menu
@@ -16,7 +46,6 @@
     background-color: #fff;
     padding: 20px;
     width: 100%;
-    height: 100vh;
     font-weight: bold;
     z-index: $menu-zindex;
 
@@ -72,6 +101,7 @@
 
     .top-level-entry-container {
         position: relative;
+        padding: 2px;
 
         ul.show {
             display: block;
@@ -117,5 +147,24 @@
         @media #{$mq-tablet-and-up} {
             display: flex;
         }
+    }
+}
+
+/* Style for general page overlay. Currently used with
+   the main menu on mobile. */
+.page-overlay {
+    position: fixed;
+    /* This is to accomodate for the page header on all viewports */
+    top: 80px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: $overlay-background-color;
+    width: 100%;
+    height: 100%;
+    z-index: 400;
+
+    @media #{$mq-tablet-and-up} {
+        display: none;
     }
 }
