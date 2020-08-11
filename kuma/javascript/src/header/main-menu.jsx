@@ -16,7 +16,7 @@ type Props = {
 // in this plain way first. See bottom of file for the final memo() and export.
 const _MainMenu = ({ documentData, locale }: Props) => {
     const mainMenuToggleRef = useRef(null);
-    const previousActiveElement = useRef(null);
+    const previousActiveElementRef = useRef(null);
     const [showMainMenu, setShowMainMenu] = useState(false);
     const [showSubMenu, setShowSubMenu] = useState(null);
     const ga = useContext(GAProvider.context);
