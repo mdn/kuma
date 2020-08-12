@@ -39,8 +39,8 @@ const _MainMenu = ({ documentData, locale }: Props) => {
 
     function hideSubMenuIfVisible() {
         if (showSubMenu) {
-            if (previousActiveElement.current) {
-                previousActiveElement.current.focus();
+            if (previousActiveElementRef.current) {
+                previousActiveElementRef.current.focus();
             }
             setShowSubMenu(false);
         }
@@ -70,7 +70,7 @@ const _MainMenu = ({ documentData, locale }: Props) => {
         const expandedState = showSubMenu === menuLabel ? false : true;
 
         // store the current activeElement
-        previousActiveElement.current = event.target;
+        previousActiveElementRef.current = event.target;
         event.target.setAttribute('aria-expanded', expandedState);
 
         setShowSubMenu(showSubMenu === menuLabel ? null : menuLabel);
