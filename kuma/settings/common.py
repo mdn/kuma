@@ -1578,8 +1578,7 @@ SESSION_CLEANUP_CHUNK_SIZE = config(
 
 # Email address from which welcome emails will be sent
 WELCOME_EMAIL_FROM = config(
-    "WELCOME_EMAIL_FROM",
-    default="Janet Swisher - MDN Community Lead <mdn-admins@mozilla.org>",
+    "WELCOME_EMAIL_FROM", default="MDN team <mdn-admins@mozilla.org>",
 )
 # If this fails, SMTP will probably also fail.
 # E.g. https://github.com/mdn/kuma/issues/7121
