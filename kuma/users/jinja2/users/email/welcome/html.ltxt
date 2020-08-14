@@ -39,7 +39,7 @@
                 room_link='https://chat.mozilla.org/#/room/#mdn:mozilla.org',
                 matrix_link=add_utm('https://wiki.mozilla.org/Matrix', 'welcome')
               %}
-                Real-time chat: <a href="{{ room_link }}">#mdn room on chat.mozilla.org</a>.  (Get more info about <a href="{{ matrix_link }}">Matrix</a>.) You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (cmills), and me (jswisher), MDN's community manager.
+                Real-time chat: <a href="{{ room_link }}">#mdn room on chat.mozilla.org</a>.  (Get more info about <a href="{{ matrix_link }}">Matrix</a>.)
               {% endtrans %}
             </li>
         </ul>

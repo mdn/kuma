@@ -42,8 +42,5 @@
     ({{ _('See %(matrix_link)s for more info about Matrix.', matrix_link=add_utm('https://wiki.mozilla.org/Matrix', 'welcome')) }})
 
 {# L10n: This is an email. Whitespace matters! #}
-    {{ _("You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and me (jswisher), MDN's community manager.") }}
-
-{# L10n: This is an email. Whitespace matters! #}
 {{ _("Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help.") }}
 {% endautoescape %}
