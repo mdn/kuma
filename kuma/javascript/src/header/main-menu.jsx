@@ -39,9 +39,6 @@ const _MainMenu = ({ documentData, locale }: Props) => {
 
     function hideSubMenuIfVisible() {
         if (showSubMenu) {
-            if (previousActiveElementRef.current) {
-                previousActiveElementRef.current.focus();
-            }
             setShowSubMenu(false);
         }
     }
@@ -81,6 +78,9 @@ const _MainMenu = ({ documentData, locale }: Props) => {
         document.addEventListener('keyup', (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 hideSubMenuIfVisible();
+                if (previousActiveElementRef.current) {
+                    previousActiveElementRef.current.focus();
+                }
             }
         });
 
