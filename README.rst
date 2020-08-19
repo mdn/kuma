@@ -6,6 +6,14 @@ Kuma
    :target: https://travis-ci.com/mdn/kuma
    :alt: Build Status
 
+.. image:: https://github.com/mdn/kuma/workflows/Python%20Lints/badge.svg
+   :target: https://github.com/mdn/kuma/actions?query=workflow%3A%22Python+Lints%22
+   :alt: Python Lints
+
+.. image:: https://github.com/mdn/kuma/workflows/Documentation%20Build/badge.svg
+   :target: https://github.com/mdn/kuma/actions?query=workflow%3A%22Documentation+Build%22
+   :alt: Documentation Build
+
 .. image:: https://codecov.io/github/mdn/kuma/coverage.svg?branch=master
    :target: https://codecov.io/github/mdn/kuma?branch=master
    :alt: Code Coverage Status
