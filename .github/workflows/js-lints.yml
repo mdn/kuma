@@ -1,0 +1,34 @@
+name: JavaScript Lints
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: technote-space/get-diff-action@v3
+        id: git_diff_content
+        with:
+          SUFFIX_FILTER: |
+            .js
+            .jsx
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: "12"
+
+      - name: Lint with jslint
+        if: steps.git_diff_content.outputs.diff
+        run: ./scripts/ci-jslint
+
+      - name: Lint with flow
+        if: steps.git_diff_content.outputs.diff
+        run: ./scripts/ci-flow
