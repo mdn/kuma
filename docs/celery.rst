@@ -4,6 +4,8 @@ Celery and async tasks
 Kuma uses Celery_ to enable asynchronous task processing for long-running jobs
 and to speed up the request-response cycle.
 
+.. _Celery: http://celeryproject.org
+
 When is Celery appropriate
 ==========================
 You can use Celery to do any processing that doesn't need to happen in the
