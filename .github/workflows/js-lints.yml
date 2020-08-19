@@ -19,6 +19,7 @@ jobs:
           SUFFIX_FILTER: |
             .js
             .jsx
+            .scss
           PREFIX_FILTER: kuma
 
       - name: Setup Node.js environment
