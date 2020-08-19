@@ -16,16 +16,6 @@ jobs:
         - scripts/ci-jslint
         - scripts/ci-flow
 
-    - stage: "Test"
-      name: "Documentation Build"
-      language: python
-      python: 3.8
-      cache: pip
-      install:
-        - pip install -r docs/requirements.txt
-      script:
-        - sphinx-build -b html -d doctrees docs html
-
     - name: "Dockerized Tests"
       services: docker
       git: { submodules: true }
