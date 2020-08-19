@@ -43,6 +43,4 @@ jobs:
       - name: Build docs
         if: steps.git_diff_content.outputs.diff
         run: |
-          # peterbe debugging
-          ls -l
           sphinx-build -b html -d doctrees -W docs html
