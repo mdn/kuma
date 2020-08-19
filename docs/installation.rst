@@ -224,7 +224,7 @@ Update the Sites section
 
 
 Enable GitHub/Google authentication (optional)
-=======================================
+==============================================
 Since Google's OAuth requires us to use a valid top-level-domain, we're going to use
 http://localhost.org:8000 as an example for every URL here.
 
@@ -297,7 +297,7 @@ Django shell::
 
 
 Enable Stripe payments (optional)
-=======================================
+=================================
 #. Go to https://dashboard.stripe.com and create a Stripe account (if you don't have one already).
 #. Go to https://dashboard.stripe.com/apikeys and copy both the publishable and secret key
    into your ``.env`` file. The respective config keys are ``STRIPE_PUBLIC_KEY`` and

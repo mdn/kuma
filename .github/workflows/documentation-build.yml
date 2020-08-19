@@ -31,4 +31,4 @@ jobs:
           pip install --disable-pip-version-check -r docs/requirements.txt
 
       - name: Build docs
-        run: sphinx-build -b html -d doctrees docs html
+        run: sphinx-build -b html -d doctrees -W docs html
