@@ -12,17 +12,31 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - uses: technote-space/get-diff-action@v3
+        id: git_diff_content
+        with:
+          SUFFIX_FILTER: .py
+          PREFIX_FILTER: kuma
+
       - name: Set up Python 3.8
+        if: steps.git_diff_content.outputs.diff
         uses: actions/setup-python@v2
         with:
           python-version: "3.8"
+
       - name: Install dependencies
+        if: steps.git_diff_content.outputs.diff
         run: |
           python -m pip install --upgrade pip
           pip install --disable-pip-version-check black flake8 flake8-import-order
+
       - name: Lint with flake8
+        if: steps.git_diff_content.outputs.diff
         run: |
           flake8 kuma docs tests
+
       - name: Lint with black
+        if: steps.git_diff_content.outputs.diff
         run: |
           black --check --diff kuma docs tests
