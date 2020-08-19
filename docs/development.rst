@@ -44,7 +44,7 @@ Run the Django test suite::
 For more information, see the :doc:`test documentation <tests>`.
 
 Functional tests
----------------
+----------------
 To run the functional tests, see
 :doc:`Client-side Testing <tests-functional>`.
 

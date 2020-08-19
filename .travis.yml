@@ -8,18 +8,6 @@ jobs:
       script:
         - "! git grep -n '^<<<<<<< '"  # Check for Git conflict markers
 
-    - name: "Python Lints"
-      language: python
-      python: 3.8
-      cache: pip
-      install:
-        - >-
-          pip install --disable-pip-version-check
-          black flake8 flake8-import-order
-      script:
-        - flake8 kuma docs tests
-        - black --check --diff kuma docs tests
-
     - name: "JavaScript Lints"
       language: node_js
       node_js: 12
@@ -27,16 +15,6 @@ jobs:
       script:
         - scripts/ci-jslint
         - scripts/ci-flow
-
-    - stage: "Test"
-      name: "Documentation Build"
-      language: python
-      python: 3.8
-      cache: pip
-      install:
-        - pip install -r docs/requirements.txt
-      script:
-        - sphinx-build -b html -d doctrees docs html
 
     - name: "Dockerized Tests"
       services: docker
