@@ -41,7 +41,8 @@
         "test-ci": "JEST_JUNIT_OUTPUT_DIR='./test_results' JEST_JUNIT_OUTPUT_NAME='jest.xml' jest --ci --reporters=default --reporters=jest-junit",
         "format": "prettier --write **/*{.js,.jsx,.scss}",
         "pretty": "prettier --check **/*{.js,.jsx,.scss}",
-        "pretty-staged": "pretty-quick --staged"
+        "pretty-staged": "pretty-quick --staged",
+        "flow": "flow"
     },
     "dependencies": {
         "@babel/runtime": "^7.11.2",

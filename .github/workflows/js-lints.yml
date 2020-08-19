@@ -55,4 +55,4 @@ jobs:
       - name: Flow
         if: steps.git_diff_content.outputs.diff
         run: |
-          flow
+          yarn run flow
