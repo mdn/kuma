@@ -1,0 +1,33 @@
+name: Python Lints
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+
+      - uses: Gr1N/setup-poetry@v3
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+      - name: Run the linting
+        run: |
+          poetry --version
+          poetry run flake8 --version
+          poetry run black --version
