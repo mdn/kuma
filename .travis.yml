@@ -8,14 +8,6 @@ jobs:
       script:
         - "! git grep -n '^<<<<<<< '"  # Check for Git conflict markers
 
-    - name: "JavaScript Lints"
-      language: node_js
-      node_js: 12
-      cache: yarn
-      script:
-        - scripts/ci-jslint
-        - scripts/ci-flow
-
     - name: "Dockerized Tests"
       services: docker
       git: { submodules: true }

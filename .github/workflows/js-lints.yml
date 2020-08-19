@@ -19,16 +19,21 @@ jobs:
           SUFFIX_FILTER: |
             .js
             .jsx
+          PREFIX_FILTER: kuma
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v2-beta
         with:
           node-version: "12"
 
-      - name: Lint with jslint
+      - name: Linting
         if: steps.git_diff_content.outputs.diff
-        run: ./scripts/ci-jslint
+        run: |
+          yarn run eslint
+          yarn run stylelint
+          yarn run pretty
 
-      - name: Lint with flow
+      - name: Flow
         if: steps.git_diff_content.outputs.diff
-        run: ./scripts/ci-flow
+        run: |
+          flow
