@@ -12,13 +12,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+
+      - uses: technote-space/get-diff-action@v3
+        id: git_diff_content
+        with:
+          PREFIX_FILTER: docs/
 
       - name: Set up Python 3.8
+        if: steps.git_diff_content.outputs.diff
         uses: actions/setup-python@v2
         with:
           python-version: "3.8"
 
       - uses: actions/cache@v2
+        if: steps.git_diff_content.outputs.diff
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/docs/requirements.txt') }}
@@ -26,9 +35,14 @@ jobs:
             ${{ runner.os }}-pip-
 
       - name: Install dependencies
+        if: steps.git_diff_content.outputs.diff
         run: |
           python -m pip install --upgrade pip
           pip install --disable-pip-version-check -r docs/requirements.txt
 
       - name: Build docs
-        run: sphinx-build -b html -d doctrees -W docs html
+        if: steps.git_diff_content.outputs.diff
+        run: |
+          # peterbe debugging
+          ls -l
+          sphinx-build -b html -d doctrees -W docs html
