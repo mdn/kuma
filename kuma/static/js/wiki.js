@@ -2,7 +2,7 @@
     'use strict';
 
     /*
-        Togglers within articles (i.e.)
+        Togglers within articles
     */
     $('.toggleable').mozTogglers();
 

@@ -10,6 +10,10 @@ Kuma
    :target: https://github.com/mdn/kuma/actions?query=workflow%3A%22Python+Lints%22
    :alt: Python Lints
 
+.. image:: https://github.com/mdn/kuma/workflows/JavaScript%20Lints/badge.svg
+   :target: https://github.com/mdn/kuma/actions?query=workflow%3A%22JavaScript+Lints%22
+   :alt: JavaScript Lints
+
 .. image:: https://github.com/mdn/kuma/workflows/Documentation%20Build/badge.svg
    :target: https://github.com/mdn/kuma/actions?query=workflow%3A%22Documentation+Build%22
    :alt: Documentation Build
