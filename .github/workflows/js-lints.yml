@@ -1,4 +1,4 @@
-name: JavaScript Lints
+name: JavaScript and SASS Lints
 
 on:
   push:
