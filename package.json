@@ -69,7 +69,7 @@
         "babel-loader": "^8.0.5",
         "babel-plugin-emotion": "^10.0.7",
         "clean-css-cli": "4.2.1",
-        "eslint": "5.1.0",
+        "eslint": "6.8.0",
         "eslint-config-prettier": "^6.11.0",
         "eslint-plugin-flowtype": "^3.4.2",
         "eslint-plugin-import": "^2.22.0",
