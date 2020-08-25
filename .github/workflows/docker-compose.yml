@@ -15,7 +15,7 @@ jobs:
       - name: Uh?
         run: |
           docker-compose run web make localecompile
-	  docker-compose run web make build-static
-	  docker-compose run web ./manage.py migrate
-	  docker-compose run web ./manage.py makemigrations --check --dry-run
-	  docker-compose run web make test
+          docker-compose run web make build-static
+          docker-compose run web ./manage.py migrate
+          docker-compose run web ./manage.py makemigrations --check --dry-run
+          docker-compose run web make test
