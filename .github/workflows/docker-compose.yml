@@ -1,0 +1,21 @@
+name: Docker testing
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Uh?
+        run: |
+          docker-compose run web make localecompile
+	  docker-compose run web make build-static
+	  docker-compose run web ./manage.py migrate
+	  docker-compose run web ./manage.py makemigrations --check --dry-run
+	  docker-compose run web make test

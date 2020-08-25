@@ -7,21 +7,3 @@ jobs:
       name: "General Lints"
       script:
         - "! git grep -n '^<<<<<<< '"  # Check for Git conflict markers
-
-    - name: "Dockerized Tests"
-      services: docker
-      git: { submodules: true }
-      env:
-        UID=0
-        DOCKER_COMPOSE_VERSION=1.23.2
-      cache:
-        directories:
-          - downloads
-          - build
-          - static
-      script:
-        - set -e
-        - scripts/ci-python
-        - scripts/ci-jest
-        - scripts/ci-localerefresh
-        - scripts/ci-codecovsubmit
