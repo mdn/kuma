@@ -2836,10 +2836,10 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-clean-css-cli@4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/clean-css-cli/-/clean-css-cli-4.2.1.tgz#0a367077ad85cb4451148ac1f2edb4eb1992b4ed"
-  integrity sha512-ST2yi9F2kAmLRs9phSpGRUm44SbRy29QGm1OuAKfTU0KCLilFMTcz+/Fxhbdi5GrsjIMhTBdFUQhc55CjM3Isw==
+clean-css-cli@4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/clean-css-cli/-/clean-css-cli-4.3.0.tgz#8502aa86d1879e5b111af51b3c2abb799e0684ce"
+  integrity sha512-8GHZfr+mG3zB/Lgqrr27qHBFsPSn0fyEI3f2rIZpxPxUbn2J6A8xyyeBRVTW8duDuXigN0s80vsXiXJOEFIO5Q==
   dependencies:
     clean-css "^4.2.1"
     commander "2.x"
