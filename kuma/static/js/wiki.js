@@ -63,7 +63,7 @@
         Syntax highlighting scripts
     */
     if ($('#wikiArticle pre').length && ('querySelectorAll' in doc)) {
-        if (mdn.assets && mdn.assets.js.hasOwnProperty('syntax-prism')) {
+        if (mdn.assets && Object.prototype.hasOwnProperty.call(mdn.assets.js, 'syntax-prism')) {
             (function() {
                 mdn.assets.js['syntax-prism'].forEach(function(url, index, array) {
                     /*
