@@ -20,6 +20,7 @@ jobs:
           docker-compose --version
           echo "UID..."
           echo $UID
+          ls -l locale/ar/LC_MESSAGES
 
       - name: Compile locales
         run: docker-compose run testing make localecompile
