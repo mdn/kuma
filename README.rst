@@ -39,13 +39,10 @@ Development
 ===========
 
 :Code:          https://github.com/mdn/kuma
-:Issues:        `P1 Bugs`_ (to be fixed in current or next sprint_)
+:Issues:        `P1 Bugs`_ (to be fixed ASAP)
 
                 `P2 Bugs`_ (to be fixed in 180 days)
 
-                `All developer.mozilla.org bugs`_
-
-                `Pull Request Queues`_
 :Dev Docs:      https://kuma.readthedocs.io/en/latest/installation.html
 :Forum:         https://discourse.mozilla.org/c/mdn
 :Matrix:        `#mdn room`_
