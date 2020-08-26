@@ -20,10 +20,6 @@ jobs:
       - name: Environment info
         run: |
           docker-compose --version
-          echo "UID..."
-          echo $UID
-          whoami
-          ls -l locale/ar/LC_MESSAGES
 
       - name: Compile locales
         run: docker-compose run testing make localecompile
@@ -36,6 +32,7 @@ jobs:
           docker-compose run testing ./manage.py migrate
           docker-compose run testing ./manage.py makemigrations --check --dry-run
 
+          docker-compose ps
           # Slower...
           # docker-compose run testing make coveragetest
           # Faster...
