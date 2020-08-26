@@ -14,12 +14,21 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: 'recursive'
-      - name: Uh?
-        run: |
-          export UID=0
 
-          docker-compose run web make localecompile
-          docker-compose run web make build-static
+      - name: Compile locales
+        run: docker-compose run web make localecompile
+
+      - name: Build static
+        run: docker-compose run web make build-static
+
+      - name: Test stuff
+        run: |
+          docker-compose run web ./manage.py migrate
+          docker-compose run web ./manage.py makemigrations --check --dry-run
+
+          # Slower...
+          # docker-compose run web make coveragetest
+          # Faster...
           docker-compose run web ./manage.py migrate
           docker-compose run web ./manage.py makemigrations --check --dry-run
 
