@@ -79,6 +79,7 @@ services:
       - elasticsearch
       - redis
       - ssr
+      - kumascript
       - minio
       - minio_setup
       # Is this even needed?!
