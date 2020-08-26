@@ -83,7 +83,7 @@ services:
       - minio
       - minio_setup
       # Is this even needed?!
-      - mockga
+      # - mockga
     volumes:
       - ./:/app
 

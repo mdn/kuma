@@ -27,13 +27,26 @@ jobs:
       - name: Build static
         run: docker-compose run testing make build-static
 
-      - name: Test stuff
+      - name: DB migrations
         run: |
           docker-compose run testing ./manage.py migrate
+          # Essentially compares **/models.py with **/migrations/*.py and
+          # makes sure the developer didn't forget to create a new migration.
           docker-compose run testing ./manage.py makemigrations --check --dry-run
 
-          docker-compose ps
+
+      - name: Special hack
+        if: ${{ github.head_ref }}
+        run: |
+          echo "This is a pull request"
+          echo ${{ github.head_ref }}
+          echo "Workflow..."
+          echo ${{ github.workflow }}
+
+      - name: Run tests
+        run: |
+          # TODO: Run the `make coveragetest` only if it's a pull request
           # Slower...
-          # docker-compose run testing make coveragetest
+          docker-compose run testing make coveragetest
           # Faster...
-          docker-compose run testing pytest kuma/wiki/tests -x
+          #docker-compose run testing make test

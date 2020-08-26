@@ -1,9 +1,0 @@
-branches: master
-language: minimal
-git: { submodules: false }
-jobs:
-  include:
-    - stage: "Lint"
-      name: "General Lints"
-      script:
-        - "! git grep -n '^<<<<<<< '"  # Check for Git conflict markers

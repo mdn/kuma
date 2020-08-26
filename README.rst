@@ -2,9 +2,9 @@
 Kuma
 ====
 
-.. image:: https://travis-ci.com/mdn/kuma.svg?branch=master
-   :target: https://travis-ci.com/mdn/kuma
-   :alt: Build Status
+.. image:: https://github.com/mdn/kuma/workflows/Docker%20Testing/badge.svg
+   :target: https://github.com/mdn/kuma/actions?query=workflow%3A%22Docker+Testing%22
+   :alt: Python Lints
 
 .. image:: https://github.com/mdn/kuma/workflows/Python%20Lints/badge.svg
    :target: https://github.com/mdn/kuma/actions?query=workflow%3A%22Python+Lints%22
@@ -47,7 +47,6 @@ Development
 
                 `Pull Request Queues`_
 :Dev Docs:      https://kuma.readthedocs.io/en/latest/installation.html
-:CI Server:     https://travis-ci.com/mdn/kuma
 :Forum:         https://discourse.mozilla.org/c/mdn
 :Matrix:        `#mdn room`_
 :Servers:       `What's Deployed on MDN?`_
@@ -58,10 +57,7 @@ Development
 
 .. _`P1 Bugs`: https://github.com/mdn/kuma/issues?q=is%3Aopen+is%3Aissue+label%3Ap1
 .. _`P2 Bugs`: https://github.com/mdn/kuma/issues?q=is%3Aopen+is%3Aissue+label%3Ap2
-.. _`All developer.mozilla.org bugs`: https://mzl.la/2onLvZ8
-.. _`Pull Request Queues`: http://prs.mozilla.io/mdn:kuma,kumascript,infra,mdn-fiori
 .. _`What's Deployed on MDN?`: https://whatsdeployed.io/s/HC0/mdn/kuma
-.. _sprint: https://wiki.mozilla.org/Engagement/MDN_Durable_Team/Processes#Planning_Sprints
 .. _`#mdn room`: https://chat.mozilla.org/#/room/#mdn:mozilla.org
 
 
