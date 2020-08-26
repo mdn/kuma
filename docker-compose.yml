@@ -80,6 +80,8 @@ services:
       - redis
       - ssr
       - minio
+      - minio_setup
+      # Is this even needed?!
       - mockga
     volumes:
       - ./:/app
