@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      UID: 0
 
     steps:
       - uses: actions/checkout@v2
@@ -20,6 +22,7 @@ jobs:
           docker-compose --version
           echo "UID..."
           echo $UID
+          whoami
           ls -l locale/ar/LC_MESSAGES
 
       - name: Compile locales
