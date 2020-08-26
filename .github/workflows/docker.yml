@@ -15,24 +15,24 @@ jobs:
         with:
           submodules: 'recursive'
 
+      - name: Environment info
+        run: |
+          docker-compose -v
+          echo "UID..."
+          echo $UID
+
       - name: Compile locales
-        run: docker-compose run web make localecompile
+        run: docker-compose run testing make localecompile
 
       - name: Build static
-        run: docker-compose run web make build-static
+        run: docker-compose run testing make build-static
 
       - name: Test stuff
         run: |
-          docker-compose run web ./manage.py migrate
-          docker-compose run web ./manage.py makemigrations --check --dry-run
+          docker-compose run testing ./manage.py migrate
+          docker-compose run testing ./manage.py makemigrations --check --dry-run
 
           # Slower...
-          # docker-compose run web make coveragetest
+          # docker-compose run testing make coveragetest
           # Faster...
-          docker-compose run web ./manage.py migrate
-          docker-compose run web ./manage.py makemigrations --check --dry-run
-
-          # Slower...
-          # docker-compose run web make coveragetest
-          # Faster...
-          docker-compose run web make test
+          docker-compose run testing make test

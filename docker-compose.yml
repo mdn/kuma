@@ -70,6 +70,21 @@ services:
     ports:
       - "8000:8000"
 
+  # Used for ci testing
+  testing:
+    <<: *worker
+    command: bash
+    depends_on:
+      - mysql
+      - elasticsearch
+      - redis
+      - ssr
+      - minio
+      - mockga
+    volumes:
+      - /tmp:/app:z
+
+
   # ssr is a Node server that performs server-side rendering of our React UI
   ssr:
     <<: *worker
