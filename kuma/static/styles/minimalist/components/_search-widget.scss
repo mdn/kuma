@@ -64,6 +64,7 @@
         color: $text-color;
         border-width: 0;
         min-width: 60px;
+        background: transparent;
 
         &:focus,
         &:invalid {
