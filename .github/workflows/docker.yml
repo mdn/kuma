@@ -17,7 +17,7 @@ jobs:
 
       - name: Environment info
         run: |
-          docker-compose -v
+          docker-compose --version
           echo "UID..."
           echo $UID
 

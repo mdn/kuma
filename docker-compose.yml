@@ -82,7 +82,7 @@ services:
       - minio
       - mockga
     volumes:
-      - /tmp:/app:z
+      - ./:/app
 
 
   # ssr is a Node server that performs server-side rendering of our React UI
