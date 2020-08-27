@@ -21,6 +21,9 @@ jobs:
             .jsx
             .scss
           PREFIX_FILTER: kuma
+          FILES: |
+            package.json
+            yarn.lock
 
       - name: Setup Node.js environment
         if: steps.git_diff_content.outputs.diff
