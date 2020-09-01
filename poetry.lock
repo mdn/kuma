@@ -297,11 +297,11 @@ description = "A high-level Python Web framework that encourages rapid developme
 name = "django"
 optional = false
 python-versions = ">=3.5"
-version = "2.2.13"
+version = "2.2.16"
 
 [package.dependencies]
 pytz = "*"
-sqlparse = "*"
+sqlparse = ">=0.2.2"
 
 [package.extras]
 argon2 = ["argon2-cffi (>=16.1.0)"]
@@ -1521,7 +1521,7 @@ test = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 
 [metadata]
-content-hash = "80c6ca671a71390b4d2714e28b8b4718f66ec727e3196f025a274c90d219031a"
+content-hash = "b7d48f336c3e3a50424974e1b473c183201713e7baeaf3287bc9c24ba10ea99f"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1677,8 +1677,8 @@ dj-email-url = [
     {file = "dj_email_url-1.0.0-py2.py3-none-any.whl", hash = "sha256:19a0450378831e2707e00404866e632837efc67dcc2e7e7a98f72df94b89c1f6"},
 ]
 django = [
-    {file = "Django-2.2.13-py3-none-any.whl", hash = "sha256:e8fe3c2b2212dce6126becab7a693157f1a441a07b62ec994c046c76af5bb66d"},
-    {file = "Django-2.2.13.tar.gz", hash = "sha256:84f370f6acedbe1f3c41e1a02de44ac206efda3355e427139ecb785b5f596d80"},
+    {file = "Django-2.2.16-py3-none-any.whl", hash = "sha256:83ced795a0f239f41d8ecabf51cc5fad4b97462a6008dc12e5af3cb9288724ec"},
+    {file = "Django-2.2.16.tar.gz", hash = "sha256:62cf45e5ee425c52e411c0742e641a6588b7e8af0d2c274a27940931b2786594"},
 ]
 django-allauth = [
     {file = "django-allauth-0.41.0.tar.gz", hash = "sha256:7ab91485b80d231da191d5c7999ba93170ef1bf14ab6487d886598a1ad03e1d8"},
@@ -2149,6 +2149,7 @@ regex = [
     {file = "regex-2020.2.20.tar.gz", hash = "sha256:9e9624440d754733eddbcd4614378c18713d2d9d0dc647cf9c72f64e39671be5"},
 ]
 requests = [
+    {file = "requests-2.23.0-py2.7.egg", hash = "sha256:5d2d0ffbb515f39417009a46c14256291061ac01ba8f875b90cad137de83beb4"},
     {file = "requests-2.23.0-py2.py3-none-any.whl", hash = "sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee"},
     {file = "requests-2.23.0.tar.gz", hash = "sha256:b3f43d496c6daba4493e7c431722aeb7dbc6288f52a6e04e7b6023b0247817e6"},
 ]
