@@ -21,6 +21,9 @@ jobs:
         run: |
           docker-compose --version
 
+      - name: Build docker
+        run: docker-compose build
+
       - name: Compile locales
         run: docker-compose run testing make localecompile
 
