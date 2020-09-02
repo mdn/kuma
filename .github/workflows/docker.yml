@@ -34,7 +34,7 @@ jobs:
           # makes sure the developer didn't forget to create a new migration.
           docker-compose run testing ./manage.py makemigrations --check --dry-run
 
-      - name: Run tests
+      - name: Run Python tests
         run: |
           # TODO: Run the `make coveragetest` only if it's a pull request.
           # We might be able to use something
@@ -43,3 +43,24 @@ jobs:
           docker-compose run testing make coveragetest
           # Faster...
           #docker-compose run testing make test
+
+      - name: Submit code coverage
+        run: |
+          curl --version
+          # FYI, as of April 2020, you get version 7.47.0 of curl
+          # and `--retry-connrefused` was added in curl 7.52.0 :(
+          bash <(curl -s --retry 3 https://codecov.io/bash)
+
+      - name: Run JavaScript tests
+        run: |
+          docker-compose run testing make yarn test-ci
+
+      - name: Run localerefresh
+        run: |
+          docker-compose run testing make localeextract
+          docker-compose run testing make localetest
+          docker-compose run testing make localecompile
+
+          cd locale
+          export GIT_PAGER=cat
+          git diff -G "^msgid " templates/LC_MESSAGES
