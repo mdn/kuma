@@ -21,6 +21,10 @@ jobs:
         run: |
           docker-compose --version
 
+      - uses: whoan/docker-build-with-cache-action@v5
+        with:
+          image_name: kuma
+
       - name: Build docker
         run: docker-compose build
 
