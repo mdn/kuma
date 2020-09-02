@@ -21,9 +21,9 @@ jobs:
         run: |
           docker-compose --version
 
-      - uses: whoan/docker-build-with-cache-action@v5
-        with:
-          image_name: kuma
+      - uses: satackey/action-docker-layer-caching@master
+        # Ignore the failure of a step and avoid terminating the job.
+        continue-on-error: true
 
       - name: Build docker
         run: docker-compose build
