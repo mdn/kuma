@@ -21,6 +21,9 @@ jobs:
         run: |
           docker-compose --version
 
+      # Use this solution until the official actions/cache
+      # gets a more "native solution".
+      # See https://github.com/actions/cache/issues/31
       - uses: satackey/action-docker-layer-caching@v0.0.8
         # Ignore the failure of a step and avoid terminating the job.
         continue-on-error: true
