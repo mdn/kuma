@@ -53,7 +53,7 @@ jobs:
 
       - name: Run JavaScript tests
         run: |
-          docker-compose run testing make yarn test-ci
+          docker-compose run testing yarn test-ci
 
       - name: Run localerefresh
         run: |
