@@ -24,6 +24,7 @@ jobs:
       - uses: whoan/docker-build-with-cache-action@v5
         with:
           dockerfile: docker/images/kuma_base/Dockerfile
+          push_image_and_stages: false
           username: peterbe
           password: "${{ secrets.GITHUB_TOKEN }}"
           registry: docker.pkg.github.com
