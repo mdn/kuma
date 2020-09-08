@@ -45,7 +45,7 @@ RUN set -x \
 RUN groupadd --gid 1001 node \
   && useradd --uid 1001 --gid node --shell /bin/bash --create-home node
 
-ENV NODE_VERSION 12.18.2
+ENV NODE_VERSION 12.18.3
 
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
