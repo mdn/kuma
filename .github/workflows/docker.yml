@@ -2,9 +2,11 @@ name: Docker testing
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
   pull_request:
-    branches: [master]
+    branches:
+      - master
 
 jobs:
   build:
@@ -24,8 +26,8 @@ jobs:
       - uses: whoan/docker-build-with-cache-action@v5
         with:
           dockerfile: docker/images/kuma_base/Dockerfile
-          # We'll only want to do this if it's a master build. XXX How do you do that?
-          # push_image_and_stages: false
+          # Only bother to push the cached layers if this is a push rather than PR.
+          push_image_and_stages: on:push
           username: peterbe
           password: "${{ secrets.GITHUB_TOKEN }}"
           # XXX Apparently, ghcr.io is the new name. Does that work better?
