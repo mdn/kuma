@@ -24,10 +24,13 @@ jobs:
       - uses: whoan/docker-build-with-cache-action@v5
         with:
           dockerfile: docker/images/kuma_base/Dockerfile
+          # We'll only want to do this if it's a master build. XXX How do you do that?
           # push_image_and_stages: false
           username: peterbe
           password: "${{ secrets.GITHUB_TOKEN }}"
+          # XXX Apparently, ghcr.io is the new name. Does that work better?
           registry: docker.pkg.github.com
+          # XXX Should this be mdnwebdocs/kuma???
           image_name: kuma
 
       - name: Build docker
