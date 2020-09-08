@@ -35,11 +35,12 @@ jobs:
           password: "${{ secrets.GITHUB_TOKEN }}"
           # XXX Apparently, ghcr.io is the new name. Does that work better?
           registry: docker.pkg.github.com
-          # XXX Should this be mdnwebdocs/kuma???
+          # XXX Should this be kuma_base???
           image_name: kuma
 
       - name: Docker pull
-        run: docker pull docker.pkg.github.com/mdn/kuma/kuma:latest
+        # run: docker pull docker.pkg.github.com/mdn/kuma/kuma:latest
+        run: docker pull ghcr.io/mdn/kuma/kuma:latest
 
       - name: Build docker
         run: docker-compose build
