@@ -30,7 +30,7 @@ jobs:
           # XXX(peterbe) Temporarily commented out whilst trying to get it to push
           # at least once.
           # push_image_and_stages: on:push
-          # Not sure if this is right? Who is a better user to use?
+          push_image_and_stages: true
           username: peterbe
           password: "${{ secrets.GITHUB_TOKEN }}"
           # XXX Apparently, ghcr.io is the new name. Does that work better?
