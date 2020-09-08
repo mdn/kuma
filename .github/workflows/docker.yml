@@ -38,6 +38,9 @@ jobs:
           # XXX Should this be mdnwebdocs/kuma???
           image_name: kuma
 
+      - name: Docker pull
+        run: docker pull docker.pkg.github.com/mdn/kuma/kuma:latest
+
       - name: Build docker
         run: docker-compose build
 
