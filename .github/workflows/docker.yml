@@ -27,7 +27,9 @@ jobs:
         with:
           dockerfile: docker/images/kuma_base/Dockerfile
           # Only bother to push the cached layers if this is a push rather than PR.
-          push_image_and_stages: on:push
+          # XXX(peterbe) Temporarily commented out whilst trying to get it to push
+          # at least once.
+          # push_image_and_stages: on:push
           username: peterbe
           password: "${{ secrets.GITHUB_TOKEN }}"
           # XXX Apparently, ghcr.io is the new name. Does that work better?
