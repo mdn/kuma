@@ -26,7 +26,7 @@ jobs:
           dockerfile: docker/images/kuma_base/Dockerfile
           # We'll only want to do this if it's a master build. XXX How do you do that?
           # push_image_and_stages: false
-          username: mdn
+          username: peterbe
           password: "${{ secrets.GITHUB_TOKEN }}"
           # XXX Apparently, ghcr.io is the new name. Does that work better?
           registry: docker.pkg.github.com
