@@ -25,7 +25,7 @@ jobs:
         with:
           dockerfile: docker/images/kuma_base/Dockerfile
           # push_image_and_stages: false
-          # username: peterbe
+          username: peterbe
           password: "${{ secrets.GITHUB_TOKEN }}"
           registry: docker.pkg.github.com
           image_name: kuma
