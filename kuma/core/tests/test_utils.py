@@ -54,8 +54,6 @@ def test_safer_pyquery(mock_requests):
     parsed = safer_pyquery("https://www.peterbe.com")
     assert parsed.outer_html() == "<p>https://www.peterbe.com</p>"
 
-    # Note! Since this file uses `__future__.unicode_literals` the only
-    # way to produce a byte string is to use force_bytes.
     # Byte strings in should continue to work.
     parsed = safer_pyquery(force_bytes("https://www.peterbe.com"))
     assert parsed.outer_html() == "<p>https://www.peterbe.com</p>"
