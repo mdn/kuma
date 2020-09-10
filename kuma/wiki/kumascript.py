@@ -20,14 +20,14 @@ from .search import WikiDocumentType
 
 def should_use_rendered(doc, params, html=None):
     """
-      * The service isn't disabled with a timeout of 0
-      * The document isn't empty
-      * The request has *not* asked for raw source
-        (eg. ?raw)
-      * The request has *not* asked for no macro evaluation
-        (eg. ?nomacros)
-      * The request *has* asked for macro evaluation
-        (eg. ?raw&macros)
+    * The service isn't disabled with a timeout of 0
+    * The document isn't empty
+    * The request has *not* asked for raw source
+      (eg. ?raw)
+    * The request has *not* asked for no macro evaluation
+      (eg. ?nomacros)
+    * The request *has* asked for macro evaluation
+      (eg. ?raw&macros)
     """
     show_raw = params.get("raw", False) is not False
     no_macros = params.get("nomacros", False) is not False

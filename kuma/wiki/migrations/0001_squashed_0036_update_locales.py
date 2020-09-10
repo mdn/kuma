@@ -752,7 +752,8 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.AlterUniqueTogether(
-            name="document", unique_together={("parent", "locale"), ("slug", "locale")},
+            name="document",
+            unique_together={("parent", "locale"), ("slug", "locale")},
         ),
         migrations.AlterField(
             model_name="document",

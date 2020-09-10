@@ -140,7 +140,10 @@ def test_EmailMultiAlternativesRetrying(settings):
     settings.EMAIL_BACKEND = "kuma.core.tests.test_utils.SMTPFlakyEmailBackend"
 
     email = EmailMultiAlternativesRetrying(
-        "Multi Subject", "Content", "from@example.com", ["to@example.com"],
+        "Multi Subject",
+        "Content",
+        "from@example.com",
+        ["to@example.com"],
     )
     email.attach_alternative("<p>Content</p>", "text/html")
     email.send(

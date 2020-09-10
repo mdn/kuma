@@ -129,7 +129,9 @@ class AttachmentRevision(models.Model):
     )
 
     file = models.FileField(
-        storage=storage, upload_to=attachment_upload_to, max_length=500,
+        storage=storage,
+        upload_to=attachment_upload_to,
+        max_length=500,
     )
 
     title = models.CharField(max_length=255, null=True, db_index=True)
@@ -238,7 +240,8 @@ class AttachmentRevision(models.Model):
     def get_previous(self):
         return (
             self.attachment.revisions.filter(
-                is_approved=True, created__lt=self.created,
+                is_approved=True,
+                created__lt=self.created,
             )
             .order_by("-created")
             .first()
