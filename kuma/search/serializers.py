@@ -63,7 +63,9 @@ class DocumentSerializer(BaseDocumentSerializer):
     excerpt = serializers.ReadOnlyField(source="get_excerpt")
     tags = serializers.ListField(read_only=True)
     score = serializers.FloatField(
-        read_only=True, source="meta.score", allow_null=True,
+        read_only=True,
+        source="meta.score",
+        allow_null=True,
     )
     parent = BaseDocumentSerializer(read_only=True, allow_null=True)
 

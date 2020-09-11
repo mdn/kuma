@@ -12,6 +12,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="revision", name="comment", field=models.TextField(),
+            model_name="revision",
+            name="comment",
+            field=models.TextField(),
         ),
     ]

@@ -682,10 +682,10 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert response.status_code == 404
 
     def test_retitling_solo_doc(self):
-        """ Editing just title of non-parent doc:
-            * Changes title
-            * Doesn't cause errors
-            * Doesn't create redirect
+        """Editing just title of non-parent doc:
+        * Changes title
+        * Doesn't cause errors
+        * Doesn't create redirect
         """
         # Not testing slug changes separately; the model tests cover those plus
         # slug+title changes. If title changes work in the view, the rest
@@ -709,10 +709,10 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert not Document.objects.filter(title=old_title).exists()
 
     def test_retitling_parent_doc(self):
-        """ Editing just title of parent doc:
-            * Changes title
-            * Doesn't cause errors
-            * Doesn't create redirect
+        """Editing just title of parent doc:
+        * Changes title
+        * Doesn't cause errors
+        * Doesn't create redirect
         """
         # Not testing slug changes separately; the model tests cover those plus
         # slug+title changes. If title changes work in the view, the rest
@@ -1313,12 +1313,24 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         )
         assert doc_entry.encode() in response.content
         response = self.client.get(
-            reverse("wiki.feeds.list_review_tag", args=("atom", "technical",)),
+            reverse(
+                "wiki.feeds.list_review_tag",
+                args=(
+                    "atom",
+                    "technical",
+                ),
+            ),
             HTTP_HOST=settings.WIKI_HOST,
         )
         assert doc_entry.encode() in response.content
         response = self.client.get(
-            reverse("wiki.feeds.list_review_tag", args=("atom", "editorial",)),
+            reverse(
+                "wiki.feeds.list_review_tag",
+                args=(
+                    "atom",
+                    "editorial",
+                ),
+            ),
             HTTP_HOST=settings.WIKI_HOST,
         )
         assert doc_entry.encode() in response.content
@@ -1370,12 +1382,24 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         )
         assert doc_entry in response.content.decode()
         response = self.client.get(
-            reverse("wiki.feeds.list_review_tag", args=("atom", "technical",)),
+            reverse(
+                "wiki.feeds.list_review_tag",
+                args=(
+                    "atom",
+                    "technical",
+                ),
+            ),
             HTTP_HOST=settings.WIKI_HOST,
         )
         assert doc_entry not in response.content.decode()
         response = self.client.get(
-            reverse("wiki.feeds.list_review_tag", args=("atom", "editorial",)),
+            reverse(
+                "wiki.feeds.list_review_tag",
+                args=(
+                    "atom",
+                    "editorial",
+                ),
+            ),
             HTTP_HOST=settings.WIKI_HOST,
         )
         assert doc_entry in response.content.decode()
@@ -1829,7 +1853,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
     def test_discard_location(self):
         """Testing that the 'discard' HREF goes to the correct place when it's
-           explicitely and implicitely set"""
+        explicitely and implicitely set"""
 
         self.client.login(username="admin", password="testpass")
 
@@ -2785,7 +2809,7 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
 
     def test_document_urls(self):
         """Check the url redirect to proper document when the url like
-         /<locale>/<document_slug>"""
+        /<locale>/<document_slug>"""
         d = document(locale="zh-CN")
         d.save()
         mt_url = "/{locale}/{slug}".format(locale=d.locale, slug=d.slug)

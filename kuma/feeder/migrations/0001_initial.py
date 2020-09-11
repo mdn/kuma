@@ -111,7 +111,8 @@ class Migration(migrations.Migration):
             preserve_default=True,
         ),
         migrations.AlterUniqueTogether(
-            name="entry", unique_together={("feed", "guid")},
+            name="entry",
+            unique_together={("feed", "guid")},
         ),
         migrations.AddField(
             model_name="bundle",
