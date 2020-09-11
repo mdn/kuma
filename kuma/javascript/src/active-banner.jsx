@@ -254,11 +254,13 @@ function SubscriptionBanner() {
 export default function ActiveBanner() {
     const userData = useContext(UserProvider.context);
 
-    if (!userData || !userData.waffle.flags) {
+    if (!userData || !userData.waffle.flags || !userData.waffle.switches) {
         return null;
     }
 
-    const isEnabled = (id) => userData.waffle.flags[id] && !isEmbargoed(id);
+    const isEnabled = (id) =>
+        (userData.waffle.flags[id] || userData.waffle.switches[id]) &&
+        !isEmbargoed(id);
 
     // The order of the if statements is important and it's our source of
     // truth about which banner is "more important" than the other.
