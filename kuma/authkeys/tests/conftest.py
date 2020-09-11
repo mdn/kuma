@@ -19,4 +19,8 @@ def user_auth_key():
     secret = key.generate_secret()
     key.save()
 
-    return Object(user=u, key=key, secret=secret,)
+    return Object(
+        user=u,
+        key=key,
+        secret=secret,
+    )

@@ -7,7 +7,11 @@ from ..templatetags.jinja_helpers import get_avatar_url, is_username_taken, publ
 
 @pytest.mark.parametrize(
     "providers",
-    (("persona",), ("persona", "github", "google"), ("persona", "google", "github"),),
+    (
+        ("persona",),
+        ("persona", "github", "google"),
+        ("persona", "google", "github"),
+    ),
     ids=("default", "github", "google"),
 )
 def test_get_avatar_url(wiki_user, providers):

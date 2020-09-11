@@ -12,6 +12,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterModelOptions(
-            name="filter", options={"base_manager_name": "objects"},
+            name="filter",
+            options={"base_manager_name": "objects"},
         ),
     ]

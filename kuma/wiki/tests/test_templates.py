@@ -702,8 +702,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         self.client.login(username=self.username, password="testpass")
 
     def test_new_revision_GET_logged_out(self):
-        """Creating a revision without being logged in redirects to login page.
-        """
+        """Creating a revision without being logged in redirects to login page."""
         self.client.logout()
         response = self.client.get(
             reverse("wiki.edit", args=[self.d.slug]), HTTP_HOST=settings.WIKI_HOST

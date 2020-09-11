@@ -354,9 +354,8 @@ def move_page(locale, slug, new_slug, user_id):
             settings.SITE_URL + doc.parent.get_absolute_url()
         ] + other_locale_urls
 
-    message = (
-        textwrap.dedent(
-            """
+    message = textwrap.dedent(
+        """
         Page move completed.
 
         The move requested for the document with slug %(slug)s in locale
@@ -367,14 +366,12 @@ def move_page(locale, slug, new_slug, user_id):
 
         You can now view this document at its new location: %(full_url)s.
     """
-        )
-        % {
-            "slug": slug,
-            "locale": locale,
-            "full_url": full_url,
-            "locale_urls": "\n".join(other_locale_urls),
-        }
-    )
+    ) % {
+        "slug": slug,
+        "locale": locale,
+        "full_url": full_url,
+        "locale_urls": "\n".join(other_locale_urls),
+    }
 
     send_mail_retrying(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
 
@@ -425,9 +422,10 @@ def build_locale_sitemap(locale):
     # but it has a list of `.only()` columns which isn't right,
     # it has a list of hardcoded slug prefixes, and it forces an order by
     # on 'slug' which is slow and not needed in this context.
-    queryset = Document.objects.filter(locale=locale, is_redirect=False,).exclude(
-        html=""
-    )
+    queryset = Document.objects.filter(
+        locale=locale,
+        is_redirect=False,
+    ).exclude(html="")
     # Be explicit about exactly only the columns we need.
     queryset = queryset.only("id", "locale", "slug", "modified")
 
@@ -438,7 +436,9 @@ def build_locale_sitemap(locale):
     # Some of those evaluations are complex and depend on the request.
     # That's too complex here but we can at least do some low-hanging
     # fruit filtering.
-    queryset = queryset.exclude(current_revision__isnull=True,)
+    queryset = queryset.exclude(
+        current_revision__isnull=True,
+    )
     q = Q(slug__startswith=EXPERIMENT_TITLE_PREFIX)
     for legacy_mindtouch_namespace in LEGACY_MINDTOUCH_NAMESPACES:
         q |= Q(slug__startswith="{}:".format(legacy_mindtouch_namespace))

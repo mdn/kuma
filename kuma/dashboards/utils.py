@@ -23,8 +23,7 @@ SPAM_PERIODS = (
 
 
 def date_range(start, end):
-    """ Return an iterator providing the dates between `start` and `end`, inclusive.
-    """
+    """Return an iterator providing the dates between `start` and `end`, inclusive."""
     if getattr(start, "date", None) is not None:
         start = start.date()
     if getattr(end, "date", None) is not None:

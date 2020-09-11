@@ -94,7 +94,11 @@ def edit_attachment(request, document_slug, document_locale):
 
     Redirects back to the document's editing URL on success.
     """
-    document = get_object_or_404(Document, locale=document_locale, slug=document_slug,)
+    document = get_object_or_404(
+        Document,
+        locale=document_locale,
+        slug=document_slug,
+    )
     if request.method != "POST":
         return redirect(document.get_edit_url())
 

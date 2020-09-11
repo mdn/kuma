@@ -221,7 +221,12 @@ def test_document_parents(root_doc):
 
 
 @pytest.mark.parametrize(
-    "url", (settings.SITE_URL + "/en-US/Mozilla", "/en-US/Mozilla", "/",)
+    "url",
+    (
+        settings.SITE_URL + "/en-US/Mozilla",
+        "/en-US/Mozilla",
+        "/",
+    ),
 )
 def test_document_redirect_allows_valid_url(db, url):
     """get_redirect_url returns valid URLs."""
@@ -234,7 +239,13 @@ def test_document_redirect_allows_valid_url(db, url):
     assert doc.get_redirect_url() == parsed.path
 
 
-@pytest.mark.parametrize("url", ("//evilsite.com", "https://example.com/foriegn_url",))
+@pytest.mark.parametrize(
+    "url",
+    (
+        "//evilsite.com",
+        "https://example.com/foriegn_url",
+    ),
+)
 def test_document_redirect_rejects_invalid_url(db, url):
     """get_redirect_url returns None for invalid URLs."""
     html = REDIRECT_CONTENT % {"href": url, "title": "Invalid URL"}
@@ -1692,7 +1703,8 @@ class RevisionIPTests(UserTestCase):
 class AttachmentTests(UserTestCase):
     def new_attachment(self, mindtouch_attachment_id=666):
         attachment = Attachment(
-            title="test attachment", mindtouch_attachment_id=mindtouch_attachment_id,
+            title="test attachment",
+            mindtouch_attachment_id=mindtouch_attachment_id,
         )
         attachment.save()
         attachment_revision = AttachmentRevision(
