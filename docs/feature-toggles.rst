@@ -39,7 +39,6 @@ other advanced criteria.
 
 * ``contrib_beta`` - Enable/disable the contributions popup and pages
 * ``kumaediting`` - Enable/disable wiki editing.
-* ``developer_needs`` - Enable/disable the MDN developer needs survey banner
 * ``page_move`` - (deprecated) enable/disable page move feature.
 * ``section_edit`` - Show section edit buttons.
 * ``sg_task_completion`` - Enable the Survey Gizmo pop-up.
