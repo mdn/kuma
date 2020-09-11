@@ -271,7 +271,13 @@ document_nav_links.short_description = "Hierarchy"
 
 def revision_links(obj):
     """Combine the revision nav links"""
-    return combine_funcs(obj, (current_revision_link, related_revisions_link,),)
+    return combine_funcs(
+        obj,
+        (
+            current_revision_link,
+            related_revisions_link,
+        ),
+    )
 
 
 revision_links.short_description = "Revisions"

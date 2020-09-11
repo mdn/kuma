@@ -1313,12 +1313,24 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         )
         assert doc_entry.encode() in response.content
         response = self.client.get(
-            reverse("wiki.feeds.list_review_tag", args=("atom", "technical",),),
+            reverse(
+                "wiki.feeds.list_review_tag",
+                args=(
+                    "atom",
+                    "technical",
+                ),
+            ),
             HTTP_HOST=settings.WIKI_HOST,
         )
         assert doc_entry.encode() in response.content
         response = self.client.get(
-            reverse("wiki.feeds.list_review_tag", args=("atom", "editorial",),),
+            reverse(
+                "wiki.feeds.list_review_tag",
+                args=(
+                    "atom",
+                    "editorial",
+                ),
+            ),
             HTTP_HOST=settings.WIKI_HOST,
         )
         assert doc_entry.encode() in response.content
@@ -1370,12 +1382,24 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         )
         assert doc_entry in response.content.decode()
         response = self.client.get(
-            reverse("wiki.feeds.list_review_tag", args=("atom", "technical",),),
+            reverse(
+                "wiki.feeds.list_review_tag",
+                args=(
+                    "atom",
+                    "technical",
+                ),
+            ),
             HTTP_HOST=settings.WIKI_HOST,
         )
         assert doc_entry not in response.content.decode()
         response = self.client.get(
-            reverse("wiki.feeds.list_review_tag", args=("atom", "editorial",),),
+            reverse(
+                "wiki.feeds.list_review_tag",
+                args=(
+                    "atom",
+                    "editorial",
+                ),
+            ),
             HTTP_HOST=settings.WIKI_HOST,
         )
         assert doc_entry in response.content.decode()

@@ -1417,7 +1417,10 @@ CONSTANCE_CONFIG = dict(
         "kumascript. Passed along in a Cache-Control: max-age={value} header, "
         "which tells kumascript whether or not to serve up a cached response.",
     ),
-    DIFF_CONTEXT_LINES=(0, "Number of lines of context to show in diff display.",),
+    DIFF_CONTEXT_LINES=(
+        0,
+        "Number of lines of context to show in diff display.",
+    ),
     FEED_DIFF_CONTEXT_LINES=(
         3,
         "Number of lines of context to show in feed diff display.",
@@ -1574,7 +1577,8 @@ SESSION_CLEANUP_CHUNK_SIZE = config(
 
 # Email address from which welcome emails will be sent
 WELCOME_EMAIL_FROM = config(
-    "WELCOME_EMAIL_FROM", default="MDN team <mdn-admins@mozilla.org>",
+    "WELCOME_EMAIL_FROM",
+    default="MDN team <mdn-admins@mozilla.org>",
 )
 # If this fails, SMTP will probably also fail.
 # E.g. https://github.com/mdn/kuma/issues/7121

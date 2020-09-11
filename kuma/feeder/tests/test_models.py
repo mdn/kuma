@@ -29,7 +29,9 @@ def entries(feed):
     for day in range(10, 0, -1):
         entries.append(
             Entry.objects.create(
-                feed=feed, guid=uuid4(), last_published=now - timedelta(days=day),
+                feed=feed,
+                guid=uuid4(),
+                last_published=now - timedelta(days=day),
             )
         )
     return entries

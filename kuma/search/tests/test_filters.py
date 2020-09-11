@@ -254,7 +254,12 @@ def test_search_query_backend_as_admin(rf, mock_search, admin_user):
 
 
 @pytest.mark.parametrize(
-    "param", ("kumascript_macros", "css_classnames", "html_attributes",),
+    "param",
+    (
+        "kumascript_macros",
+        "css_classnames",
+        "html_attributes",
+    ),
 )
 def test_keyword_query(rf, mock_search, param):
     """The KeywordQueryBackend searches keywords."""
@@ -270,7 +275,12 @@ def test_keyword_query(rf, mock_search, param):
 
 
 @pytest.mark.parametrize(
-    "param", ("kumascript_macros", "css_classnames", "html_attributes",),
+    "param",
+    (
+        "kumascript_macros",
+        "css_classnames",
+        "html_attributes",
+    ),
 )
 def test_keyword_query_wildcard(rf, mock_search, param):
     """The KeywordQueryBackend can add wildcard searches."""

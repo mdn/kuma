@@ -1089,7 +1089,13 @@ def test_clean_content_allows_simple_tag(tag):
 
 
 @pytest.mark.parametrize(
-    "tag", ("br", "command", "img", "input",),
+    "tag",
+    (
+        "br",
+        "command",
+        "img",
+        "input",
+    ),
 )
 def test_clean_content_allows_self_closed_tags(tag):
     """clean_content allows self-closed tags."""

@@ -55,7 +55,10 @@ def redirect_to_wiki(request, permanent=True):
 
 
 def is_untrusted(request):
-    return request.get_host() in (settings.ATTACHMENT_ORIGIN, settings.ATTACHMENT_HOST,)
+    return request.get_host() in (
+        settings.ATTACHMENT_ORIGIN,
+        settings.ATTACHMENT_HOST,
+    )
 
 
 def paginate(request, queryset, per_page=20):
@@ -467,7 +470,9 @@ def order_params(original_url):
 
 
 def requests_retry_session(
-    retries=3, backoff_factor=0.3, status_forcelist=(500, 502, 504),
+    retries=3,
+    backoff_factor=0.3,
+    status_forcelist=(500, 502, 504),
 ):
     """Opinionated wrapper that creates a requests session with a
     HTTPAdapter that sets up a Retry policy that includes connection
@@ -565,7 +570,9 @@ def send_mail_retrying(
     own custom 'retrying' keyword argument.
     """
     connection = connection or get_connection(
-        username=auth_user, password=auth_password, fail_silently=fail_silently,
+        username=auth_user,
+        password=auth_password,
+        fail_silently=fail_silently,
     )
     mail = EmailMultiAlternativesRetrying(
         subject, message, from_email, recipient_list, connection=connection
