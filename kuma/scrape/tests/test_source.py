@@ -35,12 +35,7 @@ def test_init_param():
 
 @pytest.mark.parametrize(
     "option,value",
-    (
-        ("pressed", True),
-        ("length", 1),
-        ("unbounded", "all"),
-        ("flavor", "curry"),
-    ),
+    (("pressed", True), ("length", 1), ("unbounded", "all"), ("flavor", "curry"),),
     ids=("bool", "int", "int_all", "text"),
 )
 def test_init_options(option, value):
@@ -66,11 +61,7 @@ def test_merge_none():
 
 @pytest.mark.parametrize(
     "option,lesser_value,greater_value",
-    (
-        ("pressed", False, True),
-        ("length", 1, 2),
-        ("unbounded", 2, 3),
-    ),
+    (("pressed", False, True), ("length", 1, 2), ("unbounded", 2, 3),),
     ids=("bool", "int", "int_all"),
 )
 def test_merge_less(option, lesser_value, greater_value):
@@ -84,12 +75,7 @@ def test_merge_less(option, lesser_value, greater_value):
 
 @pytest.mark.parametrize(
     "option,value",
-    (
-        ("pressed", True),
-        ("length", 2),
-        ("unbounded", 1),
-        ("flavor", "country"),
-    ),
+    (("pressed", True), ("length", 2), ("unbounded", 1), ("flavor", "country"),),
     ids=("bool", "int", "int_all", "text"),
 )
 def test_merge_same(option, value):
@@ -103,11 +89,7 @@ def test_merge_same(option, value):
 
 @pytest.mark.parametrize(
     "option,lesser_value,greater_value",
-    (
-        ("pressed", False, True),
-        ("length", 1, 2),
-        ("unbounded", 2, 3),
-    ),
+    (("pressed", False, True), ("length", 1, 2), ("unbounded", 2, 3),),
     ids=("bool", "int", "int_all"),
 )
 def test_merge_upgrade(option, lesser_value, greater_value):
@@ -152,12 +134,7 @@ def test_current_options_default():
 
 @pytest.mark.parametrize(
     "option,value",
-    (
-        ("pressed", True),
-        ("length", 1),
-        ("unbounded", "all"),
-        ("flavor", "curry"),
-    ),
+    (("pressed", True), ("length", 1), ("unbounded", "all"), ("flavor", "curry"),),
     ids=("bool", "int", "int_all", "text"),
 )
 def test_current_options_nondefault(option, value):

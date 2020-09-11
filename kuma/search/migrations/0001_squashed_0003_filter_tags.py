@@ -168,8 +168,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.AlterUniqueTogether(
-            name="filtergroup",
-            unique_together={("name", "slug")},
+            name="filtergroup", unique_together={("name", "slug")},
         ),
         migrations.AddField(
             model_name="filter",
@@ -192,8 +191,7 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.AlterUniqueTogether(
-            name="filter",
-            unique_together={("name", "slug")},
+            name="filter", unique_together={("name", "slug")},
         ),
         migrations.AddField(
             model_name="filter",

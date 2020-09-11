@@ -1541,10 +1541,7 @@ class KumaGoogleTests(UserTestCase, SocialTestMixin):
         """
         create_user(username="octocat", save=True)
         self.google_login(
-            profile_data=dict(
-                self.google_profile_data,
-                email="octocat@gmail.com",
-            )
+            profile_data=dict(self.google_profile_data, email="octocat@gmail.com",)
         )
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
@@ -1645,13 +1642,10 @@ def test_delete_user_no_revisions_misc_related(db, user_client, wiki_user):
     document_deletion_log = DocumentDeletionLog.objects.create(
         locale="any", slug="Any/Thing", user=wiki_user, reason="..."
     )
-    document_spam_attempt_user = DocumentSpamAttempt.objects.create(
-        user=wiki_user,
-    )
+    document_spam_attempt_user = DocumentSpamAttempt.objects.create(user=wiki_user,)
     throwaway_user = User.objects.create(username="throwaway")
     document_spam_attempt_reviewer = DocumentSpamAttempt.objects.create(
-        user=throwaway_user,
-        reviewer=wiki_user,
+        user=throwaway_user, reviewer=wiki_user,
     )
     user_ban_by = UserBan.objects.create(user=throwaway_user, by=wiki_user)
     user_ban_user = UserBan.objects.create(
@@ -1732,11 +1726,7 @@ def test_delete_user_donate_attributions(
 
 @mock.patch("kuma.users.signal_handlers.cancel_stripe_customer_subscriptions")
 def test_delete_user_donate_attributions_and_cancel_subscriptions(
-    mocked_cancel_stripe_customer_subscriptions,
-    db,
-    user_client,
-    stripe_user,
-    root_doc,
+    mocked_cancel_stripe_customer_subscriptions, db, user_client, stripe_user, root_doc,
 ):
     UserSubscription.set_active(stripe_user, "sub_1234")
 
@@ -1862,12 +1852,7 @@ def test_delete_user_keep_attributions(
 
 @mock.patch("kuma.users.stripe_utils.stripe")
 def test_delete_user_keep_attributions_and_cancel_subscriptions(
-    mocked_stripe,
-    db,
-    user_client,
-    wiki_user,
-    wiki_user_github_account,
-    root_doc,
+    mocked_stripe, db, user_client, wiki_user, wiki_user_github_account, root_doc,
 ):
     subscription_id = "sub_1234"
     mock_subscription = mock.MagicMock()

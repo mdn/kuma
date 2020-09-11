@@ -47,11 +47,7 @@ def mock_get_stripe_customer(user):
     return StripeCustomer(
         email=user.email,
         default_source=StripeCustomerSource(
-            object="card",
-            brand="MagicCard",
-            exp_month=12,
-            exp_year=2020,
-            last4=4242,
+            object="card", brand="MagicCard", exp_month=12, exp_year=2020, last4=4242,
         ),
     )
 

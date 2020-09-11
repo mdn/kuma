@@ -94,10 +94,7 @@ class FieldTests(ElasticTestCase):
         # but standard HttpRequest objects due to the way it initializes
         # the request when APIViews are called
         request.query_params = request.GET
-        serializer = SearchQueryFieldSerializer(
-            data={},
-            context={"request": request},
-        )
+        serializer = SearchQueryFieldSerializer(data={}, context={"request": request},)
         serializer.is_valid()
         assert {"q": "test"} == serializer.data
 

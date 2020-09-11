@@ -174,14 +174,12 @@ class DocumentAttachment(models.Model):
 
     # whether or not this attachment was uploaded for the document
     is_original = models.BooleanField(
-        verbose_name=_("uploaded to the document"),
-        default=False,
+        verbose_name=_("uploaded to the document"), default=False,
     )
 
     # whether or not this attachment is linked in the document's content
     is_linked = models.BooleanField(
-        verbose_name=_("linked in the document content"),
-        default=False,
+        verbose_name=_("linked in the document content"), default=False,
     )
 
     class Meta:
@@ -264,8 +262,7 @@ class Document(NotificationsMixin, models.Model):
     # The files attached to the document, represented by a custom intermediate
     # model so we can store some metadata about the relation
     files = models.ManyToManyField(
-        "attachments.Attachment",
-        through=DocumentAttachment,
+        "attachments.Attachment", through=DocumentAttachment,
     )
 
     # JSON representation of Document for API results, built on save
@@ -1899,8 +1896,7 @@ class Revision(models.Model):
         """
         try:
             return self.document.revisions.filter(
-                is_approved=True,
-                created__lt=self.created,
+                is_approved=True, created__lt=self.created,
             ).order_by("-created")[0]
         except IndexError:
             return self.based_on
@@ -1936,16 +1932,8 @@ class RevisionIP(models.Model):
         blank=True,
         null=True,
     )
-    user_agent = models.TextField(
-        _("User-Agent"),
-        editable=False,
-        blank=True,
-    )
-    referrer = models.TextField(
-        _("HTTP Referrer"),
-        editable=False,
-        blank=True,
-    )
+    user_agent = models.TextField(_("User-Agent"), editable=False, blank=True,)
+    referrer = models.TextField(_("HTTP Referrer"), editable=False, blank=True,)
     data = models.TextField(
         editable=False,
         blank=True,
@@ -2016,14 +2004,8 @@ class DocumentSpamAttempt(SpamAttempt):
     review Akismet's spam detection for false positives.
     """
 
-    title = models.CharField(
-        verbose_name=_("Title"),
-        max_length=255,
-    )
-    slug = models.CharField(
-        verbose_name=_("Slug"),
-        max_length=255,
-    )
+    title = models.CharField(verbose_name=_("Title"), max_length=255,)
+    slug = models.CharField(verbose_name=_("Slug"), max_length=255,)
     document = models.ForeignKey(
         Document,
         related_name="spam_attempts",
@@ -2038,11 +2020,7 @@ class DocumentSpamAttempt(SpamAttempt):
         null=True,
         verbose_name=_("Data submitted to Akismet"),
     )
-    reviewed = models.DateTimeField(
-        _("reviewed"),
-        blank=True,
-        null=True,
-    )
+    reviewed = models.DateTimeField(_("reviewed"), blank=True, null=True,)
 
     NEEDS_REVIEW = 0
     HAM = 1

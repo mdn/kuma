@@ -23,10 +23,7 @@ class Command(BaseCommand):
         users = User.objects.filter(is_newsletter_subscribed=True).exclude(email="")
 
         csv_out = StringIO()
-        writer = csv.DictWriter(
-            csv_out,
-            fieldnames=["EMAIL", "USERNAME", "IS_PAYING"],
-        )
+        writer = csv.DictWriter(csv_out, fieldnames=["EMAIL", "USERNAME", "IS_PAYING"],)
         writer.writeheader()
         for user in users.only("id", "email"):
             writer.writerow(

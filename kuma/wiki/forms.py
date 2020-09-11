@@ -492,9 +492,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
     )
 
     keywords = CharField(
-        required=False,
-        label=_("Keywords:"),
-        help_text=_("Affects search results"),
+        required=False, label=_("Keywords:"), help_text=_("Affects search results"),
     )
 
     summary = CharField(
@@ -539,10 +537,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         choices=LOCALIZATION_FLAG_TAGS,
     )
 
-    current_rev = forms.CharField(
-        required=False,
-        widget=forms.HiddenInput(),
-    )
+    current_rev = forms.CharField(required=False, widget=forms.HiddenInput(),)
 
     class Meta(object):
         model = Revision
@@ -714,10 +709,8 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                     orig_ct = Revision.objects.get(pk=current_rev).get_section_content(
                         self.section_id
                     )
-                    curr_ct = (
-                        self.instance.document.current_revision.get_section_content(
-                            self.section_id
-                        )
+                    curr_ct = self.instance.document.current_revision.get_section_content(
+                        self.section_id
                     )
                     if orig_ct != curr_ct:
                         # Oops. Looks like the section did actually get

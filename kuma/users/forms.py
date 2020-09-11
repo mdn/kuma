@@ -32,10 +32,7 @@ class UserEditForm(forms.ModelForm):
         choices=COMMON_GROUPED_CHOICES,
         required=False,
     )
-    beta = forms.BooleanField(
-        label=_("Beta tester"),
-        required=False,
-    )
+    beta = forms.BooleanField(label=_("Beta tester"), required=False,)
     username = forms.RegexField(
         label=_("Username"),
         regex=USERNAME_REGEX,

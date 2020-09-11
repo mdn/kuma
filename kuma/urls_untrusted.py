@@ -18,8 +18,6 @@ urlpatterns = [
 if getattr(settings, "DEBUG_TOOLBAR_INSTALLED", False):
     import debug_toolbar
 
-    urlpatterns.append(
-        re_path(r"^__debug__/", include(debug_toolbar.urls)),
-    )
+    urlpatterns.append(re_path(r"^__debug__/", include(debug_toolbar.urls)),)
 
 urlpatterns += i18n_patterns(re_path(r"^docs/", include(wiki_lang_urlpatterns)))

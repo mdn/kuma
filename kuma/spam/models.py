@@ -28,16 +28,8 @@ class AkismetSubmission(models.Model):
         (HAM_TYPE, _("Ham")),
     )
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-    sent = CreationDateTimeField(
-        _("sent at"),
-        db_index=True,
-    )
-    type = models.CharField(
-        _("type"),
-        max_length=4,
-        choices=TYPES,
-        db_index=True,
-    )
+    sent = CreationDateTimeField(_("sent at"), db_index=True,)
+    type = models.CharField(_("type"), max_length=4, choices=TYPES, db_index=True,)
 
     class Meta:
         get_latest_by = "sent"

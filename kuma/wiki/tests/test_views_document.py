@@ -221,10 +221,7 @@ def test_api_put_authkey_tracking(client, authkey):
     Revisions modified by PUT API should track the auth key used
     """
     url = "/en-US/docs/foobar$api"
-    data = dict(
-        title="Foobar, The Document",
-        content="<p>Hello, I am foobar.</p>",
-    )
+    data = dict(title="Foobar, The Document", content="<p>Hello, I am foobar.</p>",)
     content_type, encoded_data = get_content("json", data)
     response = client.put(
         url,
@@ -529,9 +526,7 @@ def test_kumascript_error_reporting(
     mock_ks_config = mock.patch("kuma.wiki.kumascript.config", **ks_settings)
     with mock_ks_config:
         mock_requests.post(
-            requests_mock.ANY,
-            text="HELLO WORLD",
-            headers=ks_toolbox.errors_as_headers,
+            requests_mock.ANY, text="HELLO WORLD", headers=ks_toolbox.errors_as_headers,
         )
         mock_requests.get(requests_mock.ANY, **ks_toolbox.macros_response)
         if endpoint == "preview":

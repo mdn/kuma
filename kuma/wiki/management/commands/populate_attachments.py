@@ -115,10 +115,7 @@ class Command(BaseCommand):
             if original_document is not None:
                 # create the attachment and mark the original as found
                 self.create_attachment(
-                    original_document,
-                    attachment,
-                    revision,
-                    is_original=True,
+                    original_document, attachment, revision, is_original=True,
                 )
 
             # hm, no English document found, so let's just use the document
@@ -127,10 +124,7 @@ class Command(BaseCommand):
                 original_document = documents.first()
                 if original_document is not None:
                     self.create_attachment(
-                        original_document,
-                        attachment,
-                        revision,
-                        is_original=True,
+                        original_document, attachment, revision, is_original=True,
                     )
 
             # now go through the rest of the bunch but ignore the original
@@ -142,10 +136,7 @@ class Command(BaseCommand):
                 ):
                     continue
                 self.create_attachment(
-                    rest_document,
-                    attachment,
-                    revision,
-                    is_original=False,
+                    rest_document, attachment, revision, is_original=False,
                 )
 
             # we failed, didn't find any document for this document

@@ -48,8 +48,7 @@ class SearchView(ListAPIView):
     def initial(self, request, *args, **kwargs):
         super(SearchView, self).initial(request, *args, **kwargs)
         self.current_page = self.request.query_params.get(
-            self.pagination_class.page_query_param,
-            1,
+            self.pagination_class.page_query_param, 1,
         )
         self.available_filters = AvailableFiltersJob().get()
         self.serialized_filters = FilterWithGroupSerializer(

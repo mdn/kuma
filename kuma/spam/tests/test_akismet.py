@@ -63,9 +63,7 @@ def test_exception_recording(
 def test_exception_attributes(spam_check_everyone, constance_config, mock_requests):
     constance_config.AKISMET_KEY = "comment"
     mock_requests.post(
-        VERIFY_URL,
-        content=b"uh uh",
-        headers={"X-Akismet-Debug-Help": "err0r!"},
+        VERIFY_URL, content=b"uh uh", headers={"X-Akismet-Debug-Help": "err0r!"},
     )
 
     client = Akismet()

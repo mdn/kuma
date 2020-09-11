@@ -23,8 +23,7 @@ class WikiConfig(AppConfig):
         from kuma.wiki.tasks import build_sitemaps
 
         app.add_periodic_task(
-            crontab(minute=0, hour=5),
-            build_sitemaps.s(),
+            crontab(minute=0, hour=5), build_sitemaps.s(),
         )
 
         # Render stale documents: every 60 minutes

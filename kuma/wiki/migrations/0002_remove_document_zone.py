@@ -11,15 +11,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name="documentzone",
-            name="document",
-        ),
-        migrations.RemoveField(
-            model_name="document",
-            name="zone_subnav_local_html",
-        ),
-        migrations.DeleteModel(
-            name="DocumentZone",
-        ),
+        migrations.RemoveField(model_name="documentzone", name="document",),
+        migrations.RemoveField(model_name="document", name="zone_subnav_local_html",),
+        migrations.DeleteModel(name="DocumentZone",),
     ]

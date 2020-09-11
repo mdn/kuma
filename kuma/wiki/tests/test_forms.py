@@ -337,8 +337,7 @@ class RevisionFormViewTests(UserTestCase):
         super(RevisionFormViewTests, self).setUp()
         self.testuser = self.user_model.objects.get(username="testuser")
         self.spam_checks_flag, created = Flag.objects.update_or_create(
-            name=SPAM_CHECKS_FLAG,
-            defaults={"everyone": True},
+            name=SPAM_CHECKS_FLAG, defaults={"everyone": True},
         )
 
     def tearDown(self):

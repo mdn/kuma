@@ -320,8 +320,7 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
 
     def test_create_no_revision(self):
         url = urlparams(
-            reverse("admin:wiki_revisionakismetsubmission_add"),
-            type="ham",
+            reverse("admin:wiki_revisionakismetsubmission_add"), type="ham",
         )
         self.client.login(username="admin", password="testpass")
         response = self.client.get(url)

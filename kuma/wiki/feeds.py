@@ -148,13 +148,7 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
             # Include some of the simple elements from the preprocessed item
             item_out = dict(
                 (x, item[x])
-                for x in (
-                    "link",
-                    "title",
-                    "pubdate",
-                    "author_name",
-                    "author_link",
-                )
+                for x in ("link", "title", "pubdate", "author_name", "author_link",)
             )
 
             # HACK: DocumentFeed is the superclass of RevisionFeed. In this

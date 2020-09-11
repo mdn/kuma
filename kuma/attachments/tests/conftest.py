@@ -25,7 +25,4 @@ def file_attachment(db, wiki_user):
     revision.creator = wiki_user
     revision.file.save(filename, ContentFile(b"This is only a test."))
     revision.make_current()
-    return dict(
-        attachment=attachment,
-        file=dict(id=file_id, name=filename),
-    )
+    return dict(attachment=attachment, file=dict(id=file_id, name=filename),)

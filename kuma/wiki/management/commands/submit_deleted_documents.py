@@ -67,8 +67,7 @@ class Command(BaseCommand):
             self.stdout.write("%d/%d: " % (i, count), ending="")
             # get the deleted document in question
             document = Document.admin_objects.filter(
-                locale=logged_deletion.locale,
-                slug=logged_deletion.slug,
+                locale=logged_deletion.locale, slug=logged_deletion.slug,
             ).first()
 
             if document is None:

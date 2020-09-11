@@ -124,8 +124,7 @@ def test_whoami(
 
 @pytest.mark.django_db
 def test_whoami_subscriber(
-    user_client,
-    wiki_user,
+    user_client, wiki_user,
 ):
     """Test responses for logged-in users and whether they have an active
     subscription."""
@@ -289,9 +288,7 @@ def test_send_subscriptions_feedback(track_event_mock_signals, client, settings)
     assert response.status_code == 204
 
     track_event_mock_signals.assert_called_with(
-        CATEGORY_MONTHLY_PAYMENTS,
-        ACTION_SUBSCRIPTION_FEEDBACK,
-        "my feedback",
+        CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_FEEDBACK, "my feedback",
     )
 
 
@@ -492,9 +489,7 @@ def test_stripe_payment_succeeded_sends_invoice_mail(
         stripe_customer_id="cus_mock_testuser",
     )
     response = Client().post(
-        reverse("api.v1.stripe_hooks"),
-        content_type="application/json",
-        data={},
+        reverse("api.v1.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 200
     assert len(mail.outbox) == 1
@@ -524,9 +519,7 @@ def test_stripe_subscription_canceled(mock1, client):
     )
     UserSubscription.set_active(testuser, "sub_123456789")
     response = client.post(
-        reverse("api.v1.stripe_hooks"),
-        content_type="application/json",
-        data={},
+        reverse("api.v1.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 200
     (user_subscription,) = UserSubscription.objects.filter(user=testuser)
@@ -547,13 +540,10 @@ def test_stripe_hook_invalid_json(client):
 @pytest.mark.django_db
 def test_stripe_hook_unexpected_type(mock1, client):
     mock1.return_value = SimpleNamespace(
-        type="not.expected",
-        data=SimpleNamespace(foo="bar"),
+        type="not.expected", data=SimpleNamespace(foo="bar"),
     )
     response = client.post(
-        reverse("api.v1.stripe_hooks"),
-        content_type="application/json",
-        data={},
+        reverse("api.v1.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 400
 
@@ -563,9 +553,7 @@ def test_stripe_hook_unexpected_type(mock1, client):
 def test_stripe_hook_stripe_api_error(mock1, client):
     mock1.side_effect = APIError("badness")
     response = client.post(
-        reverse("api.v1.stripe_hooks"),
-        content_type="application/json",
-        data={},
+        reverse("api.v1.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 400
 
@@ -597,9 +585,7 @@ def test_stripe_payment_succeeded_sends_ga_tracking(
         stripe_customer_id="cus_mock_testuser",
     )
     response = client.post(
-        reverse("api.v1.stripe_hooks"),
-        content_type="application/json",
-        data={},
+        reverse("api.v1.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 200
 
@@ -630,9 +616,7 @@ def test_stripe_subscription_canceled_sends_ga_tracking(
         stripe_customer_id="cus_mock_testuser",
     )
     response = client.post(
-        reverse("api.v1.stripe_hooks"),
-        content_type="application/json",
-        data={},
+        reverse("api.v1.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 200
 
@@ -693,9 +677,7 @@ def test_user_details_happy_path(user_client, wiki_user):
 def test_user_details_invalid_username(user_client, wiki_user, django_user_model):
     def put():
         return user_client.put(
-            reverse("api.v1.user_details"),
-            content_type="application/json",
-            data=data,
+            reverse("api.v1.user_details"), content_type="application/json", data=data,
         )
 
     # Empty username
@@ -716,8 +698,7 @@ def test_user_details_invalid_username(user_client, wiki_user, django_user_model
     assert response.json()["username"]
 
     django_user_model.objects.create(
-        username="washerefirst",
-        email="washerefirst@example.com",
+        username="washerefirst", email="washerefirst@example.com",
     )
     # Username taken by someone else
     data["username"] = "washerefirst"
@@ -736,9 +717,7 @@ def test_user_details_invalid_locale(user_client, wiki_user):
         "locale": "xxx",
     }
     response = user_client.put(
-        reverse("api.v1.user_details"),
-        content_type="application/json",
-        data=data,
+        reverse("api.v1.user_details"), content_type="application/json", data=data,
     )
     assert response.status_code == 400
     assert response.json()["locale"]
@@ -758,9 +737,7 @@ def test_user_details_toggle_is_newsletter_subscribed_on(
         "locale": wiki_user.locale,
     }
     response = user_client.put(
-        reverse("api.v1.user_details"),
-        content_type="application/json",
-        data=data,
+        reverse("api.v1.user_details"), content_type="application/json", data=data,
     )
     assert response.status_code == 200
     wiki_user.refresh_from_db()
@@ -782,9 +759,7 @@ def test_user_details_toggle_is_newsletter_subscribed_off(
         "locale": wiki_user.locale,
     }
     response = user_client.put(
-        reverse("api.v1.user_details"),
-        content_type="application/json",
-        data=data,
+        reverse("api.v1.user_details"), content_type="application/json", data=data,
     )
     assert response.status_code == 200
     wiki_user.refresh_from_db()
@@ -802,10 +777,7 @@ def test_sendinblue_unsubscribe(mock_check_sendinblue, client):
     email = "testuser@example.com"
 
     user = create_user(
-        save=True,
-        username="testuser",
-        email=email,
-        is_newsletter_subscribed=True,
+        save=True, username="testuser", email=email, is_newsletter_subscribed=True,
     )
 
     response = client.post(
