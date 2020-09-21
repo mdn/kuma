@@ -203,7 +203,9 @@ function MDNBrowserCompatReportBanner() {
                 'A deep dive into web compatibility frustrations, with useful insights into how they could be overcome.'
             )}
             cta={gettext('Read the report')}
-            url={'https://insights.developer.mozilla.org/'}
+            url={
+                'https://mdn-web-dna.s3-us-west-2.amazonaws.com/MDN-Browser-Compatibility-Report-2020.pdf'
+            }
             newWindow
         />
     );
