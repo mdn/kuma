@@ -197,12 +197,12 @@ function MDNBrowserCompatReportBanner() {
     return (
         <Banner
             id={MDN_BROWSER_COMPAT_REPORT_ID}
-            classname="developer-needs"
+            className="developer-needs"
             title={gettext('MDN Browser Compatibility Report')}
             copy={gettext(
                 'A deep dive into web compatibility frustrations, with useful insights into how they could be overcome.'
             )}
-            cta={gettext('Read the report')}
+            cta={gettext('Read the report (PDF, 1.8mb)')}
             url={
                 'https://mdn-web-dna.s3-us-west-2.amazonaws.com/MDN-Browser-Compatibility-Report-2020.pdf'
             }
