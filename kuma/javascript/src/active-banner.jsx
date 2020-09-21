@@ -197,7 +197,7 @@ function MDNBrowserCompatReportBanner() {
     return (
         <Banner
             id={MDN_BROWSER_COMPAT_REPORT_ID}
-            className="developer-needs"
+            classname="developer-needs"
             title={gettext('MDN Browser Compatibility Report')}
             copy={gettext(
                 'A deep dive into web compatibility frustrations, with useful insights into how they could be overcome.'
