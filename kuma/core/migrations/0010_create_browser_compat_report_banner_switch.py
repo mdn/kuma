@@ -8,7 +8,9 @@ def create_browser_compat_report_banner_switch(apps, schema_editor):
     Switch = apps.get_model("waffle", "Switch")
     if not Switch.objects.filter(name="mdn_browser_compat_report").exists():
         Switch.objects.create(
-            name="mdn_browser_compat_report", active=False, note="Enable/disable the MDN browser compat report banner"
+            name="mdn_browser_compat_report",
+            active=False,
+            note="Enable/disable the MDN browser compat report banner",
         )
 
 
