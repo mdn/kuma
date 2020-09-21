@@ -199,9 +199,19 @@ function MDNBrowserCompatReportBanner() {
             id={MDN_BROWSER_COMPAT_REPORT_ID}
             classname="developer-needs"
             title={gettext('MDN Browser Compatibility Report')}
-            copy={gettext(
-                'A deep dive into web compatibility frustrations, with useful insights into how they could be overcome.'
-            )}
+            copy={
+                <>
+                    A deep dive into web compatibility frustrations, with useful{' '}
+                    <a
+                        href="https://insights.developer.mozilla.org/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        insights
+                    </a>{' '}
+                    into how they could be overcome.
+                </>
+            }
             cta={gettext('Read the report (PDF, 1.8mb)')}
             url={
                 'https://mdn-web-dna.s3-us-west-2.amazonaws.com/MDN-Browser-Compatibility-Report-2020.pdf'
