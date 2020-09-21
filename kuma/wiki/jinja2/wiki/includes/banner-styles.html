@@ -4,4 +4,8 @@
 {% stylesheet 'banner_developer_needs' %}
 {% endif %}
 
+{% if waffle.switch('mdn_browser_compat_report') %}
+{% stylesheet 'banner_browser_compat_report' %}
+{% endif %}
+
 {% stylesheet 'banner_mdn_subscriptions' %}
