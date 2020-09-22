@@ -222,7 +222,7 @@ function MDNBrowserCompatReportBanner() {
                 ga('send', {
                     hitType: 'event',
                     eventCategory: MDN_BROWSER_COMPAT_REPORT_ID,
-                    eventAction: 'Browser Compat Report CTA clicked',
+                    eventAction: 'Browser Compat Report 2020 CTA clicked',
                     eventLabel: 'banner',
                 });
             }}
