@@ -194,6 +194,8 @@ export const DEVELOPER_NEEDS_ID = 'developer_needs';
 export const SUBSCRIPTION_ID = 'subscription_banner';
 
 function MDNBrowserCompatReportBanner() {
+    const ga = useContext(GAProvider.context);
+
     return (
         <Banner
             id={MDN_BROWSER_COMPAT_REPORT_ID}
@@ -216,6 +218,14 @@ function MDNBrowserCompatReportBanner() {
             url={
                 'https://mdn-web-dna.s3-us-west-2.amazonaws.com/MDN-Browser-Compatibility-Report-2020.pdf'
             }
+            onCTAClick={() => {
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: MDN_BROWSER_COMPAT_REPORT_ID,
+                    eventAction: 'Browser Compat Report 2020 CTA clicked',
+                    eventLabel: 'banner',
+                });
+            }}
             newWindow
         />
     );
