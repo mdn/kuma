@@ -88,14 +88,14 @@ def test_redirect_to_wiki(site_url, wiki_site_url, slug):
     assert resp.headers["location"] == wiki_site_url + slug
 
 
-@pytest.mark.headless
-@pytest.mark.nondestructive
-def test_redirect_contribute(site_url, wiki_site_url):
-    for base_url in (site_url, wiki_site_url):
-        url = base_url + "/en-US/contribute/"
-        resp = request("get", url)
-        assert resp.status_code == 302, url
-        assert resp.headers["location"] == "/en-US/payments/", url
+# @pytest.mark.headless
+# @pytest.mark.nondestructive
+# def test_redirect_contribute(site_url, wiki_site_url):
+#     for base_url in (site_url, wiki_site_url):
+#         url = base_url + "/en-US/contribute/"
+#         resp = request("get", url)
+#         assert resp.status_code == 302, url
+#         assert resp.headers["location"] == "/en-US/payments/", url
 
 
 @pytest.mark.headless

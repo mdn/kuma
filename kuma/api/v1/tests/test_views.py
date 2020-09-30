@@ -4,8 +4,6 @@ from unittest import mock
 
 import pytest
 from django.conf import settings
-from django.core import mail
-from django.test import Client
 from stripe.error import APIError
 from waffle.models import Flag, Sample, Switch
 from waffle.testutils import override_flag
@@ -460,50 +458,50 @@ def test_cancel_subscriptions_with_no_active_subscription(
     assert response.status_code == 410
 
 
-@mock.patch("kuma.api.v1.views._download_from_url")
-@mock.patch("kuma.api.v1.views.retrieve_and_synchronize_subscription_info")
-@mock.patch("stripe.Event.construct_from")
-@pytest.mark.django_db
-def test_stripe_payment_succeeded_sends_invoice_mail(
-    construct_stripe_event, retrieve_subscription, download_url
-):
-    construct_stripe_event.return_value = SimpleNamespace(
-        type="invoice.payment_succeeded",
-        data=SimpleNamespace(
-            object=SimpleNamespace(
-                number="test_invoice_001",
-                total=700,
-                customer="cus_mock_testuser",
-                created=1583842724,
-                invoice_pdf="https://developer.mozilla.org/mock-invoice-pdf-url",
-            )
-        ),
-    )
-    retrieve_subscription.return_value = {
-        "next_payment_at": 1583842724,
-        "brand": "MagicCard",
-    }
-    download_url.return_value = bytes("totally not a pdf", "utf-8")
+# @mock.patch("kuma.api.v1.views._download_from_url")
+# @mock.patch("kuma.api.v1.views.retrieve_and_synchronize_subscription_info")
+# @mock.patch("stripe.Event.construct_from")
+# @pytest.mark.django_db
+# def test_stripe_payment_succeeded_sends_invoice_mail(
+#     construct_stripe_event, retrieve_subscription, download_url
+# ):
+#     construct_stripe_event.return_value = SimpleNamespace(
+#         type="invoice.payment_succeeded",
+#         data=SimpleNamespace(
+#             object=SimpleNamespace(
+#                 number="test_invoice_001",
+#                 total=700,
+#                 customer="cus_mock_testuser",
+#                 created=1583842724,
+#                 invoice_pdf="https://developer.mozilla.org/mock-invoice-pdf-url",
+#             )
+#         ),
+#     )
+#     retrieve_subscription.return_value = {
+#         "next_payment_at": 1583842724,
+#         "brand": "MagicCard",
+#     }
+#     download_url.return_value = bytes("totally not a pdf", "utf-8")
 
-    testuser = create_user(
-        save=True,
-        username="testuser",
-        email="testuser@example.com",
-        stripe_customer_id="cus_mock_testuser",
-    )
-    response = Client().post(
-        reverse("api.v1.stripe_hooks"),
-        content_type="application/json",
-        data={},
-    )
-    assert response.status_code == 200
-    assert len(mail.outbox) == 1
-    payment_email = mail.outbox[0]
-    assert payment_email.to == [testuser.email]
-    assert "Receipt" in payment_email.subject
-    assert "Invoice number: test_invoice_001" in payment_email.body
-    assert "You supported MDN with a $7.00 monthly subscription" in payment_email.body
-    assert "Manage monthly subscription" in payment_email.body
+#     testuser = create_user(
+#         save=True,
+#         username="testuser",
+#         email="testuser@example.com",
+#         stripe_customer_id="cus_mock_testuser",
+#     )
+#     response = Client().post(
+#         reverse("api.v1.stripe_hooks"),
+#         content_type="application/json",
+#         data={},
+#     )
+#     assert response.status_code == 200
+#     assert len(mail.outbox) == 1
+#     payment_email = mail.outbox[0]
+#     assert payment_email.to == [testuser.email]
+#     assert "Receipt" in payment_email.subject
+#     assert "Invoice number: test_invoice_001" in payment_email.body
+#     assert "You supported MDN with a $7.00 monthly subscription" in payment_email.body
+#     assert "Manage monthly subscription" in payment_email.body
 
 
 @mock.patch("stripe.Event.construct_from")
