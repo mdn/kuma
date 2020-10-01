@@ -1908,3 +1908,9 @@ SITEMAP_USE_S3 = config("SITEMAP_USE_S3", cast=bool, default=True)
 ADDITIONAL_NEXT_URL_ALLOWED_HOSTS = config(
     "ADDITIONAL_NEXT_URL_ALLOWED_HOSTS", default=None
 )
+
+# As of Oct 2020, we might not enable subscriptions at all. There are certain
+# elements of Kuma that exposes subscriptions even if all the Waffle flags and
+# switches says otherwise. For example, the payments pages are skeletons for
+# React apps. This boolean settings disables all of that.
+ENABLE_SUBSCRIPTIONS = config("ENABLE_SUBSCRIPTIONS", cast=bool, default=False)

@@ -1,5 +1,7 @@
 import logging
 
+from django.conf import settings
+from django.http import Http404
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 from waffle.decorators import waffle_flag
@@ -12,6 +14,8 @@ log = logging.getLogger("kuma.payments.views")
 
 @never_cache
 def index(request):
+    if not settings.ENABLE_SUBSCRIPTIONS:
+        raise Http404("Not enabled")
     highest_subscriber_number = User.get_highest_subscriber_number()
     context = {"next_subscriber_number": highest_subscriber_number + 1}
     return render(request, "payments/index.html", context)
