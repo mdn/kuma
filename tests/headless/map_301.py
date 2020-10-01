@@ -974,11 +974,11 @@ FIREFOX_SOURCE_DOCS_URLS = list(
             ),
             url_test(
                 "{/en-US,/pl,}/{docs/,}Debugging_Mozilla_with_gdb",
-                "https://firefox-source-docs.mozilla.org/contributing/debugging/debugging_mozilla_with_gdb.html",
+                "https://firefox-source-docs.mozilla.org/contributing/debugging/debugging_firefox_with_gdb.html",
             ),
             url_test(
                 "{/en-US,/pl,}/{docs/,}Debugging_Mozilla_with_lldb",
-                "https://firefox-source-docs.mozilla.org/contributing/debugging/debugging_mozilla_with_lldb.html",
+                "https://firefox-source-docs.mozilla.org/contributing/debugging/debugging_firefox_with_lldb.html",
             ),
             url_test(
                 "{/en-US,/pl,}/{docs/,}Understanding_crash_reports",
@@ -990,11 +990,11 @@ FIREFOX_SOURCE_DOCS_URLS = list(
             ),
             url_test(
                 "{/en-US,/pl,}/{docs/,}Debugging_Mozilla_with_Valgrind",
-                "https://firefox-source-docs.mozilla.org/contributing/debugging/debugging_mozilla_with_valgrind.html",
+                "https://firefox-source-docs.mozilla.org/contributing/debugging/debugging_firefox_with_valgrind.html",
             ),
             url_test(
                 "{/en-US,/pl,}/{docs/,}Debugging/Record_and_Replay_Debugging_Firefox",
-                "https://firefox-source-docs.mozilla.org/contributing/debugging/record_and_replay_debugging_firefox.html",
+                "https://firefox-source-docs.mozilla.org/contributing/debugging/debugging_firefox_with_rr.html",
             ),
         )
     )
