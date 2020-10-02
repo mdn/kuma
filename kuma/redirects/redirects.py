@@ -1177,32 +1177,32 @@ firefox_source_docs_redirectpatterns = [
     external_redirect(pattern, firefox_source_docs_root_url + path)
     for (pattern, path) in [
         (
-            r"(?:docs/)?/Mozilla/Memory_Sanitizer(?:/|$)",
+            r"(?:docs/)?Mozilla/Memory_Sanitizer(?:/|$)",
             "/tools/sanitizer/memory_sanitizer.html#memory-sanitizer",
         ),
         (
-            r"(?:docs/)?/Debugging_Mozilla_with_gdb(?:/|$)",
-            "/contributing/debugging/debugging_mozilla_with_gdb.html",
+            r"(?:docs/)?Debugging_Mozilla_with_gdb(?:/|$)",
+            "/contributing/debugging/debugging_firefox_with_gdb.html",
         ),
         (
-            r"(?:docs/)?/Debugging_Mozilla_with_lldb(?:/|$)",
-            "/contributing/debugging/debugging_mozilla_with_lldb.html",
+            r"(?:docs/)?Debugging_Mozilla_with_lldb(?:/|$)",
+            "/contributing/debugging/debugging_firefox_with_lldb.html",
         ),
         (
-            r"(?:docs/)?/Understanding_crash_reports(?:/|$)",
+            r"(?:docs/)?Understanding_crash_reports(?:/|$)",
             "/contributing/debugging/understanding_crash_reports.html",
         ),
         (
-            r"(?:docs/)?/Debugging_a_minidump(?:/|$)",
+            r"(?:docs/)?Debugging_a_minidump(?:/|$)",
             "/contributing/debugging/debugging_a_minidump.html",
         ),
         (
-            r"(?:docs/)?/Debugging_Mozilla_with_Valgrind(?:/|$)",
-            "/contributing/debugging/debugging_mozilla_with_valgrind.html",
+            r"(?:docs/)?Debugging_Mozilla_with_Valgrind(?:/|$)",
+            "/contributing/debugging/debugging_firefox_with_valgrind.html",
         ),
         (
-            r"(?:docs/)?/Debugging/Record_and_Replay_Debugging_Firefox(?:/|$)",
-            "/contributing/debugging/record_and_replay_debugging_firefox.html",
+            r"(?:docs/)?Debugging/Record_and_Replay_Debugging_Firefox(?:/|$)",
+            "/contributing/debugging/debugging_firefox_with_rr.html",
         ),
     ]
 ]
