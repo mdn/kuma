@@ -5,6 +5,7 @@ from utils.urls import assert_valid_url
 from .map_301 import (
     DEFAULT_SAMPLES_URLS,
     FIREFOX_ACCOUNTS_URLS,
+    FIREFOX_SOURCE_DOCS_URLS,
     GITHUB_IO_URLS,
     LEGACY_URLS,
     MARIONETTE_URLS,
@@ -112,5 +113,17 @@ def test_webext_redirects(url, base_url):
     "url", FIREFOX_ACCOUNTS_URLS, ids=[item["url"] for item in FIREFOX_ACCOUNTS_URLS]
 )
 def test_firefox_accounts_redirects(url, base_url):
+    url["base_url"] = base_url
+    assert_valid_url(**url)
+
+
+@pytest.mark.headless
+@pytest.mark.nondestructive
+@pytest.mark.parametrize(
+    "url",
+    FIREFOX_SOURCE_DOCS_URLS,
+    ids=[item["url"] for item in FIREFOX_SOURCE_DOCS_URLS],
+)
+def test_firefox_source_docs_redirects(url, base_url):
     url["base_url"] = base_url
     assert_valid_url(**url)

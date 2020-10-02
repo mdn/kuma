@@ -964,3 +964,38 @@ FIREFOX_ACCOUNTS_URLS = list(
         )
     )
 )
+
+FIREFOX_SOURCE_DOCS_URLS = list(
+    flatten(
+        (
+            url_test(
+                "{/en-US,/pl,}/{docs/,}Mozilla/Memory_Sanitizer",
+                "https://firefox-source-docs.mozilla.org/tools/sanitizer/memory_sanitizer.html#memory-sanitizer",
+            ),
+            url_test(
+                "{/en-US,/pl,}/{docs/,}Debugging_Mozilla_with_gdb",
+                "https://firefox-source-docs.mozilla.org/contributing/debugging/debugging_firefox_with_gdb.html",
+            ),
+            url_test(
+                "{/en-US,/pl,}/{docs/,}Debugging_Mozilla_with_lldb",
+                "https://firefox-source-docs.mozilla.org/contributing/debugging/debugging_firefox_with_lldb.html",
+            ),
+            url_test(
+                "{/en-US,/pl,}/{docs/,}Understanding_crash_reports",
+                "https://firefox-source-docs.mozilla.org/contributing/debugging/understanding_crash_reports.html",
+            ),
+            url_test(
+                "{/en-US,/pl,}/{docs/,}Debugging_a_minidump",
+                "https://firefox-source-docs.mozilla.org/contributing/debugging/debugging_a_minidump.html",
+            ),
+            url_test(
+                "{/en-US,/pl,}/{docs/,}Debugging_Mozilla_with_Valgrind",
+                "https://firefox-source-docs.mozilla.org/contributing/debugging/debugging_firefox_with_valgrind.html",
+            ),
+            url_test(
+                "{/en-US,/pl,}/{docs/,}Debugging/Record_and_Replay_Debugging_Firefox",
+                "https://firefox-source-docs.mozilla.org/contributing/debugging/debugging_firefox_with_rr.html",
+            ),
+        )
+    )
+)
