@@ -32,6 +32,7 @@ RUN set -x \
         libmagic-dev \
         default-libmysqlclient-dev \
         default-mysql-client \
+        python2 \
     && rm -rf /var/lib/apt/lists/*
 
 # ----------------------------------------------------------------------------
