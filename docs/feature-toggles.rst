@@ -29,7 +29,6 @@ Switches
 * ``wiki_spam_training`` - Call Akismet to check submissions, but don't block
   due to detected spam or Akismet errors.
 * ``developer_needs`` - Enable/disable the developer needs survey banner
-* ``mdn_browser_compat_report`` - Enable/disable the MDN browser compat report banner
 
 
 Flags

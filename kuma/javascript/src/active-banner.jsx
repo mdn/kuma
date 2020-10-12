@@ -189,47 +189,8 @@ function Banner(props: BannerProps) {
     );
 }
 
-export const MDN_BROWSER_COMPAT_REPORT_ID = 'mdn_browser_compat_report';
 export const DEVELOPER_NEEDS_ID = 'developer_needs';
 export const SUBSCRIPTION_ID = 'subscription_banner';
-
-function MDNBrowserCompatReportBanner() {
-    const ga = useContext(GAProvider.context);
-
-    return (
-        <Banner
-            id={MDN_BROWSER_COMPAT_REPORT_ID}
-            classname="developer-needs"
-            title={gettext('MDN Browser Compatibility Report')}
-            copy={
-                <>
-                    A deep dive into web compatibility frustrations, with useful{' '}
-                    <a
-                        href="https://insights.developer.mozilla.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        insights
-                    </a>{' '}
-                    into how they could be overcome.
-                </>
-            }
-            cta={gettext('Read the report (PDF, 1.8mb)')}
-            url={
-                'https://mdn-web-dna.s3-us-west-2.amazonaws.com/MDN-Browser-Compatibility-Report-2020.pdf'
-            }
-            onCTAClick={() => {
-                ga('send', {
-                    hitType: 'event',
-                    eventCategory: MDN_BROWSER_COMPAT_REPORT_ID,
-                    eventAction: 'Browser Compat Report 2020 CTA clicked',
-                    eventLabel: 'banner',
-                });
-            }}
-            newWindow
-        />
-    );
-}
 
 function DeveloperNeedsBanner() {
     return (
@@ -238,12 +199,10 @@ function DeveloperNeedsBanner() {
             classname="developer-needs"
             title={gettext('MDN Web DNA')}
             copy={gettext(
-                'Help us understand the top 10 needs of Web developers and designers.'
+                'Help us understand the top 10 needs of web developers.'
             )}
             cta={gettext('Take the survey')}
-            url={
-                'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019'
-            }
+            url={'TBD'}
             newWindow
         />
     );
@@ -303,9 +262,7 @@ export default function ActiveBanner() {
 
     // The order of the if statements is important and it's our source of
     // truth about which banner is "more important" than the other.
-    if (isEnabled(MDN_BROWSER_COMPAT_REPORT_ID)) {
-        return <MDNBrowserCompatReportBanner />;
-    } else if (isEnabled(DEVELOPER_NEEDS_ID)) {
+    if (isEnabled(DEVELOPER_NEEDS_ID)) {
         return <DeveloperNeedsBanner />;
     } else if (isEnabled(SUBSCRIPTION_ID) && !userData.isSubscriber) {
         return <SubscriptionBanner />;
