@@ -1,9 +1,12 @@
 @import '../../includes/vars';
+@import '../../minimalist/vars/vars-color-palette';
 @import '../../includes/mixins';
 @import 'vars';
 
 .developer-needs {
     .mdn-cta-content {
+        background: $primary-200 url('../../../img/home-masthead-background.svg') 40% 0 no-repeat;
+        color: $neutral-100;
         padding-top: 16px;
         box-shadow: 5px 0 9px #c7c7c7;
         height: 100%;
@@ -23,7 +26,6 @@
         }
 
         @media #{$mq-small-desktop-and-up} {
-            background-image: linear-gradient(to right, #83cff3, #ebf8e1);
             margin: unset;
             padding: 20px;
             padding-left: 45px;
@@ -33,46 +35,6 @@
 
         @media #{$mq-large-desktop-and-up} {
             @include bidi(((padding-left, 120px, padding-right, 120px),));
-        }
-    }
-
-    .mdn-cta-title:before {
-        display: none;
-
-        @media #{$mq-large-desktop-and-up} {
-            position: absolute;
-            left: -90px;
-            display: inline-block;
-            content: '';
-            background: transparent
-                url('../../../img/banners/developer-needs/icon-survey.svg') 0 0
-                no-repeat;
-            background-size: 75px;
-            width: 75px;
-            height: 75px;
-        }
-    }
-
-    .mdn-cta-button-container:before {
-        display: none;
-
-        @media #{$mq-small-desktop-and-up} {
-            position: absolute;
-            top: 0;
-            left: -40px;
-            display: inline-block;
-            content: '';
-            background: transparent
-                url('../../../img/banners/developer-needs/curve.svg') 0 0
-                no-repeat;
-            background-size: 100%;
-            width: 130px;
-            height: 130px;
-        }
-
-        @media #{$mq-large-desktop-and-up} {
-            left: -50px;
-            width: 140px;
         }
     }
 
@@ -99,66 +61,15 @@
     .mdn-cta-button,
     .mdn-cta-button:link,
     .mdn-cta-button:visited {
-        background-color: $cta-deep-blue;
-    }
-}
-
-/* right to left */
-html[dir='rtl'] {
-    .mdn-cta-title:before {
-        display: none;
+        background-color: $neutral-100;
+        color: $neutral-600;
+        border: 2px solid $neutral-600;
+        border-radius: 6px;
     }
 
-    .mdn-cta-title:after {
-        display: none;
-
-        @media #{$mq-large-desktop-and-up} {
-            position: absolute;
-            top: 0;
-            right: -90px;
-            display: inline-block;
-            content: '';
-            background: transparent
-                url('../../../img/banners/developer-needs/icon-survey.svg') 0 0
-                no-repeat;
-            background-size: 75px;
-            width: 75px;
-            height: 75px;
-        }
-    }
-
-    .mdn-cta-content-container {
-        @media #{$mq-small-desktop-and-up} {
-            background-image: linear-gradient(to right, #ebf8e1, #83cff3);
-        }
-    }
-
-    .mdn-cta-button-container:before {
-        display: none;
-        background-image: none;
-    }
-
-    .mdn-cta-button-container:after {
-        display: none;
-
-        @media #{$mq-small-desktop-and-up} {
-            position: absolute;
-            top: 0;
-            right: -56px;
-            display: inline-block;
-            content: '';
-            background: transparent
-                url('../../../img/banners/developer-needs/curve.svg') 0 0
-                no-repeat;
-            background-size: 100%;
-            width: 130px;
-            height: 130px;
-            transform: rotateY(180deg);
-        }
-
-        @media #{$mq-large-desktop-and-up} {
-            left: -50px;
-            width: 140px;
+    .mdn-cta-close {
+        svg {
+            fill: $neutral-100;
         }
     }
 }
