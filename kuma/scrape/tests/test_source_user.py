@@ -26,7 +26,7 @@ def complex_user(db, django_user_model):
         github_url="https://github.com/jilldev1999",
         stackoverflow_url="http://stackoverflow.com/users/1/jilldev1999",
         linkedin_url="http://www.linkedin.com/in/jilldev1999",
-        mozillians_url="http://mozillians.org/u/jilldev/",
+        pmo_url="http://poeple.mozilla.org/u/jilldev/",
     )
     return user
 
@@ -117,7 +117,7 @@ def test_extract_complex_social(complex_user, client):
         "github_url": "https://github.com/jilldev1999",
         "stackoverflow_url": "http://stackoverflow.com/users/1/jilldev1999",
         "linkedin_url": "http://www.linkedin.com/in/jilldev1999",
-        "mozillians_url": "http://mozillians.org/u/jilldev/",
+        "pmo_url": "http://people.mozilla.org/u/jilldev/",
         "date_joined": datetime(1999, 1, 1, 10, 40, 23),
     }
     assert data == expected_data

@@ -956,7 +956,7 @@ def test_user_edit_websites(wiki_user, wiki_user_github_account, user_client):
         "twitter": "http://twitter.com/lmorchard",
         "stackoverflow": "http://stackoverflow.com/users/lmorchard",
         "linkedin": "https://www.linkedin.com/in/testuser",
-        "mozillians": "https://mozillians.org/u/testuser",
+        "pmo": "https://people.mozilla.org/u/testuser",
         "facebook": "https://www.facebook.com/test.user",
     }
 
@@ -1767,7 +1767,7 @@ def test_delete_user_keep_attributions(
         irc_nickname="pb",
         website_url="https://www.peterbe.com",
         github_url="github/peterbe",
-        mozillians_url="mozillians/peterbe",
+        pmo_url="people.mozilla.org/p/peterbe",
         twitter_url="twitter/peterbe",
         linkedin_url="linkedin/peterbe",
         facebook_url="facebook/peterbe",
@@ -1834,7 +1834,7 @@ def test_delete_user_keep_attributions(
     assert wiki_user.irc_nickname == ""
     assert wiki_user.website_url == ""
     assert wiki_user.github_url == ""
-    assert wiki_user.mozillians_url == ""
+    assert wiki_user.pmo_url == ""
     assert wiki_user.twitter_url == ""
     assert wiki_user.linkedin_url == ""
     assert wiki_user.facebook_url == ""

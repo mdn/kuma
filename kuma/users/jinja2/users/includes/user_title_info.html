@@ -87,10 +87,10 @@
     </li>
   {% endif %}
 
-  {% if detail_user.mozillians_url %}
-    <li class="mozillians">
+  {% if detail_user.pmo_url %}
+    <li class="pmo">
         {% include 'includes/icons/user/group.svg' %}
-        <a href="{{ detail_user.mozillians_url }}" rel="me external" class="url">{{ _("Mozillians") }}</a>
+        <a href="{{ detail_user.pmo_url }}" rel="me external" class="url">{{ _("people.mozilla.org") }}</a>
     </li>
   {% endif %}
 
