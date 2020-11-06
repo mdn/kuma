@@ -88,7 +88,7 @@ class UserEditForm(forms.ModelForm):
         ),
     )
     pmo_url = forms.CharField(
-        label=_("people.mozilla.org"),
+        label=_("Mozilla People Directory"),
         required=False,
         validators=[User.WEBSITE_VALIDATORS["pmo"]],
         widget=forms.TextInput(
