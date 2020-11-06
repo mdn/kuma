@@ -26,7 +26,7 @@ def complex_user(db, django_user_model):
         github_url="https://github.com/jilldev1999",
         stackoverflow_url="http://stackoverflow.com/users/1/jilldev1999",
         linkedin_url="http://www.linkedin.com/in/jilldev1999",
-        pmo_url="http://poeple.mozilla.org/u/jilldev/",
+        pmo_url="https://people.mozilla.org/p/jilldev/",
     )
     return user
 
