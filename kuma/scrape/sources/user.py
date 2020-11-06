@@ -79,7 +79,7 @@ class UserSource(Source):
                 "github",
                 "stackoverflow",
                 "linkedin",
-                "mozillians",
+                "pmo",
                 "facebook",
             )
             for social in socials:

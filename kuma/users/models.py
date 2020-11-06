@@ -138,9 +138,9 @@ class User(AbstractUser):
             _("Enter a valid LinkedIn URL."),
             "invalid",
         ),
-        "mozillians": validators.RegexValidator(
-            r"^https?://mozillians\.org/u/",
-            _("Enter a valid Mozillians URL."),
+        "pmo": validators.RegexValidator(
+            r"^https?://people\.mozilla\.org/",
+            _("Enter a valid PMO URL."),
             "invalid",
         ),
         "facebook": validators.RegexValidator(
@@ -161,10 +161,10 @@ class User(AbstractUser):
         blank=True,
         validators=[WEBSITE_VALIDATORS["website"]],
     )
-    mozillians_url = models.TextField(
-        _("Mozillians"),
+    pmo_url = models.TextField(
+        _("Mozilla People Directory"),
         blank=True,
-        validators=[WEBSITE_VALIDATORS["mozillians"]],
+        validators=[WEBSITE_VALIDATORS["pmo"]],
     )
     github_url = models.TextField(
         _("GitHub"),

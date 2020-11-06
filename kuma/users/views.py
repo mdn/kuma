@@ -529,7 +529,7 @@ def user_delete(request, username):
         user.irc_nickname = ""
         user.website_url = ""
         user.github_url = ""
-        user.mozillians_url = ""
+        user.pmo_url = ""
         user.twitter_url = ""
         user.linkedin_url = ""
         user.facebook_url = ""
