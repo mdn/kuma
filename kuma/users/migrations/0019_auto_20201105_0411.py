@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 blank=True,
                 validators=[
                     django.core.validators.RegexValidator(
-                        "^https?://people\\.mozilla\\.org/u/",
+                        "^https?://people\\.mozilla\\.org/",
                         "Enter a valid PMO URL.",
                         "invalid",
                     )
