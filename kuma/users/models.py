@@ -162,7 +162,7 @@ class User(AbstractUser):
         validators=[WEBSITE_VALIDATORS["website"]],
     )
     pmo_url = models.TextField(
-        _("people.mozilla.org"),
+        _("Mozilla People Directory"),
         blank=True,
         validators=[WEBSITE_VALIDATORS["pmo"]],
     )
