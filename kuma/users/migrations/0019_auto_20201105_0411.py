@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                         "invalid",
                     )
                 ],
-                verbose_name="people.mozilla.org",
+                verbose_name="Mozilla People Directory",
             ),
         ),
     ]
