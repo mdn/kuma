@@ -139,7 +139,7 @@ class User(AbstractUser):
             "invalid",
         ),
         "pmo": validators.RegexValidator(
-            r"^https?://people\.mozilla\.org/u/",
+            r"^https?://people\.mozilla\.org/",
             _("Enter a valid PMO URL."),
             "invalid",
         ),
