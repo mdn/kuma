@@ -956,7 +956,7 @@ def test_user_edit_websites(wiki_user, wiki_user_github_account, user_client):
         "twitter": "http://twitter.com/lmorchard",
         "stackoverflow": "http://stackoverflow.com/users/lmorchard",
         "linkedin": "https://www.linkedin.com/in/testuser",
-        "pmo": "https://people.mozilla.org/u/testuser",
+        "pmo": "https://people.mozilla.org/p/testuser",
         "facebook": "https://www.facebook.com/test.user",
     }
 
