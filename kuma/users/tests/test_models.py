@@ -18,7 +18,7 @@ class TestUser(UserTestCase):
             "twitter_url": "http://twitter.com/lmorchard",
             "github_url": "http://github.com/lmorchard",
             "stackoverflow_url": "http://stackoverflow.com/users/lmorchard",
-            "pmo_url": "https://people.mozilla.org/u/testuser",
+            "pmo_url": "https://people.mozilla.org/p/testuser",
             "facebook_url": "https://www.facebook.com/test.user",
             "discourse_url": "https://discourse.mozilla.org/u/",
         }
