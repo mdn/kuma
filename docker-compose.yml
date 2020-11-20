@@ -34,7 +34,7 @@ services:
       - DEBUG=${DEBUG:-True}
       - DOMAIN=${DOMAIN:-localhost}
       - ENABLE_RESTRICTIONS_BY_HOST=${ENABLE_RESTRICTIONS_BY_HOST:-False}
-      - ES_URLS=elasticsearch:9200
+      - ES_URLS=${ES_URLS:-elasticsearch:9200}
       - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
       - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
       - REDIS_CACHE_SERVER=redis://redis:6379/3
@@ -96,7 +96,7 @@ services:
       - mysqlvolume:/var/lib/mysql
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.1 # change to 7.10.0 some day
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false

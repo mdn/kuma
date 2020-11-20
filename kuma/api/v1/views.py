@@ -6,18 +6,16 @@ from urllib.parse import urlparse
 import stripe
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.http import (
-    HttpResponse,
-    HttpResponseBadRequest,
-    JsonResponse,
-)
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.utils import translation
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
+from elasticsearch import Elasticsearch
+from elasticsearch_dsl import Q, query, Search
 from ratelimit.decorators import ratelimit
 from raven.contrib.django.models import client as raven_client
-from rest_framework import serializers, status
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
@@ -38,14 +36,6 @@ from kuma.core.ga_tracking import (
 )
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import requests_retry_session, send_mail_retrying
-from kuma.search.filters import (
-    HighlightFilterBackend,
-    KeywordQueryBackend,
-    LanguageFilterBackend,
-    SearchQueryBackend,
-    TagGroupFilterBackend,
-)
-from kuma.search.search import SearchView
 from kuma.users.models import User, UserSubscription
 from kuma.users.newsletter.utils import refresh_is_user_newsletter_subscribed
 from kuma.users.signals import (
@@ -111,45 +101,192 @@ def whoami(request):
     return JsonResponse(data)
 
 
-class APIDocumentSerializer(serializers.Serializer):
-    title = serializers.CharField(read_only=True, max_length=255)
-    slug = serializers.CharField(read_only=True, max_length=255)
-    locale = serializers.CharField(read_only=True, max_length=7)
-    excerpt = serializers.ReadOnlyField(source="get_excerpt")
+def search(request, locale=None):
+    # Validate the input...
+    # XXX Switch to using forms
+    if locale:
+        locales = [locale]
+    else:
+        locales = request.GET.getlist("locales") or []
+    params = {
+        "locales": [x.lower() for x in locales],
+        "include_archive": False,
+        "query": request.GET.get("q"),
+        "size": 10,
+        "page": 1,
+        "sort": "relevance",  # 'best' or 'popularity'
+    }
+    assert params["query"]  # XXX
+
+    results = _find(params)
+
+    return JsonResponse(results)
 
 
-class APILanguageFilterBackend(LanguageFilterBackend):
-    """Override of kuma.search.filters:LanguageFilterBackend that is almost
-    exactly the same except the locale comes from custom code rather than
-    via kuma.core.i18n.get_language_from_request because that can't be used
-    in the API.
+def _find(params, total_only=False, make_suggestions=False, min_suggestion_score=0.8):
 
-    Basically, it's the same exact functionality but ...
-    """
+    # Perform the search
+    client = Elasticsearch(settings.ES_URLS)
+    s = Search(
+        using=client,
+        index="yari_doc",  # XXX settings?
+    )
+    if make_suggestions:
+        # XXX research if it it's better to use phrase suggesters and if
+        # that works
+        # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters.html#phrase-suggester
+        s = s.suggest("title_suggestions", params["query"], term={"field": "title"})
+        s = s.suggest("body_suggestions", params["query"], term={"field": "body"})
 
-    def filter_queryset(self, request, queryset, view):
-        locale = request.GET.get("locale") or settings.LANGUAGE_CODE
-        if locale not in settings.ACCEPTED_LOCALES:
-            raise serializers.ValidationError({"error": "Not a valid locale code"})
-        request.LANGUAGE_CODE = locale
-        return super(APILanguageFilterBackend, self).filter_queryset(
-            request, queryset, view
+    if params["locales"]:
+        s = s.filter("terms", locale=params["locales"])
+    if not params["include_archive"]:
+        s = s.filter("term", archived=False)
+
+    # XXX
+    # The problem with multi_match is that it's not a phrase search
+    # so searching for "javascript yibberish" will basically be the
+    # same as searching for "javascript". And if you ask for suggestions
+    # it'll probably come back with a (term) suggestion of
+    # "javascript jibberish" which, yes, is different but still will just
+    # result in what you would have gotten if you searched for "javascript".
+    # The research to do is to see if it's better do use a boosted (OR) boolean
+    # search with `match_phrase` and make that the primary strategy. Then,
+    # only if nothing can be found, fall back to `multi_match`.
+    # This choice of strategy should probably inform the use of suggestions too.
+    q = Q("multi_match", query=params["query"], fields=["title^10", "body"])
+
+    s = s.highlight_options(
+        pre_tags=["<mark>"],
+        post_tags=["</mark>"],
+        number_of_fragments=3,
+        fragment_size=120,
+        encoder="html",
+    )
+    s = s.highlight("title", "body")
+
+    if params["sort"] == "relevance":
+        s = s.sort("_score", "-popularity")
+        s = s.query(q)
+    elif params["popularity"]:
+        s = s.sort("-popularity", "_score")
+        s = s.query(q)
+    else:
+        popularity_factor = 1
+        boost_mode = 1
+        s = s.query(
+            "function_score",
+            matcher=q,
+            functions=[
+                query.SF(
+                    "field_value_factor",
+                    field="popularity",
+                    factor=popularity_factor,
+                    missing=0.0,
+                )
+            ],
+            boost_mode=boost_mode,
         )
 
+    s = s.source(excludes=["body"])
 
-class APISearchView(SearchView):
-    serializer_class = APIDocumentSerializer
-    renderer_classes = [JSONRenderer]
-    filter_backends = (
-        SearchQueryBackend,
-        KeywordQueryBackend,
-        TagGroupFilterBackend,
-        APILanguageFilterBackend,
-        HighlightFilterBackend,
-    )
+    s = s[params["size"] * (params["page"] - 1) : params["size"] * params["page"]]
+
+    # XXX make this retry with `redo`. Just got to learn from our mistakes first
+    # in really understanding what kinds of errors we're going to get!
+    response = s.execute()
+    if total_only:
+        return response.hits.total
+
+    metadata = {
+        "took_ms": response.took,
+        "total": response.hits.total,
+        "size": params["size"],
+        "page": params["page"],
+    }
+    documents = []
+    for hit in response:
+        try:
+            body_highlight = list(hit.meta.highlight.body)
+        except AttributeError:
+            body_highlight = []
+        try:
+            title_highlight = list(hit.meta.highlight.title)
+        except AttributeError:
+            title_highlight = []
+
+        d = {
+            "mdn_url": hit.meta.id,
+            "score": hit.meta.score,
+            "title": hit.title,
+            "locale": hit.locale,
+            "slug": hit.slug,
+            "popularity": hit.popularity,
+            "archived": hit.archived,
+            "highlight": {
+                "body": body_highlight,
+                "title": title_highlight,
+            },
+        }
+        documents.append(d)
+
+    try:
+        suggest = getattr(response, "suggest")
+    except AttributeError:
+        suggest = None
+
+    suggestions = []
+    if suggest:
+        suggestion_strings = _unpack_suggestions(
+            params["query"],
+            response.suggest,
+            ("body_suggestions", "title_suggestions"),
+        )
+
+        for score, string in suggestion_strings:
+            if score > min_suggestion_score or 1:
+                # Sure, this is different way to spell, but what will it yield
+                # if you actually search it?
+                # XXX Oftentimes, when searching for phrases, like "WORD GOOBLYGOK"
+                # Elasticsearch has already decided to ignore the "GOOBLYGOK" part,
+                # and what you have so far is the 123 search results that exists
+                # thanks to the "WORD" part. So if you re-attempt a search
+                # for "WORD GOOBLYGOOK" (extra "O"), you'll still get the same
+                # exact 123 search results.
+                total = _find(params, total_only=True)
+                if total["value"] > 0:
+                    suggestions.append(
+                        {
+                            "text": string,
+                            "total": total,
+                        }
+                    )
+                    # Since they're sorted by score, it's usually never useful
+                    # to suggestion more than exactly 1 good suggestion.
+                    break
+
+    return {
+        "documents": documents,
+        "metadata": metadata,
+        "suggestions": suggestions,
+    }
 
 
-search = never_cache(APISearchView.as_view())
+def _unpack_suggestions(query, suggest, keys):
+    alternatives = []
+    for key in keys:
+        for suggestion in getattr(suggest, key, []):
+            for option in suggestion.options:
+                alternatives.append(
+                    (
+                        option.score,
+                        query[0 : suggestion.offset]
+                        + option.text
+                        + query[suggestion.offset + suggestion.length :],
+                    )
+                )
+    alternatives.sort(reverse=True)  # highest score first
+    return alternatives
 
 
 @ratelimit(key="user_or_ip", rate="10/d", block=True)
