@@ -8,3 +8,6 @@ To report a suspected security-related vulnerability within [MDN Web Docs](https
 ```
 This report is about a problem that is putting users at risk. It should be kept hidden from the public until it is resolved.
 ```
+#debug #delete
+
+is:closed
