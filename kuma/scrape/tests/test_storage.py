@@ -334,7 +334,7 @@ def test_save_user(django_user_model):
         "github_url": "https://github.com/joedev1999",
         "stackoverflow_url": "http://stackoverflow.com/users/1/joedev1999",
         "linkedin_url": "http://www.linkedin.com/in/joedev1999",
-        "mozillians_url": "http://mozillians.org/u/joedev/",
+        "pmo_url": "https://people.mozilla.org/p/joedev/",
         "date_joined": datetime(1999, 1, 1, 10, 40, 23),
     }
     Storage().save_user(data)
@@ -348,7 +348,7 @@ def test_save_user(django_user_model):
     assert user.github_url == "https://github.com/joedev1999"
     assert user.stackoverflow_url == ("http://stackoverflow.com/users/1/joedev1999")
     assert user.linkedin_url == "http://www.linkedin.com/in/joedev1999"
-    assert user.mozillians_url == "http://mozillians.org/u/joedev/"
+    assert user.pmo_url == "https://people.mozilla.org/p/joedev/"
     assert user.date_joined == datetime(1999, 1, 1, 10, 40, 23)
 
 

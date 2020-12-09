@@ -101,7 +101,8 @@ def create_stripe_customer_and_subscription_for_user(user, email, stripe_token):
     should_create_subscription = not subscription
     if should_create_subscription:
         subscription = stripe.Subscription.create(
-            customer=customer.id, items=[{"plan": settings.STRIPE_PLAN_ID}],
+            customer=customer.id,
+            items=[{"plan": settings.STRIPE_PLAN_ID}],
         )
 
     UserSubscription.set_active(user, subscription.id)
@@ -159,5 +160,6 @@ def create_missing_stripe_webhook():
             return
 
     stripe.WebhookEndpoint.create(
-        url=url, enabled_events=events,
+        url=url,
+        enabled_events=events,
     )

@@ -1599,7 +1599,10 @@ class Migration(migrations.Migration):
                 verbose_name="username",
             ),
         ),
-        migrations.RemoveField(model_name="user", name="content_flagging_email",),
+        migrations.RemoveField(
+            model_name="user",
+            name="content_flagging_email",
+        ),
         migrations.AlterField(
             model_name="user",
             name="locale",

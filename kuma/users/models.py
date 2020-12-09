@@ -80,28 +80,53 @@ class User(AbstractUser):
             )
         },
     )
-    title = models.CharField(verbose_name=_("Title"), max_length=255, blank=True,)
-    fullname = models.CharField(verbose_name=_("Name"), max_length=255, blank=True,)
-    organization = models.CharField(
-        verbose_name=_("Organization"), max_length=255, blank=True,
+    title = models.CharField(
+        verbose_name=_("Title"),
+        max_length=255,
+        blank=True,
     )
-    location = models.CharField(verbose_name=_("Location"), max_length=255, blank=True,)
-    bio = models.TextField(verbose_name=_("About Me"), blank=True,)
+    fullname = models.CharField(
+        verbose_name=_("Name"),
+        max_length=255,
+        blank=True,
+    )
+    organization = models.CharField(
+        verbose_name=_("Organization"),
+        max_length=255,
+        blank=True,
+    )
+    location = models.CharField(
+        verbose_name=_("Location"),
+        max_length=255,
+        blank=True,
+    )
+    bio = models.TextField(
+        verbose_name=_("About Me"),
+        blank=True,
+    )
     irc_nickname = models.CharField(
-        verbose_name=_("IRC nickname"), max_length=255, blank=True,
+        verbose_name=_("IRC nickname"),
+        max_length=255,
+        blank=True,
     )
 
     is_newsletter_subscribed = models.BooleanField(default=False)
 
     WEBSITE_VALIDATORS = {
         "website": validators.RegexValidator(
-            r"^https?://", _("Enter a valid website URL."), "invalid",
+            r"^https?://",
+            _("Enter a valid website URL."),
+            "invalid",
         ),
         "twitter": validators.RegexValidator(
-            r"^https?://twitter\.com/", _("Enter a valid Twitter URL."), "invalid",
+            r"^https?://twitter\.com/",
+            _("Enter a valid Twitter URL."),
+            "invalid",
         ),
         "github": validators.RegexValidator(
-            r"^https?://github\.com/", _("Enter a valid GitHub URL."), "invalid",
+            r"^https?://github\.com/",
+            _("Enter a valid GitHub URL."),
+            "invalid",
         ),
         "stackoverflow": validators.RegexValidator(
             r"^https?://([a-z]{2}\.)?stackoverflow\.com/users/",
@@ -113,9 +138,9 @@ class User(AbstractUser):
             _("Enter a valid LinkedIn URL."),
             "invalid",
         ),
-        "mozillians": validators.RegexValidator(
-            r"^https?://mozillians\.org/u/",
-            _("Enter a valid Mozillians URL."),
+        "pmo": validators.RegexValidator(
+            r"^https?://people\.mozilla\.org/",
+            _("Enter a valid PMO URL."),
             "invalid",
         ),
         "facebook": validators.RegexValidator(
@@ -132,23 +157,38 @@ class User(AbstractUser):
 
     # a bunch of user URLs
     website_url = models.TextField(
-        _("Website"), blank=True, validators=[WEBSITE_VALIDATORS["website"]],
+        _("Website"),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS["website"]],
     )
-    mozillians_url = models.TextField(
-        _("Mozillians"), blank=True, validators=[WEBSITE_VALIDATORS["mozillians"]],
+    pmo_url = models.TextField(
+        _("Mozilla People Directory"),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS["pmo"]],
     )
     github_url = models.TextField(
-        _("GitHub"), blank=True, validators=[WEBSITE_VALIDATORS["github"]],
+        _("GitHub"),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS["github"]],
     )
-    is_github_url_public = models.BooleanField(_("Public GitHub URL"), default=False,)
+    is_github_url_public = models.BooleanField(
+        _("Public GitHub URL"),
+        default=False,
+    )
     twitter_url = models.TextField(
-        _("Twitter"), blank=True, validators=[WEBSITE_VALIDATORS["twitter"]],
+        _("Twitter"),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS["twitter"]],
     )
     linkedin_url = models.TextField(
-        _("LinkedIn"), blank=True, validators=[WEBSITE_VALIDATORS["linkedin"]],
+        _("LinkedIn"),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS["linkedin"]],
     )
     facebook_url = models.TextField(
-        _("Facebook"), blank=True, validators=[WEBSITE_VALIDATORS["facebook"]],
+        _("Facebook"),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS["facebook"]],
     )
     stackoverflow_url = models.TextField(
         _("Stack Overflow"),
@@ -156,7 +196,9 @@ class User(AbstractUser):
         validators=[WEBSITE_VALIDATORS["stackoverflow"]],
     )
     discourse_url = models.TextField(
-        _("Discourse"), blank=True, validators=[WEBSITE_VALIDATORS["discourse"]],
+        _("Discourse"),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS["discourse"]],
     )
     stripe_customer_id = models.CharField(max_length=255, blank=True)
 

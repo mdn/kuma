@@ -593,7 +593,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    "VERSION": "2020.25",
+    "VERSION": "2020.30",
     "BASE_DIR": BASE_DIR,
     "TEXT_DOMAIN": "django",
     # Tells the extract script what files to look for l10n in and what function
@@ -691,10 +691,6 @@ PIPELINE_CSS = {
     "banner_developer_needs": {
         "source_filenames": ("styles/components/banners/developer-needs.scss",),
         "output_filename": "build/styles/developer-needs.css",
-    },
-    "banner_user_interviews": {
-        "source_filenames": ("styles/components/banners/user-interviews.scss",),
-        "output_filename": "build/styles/user-interviews.css",
     },
     "banner_mdn_subscriptions": {
         "source_filenames": ("styles/components/banners/mdn-subscriptions.scss",),
@@ -1421,7 +1417,10 @@ CONSTANCE_CONFIG = dict(
         "kumascript. Passed along in a Cache-Control: max-age={value} header, "
         "which tells kumascript whether or not to serve up a cached response.",
     ),
-    DIFF_CONTEXT_LINES=(0, "Number of lines of context to show in diff display.",),
+    DIFF_CONTEXT_LINES=(
+        0,
+        "Number of lines of context to show in diff display.",
+    ),
     FEED_DIFF_CONTEXT_LINES=(
         3,
         "Number of lines of context to show in feed diff display.",
@@ -1578,7 +1577,8 @@ SESSION_CLEANUP_CHUNK_SIZE = config(
 
 # Email address from which welcome emails will be sent
 WELCOME_EMAIL_FROM = config(
-    "WELCOME_EMAIL_FROM", default="MDN team <mdn-admins@mozilla.org>",
+    "WELCOME_EMAIL_FROM",
+    default="MDN team <mdn-admins@mozilla.org>",
 )
 # If this fails, SMTP will probably also fail.
 # E.g. https://github.com/mdn/kuma/issues/7121
@@ -1904,3 +1904,9 @@ SITEMAP_USE_S3 = config("SITEMAP_USE_S3", cast=bool, default=True)
 ADDITIONAL_NEXT_URL_ALLOWED_HOSTS = config(
     "ADDITIONAL_NEXT_URL_ALLOWED_HOSTS", default=None
 )
+
+# As of Oct 2020, we might not enable subscriptions at all. There are certain
+# elements of Kuma that exposes subscriptions even if all the Waffle flags and
+# switches says otherwise. For example, the payments pages are skeletons for
+# React apps. This boolean settings disables all of that.
+ENABLE_SUBSCRIPTIONS = config("ENABLE_SUBSCRIPTIONS", cast=bool, default=False)

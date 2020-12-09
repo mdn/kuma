@@ -529,7 +529,7 @@ def user_delete(request, username):
         user.irc_nickname = ""
         user.website_url = ""
         user.github_url = ""
-        user.mozillians_url = ""
+        user.pmo_url = ""
         user.twitter_url = ""
         user.linkedin_url = ""
         user.facebook_url = ""
@@ -714,7 +714,9 @@ class SignupView(BaseSignupView):
 
             if saved_user.username != form.initial["username"]:
                 track_event(
-                    CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT, "username edit",
+                    CATEGORY_SIGNUP_FLOW,
+                    ACTION_PROFILE_EDIT,
+                    "username edit",
                 )
 
         return helpers.complete_social_signup(self.request, self.sociallogin)
@@ -727,7 +729,9 @@ class SignupView(BaseSignupView):
         """
         if form.errors.get("username") is not None:
             track_event(
-                CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, "username",
+                CATEGORY_SIGNUP_FLOW,
+                ACTION_PROFILE_EDIT_ERROR,
+                "username",
             )
         return super().form_invalid(form)
 

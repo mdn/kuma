@@ -153,12 +153,12 @@ def assert_valid_url(
 # https://github.com/mozilla/bedrock/blob/master/tests/redirects/base.py
 def flatten(urls_list):
     """Take a list of dicts which may itself contain some lists of dicts, and
-       return a generator that will return just the dicts in sequence.
+    return a generator that will return just the dicts in sequence.
 
-       Example:
+    Example:
 
-       list(flatten([{'dude': 'jeff'}, [{'walter': 'walter'}, {'donny': 'dead'}]]))
-       > [{'dude': 'jeff'}, {'walter': 'walter'}, {'donny': 'dead'}]
+    list(flatten([{'dude': 'jeff'}, [{'walter': 'walter'}, {'donny': 'dead'}]]))
+    > [{'dude': 'jeff'}, {'walter': 'walter'}, {'donny': 'dead'}]
     """
     for url in urls_list:
         if isinstance(url, dict):

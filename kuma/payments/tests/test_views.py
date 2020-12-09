@@ -17,6 +17,15 @@ def test_payments_index(client, settings):
 
 
 @pytest.mark.django_db
+def test_payments_index_disabled(client, settings):
+    """Viewing the payments index page doesn't require you to be logged in.
+    Payments page shows support email and header."""
+    settings.ENABLE_SUBSCRIPTIONS = False
+    response = client.get(reverse("payments_index"))
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
 def test_payments_url_fixes(client):
     """These tests just make sure that the use of trailing slashes are correct."""
     url = reverse("payments_index")

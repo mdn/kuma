@@ -32,7 +32,10 @@ class UserEditForm(forms.ModelForm):
         choices=COMMON_GROUPED_CHOICES,
         required=False,
     )
-    beta = forms.BooleanField(label=_("Beta tester"), required=False,)
+    beta = forms.BooleanField(
+        label=_("Beta tester"),
+        required=False,
+    )
     username = forms.RegexField(
         label=_("Username"),
         regex=USERNAME_REGEX,
@@ -84,13 +87,13 @@ class UserEditForm(forms.ModelForm):
             }
         ),
     )
-    mozillians_url = forms.CharField(
-        label=_("Mozillians"),
+    pmo_url = forms.CharField(
+        label=_("Mozilla People Directory"),
         required=False,
-        validators=[User.WEBSITE_VALIDATORS["mozillians"]],
+        validators=[User.WEBSITE_VALIDATORS["pmo"]],
         widget=forms.TextInput(
             attrs={
-                "placeholder": "https://mozillians.org/u/",
+                "placeholder": "https://people.mozilla.org/p/u/",
                 "data-fa-icon": "icon-group",
             }
         ),
@@ -134,7 +137,7 @@ class UserEditForm(forms.ModelForm):
             "is_github_url_public",
             "stackoverflow_url",
             "linkedin_url",
-            "mozillians_url",
+            "pmo_url",
             "facebook_url",
             "discourse_url",
             "username",

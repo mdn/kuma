@@ -25,7 +25,7 @@ def test_server_side_render(
     mock_get_l10n_data, mock_dumps, locale, mock_requests, settings
 ):
     """For server-side rendering expect a div with some content and
-       a script with less data than we'd get for client-side rendering
+    a script with less data than we'd get for client-side rendering
     """
 
     mock_dumps.side_effect = sorted_json_dumps
