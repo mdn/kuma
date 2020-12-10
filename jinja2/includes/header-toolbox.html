@@ -1,28 +1,5 @@
 <div id="toolbox" class="toolbox">
   <ul>
-    {% if user.is_authenticated %}
-        <li class="nav-tools">
-            <a href="{{ wiki_url('MDN/Doc_status') }}">
-                {{ _('Tools') }}{% include 'includes/icons/arrows/caret-down.svg' %}
-            </a>
-            <div class="submenu submenu-cols-2 js-submenu" id="nav-tools-submenu">
-                <div class="submenu-column">
-                    <div class="title">{{ _('Contribute to MDN') }}</div>
-                    <ul>
-                        <li><a href="{{ wiki_url('MDN/Getting_started') }}">{{ _('Get started') }}</a></li>
-                        <li><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Review or localize docs') }}</a></li>
-                    </ul>
-                </div>
-                <div class="submenu-column last">
-                    <div class="title">{{ _('Site Tools') }}</div>
-                    <ul>
-                        <li><a href="{{ url('dashboards.revisions') }}">{{ _('Revision dashboard') }}</a></li>
-                        <li><a href="{{ wiki_url('MDN/Doc_status') }}">{{ _('Documentation status') }}</a></li>
-                    </ul>
-                </div>
-            </div>
-        </li>
-    {% endif %}
     <li class="nav-login">{% include "includes/login.html" %}</li>
   </ul>
 </div>
