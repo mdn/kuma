@@ -310,9 +310,10 @@ MT_TO_KUMA_LOCALE_MAP = {
     "fa": "fa",
 }
 
+LANGUAGE_COOKIE_NAME = "preferredlocale"
 LANGUAGE_COOKIE_DOMAIN = DOMAIN
 # The number of seconds we are keeping the language preference cookie. (1 year)
-LANGUAGE_COOKIE_AGE = 365 * 24 * 60 * 60
+LANGUAGE_COOKIE_AGE = 3 * 365 * 24 * 60 * 60
 
 SITE_ID = config("SITE_ID", default=1, cast=int)
 
