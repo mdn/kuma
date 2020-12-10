@@ -1,7 +1,9 @@
 version: '2.1'
 services:
   worker: &worker
-    image: mdnwebdocs/kuma_base
+    build:
+      context: .
+      dockerfile: docker/images/kuma_base/Dockerfile
     command: ./scripts/start-worker
     user: ${UID:-1000}
     volumes:
@@ -69,6 +71,22 @@ services:
       - mockga
     ports:
       - "8000:8000"
+
+  # Used for ci testing
+  testing:
+    <<: *worker
+    command: bash
+    depends_on:
+      - mysql
+      - elasticsearch
+      - redis
+      - ssr
+      - kumascript
+      - minio
+      - minio_setup
+    volumes:
+      - ./:/app
+
 
   # ssr is a Node server that performs server-side rendering of our React UI
   ssr:

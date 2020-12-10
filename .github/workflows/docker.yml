@@ -1,0 +1,69 @@
+name: Docker testing
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      UID: 0
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Environment info
+        run: |
+          docker-compose --version
+
+      - name: Build docker
+        run: docker-compose build
+
+      - name: Compile locales
+        run: docker-compose run testing make localecompile
+
+      - name: Build static
+        run: docker-compose run testing make build-static
+
+      - name: DB migrations
+        run: |
+          docker-compose run testing ./manage.py migrate
+          # Essentially compares **/models.py with **/migrations/*.py and
+          # makes sure the developer didn't forget to create a new migration.
+          docker-compose run testing ./manage.py makemigrations --check --dry-run
+
+      - name: Run Python tests
+        run: |
+          # TODO: Run the `make coveragetest` only if it's a pull request.
+          # We might be able to use something
+          # like `if [ ${{ github.head_ref}} eq 'master']` but not sure.
+          # Slower...
+          docker-compose run testing make coveragetest
+          # Faster...
+          #docker-compose run testing make test
+
+      - name: Submit code coverage
+        run: |
+          bash <(curl -s --retry 3 --retry-connrefused https://codecov.io/bash)
+
+      - name: Run JavaScript tests
+        run: |
+          docker-compose run testing yarn test-ci
+
+      - name: Run localerefresh
+        run: |
+          set -e
+          docker-compose run testing make localeextract
+          docker-compose run testing make localetest
+          docker-compose run testing make localecompile
+
+          cd locale
+          export GIT_PAGER=cat
+          git diff -G "^msgid " templates/LC_MESSAGES
