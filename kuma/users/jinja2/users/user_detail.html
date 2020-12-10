@@ -30,53 +30,6 @@
         {% include "users/includes/user_avatar.html" %}
       </div>
     </section><!-- /#user-head -->
-
-          <section id="docs-activity" class="user-section">
-            <header>
-              <h2>{{ _("Recent Docs Activity") }}</h2> <a href="{{ url('dashboards.revisions') }}?user={{ detail_user.username }}" class="button">{{ _('View all activity') }}</a>
-            </header>
-
-            <table class="activity">
-              <thead>
-                <th scope="col" class="activity-page">{{ _("Page") }}</th>
-                <th scope="col" class="activity-date">{{ _("Date") }}</th>
-                <th scope="col" class="activity-summary">{{ _("Comment") }}</th>
-              </thead>
-              <tbody>
-                {% for revision in detail_user.wiki_revisions() %}
-                <tr>
-                  <th scope="row">
-                      <h3><a href="{{ revision.document.get_absolute_url() }}">{{ revision.document.title }}</a></h3>
-                      <ul class="activity-actions">
-                          <li><a href="{{ revision.document.get_edit_url() }}" class="edit" rel="nofollow">{{ _("Edit page") }}</a></li>
-                          <li>{% if revision.previous %}<a href="{{ url('wiki.compare_revisions', revision.document.slug, locale=revision.document.locale) }}?from={{ revision.previous.id }}&amp;to={{ revision.id }}" rel="nofollow" class="diff">{{ _("View complete diff") }}</a>{% endif %}</li>
-                          <li><a href="{{ url('wiki.document_revisions', revision.document.slug, locale=revision.document.locale) }}" class="history" rel="nofollow">{{ _("View page history") }}</a></li>
-                      </ul>
-                  </th>
-                  <td>{{ datetimeformat(revision.created, format='date') }}<br />
-                      {{ datetimeformat(revision.created, format='time') }}</td>
-                  {# TODO: auto-generate smart comment like "N words changed." #}
-                  <td>{{ format_comment(revision, previous_revision=revision.previous) }}</td>
-                </tr>
-                {% else %}
-                <tr>
-                    <th scope="row">
-                    {% if is_me %}
-                        {% trans docs_url=wiki_url('MDN/Contribute/Howto/Create_and_edit_pages') %}
-                        <p class="none">You haven't contributed to any MDN docs. <a href="{{ docs_url }}">Pitch in!</a></p>
-                        {% endtrans %}
-                    {% else %}
-                        <p class="none">{{ _('This user has no activity.') }}</p>
-                    {% endif %}
-                    </th>
-                </tr>
-                {% endfor %}
-              </tbody>
-              <tfoot>
-              </tfoot>
-            </table>
-          </section><!-- /#docs-activity -->
-
   </section><!-- /#content-main -->
 </div>
 </section>
