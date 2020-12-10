@@ -481,6 +481,7 @@ def user_edit(request, username):
                     max_age=settings.LANGUAGE_COOKIE_AGE,
                     path=settings.LANGUAGE_COOKIE_PATH,
                     domain=settings.LANGUAGE_COOKIE_DOMAIN,
+                    secure=settings.LANGUAGE_COOKIE_SECURE,
                 )
             return response
 
