@@ -395,9 +395,6 @@ exports[`Header snapshot 1`] = `
       method="get"
       role="search"
     >
-      <svg-mock
-        className="search-icon"
-      />
       <label
         className="visually-hidden"
         htmlFor="main-q"
@@ -412,6 +409,9 @@ exports[`Header snapshot 1`] = `
         placeholder="Search MDN"
         required={true}
         type="search"
+      />
+      <svg-mock
+        className="search-icon"
       />
     </form>
     <button
