@@ -48,8 +48,6 @@ export default function Search({ initialQuery }: Props) {
                 method="get"
                 role="search"
             >
-                <SearchIcon className="search-icon" />
-
                 <label htmlFor="main-q" className="visually-hidden">
                     {gettext('Search MDN')}
                 </label>
@@ -63,6 +61,8 @@ export default function Search({ initialQuery }: Props) {
                     pattern="(.|\s)*\S(.|\s)*"
                     required
                 />
+
+                <SearchIcon className="search-icon" />
             </form>
             <button className="toggle-form" onClick={handleClick}>
                 {/* In order for transitions to work correctly we need
