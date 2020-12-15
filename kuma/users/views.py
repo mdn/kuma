@@ -473,7 +473,17 @@ def user_edit(request, username):
                 # If there's no Beta Testers group, ignore that logic
                 pass
 
-            return redirect(edit_user)
+            response = redirect(edit_user)
+            if edit_user.locale:
+                response.set_cookie(
+                    key=settings.LANGUAGE_COOKIE_NAME,
+                    value=edit_user.locale,
+                    max_age=settings.LANGUAGE_COOKIE_AGE,
+                    path=settings.LANGUAGE_COOKIE_PATH,
+                    domain=settings.LANGUAGE_COOKIE_DOMAIN,
+                    secure=settings.LANGUAGE_COOKIE_SECURE,
+                )
+            return response
 
     # Needed so the template can know to show a warning message and the
     # template doesn't want to do code logic to look into the 'request' object.

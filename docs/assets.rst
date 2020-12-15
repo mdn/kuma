@@ -297,7 +297,7 @@ The ``staticfiles`` app is configured by Django settings:
      which avoids combining files when collecting them.
    * Production server (``DEBUG=False``): kuma.core.pipeline.storage.ManifestPipelineStorage_,
      which combines packaged files, hashes the names, and creates a manifest.
-   * Testing (``pytest``, TravisCI, etc.) and ``make`` commands: pipeline.storage.PipelineStorage_,
+   * Testing (``pytest`` etc.) and ``make`` commands: pipeline.storage.PipelineStorage_,
      which combines packaged files but does not hash the names.
 
 .. _django.contrib.staticfiles: cs.djangoproject.com/en/1.11/ref/contrib/staticfiles/

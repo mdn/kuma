@@ -141,7 +141,7 @@ Before deploying, a staff member should:
 
 .. _Dennis: https://github.com/willkg/dennis
 .. _Jenkins: https://ci.us-west-2.mdn.mozit.cloud
-.. _Kuma: https://travis-ci.com/mdn/kuma/
+.. _Kuma: https://github.com/mdn/kuma/actions
 .. _KumaScript: https://travis-ci.org/mdn/kumascript
 .. _Pontoon: https://pontoon.mozilla.org/projects/mdn/
 .. _`Kuma images`: https://hub.docker.com/r/mdnwebdocs/kuma/tags/

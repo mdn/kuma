@@ -39,7 +39,7 @@ steps are:
 3. Make your changes, and create one or more commits.
 4. Push your branch to your fork.
 5. Open a pull request (PR).
-6. Fix any issues identified by [TravisCI][travisci], our automated testing
+6. Fix any issues identified by [GitHub Actions][githubactions], our automated testing
    provider.
 7. Fix any issues identified by code review.
 
@@ -48,7 +48,7 @@ and give feedback, or to tell you when we plan to review it.
 
 [gh-flow]: https://guides.github.com/introduction/flow/
 [install]: https://kuma.readthedocs.io/en/latest/installation.html
-[travisci]: https://travis-ci.com/mdn/kuma/pull_requests
+[githubactions]: https://github.com/mdn/kuma/actions
 
 Conventions
 ===========
@@ -171,8 +171,8 @@ MDN uses automated tests to prevent regressions and ensure that new code does
 what it claims. Tests are required for new functionality, as measured by code
 coverage tools, and all tests must pass before merging.
 
-We use [TravisCI][travisci] to automatically run tests and quality checks when
-a pull request is opened. If TravisCI identifies problems, we expect them to
+We use [GitHub Actions][githubactions] to automatically run tests and quality checks when
+a pull request is opened. If GitHub Actions identifies problems, we expect them to
 be fixed before the code review starts.
 
 It is a good idea to run the tests that apply to your change before opening a
@@ -197,7 +197,7 @@ We **prefer** test functions, a small number of global
 that customize the global fixtures, and using [assert][assert] for test
 assertions.
 
-[travisci]: https://travis-ci.com/mdn/kuma/pull_requests
+[githubactions]: https://travis-ci.com/mdn/kuma/pull_requests
 [testing]: https://kuma.readthedocs.io/en/latest/tests.html#running-the-test-suite
 [testcase]: https://docs.djangoproject.com/en/1.8/topics/testing/tools/#testcase
 [fixture_files]: https://docs.djangoproject.com/en/1.8/topics/testing/tools/#fixture-loading

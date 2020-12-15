@@ -310,9 +310,10 @@ MT_TO_KUMA_LOCALE_MAP = {
     "fa": "fa",
 }
 
-LANGUAGE_COOKIE_DOMAIN = DOMAIN
-# The number of seconds we are keeping the language preference cookie. (1 year)
-LANGUAGE_COOKIE_AGE = 365 * 24 * 60 * 60
+LANGUAGE_COOKIE_NAME = "preferredlocale"
+# The number of seconds we are keeping the language preference cookie. (3 years)
+LANGUAGE_COOKIE_AGE = 3 * 365 * 24 * 60 * 60
+LANGUAGE_COOKIE_SECURE = "localhost" not in DOMAIN
 
 SITE_ID = config("SITE_ID", default=1, cast=int)
 
@@ -593,7 +594,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    "VERSION": "2020.29",
+    "VERSION": "2020.30",
     "BASE_DIR": BASE_DIR,
     "TEXT_DOMAIN": "django",
     # Tells the extract script what files to look for l10n in and what function

@@ -4,7 +4,7 @@
     "repository": {
         "url": "https://github.com/mdn/kuma",
         "license": "MPL-2.0",
-        "tests": "https://travis-ci.com/mdn/kuma"
+        "tests": "https://github.com/mdn/kuma/actions"
     },
     "participate": {
         "home": "https://wiki.mozilla.org/MDN",
