@@ -104,6 +104,12 @@ def whoami(request):
 def search(request, locale=None):
     # Validate the input...
     # XXX Switch to using forms
+    form = SearchForm(request.GET)
+    if not form.is_valid():
+        print(form.errors)
+        print(dir(form.errors))
+        raise Exception("stop")
+
     if locale:
         locales = [locale]
     else:
