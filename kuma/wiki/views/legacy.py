@@ -77,15 +77,7 @@ def mindtouch_to_kuma_url(locale, path):
         if namespace in LEGACY_MINDTOUCH_NAMESPACES:
             return mindtouch_namespace_to_kuma_url(locale, namespace, slug)
 
-    # Last attempt: we try the request locale as the document locale,
-    # and see if that matches something.
-    try:
-        doc = Document.objects.get(slug=path, locale=locale)
-    except Document.DoesNotExist:
-        return None
-
-    location = doc.get_absolute_url()
-    return location
+    return None
 
 
 @shared_cache_control(s_maxage=60 * 60 * 24 * 30)
