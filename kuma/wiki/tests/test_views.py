@@ -2807,31 +2807,6 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
             assert 301 == resp.status_code
             assert resp["Location"] == namespace_test["kuma"]
 
-    def test_document_urls(self):
-        """Check the url redirect to proper document when the url like
-        /<locale>/<document_slug>"""
-        d = document(locale="zh-CN")
-        d.save()
-        mt_url = "/{locale}/{slug}".format(locale=d.locale, slug=d.slug)
-        resp = self.client.get(mt_url, follow=True, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 200
-
-        # Check the last redirect chain url is correct document url
-        last_url = resp.redirect_chain[-1][0]
-        assert last_url == d.get_absolute_url()
-
-    def test_view_param(self):
-        d = document()
-        d.locale = settings.WIKI_DEFAULT_LANGUAGE
-        d.slug = "HTML/HTML5"
-        d.title = "HTML 5"
-        d.save()
-        mt_url = "/en-US/%s?view=edit" % (d.slug,)
-        resp = self.client.get(mt_url, HTTP_HOST=settings.WIKI_HOST)
-        assert 301 == resp.status_code
-        expected_url = d.get_absolute_url("wiki.edit")
-        assert resp["Location"] == expected_url
-
 
 @override_config(KUMASCRIPT_TIMEOUT=5.0, KUMASCRIPT_MAX_AGE=600)
 class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
