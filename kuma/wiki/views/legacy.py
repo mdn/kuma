@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from kuma.core.decorators import shared_cache_control
 
 from ..constants import LEGACY_MINDTOUCH_NAMESPACES
-from ..models import Document, Revision
+from ..models import Revision
 
 
 # Legacy MindTouch redirects.
