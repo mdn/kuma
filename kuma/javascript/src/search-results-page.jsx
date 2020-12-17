@@ -86,15 +86,9 @@ function ResultsMeta({
     );
 }
 
-function Results({
-    locale,
-    results,
-}: {
-    locale: string,
-    results: SearchResults,
-}) {
+function Results({ results }: { results: SearchResults }) {
     return (results.documents || []).map((result) => {
-        const path = `/${locale}/docs/${result.slug}`;
+        const path = `/${result.locale}/docs/${result.slug}`;
         return (
             <div className="result-container" key={result.slug}>
                 <div className="result">
@@ -159,7 +153,7 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                             <>
                                 <ResultsMeta {...{ results, locale }} />
 
-                                <Results {...{ results, locale }} />
+                                <Results {...{ results }} />
 
                                 {(results.previous || results.next) && (
                                     <Pager
