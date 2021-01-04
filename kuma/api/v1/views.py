@@ -27,6 +27,7 @@ from waffle import flag_is_active
 from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
+from kuma.api.v1.decorators import allow_CORS_GET
 from kuma.api.v1.serializers import BCSignalSerializer, UserDetailsSerializer
 from kuma.core.email_utils import render_email
 from kuma.core.ga_tracking import (
@@ -149,7 +150,7 @@ class APISearchView(SearchView):
     )
 
 
-search = never_cache(APISearchView.as_view())
+search = never_cache(allow_CORS_GET(APISearchView.as_view()))
 
 
 @ratelimit(key="user_or_ip", rate="10/d", block=True)
