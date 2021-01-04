@@ -2,9 +2,9 @@
 Kuma
 ====
 
-.. image:: https://github.com/mdn/kuma/workflows/Docker%20Testing/badge.svg
-   :target: https://github.com/mdn/kuma/actions?query=workflow%3A%22Docker+Testing%22
-   :alt: Python Lints
+.. image:: https://github.com/mdn/kuma/workflows/Docker%20testing/badge.svg
+   :target: https://github.com/mdn/kuma/actions?query=workflow%3A%22Docker+testing%22
+   :alt: Docker testing
 
 .. image:: https://github.com/mdn/kuma/workflows/Python%20Lints/badge.svg
    :target: https://github.com/mdn/kuma/actions?query=workflow%3A%22Python+Lints%22
