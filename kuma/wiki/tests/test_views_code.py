@@ -1,5 +1,4 @@
 import pytest
-from waffle.testutils import override_switch
 
 from kuma.attachments.models import Attachment
 from kuma.attachments.tests import make_test_file
