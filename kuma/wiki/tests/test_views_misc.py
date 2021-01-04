@@ -3,7 +3,6 @@ from urllib.parse import urlencode
 
 import pytest
 from django.conf import settings
-from waffle.testutils import override_switch
 
 from kuma.core.tests import assert_shared_cache_header
 from kuma.core.urlresolvers import reverse

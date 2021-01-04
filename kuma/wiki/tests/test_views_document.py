@@ -19,7 +19,6 @@ from django.contrib.auth.models import Permission
 from django.test.client import BOUNDARY, encode_multipart, MULTIPART_CONTENT
 from django.utils.http import quote_etag
 from pyquery import PyQuery as pq
-from waffle.testutils import override_switch
 
 from kuma.authkeys.models import Key
 from kuma.core.models import IPBan

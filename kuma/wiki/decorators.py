@@ -2,7 +2,7 @@ from functools import wraps
 
 import newrelic.agent
 from django.http import Http404, HttpResponsePermanentRedirect
-from waffle import flag_is_active, switch_is_active
+from waffle import flag_is_active
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
