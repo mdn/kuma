@@ -628,8 +628,7 @@ def test_json(doc_hierarchy, client, params_case):
         params = dict(title="nonexistent document title")
 
     url = reverse("wiki.json")
-    with override_switch("application_ACAO", True):
-        response = client.get(url, params)
+    response = client.get(url, params)
 
     assert response.status_code == expected_status_code
     if response.status_code == 404:

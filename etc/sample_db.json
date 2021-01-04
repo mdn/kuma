@@ -380,11 +380,6 @@
         "note": "Send welcome email to new user registrations",
         "created": "2014-08-07"
       }, {
-        "name": "application_ACAO",
-        "active": true,
-        "note": "Enable Access-Control-Allow-Origin=0 header",
-        "created": "2014-12-23"
-      }, {
         "name": "store_revision_ips",
         "active": true,
         "note": "Store the IP addresses and user agents of revision authors, for spam detection purposes",
