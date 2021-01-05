@@ -1,28 +1,20 @@
-import json
 import unicodedata
 
 import pytest
 import requests_mock
 from constance.test import override_config
-from django.contrib.auth.models import Permission
-from django.core import mail
 from django.test import RequestFactory
 from waffle.models import Flag
-from waffle.testutils import override_flag
 
-from kuma.core.urlresolvers import reverse
 from kuma.spam.constants import (
     CHECK_URL,
-    SPAM_ADMIN_FLAG,
     SPAM_CHECKS_FLAG,
-    SPAM_SPAMMER_FLAG,
-    SPAM_TESTING_FLAG,
     VERIFY_URL,
 )
 from kuma.users.tests import UserTestCase
 
 from ..forms import AkismetHistoricalData, DocumentForm, RevisionForm, TreeMoveForm
-from ..models import DocumentSpamAttempt, Revision, RevisionIP
+from ..models import Revision, RevisionIP
 from ..tests import document, normalize_html, revision
 
 

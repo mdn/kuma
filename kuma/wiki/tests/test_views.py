@@ -10,7 +10,6 @@ from constance.test import override_config
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
-from django.template.loader import render_to_string
 from pyquery import PyQuery as pq
 from waffle.testutils import override_flag
 
@@ -23,7 +22,6 @@ from kuma.core.tests import (
 )
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
-from kuma.spam.constants import SPAM_CHECKS_FLAG, SPAM_SUBMISSIONS_FLAG, VERIFY_URL
 from kuma.users.tests import UserTestCase
 
 from . import (
@@ -38,7 +36,7 @@ from . import (
 from ..content import get_seo_description
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
-from ..models import Document, RevisionIP
+from ..models import Document
 from ..templatetags.jinja_helpers import get_compare_url
 from ..views.document import _get_seo_parent_title
 
