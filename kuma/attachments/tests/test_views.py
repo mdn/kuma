@@ -309,7 +309,10 @@ def test_raw_file_requires_attachment_host(client, settings, file_attachment):
     response = client.get(url, HTTP_HOST="testserver")
     assert response.status_code == 301
     assert "public" in response["Cache-Control"]
-    assert "max-age=900" in response["Cache-Control"]
+    assert (
+        f"max-age={settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE}"
+        in response["Cache-Control"]
+    )
     assert response["Location"] == url
     assert "Vary" not in response
 
@@ -333,7 +336,10 @@ def test_raw_file_requires_attachment_host(client, settings, file_attachment):
     assert response["x-frame-options"] == f"ALLOW-FROM {settings.DOMAIN}"
     assert response["Last-Modified"] == convert_to_http_date(created)
     assert "public" in response["Cache-Control"]
-    assert "max-age=900" in response["Cache-Control"]
+    assert (
+        f"max-age={settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE}"
+        in response["Cache-Control"]
+    )
 
 
 def test_raw_file_if_modified_since(client, settings, file_attachment):
@@ -351,7 +357,10 @@ def test_raw_file_if_modified_since(client, settings, file_attachment):
     assert response.status_code == 304
     assert response["Last-Modified"] == convert_to_http_date(created)
     assert "public" in response["Cache-Control"]
-    assert "max-age=900" in response["Cache-Control"]
+    assert (
+        f"max-age={settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE}"
+        in response["Cache-Control"]
+    )
 
 
 def test_edit_attachment_redirect(client, root_doc):
