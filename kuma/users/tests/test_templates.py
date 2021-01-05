@@ -7,7 +7,6 @@ from django.db import IntegrityError
 from django.http import HttpResponse
 from django.test import override_settings
 from pyquery import PyQuery as pq
-from waffle.testutils import override_switch
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
@@ -34,29 +33,6 @@ class SignupTests(UserTestCase, SocialTestMixin):
         response = self.github_login()
         self.assertNotContains(response, "Sign In Failure")
         for test_string in self.profile_create_strings:
-            self.assertContains(response, test_string)
-        session = response.context["request"].session
-        self.assertIn("socialaccount_sociallogin", session)
-        self.assertEqual(session["sociallogin_provider"], "github")
-
-    def test_signup_page_disabled(self):
-        with override_switch("registration_disabled", True):
-            response = self.github_login()
-        self.assertNotContains(response, "Sign In Failure")
-        self.assertContains(response, "Profile Creation Disabled")
-        session = response.context["request"].session
-        self.assertNotIn("socialaccount_sociallogin", session)
-        self.assertNotIn("sociallogin_provider", session)
-
-        # re-enable registration
-        with override_switch("registration_disabled", False):
-            response = self.github_login()
-        test_strings = [
-            "Create your MDN account",
-            "Choose a username",
-            "Having trouble",
-        ]
-        for test_string in test_strings:
             self.assertContains(response, test_string)
         session = response.context["request"].session
         self.assertIn("socialaccount_sociallogin", session)

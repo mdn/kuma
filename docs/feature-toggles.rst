@@ -19,14 +19,7 @@ Switches
 
 `Waffle switches`_ are simple booleans - they are either on or off.
 
-* ``foundation_callout`` - Show foundation donate homepage tile
-* ``helpful-survey-2`` - Enable 2017 Helpfulness Survey
-* ``registration_disabled`` - Enable/disable new user registration.
-* ``store_revision_ips`` - Save request data, including the IP address, to
-  enable marking revisions as spam.
 * ``welcome_email`` - Send welcome email to new user registrations.
-* ``wiki_spam_training`` - Call Akismet to check submissions, but don't block
-  due to detected spam or Akismet errors.
 * ``developer_needs`` - Enable/disable the developer needs survey banner
 
 

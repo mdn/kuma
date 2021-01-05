@@ -632,7 +632,6 @@ KUMA_FILE_URL = re.compile(
     % (re.escape(settings.PROTOCOL), re.escape(settings.ATTACHMENT_HOST))
 )
 
-SPAM_TRAINING_SWITCH = "wiki_spam_training"
 SPAM_SUBMISSION_REVISION_FIELDS = [
     "title",
     "slug",

@@ -65,11 +65,7 @@
   <div class="home-callouts">
     <h2 class="offscreen">{{ _('Featured') }}</h2>
     <div class="column-container center">
-      {%- if settings.FOUNDATION_CALLOUT %}
-        {% include "landing/includes/callouts/foundation.html" %}
-      {% else %}
-        {% include "landing/includes/callouts/featured.html" %}
-      {% endif %}
+      {% include "landing/includes/callouts/featured.html" %}
       {% if settings.NEWSLETTER %}
       <div class="column-callout callout-newsletter">
         {% include "includes/newsletter.html" %}

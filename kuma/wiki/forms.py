@@ -3,7 +3,6 @@ import logging
 import unicodedata
 from difflib import ndiff
 
-import waffle
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -31,7 +30,6 @@ from .constants import (
     SLUG_CLEANSING_RE,
     SPAM_OTHER_HEADERS,
     SPAM_SUBMISSION_REVISION_FIELDS,
-    SPAM_TRAINING_SWITCH,
 )
 from .events import EditDocumentEvent
 from .models import (
@@ -773,21 +771,14 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
             dsa_params = parameters
             review = DocumentSpamAttempt.NEEDS_REVIEW
 
-        # Wrapping this in a try/finally to make sure that even if
-        # creating a spam attempt object fails we call the parent
-        # method that raises a ValidationError
-        try:
-            DocumentSpamAttempt.objects.create(
-                title=self.cleaned_data["title"],
-                slug=self.cleaned_data["slug"],
-                user=self.request.user,
-                document=document,
-                data=json.dumps(dsa_params, indent=2, sort_keys=True),
-                review=review,
-            )
-        finally:
-            if not waffle.switch_is_active(SPAM_TRAINING_SWITCH):
-                super(RevisionForm, self).akismet_error(parameters, exception)
+        DocumentSpamAttempt.objects.create(
+            title=self.cleaned_data["title"],
+            slug=self.cleaned_data["slug"],
+            user=self.request.user,
+            document=document,
+            data=json.dumps(dsa_params, indent=2, sort_keys=True),
+            review=review,
+        )
 
     def akismet_parameters(self):
         """
@@ -874,14 +865,11 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
             new_rev.localization_tags.set(*self.cleaned_data["localization_tags"])
 
             # when enabled store the user's IP address
-            if waffle.switch_is_active("store_revision_ips"):
-                RevisionIP.objects.log(
-                    revision=new_rev,
-                    headers=self.request.META,
-                    data=json.dumps(
-                        self.akismet_parameters(), indent=2, sort_keys=True
-                    ),
-                )
+            RevisionIP.objects.log(
+                revision=new_rev,
+                headers=self.request.META,
+                data=json.dumps(self.akismet_parameters(), indent=2, sort_keys=True),
+            )
 
             # send first edit emails
             if is_first_edit:

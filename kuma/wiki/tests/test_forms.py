@@ -8,7 +8,7 @@ from django.contrib.auth.models import Permission
 from django.core import mail
 from django.test import RequestFactory
 from waffle.models import Flag
-from waffle.testutils import override_flag, override_switch
+from waffle.testutils import override_flag
 
 from kuma.core.urlresolvers import reverse
 from kuma.spam.constants import (
@@ -21,7 +21,6 @@ from kuma.spam.constants import (
 )
 from kuma.users.tests import UserTestCase
 
-from ..constants import SPAM_TRAINING_SWITCH
 from ..forms import AkismetHistoricalData, DocumentForm, RevisionForm, TreeMoveForm
 from ..models import DocumentSpamAttempt, Revision, RevisionIP
 from ..tests import document, normalize_html, revision
@@ -537,176 +536,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
         )
         assert parameters["comment_content"] == expected_content
 
-    @requests_mock.mock()
-    def test_akismet_ham(self, mock_requests):
-        assert DocumentSpamAttempt.objects.count() == 0
-        assert len(mail.outbox) == 0
-        rev_form = self.setup_form(mock_requests)
-        assert rev_form.is_valid()
-        assert DocumentSpamAttempt.objects.count() == 0
-
-    @requests_mock.mock()
-    def test_akismet_spam(self, mock_requests):
-        assert DocumentSpamAttempt.objects.count() == 0
-        assert len(mail.outbox) == 0
-        rev_form = self.setup_form(mock_requests, is_spam=b"true")
-        assert not rev_form.is_valid()
-        assert rev_form.errors == {"__all__": [rev_form.akismet_error_message]}
-        admin_path = reverse("admin:wiki_documentspamattempt_changelist")
-        admin_url = admin_path
-        assert admin_url not in rev_form.akismet_error_message
-
-        assert DocumentSpamAttempt.objects.count() > 0
-        attempt = DocumentSpamAttempt.objects.latest()
-        assert attempt.title == "display"
-        assert attempt.slug == "Web/CSS/display"
-        assert attempt.user == self.testuser
-        assert attempt.review == DocumentSpamAttempt.NEEDS_REVIEW
-        assert attempt.data
-        data = json.loads(attempt.data)
-        assert "akismet_status_code" not in data
-
-        # Test that one message has been sent.
-        assert len(mail.outbox) == 1
-        body = mail.outbox[0].body
-        assert attempt.title in body
-        assert attempt.slug in body
-        assert attempt.user.username in body
-
-    @requests_mock.mock()
-    def test_akismet_spam_moderator_prompt(self, mock_requests):
-        rev_form = self.setup_form(mock_requests, is_spam="true")
-        change_perm = Permission.objects.get(codename="change_documentspamattempt")
-        self.testuser.user_permissions.add(change_perm)
-        assert not rev_form.is_valid()
-        assert rev_form.errors == {"__all__": [rev_form.akismet_error_message]}
-        admin_path = reverse("admin:wiki_documentspamattempt_changelist")
-        admin_url = admin_path + "?review__exact=0"
-        assert admin_url in rev_form.akismet_error_message
-
-    @requests_mock.mock()
-    def test_akismet_error(self, mock_requests):
-        assert DocumentSpamAttempt.objects.count() == 0
-        assert len(mail.outbox) == 0
-        rev_form = self.setup_form(mock_requests, is_spam=b"terrible")
-        assert not rev_form.is_valid()
-        assert rev_form.errors == {"__all__": [rev_form.akismet_error_message]}
-
-        assert DocumentSpamAttempt.objects.count() > 0
-        attempt = DocumentSpamAttempt.objects.latest()
-        assert attempt.review == DocumentSpamAttempt.AKISMET_ERROR
-        assert attempt.data
-        data = json.loads(attempt.data)
-        assert data["akismet_status_code"] == 200
-        assert data["akismet_debug_help"] == "Not provided"
-        assert data["akismet_response"] == "terrible"
-
-        assert len(mail.outbox) == 1
-
-    @requests_mock.mock()
-    @override_switch(SPAM_TRAINING_SWITCH, True)
-    def test_akismet_spam_training(self, mock_requests):
-        assert not DocumentSpamAttempt.objects.exists()
-        rev_form = self.setup_form(mock_requests, is_spam="true")
-        assert rev_form.is_valid()
-        assert DocumentSpamAttempt.objects.count() == 1
-        attempt = DocumentSpamAttempt.objects.get()
-        assert attempt.user == self.testuser
-        assert attempt.review == DocumentSpamAttempt.NEEDS_REVIEW
-
-    @requests_mock.mock()
-    @override_switch(SPAM_TRAINING_SWITCH, True)
-    def test_akismet_error_training(self, mock_requests):
-        assert not DocumentSpamAttempt.objects.exists()
-        rev_form = self.setup_form(mock_requests, is_spam="error")
-        assert rev_form.is_valid()
-        assert DocumentSpamAttempt.objects.count() == 1
-        attempt = DocumentSpamAttempt.objects.get()
-        assert attempt.user == self.testuser
-        assert attempt.review == DocumentSpamAttempt.AKISMET_ERROR
-
-    @requests_mock.mock()
-    @override_flag(SPAM_ADMIN_FLAG, True)
-    def test_akismet_parameters_admin_flag(self, mock_requests):
-        rev_form = self.setup_form(mock_requests)
-        assert rev_form.is_valid()
-        parameters = rev_form.akismet_parameters()
-        assert parameters["user_role"] == "administrator"
-
-    @requests_mock.mock()
-    @override_flag(SPAM_SPAMMER_FLAG, True)
-    def test_akismet_parameters_spammer_flag(self, mock_requests):
-        rev_form = self.setup_form(mock_requests, is_spam="true")
-        assert not rev_form.is_valid()
-        parameters = rev_form.akismet_parameters()
-        assert parameters["comment_author"] == "viagra-test-123"
-
-    @requests_mock.mock()
-    @override_flag(SPAM_TESTING_FLAG, True)
-    def test_akismet_parameters_testing_flag(self, mock_requests):
-        rev_form = self.setup_form(mock_requests)
-        assert rev_form.is_valid()
-        parameters = rev_form.akismet_parameters()
-        assert parameters["is_test"]
-
-    @requests_mock.mock()
-    def test_akismet_set_review_flags(self, mock_requests):
-        only_set_review_flags = {
-            "content": self.original["content"],
-            "comment": "",
-            "review_tags": ["editorial", "technical"],
-        }
-        rev_form = self.setup_form(
-            mock_requests, override_data=only_set_review_flags, is_spam="true"
-        )
-
-        assert rev_form.is_valid()
-        parameters = rev_form.akismet_parameters()
-        assert parameters["comment_content"] == ""
-        assert mock_requests.call_count == 1  # Only verify key called
-
-    @requests_mock.mock()
-    def test_akismet_significant_normalized_whitespace(self, mock_requests):
-        """
-        Whitespace is signficant when analyzing a change.
-
-        This can be fixed after some long-standing issues with content tidying
-        are addressed.  See bug 1358541.
-        """
-        original = (
-            '<h2 id="Summary">Tabs</h2>\r\n'
-            "<p>\r\n"
-            '\tThe "tab" or tabulator key, was added to typewriters in\r\n'
-            "\tthe late 19th century, to aid in the typing of tabular data\r\n"
-            "\tsuch as columns of numbers. In the modern computing era, a\r\n"
-            "\tdomain-specific language such as CSV or HTML tables\r\n"
-            "\tshould be used for tabular data. It is an on-going\r\n"
-            "\teffort to remove the deprecated tab character from\r\n"
-            "\tsource documents.\r\n"
-            "</p>\r\n"
-        )
-        new = (
-            '<h2 id="Summary">Tabs</h2>\r\n'
-            "<p>\r\n"
-            '  The "tab" or tabulator key, was added to typewriters in\n'
-            "  the late 19th century, to aid in the typing of tabular data\n"
-            "  such as columns of numbers. In the modern computing era, a\n"
-            "  domain-specific language such as CSV or HTML tables\n"
-            "  should be used for tabular data. It is an on-going\n"
-            "  effort to remove the deprecated tab character from\n"
-            "  source documents.\r\n"
-            "</p>\n"
-        )
-        rev_form = self.setup_form(
-            mock_requests,
-            override_original={"content": original},
-            override_data={"content": new},
-        )
-        assert rev_form.is_valid()
-        parameters = rev_form.akismet_parameters()
-        # Akismet sees a content change due to the whitespace
-        assert parameters["comment_content"] != ""
-
 
 class RevisionFormCreateTests(RevisionFormViewTests):
     """Test RevisionForm as used in create view."""
@@ -777,31 +606,6 @@ class RevisionFormCreateTests(RevisionFormViewTests):
         assert parameters["referrer"] == ""
         assert parameters["user_agent"] == ""
         assert parameters["user_ip"] == "127.0.0.1"
-
-    @requests_mock.mock()
-    def test_akismet_spam(self, mock_requests):
-        assert DocumentSpamAttempt.objects.count() == 0
-        assert len(mail.outbox) == 0
-        rev_form = self.setup_form(mock_requests, is_spam=b"true")
-        assert not rev_form.is_valid()
-        assert rev_form.errors == {"__all__": [rev_form.akismet_error_message]}
-
-        assert DocumentSpamAttempt.objects.count() > 0
-        attempt = DocumentSpamAttempt.objects.latest()
-        assert attempt.title == "Accessibility"
-        assert attempt.slug == "Web/Guide/Accessibility"
-        assert attempt.user == self.testuser
-        assert attempt.review == DocumentSpamAttempt.NEEDS_REVIEW
-        assert attempt.data
-        data = json.loads(attempt.data)
-        assert "akismet_status_code" not in data
-
-        # Test that one message has been sent.
-        assert len(mail.outbox) == 1
-        body = mail.outbox[0].body
-        assert attempt.title in body
-        assert attempt.slug in body
-        assert attempt.user.username in body
 
 
 class RevisionFormNewTranslationTests(RevisionFormViewTests):

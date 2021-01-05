@@ -9,7 +9,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import override
 from pyquery import PyQuery as pq
-from waffle.testutils import override_switch
 
 from kuma.core.tests import (
     assert_no_cache_header,
@@ -127,23 +126,6 @@ def test_revisions_list_via_AJAX(dashboard_revisions, user_client):
     # Revisions are in order, most recent first
     for rev_row, revision in zip(rev_rows, dashboard_revisions):
         assert int(rev_row.attrib["data-revision-id"]) == revision.id
-
-
-@pytest.mark.parametrize("switch", (True, False))
-@pytest.mark.parametrize("is_admin", (True, False))
-def test_revisions_show_ips_button(
-    switch, is_admin, root_doc, user_client, admin_client
-):
-    """Toggle IPs button appears for admins when the switch is active."""
-    client = admin_client if is_admin else user_client
-    with override_switch("store_revision_ips", active=switch):
-        response = client.get(
-            reverse("dashboards.revisions"), HTTP_HOST=settings.WIKI_HOST
-        )
-    assert response.status_code == 200
-    page = pq(response.content)
-    ip_button = page.find("button#show_ips_btn")
-    assert len(ip_button) == (1 if (switch and is_admin) else 0)
 
 
 @pytest.mark.parametrize("has_perm", (True, False))
