@@ -19,7 +19,6 @@ Switches
 
 `Waffle switches`_ are simple booleans - they are either on or off.
 
-* ``application_ACAO`` - Enable Access-Control-Allow-Origin=0 header.
 * ``foundation_callout`` - Show foundation donate homepage tile
 * ``helpful-survey-2`` - Enable 2017 Helpfulness Survey
 * ``registration_disabled`` - Enable/disable new user registration.

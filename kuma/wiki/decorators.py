@@ -2,7 +2,7 @@ from functools import wraps
 
 import newrelic.agent
 from django.http import Http404, HttpResponsePermanentRedirect
-from waffle import flag_is_active, switch_is_active
+from waffle import flag_is_active
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
@@ -30,10 +30,7 @@ def allow_CORS_GET(func):
     def _added_header(request, *args, **kwargs):
         response = func(request, *args, **kwargs)
 
-        # We are using this switch temporarily to research bug 1104260.
-        # Disabling this code has no effect locally, but may have an effect on
-        # production.
-        if "GET" == request.method and switch_is_active("application_ACAO"):
+        if "GET" == request.method:
             response["Access-Control-Allow-Origin"] = "*"
         return response
 

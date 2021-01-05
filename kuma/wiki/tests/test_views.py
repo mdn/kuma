@@ -70,8 +70,7 @@ class ViewTests(UserTestCase, WikiTestCase):
         assert result_review_tags == expected_review_tags
 
         url = reverse("wiki.json_slug", args=("article-title",))
-        with override_switch("application_ACAO", True):
-            resp = self.client.get(url)
+        resp = self.client.get(url)
         assert resp.status_code == 200
         assert_shared_cache_header(resp)
         assert resp["Access-Control-Allow-Origin"] == "*"
@@ -100,8 +99,7 @@ class ViewTests(UserTestCase, WikiTestCase):
 
         url = reverse("wiki.toc", args=[slug])
 
-        with override_switch("application_ACAO", True):
-            resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
+        resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_shared_cache_header(resp)
         assert resp["Access-Control-Allow-Origin"] == "*"
@@ -109,7 +107,6 @@ class ViewTests(UserTestCase, WikiTestCase):
             '<ol><li><a href="#Head_2" rel="internal">Head 2</a></ol>'
         )
 
-    @override_switch("application_ACAO", True)
     def test_children_view(self):
         """bug 875349"""
         test_content = '<p>Test <a href="http://example.com">Summary</a></p>'
@@ -2272,12 +2269,11 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <p>test</p>
             <p>test</p>
         """
-        with override_switch("application_ACAO", True):
-            response = self.client.get(
-                "%s?raw=true" % reverse("wiki.document", args=[rev.document.slug]),
-                HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-                HTTP_HOST=settings.WIKI_HOST,
-            )
+        response = self.client.get(
+            "%s?raw=true" % reverse("wiki.document", args=[rev.document.slug]),
+            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
+            HTTP_HOST=settings.WIKI_HOST,
+        )
         assert response.status_code == 200
         # Since the client is logged-in, the response should not be cached.
         assert_no_cache_header(response)
