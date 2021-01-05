@@ -1153,6 +1153,16 @@ ATTACHMENT_SITE_URL = PROTOCOL + ATTACHMENT_HOST
 _PROD_ATTACHMENT_ORIGIN = "demos-origin.mdn.mozit.cloud"
 ATTACHMENT_ORIGIN = config("ATTACHMENT_ORIGIN", default=_PROD_ATTACHMENT_ORIGIN)
 
+# Primary use case if for file attachments that are still served via Kuma.
+# We have settings.ATTACHMENTS_USE_S3 on by default. So a URL like
+# `/files/3710/Test_Form_2.jpg` will trigger a 302 response (to its final
+# public S3 URL). This 302 response can be cached in the CDN. That's what
+# this setting controls.
+# We can make it pretty aggressive, because as of early 2021, you can't
+# edit images by uploading a different one through the Wiki UI.
+ATTACHMENTS_CACHE_CONTROL_MAX_AGE = config(
+    "ATTACHMENTS_CACHE_CONTROL_MAX_AGE", default=60 * 60 * 24, cast=int
+)
 WIKI_HOST = config("WIKI_HOST", default="wiki." + DOMAIN)
 WIKI_SITE_URL = PROTOCOL + WIKI_HOST
 
