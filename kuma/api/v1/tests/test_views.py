@@ -177,6 +177,7 @@ class SearchViewTests(ElasticTestCase):
         response = self.client.get(url, {"q": "article"})
         assert response.status_code == 200
         assert response["content-type"] == "application/json"
+        assert response["Access-Control-Allow-Origin"] == "*"
         data = response.json()
         assert data["documents"]
         assert data["count"] == 4
