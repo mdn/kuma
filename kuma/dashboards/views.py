@@ -1,7 +1,6 @@
 import datetime
 import json
 
-import waffle
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
@@ -130,9 +129,7 @@ def revisions(request):
     context = {
         "revisions": revisions,
         "page": page,
-        "show_ips": (
-            waffle.switch_is_active("store_revision_ips") and request.user.is_superuser
-        ),
+        "show_ips": request.user.is_superuser,
         "show_spam_submission": show_spam_submission,
     }
 

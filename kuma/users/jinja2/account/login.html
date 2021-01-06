@@ -20,20 +20,11 @@
       All content on MDN is free and available without signing in.
       {% endtrans %}</p>
 
-      {% if waffle.switch('registration_disabled') -%}
-      <p>{% trans %}
-      In order to contribute, you need to sign in to an existing MDN profile.
-      {% endtrans %}</p>
-      <div class="notification error" data-level="error">
-          {{ _("We are sorry, but profile creation is currently disabled.") }}
-      </div>
-      {% else %}
       <p>{% trans %}
       In order to contribute, you need to sign in to MDN. You can sign in using
       GitHub and a MDN profile will be created for you if you don't already
       have one.
       {% endtrans %}</p>
-      {% endif %}
 
       {% if socialaccount_providers  %}
         {% trans login_url=login_url() %}

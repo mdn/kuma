@@ -16,7 +16,6 @@ from django.utils.cache import add_never_cache_headers
 from django.utils.http import is_safe_url
 from django.utils.translation import gettext_lazy as _
 from redo import retrying
-from waffle import switch_is_active
 
 from kuma.core.ga_tracking import (
     ACTION_SOCIAL_AUTH_ADD,
@@ -174,19 +173,7 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         because the default adapter uses the account adpater above
         as the default.
         """
-        allowed = True
-        if switch_is_active("registration_disabled"):
-            allowed = False
-
-        # bug 1291892: Don't confuse next login with connecting accounts
-        if not allowed:
-            for key in ("socialaccount_sociallogin", "sociallogin_provider"):
-                try:
-                    del request.session[key]
-                except KeyError:  # pragma: no cover
-                    pass
-
-        return allowed
+        return True
 
     def validate_disconnect(self, account, accounts):
         """
