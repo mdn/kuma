@@ -69,7 +69,7 @@ def test_account_email_page_requires_signin(db, client, settings):
     assert_no_cache_header(response)
     response = client.get(response["Location"], follow=True)
     assert response.status_code == 200
-    assert b"Sign in with Github" in response.content
+    assert b"Sign in with GitHub" in response.content
     assert b"Sign in with Google" in response.content
 
 
