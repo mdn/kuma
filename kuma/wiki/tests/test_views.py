@@ -11,7 +11,6 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
 from pyquery import PyQuery as pq
-from waffle.testutils import override_flag
 
 from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import (
@@ -280,47 +279,6 @@ class ViewTests(UserTestCase, WikiTestCase):
         assert b"Revision Content" in resp.content
         assert "open" == page.find("#wikiArticle").parent().attr("open")
         assert page.find("#doc-source").parent().attr("open") is None
-
-
-class ReadOnlyTests(UserTestCase, WikiTestCase):
-    """Tests readonly scenarios"""
-
-    fixtures = UserTestCase.fixtures + ["wiki/documents.json"]
-
-    def setUp(self):
-        super(ReadOnlyTests, self).setUp()
-        rev = revision(is_approved=True, save=True)
-        self.edit_url = reverse("wiki.edit", args=[rev.document.slug])
-
-    def test_everyone(self):
-        """ kumaediting: everyone, kumabanned: none  """
-        self.kumaediting_flag.everyone = True
-        self.kumaediting_flag.save()
-
-        self.client.login(username="testuser", password="testpass")
-        resp = self.client.get(self.edit_url, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 200
-        assert resp["X-Robots-Tag"] == "noindex"
-        assert_no_cache_header(resp)
-
-    def test_superusers_only(self):
-        """ kumaediting: superusers, kumabanned: none """
-        self.kumaediting_flag.everyone = None
-        self.kumaediting_flag.superusers = True
-        self.kumaediting_flag.save()
-
-        self.client.login(username="testuser", password="testpass")
-        resp = self.client.get(self.edit_url, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 403
-        assert b"The wiki is in read-only mode." in resp.content
-        assert_no_cache_header(resp)
-        self.client.logout()
-
-        self.client.login(username="admin", password="testpass")
-        resp = self.client.get(self.edit_url, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 200
-        assert resp["X-Robots-Tag"] == "noindex"
-        assert_no_cache_header(resp)
 
 
 class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
@@ -2829,12 +2787,11 @@ class PageMoveTests(UserTestCase, WikiTestCase):
 
         data = {"slug": "moved/test-page-move-views"}
         self.client.login(username="admin", password="testpass")
-        with override_flag("page_move", True):
-            resp = self.client.post(
-                reverse("wiki.move", args=(parent_doc.slug,)),
-                data=data,
-                HTTP_HOST=settings.WIKI_HOST,
-            )
+        resp = self.client.post(
+            reverse("wiki.move", args=(parent_doc.slug,)),
+            data=data,
+            HTTP_HOST=settings.WIKI_HOST,
+        )
 
         assert resp.status_code == 200
         assert_no_cache_header(resp)

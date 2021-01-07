@@ -25,9 +25,6 @@
         {% endif %}
 
         // dimension9 == "Section editing"
-        {% if waffle.flag('section_edit') %}
-            ga('set', 'dimension9', 'Enabled');
-        {% endif %}
 
         {%- if analytics_page_revision %}
             // dimension12 == 'Page Revision'

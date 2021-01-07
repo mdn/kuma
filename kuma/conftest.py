@@ -7,7 +7,6 @@ from django.contrib.auth.models import Group
 from django.core.cache import caches
 from django.urls import set_urlconf
 from django.utils.translation import activate
-from waffle.testutils import override_flag
 
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.constants import REDIRECT_CONTENT
@@ -166,8 +165,7 @@ def stripe_user_client(client, stripe_user):
 @pytest.fixture
 def editor_client(user_client):
     """A test client with wiki_user logged in for editing."""
-    with override_flag("kumaediting", True):
-        yield user_client
+    yield user_client
 
 
 @pytest.fixture

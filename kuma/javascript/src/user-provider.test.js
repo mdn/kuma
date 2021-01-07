@@ -44,7 +44,7 @@ describe('UserProvider', () => {
         const contextConsumer = jest.fn();
 
         const waffleFlags = {
-            flags: { section_edit: true },
+            flags: {},
             switches: {},
             samples: {},
         };
@@ -102,12 +102,11 @@ describe('UserProvider', () => {
         process.nextTick(() => {
             expect(contextConsumer).toHaveBeenCalledTimes(2);
             expect(contextConsumer.mock.calls[1][0]).toEqual(userData);
-            expect(gaMock).toHaveBeenCalledTimes(4);
+            expect(gaMock).toHaveBeenCalledTimes(3);
             expect(gaMock.mock.calls[0]).toEqual(['set', 'dimension1', 'Yes']);
             expect(gaMock.mock.calls[1]).toEqual(['set', 'dimension18', 'Yes']);
-            expect(gaMock.mock.calls[2]).toEqual(['set', 'dimension9', 'Yes']);
-            expect(gaMock.mock.calls[3][0]).toEqual('send');
-            expect(gaMock.mock.calls[3][1].hitType).toEqual('pageview');
+            expect(gaMock.mock.calls[2][0]).toEqual('send');
+            expect(gaMock.mock.calls[2][1].hitType).toEqual('pageview');
         });
     });
 });

@@ -8,7 +8,6 @@ from datetime import datetime
 
 import pytest
 from django.contrib.auth.models import Permission
-from waffle.testutils import override_flag
 
 from ..models import Document, DocumentDeletionLog, Revision
 
@@ -67,8 +66,7 @@ def moderator_client(client, wiki_moderator):
     wiki_moderator.set_password("password")
     wiki_moderator.save()
     client.login(username=wiki_moderator.username, password="password")
-    with override_flag("kumaediting", True):
-        yield client
+    yield client
 
 
 @pytest.fixture

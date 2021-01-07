@@ -1,13 +1,12 @@
+import warnings
 from functools import wraps
 
 import newrelic.agent
 from django.http import Http404, HttpResponsePermanentRedirect
-from waffle import flag_is_active
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 
-from .exceptions import ReadOnlyException
 from .utils import locale_and_slug_from_path
 
 
@@ -41,9 +40,7 @@ def check_readonly(view):
     """Decorator to enable readonly mode"""
 
     def _check_readonly(request, *args, **kwargs):
-        if not flag_is_active(request, "kumaediting"):
-            raise ReadOnlyException("kumaediting")
-
+        warnings.warn("The check_readonly decorator is deprecated", DeprecationWarning)
         return view(request, *args, **kwargs)
 
     return _check_readonly

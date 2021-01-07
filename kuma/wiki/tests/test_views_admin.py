@@ -1,7 +1,6 @@
 from datetime import datetime
 
 import pytest
-from waffle.testutils import override_flag
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
@@ -11,8 +10,7 @@ from ..models import Document, Revision
 
 @pytest.fixture
 def purge_client(admin_client):
-    with override_flag("kumaediting", True):
-        yield admin_client
+    yield admin_client
 
 
 @pytest.fixture
@@ -51,17 +49,6 @@ def test_staff_permission(editor_client):
     assert response["Location"].endswith(
         "admin/login/?next=/admin/wiki/document/purge/"
     )
-    assert_no_cache_header(response)
-
-
-def test_read_only_mode(admin_client):
-    """
-    Tests that editting has been enabled. The "admin_client"
-    fixture has not enabled document editting.
-    """
-    url = reverse("wiki.admin_bulk_purge")
-    response = admin_client.get(url)
-    assert response.status_code == 403
     assert_no_cache_header(response)
 
 
