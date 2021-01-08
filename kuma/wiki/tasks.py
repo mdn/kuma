@@ -1,33 +1,19 @@
 import json
 import logging
-import os
 import textwrap
 from datetime import datetime, timedelta
-from glob import glob
 
-from celery import chain, chord, task
+from celery import chain, task
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.sitemaps import GenericSitemap
 from django.core.mail import mail_admins
 from django.db import transaction
-from django.db.models import Q
-from django.template.loader import render_to_string
-from django.utils.encoding import smart_str
-from lxml import etree
 
-from kuma.attachments.models import AttachmentStorage
 from kuma.core.decorators import skip_in_maintenance_mode
-from kuma.core.urlresolvers import reverse
 from kuma.core.utils import chunked, send_mail_retrying
 from kuma.search.models import Index
 from kuma.users.models import User
 
-from .constants import (
-    EXPERIMENT_TITLE_PREFIX,
-    LEGACY_MINDTOUCH_NAMESPACES,
-    NOINDEX_SLUG_PREFIXES,
-)
 from .events import first_edit_email
 from .exceptions import PageMoveError
 from .models import (
@@ -39,69 +25,10 @@ from .models import (
     RevisionIP,
 )
 from .search import WikiDocumentType
-from .templatetags.jinja_helpers import absolutify
 from .utils import tidy_content
 
 
 log = logging.getLogger("kuma.wiki.tasks")
-
-
-class SitemapStorage:
-    @staticmethod
-    def joinpaths(path, *paths, makedirs=False):
-        if settings.SITEMAP_USE_S3:
-            return os.path.join(path, *paths)
-        result = os.path.join(settings.MEDIA_ROOT, path, *paths)
-        if makedirs:
-            os.makedirs(result, exist_ok=True)
-        return result
-
-    def __init__(self):
-        self.__s3_storage = None
-
-    @property
-    def s3_storage(self):
-        # Lazily create the S3 storage instance.
-        if not self.__s3_storage and settings.SITEMAP_USE_S3:
-            self.__s3_storage = AttachmentStorage(
-                object_parameters={
-                    "CacheControl": "public, max-age=3600",
-                    "ContentType": "application/xml; charset=utf-8",
-                }
-            )
-        return self.__s3_storage
-
-    def open(self, path, mode="r"):
-        if settings.SITEMAP_USE_S3:
-            return self.s3_storage.open(path, mode)
-        return open(path, mode)
-
-    def exists(self, path):
-        if settings.SITEMAP_USE_S3:
-            return self.s3_storage.exists(path)
-        return os.path.exists(path)
-
-    def s3_clear(self):
-        # Convenience function for clean-up of the test S3 bucket. There is
-        # no need for a filesystem equivalent since you should be using
-        # the "tmpdir" fixture for that within tests.
-        if settings.SITEMAP_USE_S3 and (self.s3_storage.bucket.name == "test"):
-            self.s3_storage.bucket.objects.delete()
-
-    def get_all(self):
-        # Convenience function for use in tests that returns a list of all
-        # filenames with an ".xml" extension within the S3 bucket or under
-        # settings.MEDIA_ROOT on the filesystem.
-        if settings.SITEMAP_USE_S3:
-            return [
-                obj.key
-                for obj in self.s3_storage.bucket.objects.all()
-                if obj.key.endswith(".xml")
-            ]
-        return glob(os.path.join(settings.MEDIA_ROOT, "**/*.xml"), recursive=True)
-
-
-sitemap_storage = SitemapStorage()
 
 
 @task(rate_limit="60/m")
@@ -388,136 +315,6 @@ def send_first_edit_email(revision_pk):
     """ Make an 'edited' notification email for first-time editors """
     revision = Revision.objects.get(pk=revision_pk)
     first_edit_email(revision).send()
-
-
-SITEMAP_START = '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-SITEMAP_ELEMENT = "<sitemap><loc>%s</loc><lastmod>%s</lastmod></sitemap>"
-SITEMAP_END = "</sitemapindex>"
-
-
-@task
-def build_locale_sitemap(locale):
-    """
-    For the given locale build the appropriate sitemap file and
-    returns the locale, the file names written and timestamp of the
-    build.
-    """
-    now = datetime.utcnow()
-    timestamp = "%s+00:00" % now.replace(microsecond=0).isoformat()
-
-    directory = sitemap_storage.joinpaths("sitemaps", locale, makedirs=True)
-
-    # Add any non-document URL's, which will always include the home page.
-    other_urls = [
-        {
-            "location": absolutify(reverse("home", locale=locale)),
-            "lastmod": None,
-            "changefreq": None,
-            "priority": None,
-        }
-    ]
-    make = [("sitemap_other.xml", other_urls)]
-
-    # We *could* use the `Document.objects.filter_for_list()` manager
-    # but it has a list of `.only()` columns which isn't right,
-    # it has a list of hardcoded slug prefixes, and it forces an order by
-    # on 'slug' which is slow and not needed in this context.
-    queryset = Document.objects.filter(
-        locale=locale,
-        is_redirect=False,
-    ).exclude(html="")
-    # Be explicit about exactly only the columns we need.
-    queryset = queryset.only("id", "locale", "slug", "modified")
-
-    # The logic for rendering a page will do various checks on each
-    # document to evaluate if it should be excluded from robots.
-    # Ie. in a jinja template it does...
-    #  `{% if reasons... %}noindex, nofollow{% endif %}`
-    # Some of those evaluations are complex and depend on the request.
-    # That's too complex here but we can at least do some low-hanging
-    # fruit filtering.
-    queryset = queryset.exclude(
-        current_revision__isnull=True,
-    )
-    q = Q(slug__startswith=EXPERIMENT_TITLE_PREFIX)
-    for legacy_mindtouch_namespace in LEGACY_MINDTOUCH_NAMESPACES:
-        q |= Q(slug__startswith="{}:".format(legacy_mindtouch_namespace))
-    for slug_start in NOINDEX_SLUG_PREFIXES:
-        q |= Q(slug__startswith=slug_start)
-    queryset = queryset.exclude(q)
-
-    # We have to make the queryset ordered. Otherwise the GenericSitemap
-    # generator might throw this perfectly valid warning:
-    #
-    #    UnorderedObjectListWarning:
-    #     Pagination may yield inconsistent results with an unordered
-    #     object_list: <class 'kuma.wiki.models.Document'> QuerySet.
-    #
-    # Any order is fine. Use something definitely indexed. It's needed for
-    # paginator used by GenericSitemap.
-    queryset = queryset.order_by("id")
-
-    # To avoid an extra query to see if the queryset is empty, let's just
-    # start iterator and create the sitemap on the first found page.
-    # Note, how we check if 'urls' became truthy before adding it.
-    sitemap = GenericSitemap(
-        {"queryset": queryset, "date_field": "modified"}, protocol="https", priority=0.5
-    )
-    for page in range(1, sitemap.paginator.num_pages + 1):
-        urls = sitemap.get_urls(page=page)
-        if page == 1:
-            name = "sitemap.xml"
-        else:
-            name = "sitemap_%s.xml" % page
-        if urls:
-            make.append((name, urls))
-
-    # Make the sitemap files.
-    for name, urls in make:
-        rendered = smart_str(render_to_string("wiki/sitemap.xml", {"urls": urls}))
-        path = os.path.join(directory, name)
-        with sitemap_storage.open(path, "w") as sitemap_file:
-            sitemap_file.write(rendered)
-
-    return locale, [name for name, _ in make], timestamp
-
-
-@task
-def build_index_sitemap(results):
-    """
-    A chord callback task that writes a sitemap index file for the
-    given results of :func:`~kuma.wiki.tasks.build_locale_sitemap` task.
-    """
-    sitemap_parts = [SITEMAP_START]
-
-    for result in results:
-        # result can be empty if no documents were found
-        if result is not None:
-            locale, names, timestamp = result
-            for name in names:
-                sitemap_url = absolutify("/sitemaps/%s/%s" % (locale, name))
-                sitemap_parts.append(SITEMAP_ELEMENT % (sitemap_url, timestamp))
-
-    sitemap_parts.append(SITEMAP_END)
-
-    index_path = sitemap_storage.joinpaths("sitemap.xml")
-    sitemap_tree = etree.fromstringlist(sitemap_parts)
-    with sitemap_storage.open(index_path, "wb") as index_file:
-        sitemap_tree.getroottree().write(
-            index_file, encoding="utf-8", pretty_print=True
-        )
-
-
-@task
-def build_sitemaps():
-    """
-    Build and save sitemap files for every MDN language and as a
-    callback save the sitemap index file as well.
-    """
-    tasks = [build_locale_sitemap.si(lang[0]) for lang in settings.LANGUAGES]
-    post_task = build_index_sitemap.s()
-    # we retry the chord unlock 300 times, so 5 mins with an interval of 1s
-    chord(header=tasks, body=post_task).apply_async(max_retries=300, interval=1)
 
 
 @task
