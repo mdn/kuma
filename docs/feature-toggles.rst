@@ -32,7 +32,6 @@ other advanced criteria.
 * ``contrib_beta`` - Enable/disable the contributions popup and pages
 * ``sg_task_completion`` - Enable the Survey Gizmo pop-up.
 * ``spam_admin_override`` - Tell Akismet that edits are never spam.
-* ``spam_checks_enabled`` - Toggle spam checks site wide.
 * ``spam_spammer_override`` - Tell Akismet that edits are always spam.
 * ``spam_submissions_enabled`` - Toggle Akismet spam/spam submission ability.
 * ``spam_testing_mode`` - Tell Akismet that edits are tests, not real content.
