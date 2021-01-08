@@ -318,22 +318,6 @@
       }],
     "waffle.flag": [
       {
-        "name": "kumaediting",
-        "superusers": false,
-        "authenticated": true,
-        "note": "Use this to put the wiki into read-only mode.",
-        "created": "2014-01-14"
-      }, {
-        "name": "page_move",
-        "note": "Enable page move feature",
-        "everyone": false,
-        "staff": true,
-        "created": "2014-01-14"
-      }, {
-        "name": "section_edit",
-        "note": "Show section edit buttons to signed-in users when mousing over section headers",
-        "created": "2015-10-07"
-      }, {
         "name": "spam_checks_enabled",
         "note": "Decides whether spam checks are enabled site-wide.",
         "everyone": true,

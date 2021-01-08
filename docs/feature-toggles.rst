@@ -30,9 +30,6 @@ Flags
 other advanced criteria.
 
 * ``contrib_beta`` - Enable/disable the contributions popup and pages
-* ``kumaediting`` - Enable/disable wiki editing.
-* ``page_move`` - (deprecated) enable/disable page move feature.
-* ``section_edit`` - Show section edit buttons.
 * ``sg_task_completion`` - Enable the Survey Gizmo pop-up.
 * ``spam_admin_override`` - Tell Akismet that edits are never spam.
 * ``spam_checks_enabled`` - Toggle spam checks site wide.

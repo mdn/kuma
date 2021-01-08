@@ -305,40 +305,6 @@
 
 {% block js %}
 
-  {% if waffle.flag('section_edit') %}
-    <script>
-        (function($) {
-            $('#wikiArticle').children('h2[id]').each(function() {
-                var id = $(this).attr('id');
-                var href = '{{ doc_edit_url }}#' + id;
-                var pencil = window.mdnIcons ? window.mdnIcons.getIcon('pencil') : '';
-
-                $('<a>').attr({
-                    href: href,
-                    'class': 'button section-edit only-icon',
-                    'rel': 'nofollow, noindex'
-                })
-                .append(pencil)
-                .append($('<span>'))
-                .find('span')
-                .text(gettext('Edit'))
-                .end()
-                .on('click', function(e) {
-                    e.preventDefault();
-
-                    mdn.analytics.trackEvent({
-                        category: 'Section Edit',
-                        action: id
-                    }, function() {
-                        window.location = href;
-                    });
-                })
-                .appendTo(this);
-            });
-        })(jQuery);
-    </script>
-  {% endif %}
-
   {% if waffle.flag('sg_task_completion') %}
     {% javascript 'task-completion' %}
   {% endif %}

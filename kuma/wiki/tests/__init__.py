@@ -3,7 +3,6 @@ from datetime import datetime
 from django.contrib.auth.models import Group, Permission
 from django.utils.text import slugify
 from html5lib.filters.base import Filter as html5lib_Filter
-from waffle.models import Flag
 
 import kuma.wiki.content
 from kuma.core.tests import get_user, KumaTestCase
@@ -25,16 +24,6 @@ HREFLANG_TEST_CASES = {
 
 class WikiTestCase(KumaTestCase):
     """Base TestCase for the wiki app test cases."""
-
-    def setUp(self):
-        super(WikiTestCase, self).setUp()
-        self.kumaediting_flag, created = Flag.objects.get_or_create(
-            name="kumaediting", everyone=True
-        )
-
-    def tearDown(self):
-        super(WikiTestCase, self).setUp()
-        self.kumaediting_flag.delete()
 
 
 # Model makers. These make it clearer and more concise to create objects in

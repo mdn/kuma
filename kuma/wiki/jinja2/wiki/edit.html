@@ -230,28 +230,6 @@
     {% include 'wiki/includes/tag_suggestions.html' %}
 
     {% include 'wiki/includes/ckeditor_scripts.html' %}
-    <script>
-    if(window.waffle.flag_is_active('section_edit')) CKEDITOR.on('instanceReady', function(evt) {
-        var hash = window.location.hash.replace('#', '');
-        if(!hash) return;
-
-        var element = evt.editor.document.getById(hash);
-        var range;
-
-        if(element) {
-            element.scrollIntoView();
-
-            // Thank you S/O
-            // http://stackoverflow.com/questions/16835365/set-cursor-to-specific-position-in-ckeditor
-            range = evt.editor.createRange();
-            range.setStart(element, 0);
-            range.setEnd(element, 0);
-            evt.editor.getSelection().selectRanges([range]);
-        }
-
-        return false;
-    });
-    </script>
     {% javascript 'wiki-edit' %}
 
 {% endblock %}

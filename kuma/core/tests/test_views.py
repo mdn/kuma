@@ -9,7 +9,6 @@ from django.utils.log import AdminEmailHandler
 from pyquery import PyQuery as pq
 from ratelimit.exceptions import Ratelimited
 from soapbox.models import Message
-from waffle.models import Flag
 
 from . import assert_no_cache_header, assert_shared_cache_header, KumaTestCase
 from ..urlresolvers import reverse
@@ -236,7 +235,6 @@ def test_error_handler_minimal_request(rf, db, settings):
     """Error page renders if middleware hasn't added request members."""
     # Setup conditions for adding analytics with a flag check
     settings.GOOGLE_ANALYTICS_ACCOUNT = "UA-00000000-0"
-    Flag.objects.create(name="section_edit", authenticated=True)
 
     # Create minimal request
     request = rf.get("/en-US/docs/tags/Open Protocol")
