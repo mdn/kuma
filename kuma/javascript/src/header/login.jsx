@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 
 import Dropdown from './dropdown.jsx';
-import { getLocale, gettext, interpolate } from '../l10n.js';
+import { getLocale, gettext } from '../l10n.js';
 import UserProvider from '../user-provider.jsx';
 import SignInLink from '../signin-link.jsx';
 
@@ -34,9 +34,6 @@ export default function Login(): React.Node {
             />
         );
         let viewProfileLink = `/${locale}/profiles/${userData.username}`;
-        let contributionsLink = `/${locale}/dashboards/revisions?user=${encodeURIComponent(
-            userData.username
-        )}`;
         let editProfileLink = `${viewProfileLink}/edit`;
 
         return (
@@ -47,25 +44,6 @@ export default function Login(): React.Node {
                     right={true}
                     hideArrow={true}
                 >
-                    {!!userData.wikiContributions && (
-                        <li>
-                            <a
-                                href={contributionsLink}
-                                title={interpolate(
-                                    gettext(
-                                        'You have %(count)s Wiki revisions'
-                                    ),
-                                    {
-                                        count:
-                                            userData.wikiContributions &&
-                                            userData.wikiContributions.toLocaleString(),
-                                    }
-                                )}
-                            >
-                                {gettext('Contributions')}
-                            </a>
-                        </li>
-                    )}
                     <li>
                         <a href={viewProfileLink}>{gettext('View profile')}</a>
                     </li>

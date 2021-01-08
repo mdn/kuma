@@ -944,10 +944,9 @@ def test_annotate_links_docs_but_not_wiki_urls(slug):
     assert normalize_html(actual_raw) == html
 
 
-@pytest.mark.parametrize("slug", ("", "/dashboards/revisions"))
-def test_annotate_links_not_docs_urls(slug):
+def test_annotate_links_not_docs_urls():
     """Links that are not /docs/ are not annotated."""
-    html = normalize_html('<li><a href="%s">Other</a></li>' % slug)
+    html = normalize_html('<li><a href="">Other</a></li>')
     actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
     assert normalize_html(actual_raw) == html
 

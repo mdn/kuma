@@ -28,7 +28,6 @@ class LinksSource(Source):
     PARAM_NAME = "path"
 
     ignored_slugs = {
-        "dashboards",
         "profiles",
         "search",
         "users/signin",

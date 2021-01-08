@@ -533,7 +533,6 @@ INSTALLED_APPS = (
     "honeypot",
     "cacheback",
     "django_extensions",
-    "kuma.dashboards",
     "statici18n",
     "rest_framework",
     "rest_framework.authtoken",
@@ -775,10 +774,6 @@ PIPELINE_CSS = {
         "source_filenames": ("styles/error-404.scss",),
         "output_filename": "build/styles/error-404.css",
     },
-    "dashboards": {
-        "source_filenames": ("styles/dashboards.scss",),
-        "output_filename": "build/styles/dashboards.css",
-    },
     "submission": {
         "source_filenames": ("styles/submission.scss",),
         "output_filename": "build/styles/submission.css",
@@ -969,10 +964,6 @@ PIPELINE_JS = {
         ),
         "output_filename": "build/js/auth-modal.js",
         "extra_context": {"defer": True},
-    },
-    "dashboard": {
-        "source_filenames": ("js/dashboard.js",),
-        "output_filename": "build/js/dashboard.js",
     },
     "jquery-ui": {
         "source_filenames": (
