@@ -85,8 +85,7 @@ class AkismetCheckFormMixin(AkismetFormMixin):
 
         Checks the waffle flag additionally to the default behavior.
         """
-        spam_checks = flag_is_active(self.request, constants.SPAM_CHECKS_FLAG)
-        return spam_checks and super(AkismetCheckFormMixin, self).akismet_enabled()
+        return False
 
     def akismet_call(self, parameters):
         try:

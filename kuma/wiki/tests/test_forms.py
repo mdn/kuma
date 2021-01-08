@@ -4,11 +4,9 @@ import pytest
 import requests_mock
 from constance.test import override_config
 from django.test import RequestFactory
-from waffle.models import Flag
 
 from kuma.spam.constants import (
     CHECK_URL,
-    SPAM_CHECKS_FLAG,
     VERIFY_URL,
 )
 from kuma.users.tests import UserTestCase
@@ -327,14 +325,6 @@ class RevisionFormViewTests(UserTestCase):
     def setUp(self):
         super(RevisionFormViewTests, self).setUp()
         self.testuser = self.user_model.objects.get(username="testuser")
-        self.spam_checks_flag, created = Flag.objects.update_or_create(
-            name=SPAM_CHECKS_FLAG,
-            defaults={"everyone": True},
-        )
-
-    def tearDown(self):
-        super(RevisionFormViewTests, self).tearDown()
-        self.spam_checks_flag.delete()
 
 
 class RevisionFormEditTests(RevisionFormViewTests):

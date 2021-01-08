@@ -318,12 +318,6 @@
       }],
     "waffle.flag": [
       {
-        "name": "spam_checks_enabled",
-        "note": "Decides whether spam checks are enabled site-wide.",
-        "everyone": true,
-        "superusers": false,
-        "created": "2015-10-28"
-      }, {
         "name": "spam_submisions_enabled",
         "note": "Decides whether ham and spam submissions are allowed to be done.",
         "created": "2016-01-11"
