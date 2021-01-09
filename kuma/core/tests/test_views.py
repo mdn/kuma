@@ -10,43 +10,9 @@ from pyquery import PyQuery as pq
 from ratelimit.exceptions import Ratelimited
 from soapbox.models import Message
 
-from . import assert_no_cache_header, assert_shared_cache_header, KumaTestCase
+from . import assert_no_cache_header, KumaTestCase
 from ..urlresolvers import reverse
 from ..views import handler500
-
-
-@pytest.fixture()
-def sitemaps(db, settings, tmpdir):
-    media_dir = tmpdir.mkdir("media")
-    locale_dir = media_dir.mkdir("sitemaps").mkdir("en-US")
-    sitemap_file = media_dir.join("sitemap.xml")
-    locale_file = locale_dir.join("sitemap.xml")
-    sitemap_file.write_text(
-        """
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
-    <loc>https://localhost:8000/sitemaps/en-US/sitemap.xml</loc>
-    <lastmod>2017-09-06T23:24:37+00:00</lastmod>
-  </sitemap>
-</sitemapindex>""",
-        "utf8",
-    )
-    locale_file.write_text(
-        """
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://example.com/en-US/docs/foobar</loc>
-    <lastmod>2013-06-06</lastmod>
-   </url>
-</urlset>""",
-        "utf8",
-    )
-    return {
-        "tmpdir": media_dir,
-        "index": sitemap_file.read_text("utf8"),
-        "locales": {"en-US": locale_file.read_text("utf8")},
-    }
 
 
 @override_settings(
@@ -145,78 +111,6 @@ def test_not_possible_to_set_non_locale_cookie(client):
     assert_no_cache_header(response)
     # No language cookie should be saved as `foo` is not a supported locale
     assert not response.client.cookies.get(settings.LANGUAGE_COOKIE_NAME)
-
-
-@pytest.mark.parametrize("storage_mode", ["s3", "media_root"])
-@pytest.mark.parametrize("method", ["get", "head"])
-def test_sitemap(client, settings, sitemaps, db, sitemap_storage, method, storage_mode):
-    settings.MEDIA_ROOT = sitemaps["tmpdir"].realpath()
-    settings.SITEMAP_USE_S3 = storage_mode == "s3"
-    if settings.SITEMAP_USE_S3:
-        with sitemap_storage.open("sitemap.xml", "w") as sitemap_file:
-            sitemap_file.write(sitemaps["index"])
-    response = getattr(client, method)(reverse("sitemap"))
-    assert response.status_code == 200
-    assert_shared_cache_header(response)
-    if settings.SITEMAP_USE_S3:
-        assert response["Content-Type"] == "application/xml; charset=utf-8"
-        if method == "get":
-            assert response.content.decode() == sitemaps["index"]
-    else:
-        assert response["Content-Type"] == "application/xml"
-        if method == "get":
-            assert (
-                "".join([chunk.decode() for chunk in response.streaming_content])
-                == sitemaps["index"]
-            )
-        else:
-            response.close()  # Discard response body; prevents an unclosed file warning
-
-
-@pytest.mark.parametrize("method", ["post", "put", "delete", "options", "patch"])
-def test_sitemap_405s(client, db, method):
-    response = getattr(client, method)(reverse("sitemap"))
-    assert response.status_code == 405
-    assert_shared_cache_header(response)
-
-
-@pytest.mark.parametrize("storage_mode", ["s3", "media_root"])
-@pytest.mark.parametrize("method", ["get", "head"])
-def test_sitemaps(
-    client, settings, sitemaps, db, sitemap_storage, method, storage_mode
-):
-    settings.MEDIA_ROOT = sitemaps["tmpdir"].realpath()
-    settings.SITEMAP_USE_S3 = storage_mode == "s3"
-    if settings.SITEMAP_USE_S3:
-        with sitemap_storage.open("sitemaps/en-US/sitemap.xml", "w") as sitemap_file:
-            sitemap_file.write(sitemaps["locales"]["en-US"])
-    response = getattr(client, method)(
-        reverse("sitemaps", kwargs={"path": "sitemaps/en-US/sitemap.xml"})
-    )
-    assert response.status_code == 200
-    assert_shared_cache_header(response)
-    if settings.SITEMAP_USE_S3:
-        assert response["Content-Type"] == "application/xml; charset=utf-8"
-        if method == "get":
-            assert response.content.decode() == sitemaps["locales"]["en-US"]
-    else:
-        assert response["Content-Type"] == "application/xml"
-        if method == "get":
-            assert (
-                "".join([chunk.decode() for chunk in response.streaming_content])
-                == sitemaps["locales"]["en-US"]
-            )
-        else:
-            response.close()  # Discard response body; prevents an unclosed file warning
-
-
-@pytest.mark.parametrize("method", ["post", "put", "delete", "options", "patch"])
-def test_sitemaps_405s(client, db, method):
-    response = getattr(client, method)(
-        reverse("sitemaps", kwargs={"path": "sitemaps/en-US/sitemap.xml"})
-    )
-    assert response.status_code == 405
-    assert_shared_cache_header(response)
 
 
 def test_ratelimit_429(client, db):

@@ -364,9 +364,6 @@ LANGUAGE_URL_IGNORED_PATHS = (
     "web-tech",
     "css",
     "index.php",  # Legacy MediaWiki endpoint, return 404
-    # Served in AWS
-    "sitemap.xml",
-    "sitemaps/",
     "i18n",
 )
 
@@ -497,7 +494,6 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.admin",
-    "django.contrib.sitemaps",
     "django.contrib.staticfiles",
     "soapbox",  # must be before kuma.wiki, or RemovedInDjango19Warning
     # MDN
@@ -1360,9 +1356,6 @@ CELERY_TASK_ROUTES = {
     "cacheback.tasks.refresh_cache": {"queue": "mdn_purgeable"},
     "kuma.core.tasks.clean_sessions": {"queue": "mdn_purgeable"},
     "kuma.core.tasks.delete_old_ip_bans": {"queue": "mdn_purgeable"},
-    "kuma.wiki.tasks.build_index_sitemap": {"queue": "mdn_purgeable"},
-    "kuma.wiki.tasks.build_locale_sitemap": {"queue": "mdn_purgeable"},
-    "kuma.wiki.tasks.build_sitemaps": {"queue": "mdn_purgeable"},
     "kuma.wiki.tasks.delete_old_revision_ips": {"queue": "mdn_purgeable"},
     "kuma.wiki.tasks.tidy_revision_content": {"queue": "mdn_purgeable"},
     "kuma.search.tasks.prepare_index": {"queue": "mdn_search"},
@@ -1903,8 +1896,6 @@ CUSTOM_WEBHOOK_HOSTNAME = config("CUSTOM_WEBHOOK_HOSTNAME", default=None)
 # into lists of paying and not paying users
 SENDINBLUE_API_KEY = config("SENDINBLUE_API_KEY", default=None)
 SENDINBLUE_LIST_ID = config("SENDINBLUE_LIST_ID", default=None)
-
-SITEMAP_USE_S3 = config("SITEMAP_USE_S3", cast=bool, default=True)
 
 # When doing local development with Yari, if you want to have `?next=...` redirects
 # work when you sign in on Yari, this needs to be set to `localhost.org:3000` in your
