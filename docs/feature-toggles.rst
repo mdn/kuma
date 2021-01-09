@@ -19,15 +19,7 @@ Switches
 
 `Waffle switches`_ are simple booleans - they are either on or off.
 
-* ``application_ACAO`` - Enable Access-Control-Allow-Origin=0 header.
-* ``foundation_callout`` - Show foundation donate homepage tile
-* ``helpful-survey-2`` - Enable 2017 Helpfulness Survey
-* ``registration_disabled`` - Enable/disable new user registration.
-* ``store_revision_ips`` - Save request data, including the IP address, to
-  enable marking revisions as spam.
 * ``welcome_email`` - Send welcome email to new user registrations.
-* ``wiki_spam_training`` - Call Akismet to check submissions, but don't block
-  due to detected spam or Akismet errors.
 * ``developer_needs`` - Enable/disable the developer needs survey banner
 
 
@@ -38,12 +30,8 @@ Flags
 other advanced criteria.
 
 * ``contrib_beta`` - Enable/disable the contributions popup and pages
-* ``kumaediting`` - Enable/disable wiki editing.
-* ``page_move`` - (deprecated) enable/disable page move feature.
-* ``section_edit`` - Show section edit buttons.
 * ``sg_task_completion`` - Enable the Survey Gizmo pop-up.
 * ``spam_admin_override`` - Tell Akismet that edits are never spam.
-* ``spam_checks_enabled`` - Toggle spam checks site wide.
 * ``spam_spammer_override`` - Tell Akismet that edits are always spam.
 * ``spam_submissions_enabled`` - Toggle Akismet spam/spam submission ability.
 * ``spam_testing_mode`` - Tell Akismet that edits are tests, not real content.

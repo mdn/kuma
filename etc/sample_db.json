@@ -318,28 +318,6 @@
       }],
     "waffle.flag": [
       {
-        "name": "kumaediting",
-        "superusers": false,
-        "authenticated": true,
-        "note": "Use this to put the wiki into read-only mode.",
-        "created": "2014-01-14"
-      }, {
-        "name": "page_move",
-        "note": "Enable page move feature",
-        "everyone": false,
-        "staff": true,
-        "created": "2014-01-14"
-      }, {
-        "name": "section_edit",
-        "note": "Show section edit buttons to signed-in users when mousing over section headers",
-        "created": "2015-10-07"
-      }, {
-        "name": "spam_checks_enabled",
-        "note": "Decides whether spam checks are enabled site-wide.",
-        "everyone": true,
-        "superusers": false,
-        "created": "2015-10-28"
-      }, {
         "name": "spam_submisions_enabled",
         "note": "Decides whether ham and spam submissions are allowed to be done.",
         "created": "2016-01-11"
@@ -379,36 +357,6 @@
         "active": true,
         "note": "Send welcome email to new user registrations",
         "created": "2014-08-07"
-      }, {
-        "name": "application_ACAO",
-        "active": true,
-        "note": "Enable Access-Control-Allow-Origin=0 header",
-        "created": "2014-12-23"
-      }, {
-        "name": "store_revision_ips",
-        "active": true,
-        "note": "Store the IP addresses and user agents of revision authors, for spam detection purposes",
-        "created": "2014-12-26"
-      }, {
-        "name": "registration_disabled",
-        "active": false,
-        "note": "Disable new user registration",
-        "created": "2015-02-25"
-      }, {
-        "name": "wiki_spam_training",
-        "note": "Do not block page changes when detected as spam",
-        "active": false,
-        "created": "2016-04-20"
-      }, {
-        "name": "foundation_callout",
-        "note": "Show foundation donate homepage tile?",
-        "active": false,
-        "created": "2016-12-01"
-      }, {
-        "name": "helpful-survey-2",
-        "note": "Enable 2017 Helpfulness Survey",
-        "active": false,
-        "created": "2017-02-14"
       }
     ],
     "search.filtergroup": [

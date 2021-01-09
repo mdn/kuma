@@ -1,5 +1,4 @@
 import pytest
-from waffle.testutils import override_switch
 
 from kuma.attachments.models import Attachment
 from kuma.attachments.tests import make_test_file
@@ -33,10 +32,9 @@ def test_code_sample(code_sample_doc, client, settings, domain):
     """The raw source for a document can be requested."""
     url = reverse("wiki.code_sample", args=[code_sample_doc.slug, "sample1"])
     setattr(settings, "ATTACHMENT_" + domain, "testserver")
-    with override_switch("application_ACAO", True):
-        response = client.get(
-            url, HTTP_HOST="testserver", HTTP_IF_NONE_MATCH='"some-old-etag"'
-        )
+    response = client.get(
+        url, HTTP_HOST="testserver", HTTP_IF_NONE_MATCH='"some-old-etag"'
+    )
     assert response.status_code == 200
     assert response["Access-Control-Allow-Origin"] == "*"
     assert "Last-Modified" not in response

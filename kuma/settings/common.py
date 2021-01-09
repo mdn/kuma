@@ -364,9 +364,6 @@ LANGUAGE_URL_IGNORED_PATHS = (
     "web-tech",
     "css",
     "index.php",  # Legacy MediaWiki endpoint, return 404
-    # Served in AWS
-    "sitemap.xml",
-    "sitemaps/",
     "i18n",
 )
 
@@ -497,7 +494,6 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.admin",
-    "django.contrib.sitemaps",
     "django.contrib.staticfiles",
     "soapbox",  # must be before kuma.wiki, or RemovedInDjango19Warning
     # MDN
@@ -533,7 +529,6 @@ INSTALLED_APPS = (
     "honeypot",
     "cacheback",
     "django_extensions",
-    "kuma.dashboards",
     "statici18n",
     "rest_framework",
     "rest_framework.authtoken",
@@ -775,10 +770,6 @@ PIPELINE_CSS = {
         "source_filenames": ("styles/error-404.scss",),
         "output_filename": "build/styles/error-404.css",
     },
-    "dashboards": {
-        "source_filenames": ("styles/dashboards.scss",),
-        "output_filename": "build/styles/dashboards.css",
-    },
     "submission": {
         "source_filenames": ("styles/submission.scss",),
         "output_filename": "build/styles/submission.css",
@@ -970,10 +961,6 @@ PIPELINE_JS = {
         "output_filename": "build/js/auth-modal.js",
         "extra_context": {"defer": True},
     },
-    "dashboard": {
-        "source_filenames": ("js/dashboard.js",),
-        "output_filename": "build/js/dashboard.js",
-    },
     "jquery-ui": {
         "source_filenames": (
             "js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js",
@@ -1153,6 +1140,16 @@ ATTACHMENT_SITE_URL = PROTOCOL + ATTACHMENT_HOST
 _PROD_ATTACHMENT_ORIGIN = "demos-origin.mdn.mozit.cloud"
 ATTACHMENT_ORIGIN = config("ATTACHMENT_ORIGIN", default=_PROD_ATTACHMENT_ORIGIN)
 
+# Primary use case if for file attachments that are still served via Kuma.
+# We have settings.ATTACHMENTS_USE_S3 on by default. So a URL like
+# `/files/3710/Test_Form_2.jpg` will trigger a 302 response (to its final
+# public S3 URL). This 302 response can be cached in the CDN. That's what
+# this setting controls.
+# We can make it pretty aggressive, because as of early 2021, you can't
+# edit images by uploading a different one through the Wiki UI.
+ATTACHMENTS_CACHE_CONTROL_MAX_AGE = config(
+    "ATTACHMENTS_CACHE_CONTROL_MAX_AGE", default=60 * 60 * 24, cast=int
+)
 WIKI_HOST = config("WIKI_HOST", default="wiki." + DOMAIN)
 WIKI_SITE_URL = PROTOCOL + WIKI_HOST
 
@@ -1350,9 +1347,6 @@ CELERY_TASK_ROUTES = {
     "cacheback.tasks.refresh_cache": {"queue": "mdn_purgeable"},
     "kuma.core.tasks.clean_sessions": {"queue": "mdn_purgeable"},
     "kuma.core.tasks.delete_old_ip_bans": {"queue": "mdn_purgeable"},
-    "kuma.wiki.tasks.build_index_sitemap": {"queue": "mdn_purgeable"},
-    "kuma.wiki.tasks.build_locale_sitemap": {"queue": "mdn_purgeable"},
-    "kuma.wiki.tasks.build_sitemaps": {"queue": "mdn_purgeable"},
     "kuma.wiki.tasks.delete_old_revision_ips": {"queue": "mdn_purgeable"},
     "kuma.wiki.tasks.tidy_revision_content": {"queue": "mdn_purgeable"},
     "kuma.search.tasks.prepare_index": {"queue": "mdn_search"},
@@ -1764,7 +1758,6 @@ if SENTRY_DSN:
 TAGGIT_CASE_INSENSITIVE = True
 
 # Ad Banner Settings
-FOUNDATION_CALLOUT = config("FOUNDATION_CALLOUT", False, cast=bool)
 NEWSLETTER = True
 NEWSLETTER_ARTICLE = True
 
@@ -1894,8 +1887,6 @@ CUSTOM_WEBHOOK_HOSTNAME = config("CUSTOM_WEBHOOK_HOSTNAME", default=None)
 # into lists of paying and not paying users
 SENDINBLUE_API_KEY = config("SENDINBLUE_API_KEY", default=None)
 SENDINBLUE_LIST_ID = config("SENDINBLUE_LIST_ID", default=None)
-
-SITEMAP_USE_S3 = config("SITEMAP_USE_S3", cast=bool, default=True)
 
 # When doing local development with Yari, if you want to have `?next=...` redirects
 # work when you sign in on Yari, this needs to be set to `localhost.org:3000` in your

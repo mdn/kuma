@@ -34,7 +34,6 @@ SLUG_RESERVED_CASES = {
     "invalid_reserved_12": "needs-review/technical",
     "invalid_reserved_13": "localization-tag",
     "invalid_reserved_14": "localization-tag/inprogress",
-    "invalid_reserved_15": "templates",
     "invalid_reserved_16": "submit_akismet_spam",
     "invalid_reserved_17": "feeds/atom/all",
     "invalid_reserved_18": "feeds/rss/all",

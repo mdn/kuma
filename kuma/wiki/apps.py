@@ -1,4 +1,3 @@
-from celery.schedules import crontab
 from django.apps import AppConfig
 from django.utils.translation import gettext_lazy as _
 
@@ -18,14 +17,6 @@ class WikiConfig(AppConfig):
         """Configure kuma.wiki after models are loaded."""
         # Register signal handlers
         from . import signal_handlers  # noqa
-
-        # Build sitemaps every day at 05:00
-        from kuma.wiki.tasks import build_sitemaps
-
-        app.add_periodic_task(
-            crontab(minute=0, hour=5),
-            build_sitemaps.s(),
-        )
 
         # Render stale documents: every 60 minutes
         from kuma.wiki.tasks import render_stale_documents

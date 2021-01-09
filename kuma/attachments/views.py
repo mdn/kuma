@@ -36,7 +36,7 @@ def guess_extension(_type):
     return OVERRIDE_MIMETYPES.get(_type, mimetypes.guess_extension(_type))
 
 
-@cache_control(public=True, max_age=60 * 15)
+@cache_control(public=True, max_age=settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE)
 def raw_file(request, attachment_id, filename):
     """
     Serve up an attachment's file.

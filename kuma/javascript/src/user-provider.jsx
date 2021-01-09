@@ -94,10 +94,6 @@ export default function UserProvider(props: {
                     }
                 }
 
-                if (userData.waffle.flags.section_edit) {
-                    ga('set', 'dimension9', 'Yes');
-                }
-
                 // We only fetch user data once, right after the
                 // initial page load, so when that user data arrives
                 // it is time to send the initial 'pageview' event for

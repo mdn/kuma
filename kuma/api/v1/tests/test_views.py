@@ -37,7 +37,7 @@ def test_whoami_disallowed_methods(client, http_method):
 def test_whoami_anonymous(client, settings):
     """Test response for anonymous users."""
     # Create some fake waffle objects
-    Flag.objects.create(name="section_edit", authenticated=True)
+    Flag.objects.create(name="vip_only", authenticated=True)
     Flag.objects.create(name="flag_all", everyone=True)
     Flag.objects.create(name="flag_none", percent=0)
     Switch.objects.create(name="switch_on", active=True)
@@ -79,7 +79,7 @@ def test_whoami(
     Flag.objects.all().delete()
 
     # Create some fake waffle objects
-    Flag.objects.create(name="section_edit", authenticated=True)
+    Flag.objects.create(name="vip_only", authenticated=True)
     Flag.objects.create(name="flag_all", everyone=True)
     Flag.objects.create(name="flag_none", percent=0, superusers=False)
     Switch.objects.create(name="switch_on", active=True)
@@ -103,7 +103,7 @@ def test_whoami(
         "avatar_url": wiki_user_github_account.get_avatar_url(),
         "subscriber_number": None,
         "waffle": {
-            "flags": {"section_edit": True, "flag_all": True},
+            "flags": {"vip_only": True, "flag_all": True},
             "switches": {"switch_on": True},
             "samples": {"sample_always": True},
         },
@@ -177,6 +177,7 @@ class SearchViewTests(ElasticTestCase):
         response = self.client.get(url, {"q": "article"})
         assert response.status_code == 200
         assert response["content-type"] == "application/json"
+        assert response["Access-Control-Allow-Origin"] == "*"
         data = response.json()
         assert data["documents"]
         assert data["count"] == 4

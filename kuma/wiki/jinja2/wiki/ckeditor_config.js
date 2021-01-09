@@ -131,12 +131,6 @@
     // Adjust the spell checker's items in the context menu
     config.scayt_contextCommands = "ignore|ignoreall|add|option|language";
 
-    // Allows section editing to be used immediately and not lose focus on desired element
-    // http://docs.ckeditor.com/#!/guide/dev_autogrow
-    if(window.waffle && window.waffle.flag_is_active('section_edit')) {
-        config.autoGrow_onStartup = true;
-    }
-
     config.startupFocus = true;
     config.bodyClass = 'text-content';
     config.contentsCss = mdn.assets.css['editor-content'];

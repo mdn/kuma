@@ -1,13 +1,12 @@
+import warnings
 from functools import wraps
 
 import newrelic.agent
 from django.http import Http404, HttpResponsePermanentRedirect
-from waffle import flag_is_active, switch_is_active
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 
-from .exceptions import ReadOnlyException
 from .utils import locale_and_slug_from_path
 
 
@@ -30,10 +29,7 @@ def allow_CORS_GET(func):
     def _added_header(request, *args, **kwargs):
         response = func(request, *args, **kwargs)
 
-        # We are using this switch temporarily to research bug 1104260.
-        # Disabling this code has no effect locally, but may have an effect on
-        # production.
-        if "GET" == request.method and switch_is_active("application_ACAO"):
+        if "GET" == request.method:
             response["Access-Control-Allow-Origin"] = "*"
         return response
 
@@ -44,9 +40,7 @@ def check_readonly(view):
     """Decorator to enable readonly mode"""
 
     def _check_readonly(request, *args, **kwargs):
-        if not flag_is_active(request, "kumaediting"):
-            raise ReadOnlyException("kumaediting")
-
+        warnings.warn("The check_readonly decorator is deprecated", DeprecationWarning)
         return view(request, *args, **kwargs)
 
     return _check_readonly

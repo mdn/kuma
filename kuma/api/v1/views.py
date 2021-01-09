@@ -25,6 +25,7 @@ from waffle import flag_is_active
 from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
+from kuma.api.v1.decorators import allow_CORS_GET
 from kuma.api.v1.serializers import BCSignalSerializer, UserDetailsSerializer
 from kuma.core.email_utils import render_email
 from kuma.core.ga_tracking import (

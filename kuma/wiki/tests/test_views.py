@@ -10,9 +10,7 @@ from constance.test import override_config
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
-from django.template.loader import render_to_string
 from pyquery import PyQuery as pq
-from waffle.testutils import override_flag, override_switch
 
 from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import (
@@ -23,7 +21,6 @@ from kuma.core.tests import (
 )
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
-from kuma.spam.constants import SPAM_CHECKS_FLAG, SPAM_SUBMISSIONS_FLAG, VERIFY_URL
 from kuma.users.tests import UserTestCase
 
 from . import (
@@ -38,7 +35,7 @@ from . import (
 from ..content import get_seo_description
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
-from ..models import Document, RevisionIP
+from ..models import Document
 from ..templatetags.jinja_helpers import get_compare_url
 from ..views.document import _get_seo_parent_title
 
@@ -70,8 +67,7 @@ class ViewTests(UserTestCase, WikiTestCase):
         assert result_review_tags == expected_review_tags
 
         url = reverse("wiki.json_slug", args=("article-title",))
-        with override_switch("application_ACAO", True):
-            resp = self.client.get(url)
+        resp = self.client.get(url)
         assert resp.status_code == 200
         assert_shared_cache_header(resp)
         assert resp["Access-Control-Allow-Origin"] == "*"
@@ -100,8 +96,7 @@ class ViewTests(UserTestCase, WikiTestCase):
 
         url = reverse("wiki.toc", args=[slug])
 
-        with override_switch("application_ACAO", True):
-            resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
+        resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_shared_cache_header(resp)
         assert resp["Access-Control-Allow-Origin"] == "*"
@@ -109,7 +104,6 @@ class ViewTests(UserTestCase, WikiTestCase):
             '<ol><li><a href="#Head_2" rel="internal">Head 2</a></ol>'
         )
 
-    @override_switch("application_ACAO", True)
     def test_children_view(self):
         """bug 875349"""
         test_content = '<p>Test <a href="http://example.com">Summary</a></p>'
@@ -285,47 +279,6 @@ class ViewTests(UserTestCase, WikiTestCase):
         assert b"Revision Content" in resp.content
         assert "open" == page.find("#wikiArticle").parent().attr("open")
         assert page.find("#doc-source").parent().attr("open") is None
-
-
-class ReadOnlyTests(UserTestCase, WikiTestCase):
-    """Tests readonly scenarios"""
-
-    fixtures = UserTestCase.fixtures + ["wiki/documents.json"]
-
-    def setUp(self):
-        super(ReadOnlyTests, self).setUp()
-        rev = revision(is_approved=True, save=True)
-        self.edit_url = reverse("wiki.edit", args=[rev.document.slug])
-
-    def test_everyone(self):
-        """ kumaediting: everyone, kumabanned: none  """
-        self.kumaediting_flag.everyone = True
-        self.kumaediting_flag.save()
-
-        self.client.login(username="testuser", password="testpass")
-        resp = self.client.get(self.edit_url, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 200
-        assert resp["X-Robots-Tag"] == "noindex"
-        assert_no_cache_header(resp)
-
-    def test_superusers_only(self):
-        """ kumaediting: superusers, kumabanned: none """
-        self.kumaediting_flag.everyone = None
-        self.kumaediting_flag.superusers = True
-        self.kumaediting_flag.save()
-
-        self.client.login(username="testuser", password="testpass")
-        resp = self.client.get(self.edit_url, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 403
-        assert b"The wiki is in read-only mode." in resp.content
-        assert_no_cache_header(resp)
-        self.client.logout()
-
-        self.client.login(username="admin", password="testpass")
-        resp = self.client.get(self.edit_url, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 200
-        assert resp["X-Robots-Tag"] == "noindex"
-        assert_no_cache_header(resp)
 
 
 class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
@@ -1576,67 +1529,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         """Tests midair collisions for ajax submissions."""
         self.test_edit_midair_collisions(is_ajax=True)
 
-    @override_flag(SPAM_SUBMISSIONS_FLAG, active=True)
-    @override_flag(SPAM_CHECKS_FLAG, active=True)
-    @override_config(AKISMET_KEY="dashboard")
-    @requests_mock.mock()
-    @mock.patch("kuma.spam.akismet.Akismet.check_comment")
-    def test_edit_spam_ajax(
-        self, mock_requests, mock_akismet_method, translate_locale=None
-    ):
-        """Tests attempted spam edits that occur on Ajax POSTs."""
-        # Note: Akismet is enabled by the Flag overrides
-
-        mock_requests.post(VERIFY_URL, content=b"valid")
-        # The return value of akismet.check_comment is set to True
-        mock_akismet_method.return_value = True
-
-        # self.client.login(username='admin', password='testpass')
-        self.client.login(username="testuser", password="testpass")
-
-        # Create a new document.
-        doc = document(save=True)
-        data = new_document_data()
-        # Create a revision on the document
-        revision(save=True, document=doc)
-        # This is the url to post new revisions for the rest of this test
-        posting_url = reverse("wiki.edit", args=[doc.slug])
-
-        # If this is a translation test, then create a translation and a revision on it
-        if translate_locale:
-            data["locale"] = translate_locale
-            translation = document(parent=doc, locale=translate_locale, save=True)
-            translation_rev = revision(
-                document=translation,
-                based_on=translation.parent.current_or_latest_revision(),
-                save=True,
-            )
-            # rev_id = translation_rev.id
-            posting_url = reverse(
-                "wiki.edit",
-                args=[translation_rev.document.slug],
-                locale=translate_locale,
-            )
-
-        # Get the rev id
-        resp = self.client.get(posting_url, HTTP_HOST=settings.WIKI_HOST)
-        page = pq(resp.content)
-        rev_id = page.find('input[name="current_rev"]').attr("value")
-
-        # Edit submits
-        data.update(
-            {"form-type": "rev", "content": "Spam content", "current_rev": rev_id}
-        )
-        resp = self.client.post(
-            posting_url,
-            data,
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-            HTTP_HOST=settings.WIKI_HOST,
-        )
-
-        spam_message = render_to_string("wiki/includes/spam_error.html")
-        assert spam_message in json.loads(resp.content)["error_message"]
-
     def test_multiple_edits_ajax(self, translate_locale=None):
         """Tests multiple sequential attempted valid edits that occur as Ajax POSTs."""
 
@@ -1709,10 +1601,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
     def test_translation_midair_collission_ajax(self):
         """Tests midair collisions for ajax translation revisions."""
         self.test_edit_midair_collisions(is_ajax=True, translate_locale="it")
-
-    def test_translation_spam_ajax(self):
-        """Tests attempted translation spam edits that occur on Ajax POSTs."""
-        self.test_edit_spam_ajax(translate_locale="ru")
 
     def test_toc_toggle_off(self):
         """Toggling of table of contents in revisions"""
@@ -1961,57 +1849,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         assert b"cannot revert a document that has been moved" in resp.content
-
-    def test_store_revision_ip(self):
-        self.client.login(username="testuser", password="testpass")
-        data = new_document_data()
-        slug = "test-article-for-storing-revision-ip"
-        data.update({"title": "A Test Article For Storing Revision IP", "slug": slug})
-        self.client.post(reverse("wiki.create"), data, HTTP_HOST=settings.WIKI_HOST)
-
-        doc = Document.objects.get(locale="en-US", slug=slug)
-
-        data.update(
-            {
-                "form-type": "rev",
-                "content": "This revision should NOT record IP",
-                "comment": "This revision should NOT record IP",
-            }
-        )
-
-        resp = self.client.post(
-            reverse("wiki.edit", args=[doc.slug]),
-            data,
-            HTTP_USER_AGENT="Mozilla Firefox",
-            HTTP_REFERER="http://localhost/",
-            HTTP_HOST=settings.WIKI_HOST,
-        )
-        assert resp.status_code == 302
-        assert resp["X-Robots-Tag"] == "noindex"
-        assert_no_cache_header(resp)
-        assert RevisionIP.objects.all().count() == 0
-
-        data.update(
-            {
-                "content": "Store the IP address for the revision.",
-                "comment": "Store the IP address for the revision.",
-            }
-        )
-
-        with override_switch("store_revision_ips", True):
-            self.client.post(
-                reverse("wiki.edit", args=[doc.slug]),
-                data,
-                HTTP_USER_AGENT="Mozilla Firefox",
-                HTTP_REFERER="http://localhost/",
-                HTTP_HOST=settings.WIKI_HOST,
-            )
-        assert RevisionIP.objects.all().count() == 1
-        rev = doc.revisions.order_by("-id").all()[0]
-        rev_ip = RevisionIP.objects.get(revision=rev)
-        assert rev_ip.ip == "127.0.0.1"
-        assert rev_ip.user_agent == "Mozilla Firefox"
-        assert rev_ip.referrer == "http://localhost/"
 
     @call_on_commit_immediately
     def test_email_for_first_edits(self):
@@ -2272,12 +2109,11 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <p>test</p>
             <p>test</p>
         """
-        with override_switch("application_ACAO", True):
-            response = self.client.get(
-                "%s?raw=true" % reverse("wiki.document", args=[rev.document.slug]),
-                HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-                HTTP_HOST=settings.WIKI_HOST,
-            )
+        response = self.client.get(
+            "%s?raw=true" % reverse("wiki.document", args=[rev.document.slug]),
+            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
+            HTTP_HOST=settings.WIKI_HOST,
+        )
         assert response.status_code == 200
         # Since the client is logged-in, the response should not be cached.
         assert_no_cache_header(response)
@@ -2807,31 +2643,6 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
             assert 301 == resp.status_code
             assert resp["Location"] == namespace_test["kuma"]
 
-    def test_document_urls(self):
-        """Check the url redirect to proper document when the url like
-        /<locale>/<document_slug>"""
-        d = document(locale="zh-CN")
-        d.save()
-        mt_url = "/{locale}/{slug}".format(locale=d.locale, slug=d.slug)
-        resp = self.client.get(mt_url, follow=True, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 200
-
-        # Check the last redirect chain url is correct document url
-        last_url = resp.redirect_chain[-1][0]
-        assert last_url == d.get_absolute_url()
-
-    def test_view_param(self):
-        d = document()
-        d.locale = settings.WIKI_DEFAULT_LANGUAGE
-        d.slug = "HTML/HTML5"
-        d.title = "HTML 5"
-        d.save()
-        mt_url = "/en-US/%s?view=edit" % (d.slug,)
-        resp = self.client.get(mt_url, HTTP_HOST=settings.WIKI_HOST)
-        assert 301 == resp.status_code
-        expected_url = d.get_absolute_url("wiki.edit")
-        assert resp["Location"] == expected_url
-
 
 @override_config(KUMASCRIPT_TIMEOUT=5.0, KUMASCRIPT_MAX_AGE=600)
 class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
@@ -2976,12 +2787,11 @@ class PageMoveTests(UserTestCase, WikiTestCase):
 
         data = {"slug": "moved/test-page-move-views"}
         self.client.login(username="admin", password="testpass")
-        with override_flag("page_move", True):
-            resp = self.client.post(
-                reverse("wiki.move", args=(parent_doc.slug,)),
-                data=data,
-                HTTP_HOST=settings.WIKI_HOST,
-            )
+        resp = self.client.post(
+            reverse("wiki.move", args=(parent_doc.slug,)),
+            data=data,
+            HTTP_HOST=settings.WIKI_HOST,
+        )
 
         assert resp.status_code == 200
         assert_no_cache_header(resp)

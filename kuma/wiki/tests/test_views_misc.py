@@ -3,7 +3,6 @@ from urllib.parse import urlencode
 
 import pytest
 from django.conf import settings
-from waffle.testutils import override_switch
 
 from kuma.core.tests import assert_shared_cache_header
 from kuma.core.urlresolvers import reverse
@@ -70,8 +69,7 @@ def test_autosuggest(client, redirect_doc, doc_hierarchy, locale_case, term):
     url = reverse("wiki.autosuggest_documents")
     if params:
         url += "?{}".format(urlencode(params))
-    with override_switch("application_ACAO", True):
-        response = client.get(url)
+    response = client.get(url)
     assert response.status_code == expected_status_code
     assert_shared_cache_header(response)
     assert "Access-Control-Allow-Origin" in response

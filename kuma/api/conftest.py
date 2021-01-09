@@ -43,25 +43,3 @@ def redirect_to_home(wiki_user):
         created=datetime(2015, 7, 4, 11, 15),
     )
     return doc
-
-
-@pytest.fixture
-def redirect_to_macros(wiki_user):
-    """
-    A top-level English document that redirects to the macros dashboard.
-    """
-    doc = Document.objects.create(
-        locale="en-US", slug="GoMacros", title="Redirect to Macros Dashboard"
-    )
-    Revision.objects.create(
-        document=doc,
-        creator=wiki_user,
-        content=REDIRECT_CONTENT
-        % {
-            "href": reverse("dashboards.macros", locale="en-US"),
-            "title": "Active macros | MDN",
-        },
-        title="Redirect to Macros Dashboard",
-        created=datetime(2017, 5, 24, 12, 15),
-    )
-    return doc

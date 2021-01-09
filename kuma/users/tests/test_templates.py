@@ -7,7 +7,6 @@ from django.db import IntegrityError
 from django.http import HttpResponse
 from django.test import override_settings
 from pyquery import PyQuery as pq
-from waffle.testutils import override_switch
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
@@ -39,29 +38,6 @@ class SignupTests(UserTestCase, SocialTestMixin):
         self.assertIn("socialaccount_sociallogin", session)
         self.assertEqual(session["sociallogin_provider"], "github")
 
-    def test_signup_page_disabled(self):
-        with override_switch("registration_disabled", True):
-            response = self.github_login()
-        self.assertNotContains(response, "Sign In Failure")
-        self.assertContains(response, "Profile Creation Disabled")
-        session = response.context["request"].session
-        self.assertNotIn("socialaccount_sociallogin", session)
-        self.assertNotIn("sociallogin_provider", session)
-
-        # re-enable registration
-        with override_switch("registration_disabled", False):
-            response = self.github_login()
-        test_strings = [
-            "Create your MDN account",
-            "Choose a username",
-            "Having trouble",
-        ]
-        for test_string in test_strings:
-            self.assertContains(response, test_string)
-        session = response.context["request"].session
-        self.assertIn("socialaccount_sociallogin", session)
-        self.assertEqual(session["sociallogin_provider"], "github")
-
 
 def test_account_email_page_requires_signin(db, client, settings):
     response = client.get(reverse("account_email"))
@@ -69,7 +45,7 @@ def test_account_email_page_requires_signin(db, client, settings):
     assert_no_cache_header(response)
     response = client.get(response["Location"], follow=True)
     assert response.status_code == 200
-    assert b"Sign in with Github" in response.content
+    assert b"Sign in with GitHub" in response.content
     assert b"Sign in with Google" in response.content
 
 
@@ -280,242 +256,6 @@ class BanTestCase(UserTestCase):
         assert len(reasons_to_ban_found) == len(reasons_to_ban_expected)
         for reason in reasons_to_ban_found:
             assert reason.text in reasons_to_ban_expected
-
-
-class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
-    def test_user_revisions_in_one_click_page_template(self):
-        """The user's revisions show up in the ban and cleanup template."""
-        # Create 3 revisions for testuser, titled 'Revision 1', 'Revision 2'...
-        revisions_expected = self.create_revisions(
-            num=3, creator=self.testuser, document=self.document
-        )
-
-        self.client.login(username="admin", password="testpass")
-        ban_url = reverse(
-            "users.ban_user_and_cleanup", kwargs={"username": self.testuser.username}
-        )
-
-        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 200
-        assert_no_cache_header(resp)
-        page = pq(resp.content)
-
-        revisions_found = page.find(".dashboard-row")
-        revisions_found_text = ""
-        for rev in revisions_found:
-            revisions_found_text += rev.text_content()
-
-        assert len(revisions_found) == len(revisions_expected)
-        # The title for each of the created revisions shows up in the template
-        for revision in revisions_expected:
-            assert revision.title in revisions_found_text
-        # The original revision created by the admin user is not in the template
-        assert self.original_revision.title not in revisions_found_text
-
-    def test_no_user_revisions_in_one_click_page_template(self):
-        """If the user has no revisions, it should be stated in the template."""
-        self.client.login(username="admin", password="testpass")
-        ban_url = reverse(
-            "users.ban_user_and_cleanup", kwargs={"username": self.testuser.username}
-        )
-
-        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 200
-        assert_no_cache_header(resp)
-        page = pq(resp.content)
-
-        revisions_found = page.find(".dashboard-row")
-        no_revisions = page.find("#ban-and-cleanup-form")
-
-        assert len(revisions_found) == 0
-        assert (
-            "This user has not created any revisions "
-            "in the past three days." in no_revisions.text()
-        )
-
-    def test_not_banned_user_no_revisions_ban_button(self):
-        """Test ban button text for a non-banned user who has revisions not submitted as spam."""
-        # There are some revisions made by self.testuser
-        num_revisions = 3
-        self.create_revisions(
-            num=num_revisions, document=self.document, creator=self.testuser
-        )
-
-        self.client.login(username="admin", password="testpass")
-
-        # For self.testuser (not banned, and revisions need to be reverted) the
-        # button on the form should read "Ban User for Spam & Submit Spam"
-        # and there should be a link to ban a user for other reasons
-        ban_url = reverse(
-            "users.ban_user_and_cleanup", kwargs={"username": self.testuser.username}
-        )
-
-        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 200
-        assert_no_cache_header(resp)
-        page = pq(resp.content)
-
-        revisions_found = page.find(".dashboard-row")
-        ban_button = page.find("#ban-and-cleanup-form button[type=submit]")
-        ban_other_reasons = page.find("#ban-for-other-reasons")
-
-        assert len(revisions_found) == num_revisions
-        assert ban_button.text() == "Ban User for Spam & Submit Spam"
-        assert len(ban_other_reasons) == 1
-
-    def test_not_banned_user_no_revisions_or_already_spam_ban_button(self):
-        """
-        Test for a non-banned user with no revisions that can be marked as spam.
-
-        We test the ban button text for a non-banned user who has either
-        no revisions or revisions already marked as spam.
-        """
-        self.client.login(username="admin", password="testpass")
-        # For self.testuser (not banned, no revisions needing to be reverted)
-        # the button on the form should read "Ban User for Spam". There should
-        # be no link to ban for other reasons
-        ban_url = reverse(
-            "users.ban_user_and_cleanup", kwargs={"username": self.testuser.username}
-        )
-        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 200
-        assert_no_cache_header(resp)
-        page = pq(resp.content)
-
-        revisions_found = page.find(".dashboard-row")
-        ban_button = page.find("#ban-and-cleanup-form button[type=submit]")
-        ban_other_reasons = page.find("#ban-for-other-reasons")
-
-        assert len(revisions_found) == 0
-        assert ban_button.text() == "Ban User for Spam"
-        assert len(ban_other_reasons) == 0
-
-        # For self.testuser2 (not banned, revisions already marked as spam)
-        # the button on the form should read "Ban User for Spam". There should
-        # be no link to ban for other reasons
-        # Create some revisions made by self.testuser2 and add a Spam submission for each
-        num_revisions = 3
-        created_revisions = self.create_revisions(
-            num=num_revisions, document=self.document, creator=self.testuser2
-        )
-        for revision in created_revisions:
-            revision.akismet_submissions.create(sender=self.testuser2, type="spam")
-
-        ban_url = reverse(
-            "users.ban_user_and_cleanup", kwargs={"username": self.testuser2.username}
-        )
-        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 200
-        assert_no_cache_header(resp)
-        page = pq(resp.content)
-
-        revisions_found = page.find(".dashboard-row")
-        ban_button = page.find("#ban-and-cleanup-form button[type=submit]")
-        ban_other_reasons = page.find("#ban-for-other-reasons")
-
-        assert len(revisions_found) == 3
-        assert ban_button.text() == "Ban User for Spam"
-        assert len(ban_other_reasons) == 0
-
-    def test_banned_user_revisions_ban_button(self):
-        """Test the template for a banned user with revisions that can be marked as spam."""
-        # There are some revisions made by self.testuser; none by self.testuser2
-        num_revisions = 3
-        self.create_revisions(
-            num=num_revisions, document=self.document, creator=self.testuser
-        )
-
-        # Ban self.testuser
-        UserBan.objects.create(
-            user=self.testuser,
-            by=self.admin,
-            reason="Banned by unit test.",
-            is_active=True,
-        )
-
-        self.client.login(username="admin", password="testpass")
-
-        # For self.testuser (banned, but revisions need to be reverted) the
-        # button on the form should read "Submit Spam". There should
-        # be no link to ban for other reasons
-        ban_url = reverse(
-            "users.ban_user_and_cleanup", kwargs={"username": self.testuser.username}
-        )
-
-        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 200
-        assert_no_cache_header(resp)
-        page = pq(resp.content)
-
-        revisions_found = page.find(".dashboard-row")
-        ban_button = page.find("#ban-and-cleanup-form button[type=submit]")
-        ban_other_reasons = page.find("#ban-for-other-reasons")
-
-        assert len(revisions_found) == num_revisions
-        assert ban_button.text() == "Submit Spam"
-        assert len(ban_other_reasons) == 0
-
-    def test_banned_user_no_revisions_or_already_spam_ban_button(self):
-        """
-        Test for a banned user with no revisions that can be marked as spam.
-
-        We test the ban button text for a banned user who has either
-        no revisions or revisions already marked as spam.
-        """
-        # Ban self.testuser2
-        UserBan.objects.create(
-            user=self.testuser2,
-            by=self.admin,
-            reason="Banned by unit test.",
-            is_active=True,
-        )
-        self.client.login(username="admin", password="testpass")
-        # For self.testuser2 (banned, has no revisions needing to be reverted)
-        # there should be no button on the form and no link to
-        # ban for other reasons
-        ban_url = reverse(
-            "users.ban_user_and_cleanup", kwargs={"username": self.testuser2.username}
-        )
-
-        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 200
-        assert_no_cache_header(resp)
-        page = pq(resp.content)
-
-        revisions_found = page.find(".dashboard-row")
-        ban_button = page.find("#ban-and-cleanup-form button[type=submit]")
-        ban_other_reasons = page.find("#ban-for-other-reasons")
-
-        assert len(revisions_found) == 0
-        assert len(ban_button) == 0
-        assert len(ban_other_reasons) == 0
-
-        # For self.testuser2 (banned, revisions already marked as spam)
-        # there should be no button on the form and no link to
-        # ban for other reasons
-        # Create some revisions made by self.testuser2 and add a Spam submission for each
-        num_revisions = 3
-        created_revisions = self.create_revisions(
-            num=num_revisions, document=self.document, creator=self.testuser2
-        )
-        for revision in created_revisions:
-            revision.akismet_submissions.create(sender=self.testuser2, type="spam")
-
-        ban_url = reverse(
-            "users.ban_user_and_cleanup", kwargs={"username": self.testuser2.username}
-        )
-        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
-        assert resp.status_code == 200
-        assert_no_cache_header(resp)
-        page = pq(resp.content)
-
-        revisions_found = page.find(".dashboard-row")
-        ban_button = page.find("#ban-and-cleanup-form button[type=submit]")
-        ban_other_reasons = page.find("#ban-for-other-reasons")
-
-        assert len(revisions_found) == 3
-        assert len(ban_button) == 0
-        assert len(ban_other_reasons) == 0
 
 
 class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):

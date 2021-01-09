@@ -13,8 +13,6 @@ from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
 from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
-from kuma.dashboards.urls import lang_urlpatterns as dashboards_lang_urlpatterns
-from kuma.dashboards.views import index as dashboards_index
 from kuma.landing.urls import lang_urlpatterns as landing_lang_urlpatterns
 from kuma.payments.urls import lang_urlpatterns as payments_lang_urlpatterns
 from kuma.search.urls import (
@@ -22,7 +20,6 @@ from kuma.search.urls import (
     lang_urlpatterns as search_lang_urlpatterns,
 )
 from kuma.users.urls import lang_urlpatterns as users_lang_urlpatterns
-from kuma.views import serve_sitemap
 from kuma.wiki.admin import purge_view
 from kuma.wiki.urls import lang_urlpatterns as wiki_lang_urlpatterns
 from kuma.wiki.views.document import as_json as document_as_json
@@ -88,12 +85,6 @@ urlpatterns += i18n_patterns(
 )
 urlpatterns += i18n_patterns(re_path(r"^docs/", include(wiki_lang_urlpatterns)))
 urlpatterns += [re_path("", include("kuma.attachments.urls"))]
-urlpatterns += i18n_patterns(
-    re_path(r"dashboards/?$", dashboards_index, name="dashboards.index"),
-)
-urlpatterns += i18n_patterns(
-    re_path(r"^dashboards/", include(dashboards_lang_urlpatterns))
-)
 urlpatterns += [re_path("users/", include("kuma.users.urls"))]
 urlpatterns += i18n_patterns(
     re_path(
@@ -138,9 +129,6 @@ urlpatterns += [
     # Services and sundry.
     re_path("^api/", include("kuma.api.urls")),
     re_path("", include("kuma.version.urls")),
-    # Serve sitemap files.
-    re_path(r"^sitemap.xml$", serve_sitemap, {"path": "sitemap.xml"}, name="sitemap"),
-    re_path(r"^(?P<path>sitemaps/.+)$", serve_sitemap, name="sitemaps"),
     re_path(r"^humans.txt$", core_views.humans_txt, name="humans_txt"),
     re_path(
         r"^miel$",

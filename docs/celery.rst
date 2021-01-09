@@ -29,9 +29,6 @@ Some examples where Celery is used:
   viewer will get a "``502 Bad Gateway``" error. The async task can take as long as
   needed, and the spam moderator will see the dashboard when the data is
   calculated and cached.
-* **Rebuilding sitemaps** - Search engines need recent site URL data, and it
-  can't be assembled quickly in the request for the sitemap. An async request
-  repopulates the cached sitemap data, keeping this data fast and up-to-date.
 
 There are some downsides to async tasks that should also be considered:
 
@@ -72,8 +69,7 @@ Result store
 ------------
 When a task completes, it returns processed data and task states to a
 `results store`_. Kuma doesn't use returned data, but it does use returned task
-state to coordinate multi-step tasks. In particular for `chord tasks`_ such
-as building a sitemap of sitemaps after each locales' sitemap is built.
+state to coordinate multi-step tasks.
 
 Referring to logging to see message about completion of Celery worker tasks.
 

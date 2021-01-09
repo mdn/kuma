@@ -7,12 +7,10 @@ from django.contrib.auth.models import Group
 from django.core.cache import caches
 from django.urls import set_urlconf
 from django.utils.translation import activate
-from waffle.testutils import override_flag
 
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.constants import REDIRECT_CONTENT
 from kuma.wiki.models import Document, Revision
-from kuma.wiki.tasks import sitemap_storage as real_sitemap_storage
 
 
 @pytest.fixture(autouse=True)
@@ -166,8 +164,7 @@ def stripe_user_client(client, stripe_user):
 @pytest.fixture
 def editor_client(user_client):
     """A test client with wiki_user logged in for editing."""
-    with override_flag("kumaediting", True):
-        yield user_client
+    yield user_client
 
 
 @pytest.fixture
@@ -236,12 +233,3 @@ def redirect_doc(wiki_user, root_doc):
 def mock_requests():
     with requests_mock.Mocker() as mocker:
         yield mocker
-
-
-@pytest.fixture
-def sitemap_storage(settings):
-    """A well-behaved sitemap_storage that cleans-up before and after itself."""
-    settings.ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN = "localhost:9000/test"
-    real_sitemap_storage.s3_clear()
-    yield real_sitemap_storage
-    real_sitemap_storage.s3_clear()
