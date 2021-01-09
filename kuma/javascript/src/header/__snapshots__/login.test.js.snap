@@ -91,14 +91,6 @@ exports[`Login component when user is logged in and has wiki contributions 1`] =
     >
       <li>
         <a
-          href="/en-US/dashboards/revisions?user=test-username"
-          title="You have 1 Wiki revisions"
-        >
-          Contributions
-        </a>
-      </li>
-      <li>
-        <a
           href="/en-US/profiles/test-username"
         >
           View profile

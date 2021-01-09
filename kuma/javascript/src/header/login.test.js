@@ -80,7 +80,7 @@ test('Login component when user is logged in and has wiki contributions', () => 
     expect(dropdown).toBeDefined();
 
     let string = JSON.stringify(login.toJSON());
-    expect(string).toContain('Contributions');
+    expect(string).not.toContain('Contributions');
     expect(string).toContain('View profile');
     expect(string).toContain('Edit profile');
     expect(string).toContain('Sign out');

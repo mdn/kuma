@@ -12,7 +12,7 @@ from kuma.spam.constants import (
 from kuma.users.tests import UserTestCase
 
 from ..forms import AkismetHistoricalData, DocumentForm, RevisionForm, TreeMoveForm
-from ..models import Revision, RevisionIP
+from ..models import Revision
 from ..tests import document, normalize_html, revision
 
 
@@ -53,49 +53,6 @@ class AkismetHistoricalDataTests(UserTestCase):
         """
         params = AkismetHistoricalData(self.revision).parameters
         assert params == self.base_akismet_payload
-
-    def test_revision_ip_no_data(self):
-        """
-        Test Akismet payload with a RevisionIP without data.
-
-        This is a possible payload from an April 2016 revision.
-        """
-        RevisionIP.objects.create(
-            revision=self.revision,
-            ip="127.0.0.1",
-            user_agent="Agent",
-            referrer="Referrer",
-        )
-        request = self.rf.get("/en-US/dashboard/revisions")
-        params = AkismetHistoricalData(self.revision, request).parameters
-        expected = self.base_akismet_payload.copy()
-        expected.update(
-            {
-                "blog": "http://testserver/",
-                "permalink": "http://testserver/en-US/docs/SampleSlug",
-                "referrer": "Referrer",
-                "user_agent": "Agent",
-                "user_ip": "127.0.0.1",
-            }
-        )
-        assert params == expected
-
-    def test_revision_ip_with_data(self):
-        """
-        Test Akismet payload is the data from the RevisionIP.
-
-        This payload is from a revision after April 2016.
-        """
-        RevisionIP.objects.create(
-            revision=self.revision,
-            ip="127.0.0.1",
-            user_agent="Agent",
-            referrer="Referrer",
-            data='{"content": "spammy"}',
-        )
-        request = self.rf.get("/en-US/dashboard/revisions")
-        params = AkismetHistoricalData(self.revision, request).parameters
-        assert params == {"content": "spammy"}
 
 
 @pytest.mark.parametrize(

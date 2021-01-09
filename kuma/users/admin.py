@@ -1,9 +1,5 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.utils.html import format_html
-
-from kuma.core.urlresolvers import reverse
-from kuma.core.utils import urlparams
 
 from .models import User, UserBan, UserSubscription
 
@@ -57,7 +53,6 @@ class UserAdmin(BaseUserAdmin):
         "username",
         "fullname",
         "email",
-        "revisions",
         "date_joined",
         "is_staff",
         "is_active",
@@ -79,12 +74,6 @@ class UserAdmin(BaseUserAdmin):
         "location",
         "email",
     )
-
-    def revisions(self, obj):
-        """HTML link to user's revisions with count"""
-        link = urlparams(reverse("dashboards.revisions"), user=obj.username)
-        count = obj.created_revisions.count()
-        return format_html('<a href="{}"><strong>{}</strong></a>', link, count)
 
 
 @admin.register(UserSubscription)
