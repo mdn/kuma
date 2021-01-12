@@ -15,7 +15,6 @@ from django.utils import translation
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
-from ratelimit.decorators import ratelimit
 from raven.contrib.django.models import client as raven_client
 from rest_framework import serializers, status
 from rest_framework.decorators import api_view
@@ -28,7 +27,7 @@ from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.decorators import allow_CORS_GET
-from kuma.api.v1.serializers import BCSignalSerializer, UserDetailsSerializer
+from kuma.api.v1.serializers import UserDetailsSerializer
 from kuma.core.email_utils import render_email
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_CANCELED,
@@ -151,19 +150,6 @@ class APISearchView(SearchView):
 
 
 search = never_cache(allow_CORS_GET(APISearchView.as_view()))
-
-
-@ratelimit(key="user_or_ip", rate="10/d", block=True)
-@api_view(["POST"])
-def bc_signal(request):
-    if not settings.ENABLE_BCD_SIGNAL:
-        return Response("not enabled", status=status.HTTP_400_BAD_REQUEST)
-
-    serializer = BCSignalSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @waffle_flag("subscription")
