@@ -5,7 +5,7 @@ from django.views.decorators.http import require_GET
 from django.views.generic import RedirectView
 from ratelimit.decorators import ratelimit
 
-from kuma.api.v1.views import search as search_api
+from kuma.api.v1.search import search as search_api
 from kuma.core.decorators import shared_cache_control
 from kuma.core.utils import is_wiki
 

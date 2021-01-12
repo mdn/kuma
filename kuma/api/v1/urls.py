@@ -1,12 +1,11 @@
 from django.urls import path, re_path
 
-from . import views
-
+from . import search, views
 
 urlpatterns = [
     re_path(r"^whoami/?$", views.whoami, name="api.v1.whoami"),
-    path("search/<locale>", views.search, name="api.v1.search_legacy"),
-    path("search/", views.search, name="api.v1.search"),
+    path("search/<locale>", search.search, name="api.v1.search_legacy"),
+    path("search", search.search, name="api.v1.search"),
     re_path(r"^bc-signal/?$", views.bc_signal, name="api.v1.bc_signal"),
     path(
         "subscriptions/feedback/",
