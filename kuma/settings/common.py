@@ -1348,7 +1348,6 @@ CELERY_TASK_ROUTES = {
     "kuma.core.tasks.clean_sessions": {"queue": "mdn_purgeable"},
     "kuma.core.tasks.delete_old_ip_bans": {"queue": "mdn_purgeable"},
     "kuma.wiki.tasks.delete_old_revision_ips": {"queue": "mdn_purgeable"},
-    "kuma.wiki.tasks.tidy_revision_content": {"queue": "mdn_purgeable"},
     "kuma.search.tasks.prepare_index": {"queue": "mdn_search"},
     "kuma.search.tasks.finalize_index": {"queue": "mdn_search"},
     "kuma.wiki.tasks.index_documents": {"queue": "mdn_search"},
