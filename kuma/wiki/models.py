@@ -2076,6 +2076,7 @@ class DocumentSpamAttempt(SpamAttempt):
 
 class BCSignal(models.Model):
     """Model to keep track of the BC signals."""
+
     # NOTE! The BCSignal data is deprecated. We no longer accept them coming
     # in. The only reason the model is not deleted yet is to keep it a little
     # bit longer. For historical reasons.
@@ -2083,6 +2084,7 @@ class BCSignal(models.Model):
     # the data from the MySQL when we're really comfortable that it will
     # never be useful again. Also, we do have backups of the MySQL database
     # if we really change our minds.
+    # See https://github.com/mdn/kuma/issues/7728
 
     document = models.ForeignKey(
         Document,
