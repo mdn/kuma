@@ -13,9 +13,9 @@ class SearchForm(forms.Form):
         # force everything to lowercase.
         choices=[(code.lower(), name) for code, name in settings.LANGUAGES],
     )
-    sort = forms.ChoiceField(
-        required=False, choices=["best", "relevance", "popularity"]
-    )
+
+    SORT_CHOICES = ("best", "relevance", "popularity")
+    sort = forms.ChoiceField(required=False, choices=[(x, x) for x in SORT_CHOICES])
     include_archive = forms.BooleanField(required=False)
     size = forms.IntegerField(required=False, min_value=1, max_value=100)
     page = forms.IntegerField(required=False, min_value=1, max_value=10)
@@ -29,15 +29,3 @@ class SearchForm(forms.Form):
         # See https://www.peterbe.com/plog/initial-values-bound-django-form-rendered
         data = MultiValueDict({**{k: [v] for k, v in initial.items()}, **data})
         super().__init__(data, **kwargs)
-
-    # def clean_size(self):
-    #     value = self.cleaned_data["size"]
-    #     if value < 1:
-    #         raise forms.ValidationError("too small")
-    #     return value
-
-    # def clean_page(self):
-    #     value = self.cleaned_data["page"]
-    #     if value < 1:
-    #         raise forms.ValidationError("too small")
-    #     return value

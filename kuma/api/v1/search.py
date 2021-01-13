@@ -31,11 +31,21 @@ def search(request, locale=None):
         "query": form.cleaned_data["q"],
         "size": form.cleaned_data["size"],
         "page": form.cleaned_data["page"],
-        "sort": "relevance",  # 'best' or 'popularity'
+        "sort": form.cleaned_data["sort"],
     }
-    from pprint import pprint
+    # from pprint import pprint
+    # pprint(params)
 
-    pprint(params)
+    # from elasticsearch_dsl import A
+    # client = Elasticsearch(settings.ES_URLS)
+    # search = Search(using=client, index=settings.SEARCH_INDEX_NAME)
+    # agg = A("terms", field="locale", size=100)
+    # # search = SongDoc.search()
+    # search.aggs.bucket("per_locale", agg)
+    # search = search[:0]  # select no hits
+    # response = search.execute()
+    # for each in response.aggregations.per_locale.buckets:
+    #     print(each)
 
     results = _find(params)
 
@@ -44,6 +54,7 @@ def search(request, locale=None):
 
 def _find(params, total_only=False, make_suggestions=False, min_suggestion_score=0.8):
     client = Elasticsearch(settings.ES_URLS)
+    # XXX stop using a single-character variable name
     s = Search(
         using=client,
         index=settings.SEARCH_INDEX_NAME,
@@ -85,7 +96,7 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
     if params["sort"] == "relevance":
         s = s.sort("_score", "-popularity")
         s = s.query(q)
-    elif params["popularity"]:
+    elif params["sort"] == "popularity":
         s = s.sort("-popularity", "_score")
         s = s.query(q)
     else:
@@ -93,7 +104,7 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
         boost_mode = 1
         s = s.query(
             "function_score",
-            matcher=q,
+            query=s.query(q),
             functions=[
                 query.SF(
                     "field_value_factor",
@@ -109,6 +120,9 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
 
     s = s[params["size"] * (params["page"] - 1) : params["size"] * params["page"]]
 
+    from pprint import pprint
+
+    pprint(s.to_dict())
     retry_options = {
         "retry_exceptions": (
             # This is the standard operational exception.
