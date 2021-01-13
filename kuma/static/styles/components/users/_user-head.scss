@@ -24,6 +24,7 @@
         top: auto;
         @include bidi(((right, auto, left, auto),));
         margin: 0 0 $grid-spacing 0;
+        display: flex;
 
         a {
             float: none;
