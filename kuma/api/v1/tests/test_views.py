@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core import mail
 from django.test import Client
 from stripe.error import APIError
-from waffle.models import Flag, Sample, Switch
+from waffle.models import Flag, Switch
 from waffle.testutils import override_flag
 
 from kuma.core.ga_tracking import (
@@ -41,8 +41,6 @@ def test_whoami_anonymous(client, settings):
     Flag.objects.create(name="flag_none", percent=0)
     Switch.objects.create(name="switch_on", active=True)
     Switch.objects.create(name="switch_off", active=False)
-    Sample.objects.create(name="sample_never", percent=0)
-    Sample.objects.create(name="sample_always", percent=100)
 
     url = reverse("api.v1.whoami")
     response = client.get(url)
@@ -52,7 +50,6 @@ def test_whoami_anonymous(client, settings):
         "waffle": {
             "flags": {"flag_all": True},
             "switches": {"switch_on": True},
-            "samples": {"sample_always": True},
         },
     }
     assert_no_cache_header(response)
@@ -83,8 +80,6 @@ def test_whoami(
     Flag.objects.create(name="flag_none", percent=0, superusers=False)
     Switch.objects.create(name="switch_on", active=True)
     Switch.objects.create(name="switch_off", active=False)
-    Sample.objects.create(name="sample_never", percent=0)
-    Sample.objects.create(name="sample_always", percent=100)
 
     wiki_user.is_staff = is_staff
     wiki_user.is_superuser = is_superuser
@@ -104,7 +99,6 @@ def test_whoami(
         "waffle": {
             "flags": {"vip_only": True, "flag_all": True},
             "switches": {"switch_on": True},
-            "samples": {"sample_always": True},
         },
         "email": "wiki_user@example.com",
         # TODO Remove this once we're off the Wiki.
