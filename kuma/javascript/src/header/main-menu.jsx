@@ -198,8 +198,8 @@ const _MainMenu = ({ documentData, locale }: Props) => {
                         external: true,
                     },
                     {
-                        url: `/${locale}/docs/MDN/Community`,
-                        label: gettext('Join the MDN community'),
+                        url: `/${locale}/docs/MDN/Contribute`,
+                        label: gettext('Contribute to MDN'),
                     },
                     {
                         label: gettext('Report a content problem'),
