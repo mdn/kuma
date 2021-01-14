@@ -24,7 +24,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from waffle import flag_is_active
 from waffle.decorators import waffle_flag
-from waffle.models import Flag, Sample, Switch
+from waffle.models import Flag, Switch
 
 from kuma.api.v1.decorators import allow_CORS_GET
 from kuma.api.v1.serializers import UserDetailsSerializer
@@ -106,7 +106,6 @@ def whoami(request):
     data["waffle"] = {
         "flags": {f.name: True for f in Flag.get_all() if f.is_active(request)},
         "switches": {s.name: True for s in Switch.get_all() if s.is_active()},
-        "samples": {s.name: True for s in Sample.get_all() if s.is_active()},
     }
     return JsonResponse(data)
 
