@@ -106,7 +106,6 @@ def whoami(request):
     data["waffle"] = {
         "flags": {f.name: True for f in Flag.get_all() if f.is_active(request)},
         "switches": {s.name: True for s in Switch.get_all() if s.is_active()},
-        "samples": {s.name: True for s in Sample.get_all() if s.is_active()},
     }
     return JsonResponse(data)
 
