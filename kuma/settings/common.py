@@ -911,11 +911,6 @@ PIPELINE_JS = {
         "output_filename": "build/js/react-main.js",
         "extra_context": {"defer": True},
     },
-    "bcd-signal": {
-        "source_filenames": ("bcd-signal.js",),
-        "output_filename": "build/js/react-bcd-signal.js",
-        "extra_context": {"defer": True},
-    },
     "banners": {
         "source_filenames": (
             "js/components/banners/utils/banners-event-util.js",
@@ -1760,10 +1755,6 @@ TAGGIT_CASE_INSENSITIVE = True
 # Ad Banner Settings
 NEWSLETTER = True
 NEWSLETTER_ARTICLE = True
-
-# Whether or not to enable the BCD signalling feature.
-# Affects loading of CSS (statically) and JS (in runtime).
-ENABLE_BCD_SIGNAL = config("ENABLE_BCD_SIGNAL", default=True, cast=bool)
 
 # Auth and permissions related constants
 LOGIN_URL = "socialaccount_signin"

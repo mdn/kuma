@@ -84,9 +84,6 @@ GOOGLE_ANALYTICS_TRACKING_URL = "https://thisllneverwork.example.com/collect"
 # Because that's what all the tests presume.
 SITE_ID = 1
 
-# Because it's on by default
-ENABLE_BCD_SIGNAL = True
-
 # Stripe API KEY settings
 STRIPE_PUBLIC_KEY = "testing"
 STRIPE_SECRET_KEY = "testing"
