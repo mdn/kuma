@@ -146,9 +146,6 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
             boost_mode=boost_mode,
             score_mode=score_mode,
         )
-        from pprint import pprint
-
-        pprint(search_query.to_dict())
 
     search_query = search_query.source(excludes=["body"])
 
@@ -156,9 +153,9 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
         params["size"] * (params["page"] - 1) : params["size"] * params["page"]
     ]
 
-    from pprint import pprint
+    # from pprint import pprint
 
-    pprint(search_query.to_dict())
+    # pprint(search_query.to_dict())
     retry_options = {
         "retry_exceptions": (
             # This is the standard operational exception.
