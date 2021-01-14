@@ -25,7 +25,6 @@ from .models import (
     RevisionIP,
 )
 from .search import WikiDocumentType
-from .utils import tidy_content
 
 
 log = logging.getLogger("kuma.wiki.tasks")
@@ -369,31 +368,6 @@ def unindex_documents(ids, index_pk):
     index = Index.objects.get(pk=index_pk)
 
     cls.bulk_delete(ids, es=es, index=index.prefixed_name)
-
-
-@task(rate_limit="120/m")
-@skip_in_maintenance_mode
-def tidy_revision_content(pk, refresh=True):
-    """
-    Run tidy over the given revision's content and save it to the
-    tidy_content field if the content is not equal to the current value.
-
-    :arg pk: Primary key of `Revision` whose content needs tidying.
-    """
-    try:
-        revision = Revision.objects.get(pk=pk)
-    except Revision.DoesNotExist as exc:
-        # Retry in 2 minutes
-        log.error("Tidy was unable to get revision id: %d. Retrying.", pk)
-        tidy_revision_content.retry(countdown=60 * 2, max_retries=5, exc=exc)
-    else:
-        if revision.tidied_content and not refresh:
-            return
-        tidied_content, errors = tidy_content(revision.content)
-        if tidied_content != revision.tidied_content:
-            Revision.objects.filter(pk=pk).update(tidied_content=tidied_content)
-        # return the errors so we can look them up in the Celery task result
-        return errors
 
 
 @task

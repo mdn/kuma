@@ -1,6 +1,6 @@
 import time
 from unittest import mock
-from urllib.parse import parse_qs, quote, urlparse
+from urllib.parse import quote
 
 import pytest
 from django.conf import settings
@@ -927,83 +927,6 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         assert response["X-Robots-Tag"] == "noindex"
         assert_no_cache_header(response)
         assert Document.objects.get(pk=self.d.pk).title == new_title
-
-
-def test_compare_revisions(edit_revision, client):
-    """Comparing two valid revisions of the same document works."""
-    doc = edit_revision.document
-    first_revision = doc.revisions.first()
-    params = {"from": first_revision.id, "to": edit_revision.id}
-    url = urlparams(reverse("wiki.compare_revisions", args=[doc.slug]), **params)
-
-    response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
-    assert response.status_code == 200
-    assert response["X-Robots-Tag"] == "noindex"
-    assert_shared_cache_header(response)
-    page = pq(response.content)
-    assert page("span.diff_sub").text() == "Getting\xa0started..."
-    assert page("span.diff_add").text() == "The\xa0root\xa0document."
-
-    change_link = page("a.change-revisions")
-    assert change_link.text() == "Change Revisions"
-    change_href = change_link.attr("href")
-    bits = urlparse(change_href)
-    assert bits.path == reverse("wiki.document_revisions", args=[doc.slug])
-    assert parse_qs(bits.query) == {"locale": [doc.locale], "origin": ["compare"]}
-
-    rev_from_link = page("div.rev-from h3 a")
-    assert rev_from_link.text() == "Revision %d:" % first_revision.id
-    from_href = rev_from_link.attr("href")
-    assert from_href == reverse("wiki.revision", args=[doc.slug, first_revision.id])
-
-    rev_to_link = page("div.rev-to h3 a")
-    assert rev_to_link.text() == "Revision %d:" % edit_revision.id
-    to_href = rev_to_link.attr("href")
-    assert to_href == reverse("wiki.revision", args=[doc.slug, edit_revision.id])
-
-
-def test_compare_first_translation(trans_revision, client):
-    """A localized revision can be compared to an English source revision."""
-    fr_doc = trans_revision.document
-    en_revision = trans_revision.based_on
-    en_doc = en_revision.document
-    assert en_doc != fr_doc
-    params = {"from": en_revision.id, "to": trans_revision.id}
-    url = urlparams(
-        reverse("wiki.compare_revisions", args=[fr_doc.slug], locale=fr_doc.locale),
-        **params,
-    )
-
-    response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
-    assert response.status_code == 200
-    assert response["X-Robots-Tag"] == "noindex"
-    assert_shared_cache_header(response)
-    page = pq(response.content)
-    assert page("span.diff_sub").text() == "Getting\xa0started..."
-    assert page("span.diff_add").text() == "Mise\xa0en\xa0route..."
-
-    # Change Revisions link goes to the French document history page
-    change_link = page("a.change-revisions")
-    change_href = change_link.attr("href")
-    bits = urlparse(change_href)
-    assert bits.path == reverse(
-        "wiki.document_revisions", args=[fr_doc.slug], locale=fr_doc.locale
-    )
-    assert parse_qs(bits.query) == {"locale": [fr_doc.locale], "origin": ["compare"]}
-
-    # From revision link goes to the English document
-    rev_from_link = page("div.rev-from h3 a")
-    from_href = rev_from_link.attr("href")
-    assert from_href == reverse(
-        "wiki.revision", args=[en_doc.slug, en_revision.id], locale=en_doc.locale
-    )
-
-    # To revision link goes to the French document
-    rev_to_link = page("div.rev-to h3 a")
-    to_href = rev_to_link.attr("href")
-    assert to_href == reverse(
-        "wiki.revision", args=[fr_doc.slug, trans_revision.id], locale=fr_doc.locale
-    )
 
 
 class TranslateTests(UserTestCase, WikiTestCase):
