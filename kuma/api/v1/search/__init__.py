@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.http import JsonResponse
 from elasticsearch import Elasticsearch, exceptions
-from elasticsearch_dsl import Q, Search, query
+from elasticsearch_dsl import Q, query, Search
 from redo import retrying
 
 from kuma.api.v1.decorators import allow_CORS_GET
@@ -15,7 +15,7 @@ def legacy(request, locale=None):
 
 @allow_CORS_GET
 def search(request, locale=None):
-    initial = {"size": 10, "page": 1}
+    initial = {"size": 10, "page": 1, "archive": SearchForm.ARCHIVE_CHOICES[0]}
     if locale:
         initial["locale"] = locale
     form = SearchForm(request.GET, initial=initial)
@@ -27,14 +27,15 @@ def search(request, locale=None):
 
     params = {
         "locales": [x.lower() for x in locales],
-        "include_archive": form.cleaned_data["include_archive"],
+        "archive": form.cleaned_data["archive"],
         "query": form.cleaned_data["q"],
         "size": form.cleaned_data["size"],
         "page": form.cleaned_data["page"],
         "sort": form.cleaned_data["sort"],
     }
-    # from pprint import pprint
-    # pprint(params)
+    from pprint import pprint
+
+    pprint(params)
 
     # from elasticsearch_dsl import A
     # client = Elasticsearch(settings.ES_URLS)
@@ -54,8 +55,7 @@ def search(request, locale=None):
 
 def _find(params, total_only=False, make_suggestions=False, min_suggestion_score=0.8):
     client = Elasticsearch(settings.ES_URLS)
-    # XXX stop using a single-character variable name
-    s = Search(
+    search_query = Search(
         using=client,
         index=settings.SEARCH_INDEX_NAME,
     )
@@ -63,13 +63,12 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
         # XXX research if it it's better to use phrase suggesters and if
         # that works
         # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters.html#phrase-suggester
-        s = s.suggest("title_suggestions", params["query"], term={"field": "title"})
-        s = s.suggest("body_suggestions", params["query"], term={"field": "body"})
-
-    if params["locales"]:
-        s = s.filter("terms", locale=params["locales"])
-    if not params["include_archive"]:
-        s = s.filter("term", archived=False)
+        search_query = search_query.suggest(
+            "title_suggestions", params["query"], term={"field": "title"}
+        )
+        search_query = search_query.suggest(
+            "body_suggestions", params["query"], term={"field": "body"}
+        )
 
     # XXX
     # The problem with multi_match is that it's not a phrase search
@@ -82,29 +81,60 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
     # search with `match_phrase` and make that the primary strategy. Then,
     # only if nothing can be found, fall back to `multi_match`.
     # This choice of strategy should probably inform the use of suggestions too.
-    q = Q("multi_match", query=params["query"], fields=["title^10", "body"])
+    # matcher = Q("multi_match", query=params["query"], fields=["title^10", "body"])
+    sub_queries = []
+    sub_queries.append(Q("match", title={"query": params["query"], "boost": 2.0}))
+    sub_queries.append(Q("match", body={"query": params["query"], "boost": 1.0}))
+    if " " in params["query"]:
+        sub_queries.append(
+            Q("match_phrase", title={"query": params["query"], "boost": 10.0})
+        )
+        sub_queries.append(
+            Q("match_phrase", body={"query": params["query"], "boost": 5.0})
+        )
 
-    s = s.highlight_options(
+        # sub_queries.append(Q("match_phrase", title=params["query"], boost=10.0))
+        # sub_queries.append(Q("match_phrase", body=params["query"], boost=5.0))
+    # matcher = query.Bool(should=sub_queries)
+    sub_query = query.Bool(should=sub_queries)
+
+    # matcher |= Q("match", query=params["query"], fields=["title^10", "body"])
+
+    if params["locales"]:
+        search_query = search_query.filter("terms", locale=params["locales"])
+        # filters.append(Q("terms", locale=params["locales"]))
+        # matcher &= Q("terms", locale=params["locales"])
+        # search_query = search_query.query("bool", filter=[Q("terms", locale=params["locales"])
+    if params["archive"] == "exclude":
+        search_query = search_query.filter("term", archived=False)
+    elif params["archive"] == "only":
+        search_query = search_query.filter("term", archived=True)
+        # filters.append(Q("term", archived=False))
+        # matcher &= Q("term", archived=False)
+
+    search_query = search_query.highlight_options(
         pre_tags=["<mark>"],
         post_tags=["</mark>"],
         number_of_fragments=3,
         fragment_size=120,
         encoder="html",
     )
-    s = s.highlight("title", "body")
+    search_query = search_query.highlight("title", "body")
 
     if params["sort"] == "relevance":
-        s = s.sort("_score", "-popularity")
-        s = s.query(q)
+        search_query = search_query.sort("_score", "-popularity")
+        search_query = search_query.query(sub_query)
     elif params["sort"] == "popularity":
-        s = s.sort("-popularity", "_score")
-        s = s.query(q)
+        search_query = search_query.sort("-popularity", "_score")
+        search_query = search_query.query(sub_query)
     else:
-        popularity_factor = 1
-        boost_mode = 1
-        s = s.query(
+        popularity_factor = 10.0
+        boost_mode = "sum"
+        score_mode = "max"
+        search_query = search_query.query(
             "function_score",
-            query=s.query(q),
+            # query=query.Bool(should=[matcher]),
+            query=sub_query,
             functions=[
                 query.SF(
                     "field_value_factor",
@@ -114,15 +144,21 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
                 )
             ],
             boost_mode=boost_mode,
+            score_mode=score_mode,
         )
+        from pprint import pprint
 
-    s = s.source(excludes=["body"])
+        pprint(search_query.to_dict())
 
-    s = s[params["size"] * (params["page"] - 1) : params["size"] * params["page"]]
+    search_query = search_query.source(excludes=["body"])
+
+    search_query = search_query[
+        params["size"] * (params["page"] - 1) : params["size"] * params["page"]
+    ]
 
     from pprint import pprint
 
-    pprint(s.to_dict())
+    pprint(search_query.to_dict())
     retry_options = {
         "retry_exceptions": (
             # This is the standard operational exception.
@@ -135,7 +171,7 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
         "sleeptime": 1,
         "attempts": 5,
     }
-    with retrying(s.execute, **retry_options) as retrying_function:
+    with retrying(search_query.execute, **retry_options) as retrying_function:
         response = retrying_function()
 
     if total_only:

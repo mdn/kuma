@@ -12,9 +12,6 @@ class SearchConfig(AppConfig):
 
     def ready(self):
         """Configure kuma.search after models are loaded."""
-        # Register signal handlers
-        from . import signal_handlers  # noqa
-
         # Configure Elasticsearch connections for connection pooling.
         es_connections.configure(
             default={"hosts": settings.ES_URLS},

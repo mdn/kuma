@@ -16,9 +16,14 @@ class SearchForm(forms.Form):
 
     SORT_CHOICES = ("best", "relevance", "popularity")
     sort = forms.ChoiceField(required=False, choices=[(x, x) for x in SORT_CHOICES])
-    include_archive = forms.BooleanField(required=False)
-    size = forms.IntegerField(required=False, min_value=1, max_value=100)
-    page = forms.IntegerField(required=False, min_value=1, max_value=10)
+
+    ARCHIVE_CHOICES = ("exclude", "include", "only")
+    archive = forms.ChoiceField(
+        required=False, choices=[(x, x) for x in ARCHIVE_CHOICES]
+    )
+
+    size = forms.IntegerField(required=True, min_value=1, max_value=100)
+    page = forms.IntegerField(required=True, min_value=1, max_value=10)
 
     def __init__(self, data, **kwargs):
         initial = kwargs.get("initial", {})
@@ -28,4 +33,13 @@ class SearchForm(forms.Form):
         # HTML generated form widgets.
         # See https://www.peterbe.com/plog/initial-values-bound-django-form-rendered
         data = MultiValueDict({**{k: [v] for k, v in initial.items()}, **data})
+
+        # If, for keys we have an initial value for, it was passed an empty string,
+        # then swap it for the initial value.
+        # For example `?q=searching&page=` you probably meant to omit it
+        # but "allowing" it to be an empty string makes it convenient for the client.
+        for key, values in data.items():
+            if key in initial and values == "":
+                data[key] = initial[key]
+
         super().__init__(data, **kwargs)
