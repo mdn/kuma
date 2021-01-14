@@ -101,7 +101,9 @@ def whoami(request):
             # Majority of users are anonymous, so let's focus on that.
             # Let's see if there's a quick reason to bail the
             # expensive `flag.is_active(request)` call.
-            if flag.authenticated or flag.staff or flag.superusers:
+            if (
+                flag.authenticated or flag.staff or flag.superusers
+            ) and not flag.everyone:
                 continue
             if not (flag.languages or flag.percent or flag.everyone):
                 continue
