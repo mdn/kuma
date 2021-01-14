@@ -318,10 +318,6 @@
       }],
     "waffle.flag": [
       {
-        "name": "spam_submisions_enabled",
-        "note": "Decides whether ham and spam submissions are allowed to be done.",
-        "created": "2016-01-11"
-      }, {
         "name": "sg_task_completion",
         "note": "Show Survey Gizmo link to task completion survey.",
         "superusers": false,
