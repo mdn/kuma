@@ -322,21 +322,6 @@
         "note": "Decides whether ham and spam submissions are allowed to be done.",
         "created": "2016-01-11"
       }, {
-        "name": "spam_admin_override",
-        "note": "User's content should be trusted by Akismet",
-        "superusers": false,
-        "created": "2016-04-20"
-      }, {
-        "name": "spam_spammer_override",
-        "note": "User's content is always spam",
-        "superusers": false,
-        "created": "2016-04-20"
-      }, {
-        "name": "spam_testing_mode",
-        "note": "Edits are test content and should not train Akismet",
-        "superusers": false,
-        "created": "2016-04-20"
-      }, {
         "name": "sg_task_completion",
         "note": "Show Survey Gizmo link to task completion survey.",
         "superusers": false,

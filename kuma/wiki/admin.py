@@ -12,12 +12,10 @@ from django.utils.html import format_html, format_html_join
 from django.utils.safestring import mark_safe
 from django.utils.text import Truncator
 from django.views.decorators.cache import never_cache
-from waffle import flag_is_active
 
 from kuma.core.admin import DisabledDeletionMixin
 from kuma.core.decorators import login_required, permission_required
 from kuma.core.urlresolvers import reverse
-from kuma.spam import constants
 from kuma.spam.akismet import Akismet, AkismetError
 
 from .decorators import check_readonly
@@ -497,12 +495,7 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
         client = Akismet()
         if not client.ready:
             raise self.NotEnabled("Akismet is not configured.")
-        spam_submission = flag_is_active(request, constants.SPAM_SUBMISSIONS_FLAG)
-        if not spam_submission:
-            raise self.NotEnabled("Akismet spam submission is not enabled.")
-        user_ip = data.pop("user_ip", "")
-        user_agent = data.pop("user_agent", "")
-        client.submit_ham(user_ip=user_ip, user_agent=user_agent, **data)
+        raise self.NotEnabled("Akismet spam submission is not enabled.")
 
     def save_model(self, request, obj, form, change):
         """If reviewed, set the reviewer, and submit ham as requested."""
