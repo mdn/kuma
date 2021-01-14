@@ -3,14 +3,14 @@ import logging
 import textwrap
 from datetime import datetime, timedelta
 
-from celery import chain, task
+from celery import task
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import mail_admins
 from django.db import transaction
 
 from kuma.core.decorators import skip_in_maintenance_mode
-from kuma.core.utils import chunked, send_mail_retrying
+from kuma.core.utils import send_mail_retrying
 from kuma.search.models import Index
 from kuma.users.models import User
 
@@ -130,27 +130,6 @@ def clean_document_chunk(doc_pks, user_pk):
         "Finished cleaning document chunk ({} of {} "
         "required cleaning)".format(num_cleaned, len(doc_pks))
     )
-
-
-@task
-@skip_in_maintenance_mode
-def render_stale_documents(log=None):
-    """Simple task wrapper for rendering stale documents"""
-    stale_docs = Document.objects.get_by_stale_rendering().distinct()
-    stale_docs_count = stale_docs.count()
-    if stale_docs_count == 0:
-        # not stale documents to render
-        return
-
-    if log is None:
-        # fetch a logger in case none is given
-        log = render_stale_documents.get_logger()
-
-    log.info("Found %s stale documents" % stale_docs_count)
-    stale_pks = stale_docs.values_list("pk", flat=True)
-
-    render_tasks = [render_document_chunk.si(pks) for pks in chunked(stale_pks, 5)]
-    chain(*render_tasks).apply_async()
 
 
 @task
