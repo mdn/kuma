@@ -86,27 +86,37 @@ def whoami(request):
             data["is_superuser"] = True
         if user.is_beta_tester:
             data["is_beta_tester"] = True
-
-        # This is rather temporary field. Once we're off the Wiki and into Yari
-        # this no longer makes sense to keep.
-        data["wiki_contributions"] = user.created_revisions.count()
     else:
         data = {}
 
-    # Add waffle data to the dict we're going to be returning.
-    # This is what the waffle.wafflejs() template tag does, but we're
-    # doing it via an API instead of hardcoding the settings into
-    # the HTML page. See also from waffle.views._generate_waffle_js.
-    #
-    # Note that if we upgrade django-waffle, version 15 introduces a
-    # pluggable flag model, and the approved way to get all flag
-    # objects will then become:
-    #    get_waffle_flag_model().get_all()
-    #
     data["waffle"] = {
-        "flags": {f.name: True for f in Flag.get_all() if f.is_active(request)},
+        "flags": {},
         "switches": {s.name: True for s in Switch.get_all() if s.is_active()},
     }
+    # Specifically and more smartly loop over the waffle Flag objects
+    # to avoid unnecessary `cache.get(...)` calls within the `flag.is_active(request)`.
+    for flag in Flag.get_all():
+        if not request.user.is_authenticated:
+            # Majority of users are anonymous, so let's focus on that.
+            # Let's see if there's a quick reason to bail the
+            # expensive `flag.is_active(request)` call.
+            if (
+                flag.authenticated or flag.staff or flag.superusers
+            ) and not flag.everyone:
+                continue
+            if not (flag.languages or flag.percent or flag.everyone):
+                continue
+            if flag.languages:
+                languages = [ln.strip() for ln in flag.languages.split(",")]
+                if (
+                    not hasattr(request, "LANGUAGE_CODE")
+                    or request.LANGUAGE_CODE not in languages
+                ):
+                    continue
+
+        if flag.is_active(request):
+            data["waffle"]["flags"][flag.name] = True
+
     return JsonResponse(data)
 
 
