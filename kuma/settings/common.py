@@ -1028,10 +1028,6 @@ PIPELINE_JS = {
         "output_filename": "build/js/wiki-compat-tables.js",
         "template_name": "pipeline/javascript-array.jinja",
     },
-    "task-completion": {
-        "source_filenames": ("js/task-completion.js",),
-        "output_filename": "build/js/task-completion.js",
-    },
     "newsletter": {
         "source_filenames": ("js/newsletter.js",),
         "output_filename": "build/js/newsletter.js",

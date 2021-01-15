@@ -8,7 +8,6 @@ import Document, { DocumentRoute, Sidebar } from './document.jsx';
 import Header from './header/header.jsx';
 import Newsletter from './newsletter.jsx';
 import Footer from './footer.jsx';
-import TaskCompletionSurvey from './task-completion-survey.jsx';
 import Titlebar from './titlebar.jsx';
 
 export const fakeDocumentData = {
@@ -62,12 +61,6 @@ describe('Document component renders all of its parts', () => {
     test('header', () => {
         const headers = root.findAllByType(Header);
         expect(headers.length).toBe(1);
-    });
-
-    // The document has a task completion survey component, even
-    // if it does not render anything
-    test('task completion survey', () => {
-        expect(root.findAllByType(TaskCompletionSurvey).length).toBe(1);
     });
 
     // The document should have one Titlebar, with the document title.

@@ -316,22 +316,7 @@
         "by": ["test-super"],
         "reason": "Spam"
       }],
-    "waffle.flag": [
-      {
-        "name": "sg_task_completion",
-        "note": "Show Survey Gizmo link to task completion survey.",
-        "superusers": false,
-        "created": "2016-08-12"
-      }, {
-        "name": "contrib_beta",
-        "note": "Enable the contribution popup and views.",
-        "created": "2018-09-23"
-      }, {
-        "name": "recurring_payment_beta",
-        "note": "Enables recurring payments, if single payments are active (contrib_beta)",
-        "created": "2018-11-05"
-      }
-    ],
+    "waffle.flag": [],
     "waffle.switch": [
       {
         "name": "welcome_email",

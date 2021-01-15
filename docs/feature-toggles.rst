@@ -29,8 +29,6 @@ Flags
 `Waffle flags`_ control behavior by specific users, groups, percentages, and
 other advanced criteria.
 
-* ``contrib_beta`` - Enable/disable the contributions popup and pages
-* ``sg_task_completion`` - Enable the Survey Gizmo pop-up.
 * ``subscription_banner`` - Enable/disable the subscriptions banner
 * ``subscription_form`` - Enable/disable the subscriptions form
 
