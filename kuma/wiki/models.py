@@ -2068,38 +2068,3 @@ class DocumentSpamAttempt(SpamAttempt):
 
     def __str__(self):
         return f"{self.slug} ({self.title})"
-
-
-class BCSignal(models.Model):
-    """Model to keep track of the BC signals."""
-
-    # NOTE! The BCSignal data is deprecated. We no longer accept them coming
-    # in. The only reason the model is not deleted yet is to keep it a little
-    # bit longer. For historical reasons.
-    # We can delete this model (and the BCSignalAdmin class) and even delete
-    # the data from the MySQL when we're really comfortable that it will
-    # never be useful again. Also, we do have backups of the MySQL database
-    # if we really change our minds.
-    # See https://github.com/mdn/kuma/issues/7728
-
-    document = models.ForeignKey(
-        Document,
-        related_name="bc_signals",
-        null=True,
-        blank=True,
-        verbose_name=_("Document (optional)"),
-        on_delete=models.SET_NULL,
-    )
-
-    browsers = models.CharField(max_length=255, default="", blank=True)
-    feature = models.CharField(max_length=255, default="", blank=True)
-    explanation = models.TextField(default="", blank=True)
-    supporting_material = models.TextField(default="", blank=True)
-
-    submitted_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return "BC Signal: {}".format(self.document.slug)
-
-    class Meta:
-        verbose_name = "BC Signal"

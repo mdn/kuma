@@ -21,7 +21,6 @@ from kuma.spam.akismet import Akismet, AkismetError
 from .decorators import check_readonly
 from .forms import RevisionAkismetSubmissionAdminForm
 from .models import (
-    BCSignal,
     Document,
     DocumentDeletionLog,
     DocumentSpamAttempt,
@@ -654,20 +653,3 @@ class EditorToolbarAdmin(admin.ModelAdmin):
     list_display = ["name", "creator", "default"]
     list_filters = ["default"]
     raw_id_fields = ["creator"]
-
-
-@admin.register(BCSignal)
-class BCSignalAdmin(admin.ModelAdmin):
-    list_display = ["pk", "document", "submitted_at"]
-    list_filter = ["submitted_at"]
-    search_fields = ["document__slug", "document__title", "document__locale"]
-    readonly_fields = ["document", "browsers", "feature"]
-
-    def get_queryset(self, request):
-        only = ("document__slug", "document__title", "document__locale", "submitted_at")
-        return (
-            super(BCSignalAdmin, self)
-            .get_queryset(request)
-            .select_related("document")
-            .only(*only)
-        )
