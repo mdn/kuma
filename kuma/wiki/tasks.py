@@ -10,7 +10,7 @@ from django.core.mail import mail_admins
 from django.db import transaction
 
 from kuma.core.decorators import skip_in_maintenance_mode
-from kuma.core.utils import chunked, send_mail_retrying
+from kuma.core.utils import send_mail_retrying
 from kuma.users.models import User
 
 from .events import first_edit_email
