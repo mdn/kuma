@@ -4,7 +4,7 @@ from django.utils.datastructures import MultiValueDict
 
 
 class SearchForm(forms.Form):
-    q = forms.CharField(max_length=200)
+    q = forms.CharField(max_length=settings.ES_Q_MAXLENGTH)
     locale = forms.MultipleChoiceField(
         required=False,
         # The `settings.LANGUAGES` looks like this:

@@ -1,5 +1,5 @@
+from django import http
 from django.conf import settings
-from django.http import JsonResponse
 from elasticsearch import Elasticsearch, exceptions
 from elasticsearch_dsl import Q, query, Search
 from redo import retrying
@@ -7,6 +7,24 @@ from redo import retrying
 from kuma.api.v1.decorators import allow_CORS_GET
 
 from .forms import SearchForm
+
+
+class JsonResponse(http.JsonResponse):
+    """The only reason this exists is so that other Django views can call
+    views that return instances of this and then get to the data before it
+    gets JSON serialized.
+    This is something that rest_framework's JsonResponse supports.
+    Ultimately, the only view that cares is the (old) Kuma search view page
+    that calls the view function here in this file. Now it can do something like:
+
+        response = kuma.api.v1.search.search(request)
+        found = response.data
+
+    """
+
+    def __init__(self, data, *args, **kwargs):
+        self.data = data
+        super().__init__(data, *args, **kwargs)
 
 
 def legacy(request, locale=None):
@@ -20,7 +38,7 @@ def search(request, locale=None):
         initial["locale"] = locale
     form = SearchForm(request.GET, initial=initial)
     if not form.is_valid():
-        return JsonResponse(form.errors.get_json_data(), status=400)
+        return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
     locales = form.cleaned_data["locale"] or [settings.LANGUAGE_CODE]
     assert isinstance(locales, list)
