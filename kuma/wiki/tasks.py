@@ -3,7 +3,7 @@ import logging
 import textwrap
 from datetime import datetime, timedelta
 
-from celery import chain, task
+from celery import task
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import mail_admins
@@ -23,7 +23,6 @@ from .models import (
     Revision,
     RevisionIP,
 )
-from .utils import tidy_content
 
 
 log = logging.getLogger("kuma.wiki.tasks")
@@ -129,27 +128,6 @@ def clean_document_chunk(doc_pks, user_pk):
         "Finished cleaning document chunk ({} of {} "
         "required cleaning)".format(num_cleaned, len(doc_pks))
     )
-
-
-@task
-@skip_in_maintenance_mode
-def render_stale_documents(log=None):
-    """Simple task wrapper for rendering stale documents"""
-    stale_docs = Document.objects.get_by_stale_rendering().distinct()
-    stale_docs_count = stale_docs.count()
-    if stale_docs_count == 0:
-        # not stale documents to render
-        return
-
-    if log is None:
-        # fetch a logger in case none is given
-        log = render_stale_documents.get_logger()
-
-    log.info("Found %s stale documents" % stale_docs_count)
-    stale_pks = stale_docs.values_list("pk", flat=True)
-
-    render_tasks = [render_document_chunk.si(pks) for pks in chunked(stale_pks, 5)]
-    chain(*render_tasks).apply_async()
 
 
 @task
@@ -313,31 +291,6 @@ def send_first_edit_email(revision_pk):
     """ Make an 'edited' notification email for first-time editors """
     revision = Revision.objects.get(pk=revision_pk)
     first_edit_email(revision).send()
-
-
-@task(rate_limit="120/m")
-@skip_in_maintenance_mode
-def tidy_revision_content(pk, refresh=True):
-    """
-    Run tidy over the given revision's content and save it to the
-    tidy_content field if the content is not equal to the current value.
-
-    :arg pk: Primary key of `Revision` whose content needs tidying.
-    """
-    try:
-        revision = Revision.objects.get(pk=pk)
-    except Revision.DoesNotExist as exc:
-        # Retry in 2 minutes
-        log.error("Tidy was unable to get revision id: %d. Retrying.", pk)
-        tidy_revision_content.retry(countdown=60 * 2, max_retries=5, exc=exc)
-    else:
-        if revision.tidied_content and not refresh:
-            return
-        tidied_content, errors = tidy_content(revision.content)
-        if tidied_content != revision.tidied_content:
-            Revision.objects.filter(pk=pk).update(tidied_content=tidied_content)
-        # return the errors so we can look them up in the Celery task result
-        return errors
 
 
 @task

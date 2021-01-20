@@ -2,12 +2,10 @@
 import * as React from 'react';
 import { useContext, useEffect, useRef } from 'react';
 
-import { activateBCDTables } from './bcd.js';
 import { addLiveExampleButtons } from './live-examples.js';
 import { getLocale, gettext } from './l10n.js';
 import { highlightSyntax } from './prism.js';
 import * as InteractiveExamples from './interactive-examples.js';
-import UserProvider from './user-provider.jsx';
 import GAProvider from './ga-provider.jsx';
 
 import LastModified from './last-modified.jsx';
@@ -49,7 +47,6 @@ function TranslationStatus({
 
 export default function Article({ document }: DocumentProps) {
     const article = useRef(null);
-    const userData = useContext(UserProvider.context);
     const ga = useContext(GAProvider.context);
 
     // This is a one-time effect we need to call the first time an article
@@ -79,40 +76,8 @@ export default function Article({ document }: DocumentProps) {
                 });
             }
             highlightSyntax(rootElement);
-            try {
-                activateBCDTables(rootElement);
-            } catch (error) {
-                console.error(error);
-                ga('send', {
-                    hitType: 'event',
-                    eventCategory: 'article-effect-error',
-                    eventAction: 'activateBCDTables',
-                    eventLabel: error.toString(),
-                });
-            }
         }
     }, [document, ga]);
-
-    useEffect(() => {
-        let rootElement = article.current;
-        if (rootElement) {
-            // The reasons it might NOT exist is because perhaps it's not
-            // loaded because a setting tells it not to.
-            if (window.activateBCDSignals) {
-                try {
-                    window.activateBCDSignals(document.slug, document.locale);
-                } catch (error) {
-                    console.error(error);
-                    ga('send', {
-                        hitType: 'event',
-                        eventCategory: 'article-effect-error',
-                        eventAction: 'activateBCDSignals',
-                        eventLabel: error.toString(),
-                    });
-                }
-            }
-        }
-    }, [document, userData, ga]);
 
     /** Any link inside the article that matches `a.new` means it's a
      * wiki page that hasn't yet been created. Clicking on it will

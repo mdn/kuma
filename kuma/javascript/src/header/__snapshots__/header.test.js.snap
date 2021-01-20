@@ -342,12 +342,12 @@ exports[`Header snapshot 1`] = `
             role="none"
           >
             <a
-              href="/en-US/docs/MDN/Community"
+              href="/en-US/docs/MDN/Contribute"
               onClick={[Function]}
               onContextMenu={[Function]}
               role="menuitem"
             >
-              Join the MDN community
+              Contribute to MDN
             </a>
           </li>
           <li

@@ -11,7 +11,6 @@ from django.utils import translation
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
-from ratelimit.decorators import ratelimit
 from raven.contrib.django.models import client as raven_client
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -21,9 +20,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from waffle import flag_is_active
 from waffle.decorators import waffle_flag
-from waffle.models import Flag, Sample, Switch
+from waffle.models import Flag, Switch
 
-from kuma.api.v1.serializers import BCSignalSerializer, UserDetailsSerializer
+from kuma.api.v1.serializers import UserDetailsSerializer
 from kuma.core.email_utils import render_email
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_CANCELED,
@@ -74,42 +73,38 @@ def whoami(request):
             data["is_superuser"] = True
         if user.is_beta_tester:
             data["is_beta_tester"] = True
-
-        # This is rather temporary field. Once we're off the Wiki and into Yari
-        # this no longer makes sense to keep.
-        data["wiki_contributions"] = user.created_revisions.count()
     else:
         data = {}
 
-    # Add waffle data to the dict we're going to be returning.
-    # This is what the waffle.wafflejs() template tag does, but we're
-    # doing it via an API instead of hardcoding the settings into
-    # the HTML page. See also from waffle.views._generate_waffle_js.
-    #
-    # Note that if we upgrade django-waffle, version 15 introduces a
-    # pluggable flag model, and the approved way to get all flag
-    # objects will then become:
-    #    get_waffle_flag_model().get_all()
-    #
     data["waffle"] = {
-        "flags": {f.name: True for f in Flag.get_all() if f.is_active(request)},
+        "flags": {},
         "switches": {s.name: True for s in Switch.get_all() if s.is_active()},
-        "samples": {s.name: True for s in Sample.get_all() if s.is_active()},
     }
+    # Specifically and more smartly loop over the waffle Flag objects
+    # to avoid unnecessary `cache.get(...)` calls within the `flag.is_active(request)`.
+    for flag in Flag.get_all():
+        if not request.user.is_authenticated:
+            # Majority of users are anonymous, so let's focus on that.
+            # Let's see if there's a quick reason to bail the
+            # expensive `flag.is_active(request)` call.
+            if (
+                flag.authenticated or flag.staff or flag.superusers
+            ) and not flag.everyone:
+                continue
+            if not (flag.languages or flag.percent or flag.everyone):
+                continue
+            if flag.languages:
+                languages = [ln.strip() for ln in flag.languages.split(",")]
+                if (
+                    not hasattr(request, "LANGUAGE_CODE")
+                    or request.LANGUAGE_CODE not in languages
+                ):
+                    continue
+
+        if flag.is_active(request):
+            data["waffle"]["flags"][flag.name] = True
+
     return JsonResponse(data)
-
-
-@ratelimit(key="user_or_ip", rate="10/d", block=True)
-@api_view(["POST"])
-def bc_signal(request):
-    if not settings.ENABLE_BCD_SIGNAL:
-        return Response("not enabled", status=status.HTTP_400_BAD_REQUEST)
-
-    serializer = BCSignalSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @waffle_flag("subscription")

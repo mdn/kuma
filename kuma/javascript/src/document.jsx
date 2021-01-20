@@ -11,7 +11,6 @@ import Header from './header/header.jsx';
 import Newsletter from './newsletter.jsx';
 import Footer from './footer.jsx';
 import Route from './route.js';
-import TaskCompletionSurvey from './task-completion-survey.jsx';
 import Titlebar from './titlebar.jsx';
 import TOC from './toc.jsx';
 import { ContentErrorBoundary } from './error-boundaries.jsx';
@@ -115,7 +114,6 @@ function DocumentPage({ document }: DocumentProps) {
             </main>
             <Newsletter />
             <Footer />
-            <TaskCompletionSurvey document={document} />
             <ActiveBanner />
         </>
     );

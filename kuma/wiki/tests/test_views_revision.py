@@ -73,26 +73,6 @@ def test_compare_translation(trans_revision, client, raw):
     assert_shared_cache_header(response)
 
 
-@pytest.mark.parametrize("raw", [True, False])
-def test_compare_revisions_without_tidied_content(edit_revision, client, raw):
-    """Comparing revisions without tidied content displays a wait message."""
-    doc = edit_revision.document
-    first_revision = doc.revisions.first()
-
-    # update() to skip the tidy_revision_content post_save signal handler
-    ids = [first_revision.id, edit_revision.id]
-    Revision.objects.filter(id__in=ids).update(tidied_content="")
-
-    params = {"from": first_revision.id, "to": edit_revision.id}
-    if raw:
-        params["raw"] = "1"
-    url = urlparams(reverse("wiki.compare_revisions", args=[doc.slug]), **params)
-
-    response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
-    assert response.status_code == 200
-    assert b"Please refresh this page in a few minutes." in response.content
-
-
 @pytest.mark.parametrize(
     "id1,id2", [("1e309", "1e309"), ("", "invalid"), ("invalid", "")]
 )

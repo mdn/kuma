@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core import mail
 from django.test import Client
 from stripe.error import APIError
-from waffle.models import Flag, Sample, Switch
+from waffle.models import Flag, Switch
 from waffle.testutils import override_flag
 
 from kuma.core.ga_tracking import (
@@ -21,7 +21,6 @@ from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
 from kuma.users.models import UserSubscription
 from kuma.users.tests import create_user
-from kuma.wiki.models import BCSignal
 
 
 @pytest.mark.parametrize("http_method", ["put", "post", "delete", "options", "head"])
@@ -42,8 +41,6 @@ def test_whoami_anonymous(client, settings):
     Flag.objects.create(name="flag_none", percent=0)
     Switch.objects.create(name="switch_on", active=True)
     Switch.objects.create(name="switch_off", active=False)
-    Sample.objects.create(name="sample_never", percent=0)
-    Sample.objects.create(name="sample_always", percent=100)
 
     url = reverse("api.v1.whoami")
     response = client.get(url)
@@ -53,7 +50,6 @@ def test_whoami_anonymous(client, settings):
         "waffle": {
             "flags": {"flag_all": True},
             "switches": {"switch_on": True},
-            "samples": {"sample_always": True},
         },
     }
     assert_no_cache_header(response)
@@ -84,8 +80,6 @@ def test_whoami(
     Flag.objects.create(name="flag_none", percent=0, superusers=False)
     Switch.objects.create(name="switch_on", active=True)
     Switch.objects.create(name="switch_off", active=False)
-    Sample.objects.create(name="sample_never", percent=0)
-    Sample.objects.create(name="sample_always", percent=100)
 
     wiki_user.is_staff = is_staff
     wiki_user.is_superuser = is_superuser
@@ -105,11 +99,8 @@ def test_whoami(
         "waffle": {
             "flags": {"vip_only": True, "flag_all": True},
             "switches": {"switch_on": True},
-            "samples": {"sample_always": True},
         },
         "email": "wiki_user@example.com",
-        # TODO Remove this once we're off the Wiki.
-        "wiki_contributions": 0,
     }
     if is_staff:
         expect["is_staff"] = True
@@ -191,88 +182,6 @@ class SearchViewTests(ElasticTestCase):
         assert data["documents"]
         assert data["count"] == 5
         assert data["locale"] == "fr"
-
-
-@pytest.mark.django_db
-def test_bc_signal_happy_path(client, root_doc):
-    url = reverse("api.v1.bc_signal")
-    response = client.post(
-        url,
-        {
-            "slug": root_doc.slug,
-            "locale": root_doc.locale,
-            "explanation": "My explanation",
-            "feature": "Feet",
-            "browsers": "One,Two",
-            "supporting_material": "Extra things",
-        },
-    )
-    assert response.status_code == 201
-
-    bc_signal = BCSignal.objects.all().first()
-    assert bc_signal.document == root_doc
-    assert bc_signal.browsers == "One,Two"
-    assert bc_signal.explanation == "My explanation"
-    assert bc_signal.feature == "Feet"
-    assert bc_signal.supporting_material == "Extra things"
-
-
-@pytest.mark.django_db
-def test_bc_signal_disabled(client, settings):
-    settings.ENABLE_BCD_SIGNAL = False
-    url = reverse("api.v1.bc_signal")
-    response = client.post(url)
-    assert response.status_code == 400
-
-
-@pytest.mark.parametrize(
-    "explanation", ("", "tooshort", "x" * 1001), ids=("empty", "too-short", "too-long")
-)
-@pytest.mark.django_db
-def test_bc_signal_explanation_validation(client, root_doc, explanation):
-    url = reverse("api.v1.bc_signal")
-    data = {
-        "slug": root_doc.slug,
-        "locale": root_doc.locale,
-        "explanation": explanation,
-        "feature": "Feet",
-        "browsers": "One,Two",
-        "supporting_material": "Extra things",
-    }
-    response = client.post(url, data)
-    assert response.status_code == 400
-    assert response.json()["explanation"]
-
-
-@pytest.mark.django_db
-def test_bc_signal_document_validation(client):
-    url = reverse("api.v1.bc_signal")
-    response = client.post(
-        url,
-        {
-            "slug": "xxx",
-            "locale": "yyy",
-            "explanation": "My explanation",
-            "feature": "Feet",
-            "browsers": "One,Two",
-            "supporting_material": "Extra things",
-        },
-    )
-    assert response.status_code == 400
-    assert response.json() == ["Document not found"]
-
-
-@pytest.mark.django_db
-def test_bc_signal_http_method(client):
-    url = reverse("api.v1.bc_signal")
-    response = client.get(url)
-    assert response.status_code == 405
-
-    response = client.head(url)
-    assert response.status_code == 405
-
-    response = client.put(url)
-    assert response.status_code == 405
 
 
 @mock.patch("kuma.api.v1.views.track_event")

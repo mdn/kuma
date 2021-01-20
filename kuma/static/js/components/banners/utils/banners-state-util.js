@@ -4,7 +4,7 @@
      * Array of all banner ids
      * @const
      */
-    var ALL_BANNER_IDS = ['developer_needs', 'contrib_beta'];
+    var ALL_BANNER_IDS = ['developer_needs'];
     /**
      * Length of time a banner remains hidden after it's been disabled
      * by clicking the close button.

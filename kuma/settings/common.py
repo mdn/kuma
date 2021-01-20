@@ -911,11 +911,6 @@ PIPELINE_JS = {
         "output_filename": "build/js/react-main.js",
         "extra_context": {"defer": True},
     },
-    "bcd-signal": {
-        "source_filenames": ("bcd-signal.js",),
-        "output_filename": "build/js/react-bcd-signal.js",
-        "extra_context": {"defer": True},
-    },
     "banners": {
         "source_filenames": (
             "js/components/banners/utils/banners-event-util.js",
@@ -1032,10 +1027,6 @@ PIPELINE_JS = {
         "source_filenames": ("js/wiki-compat-tables.js",),
         "output_filename": "build/js/wiki-compat-tables.js",
         "template_name": "pipeline/javascript-array.jinja",
-    },
-    "task-completion": {
-        "source_filenames": ("js/task-completion.js",),
-        "output_filename": "build/js/task-completion.js",
     },
     "newsletter": {
         "source_filenames": ("js/newsletter.js",),
@@ -1348,7 +1339,6 @@ CELERY_TASK_ROUTES = {
     "kuma.core.tasks.clean_sessions": {"queue": "mdn_purgeable"},
     "kuma.core.tasks.delete_old_ip_bans": {"queue": "mdn_purgeable"},
     "kuma.wiki.tasks.delete_old_revision_ips": {"queue": "mdn_purgeable"},
-    "kuma.wiki.tasks.tidy_revision_content": {"queue": "mdn_purgeable"},
     "kuma.search.tasks.prepare_index": {"queue": "mdn_search"},
     "kuma.search.tasks.finalize_index": {"queue": "mdn_search"},
     "kuma.wiki.tasks.index_documents": {"queue": "mdn_search"},
@@ -1364,7 +1354,6 @@ CELERY_TASK_ROUTES = {
     "kuma.wiki.tasks.render_document": {"queue": "mdn_wiki"},
     "kuma.wiki.tasks.render_document_chunk": {"queue": "mdn_wiki"},
     "kuma.wiki.tasks.clean_document_chunk": {"queue": "mdn_wiki"},
-    "kuma.wiki.tasks.render_stale_documents": {"queue": "mdn_wiki"},
     "kuma.wiki.tasks.build_json_data_for_document": {"queue": "mdn_wiki"},
     "kuma.feeder.tasks.update_feeds": {"queue": "mdn_purgeable"},
     "kuma.api.tasks.publish": {"queue": "mdn_api"},
@@ -1760,10 +1749,6 @@ TAGGIT_CASE_INSENSITIVE = True
 # Ad Banner Settings
 NEWSLETTER = True
 NEWSLETTER_ARTICLE = True
-
-# Whether or not to enable the BCD signalling feature.
-# Affects loading of CSS (statically) and JS (in runtime).
-ENABLE_BCD_SIGNAL = config("ENABLE_BCD_SIGNAL", default=True, cast=bool)
 
 # Auth and permissions related constants
 LOGIN_URL = "socialaccount_signin"

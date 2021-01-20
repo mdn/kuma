@@ -1864,10 +1864,6 @@ class Revision(models.Model):
             tidied_content = self.tidied_content
         else:
             if allow_none:
-                if self.pk and not settings.MAINTENANCE_MODE:
-                    from .tasks import tidy_revision_content
-
-                    tidy_revision_content.delay(self.pk, refresh=False)
                 tidied_content = None
             else:
                 tidied_content, errors = tidy_content(self.content)
@@ -2072,29 +2068,3 @@ class DocumentSpamAttempt(SpamAttempt):
 
     def __str__(self):
         return f"{self.slug} ({self.title})"
-
-
-class BCSignal(models.Model):
-    """Model to keep track of the BC signals."""
-
-    document = models.ForeignKey(
-        Document,
-        related_name="bc_signals",
-        null=True,
-        blank=True,
-        verbose_name=_("Document (optional)"),
-        on_delete=models.SET_NULL,
-    )
-
-    browsers = models.CharField(max_length=255, default="", blank=True)
-    feature = models.CharField(max_length=255, default="", blank=True)
-    explanation = models.TextField(default="", blank=True)
-    supporting_material = models.TextField(default="", blank=True)
-
-    submitted_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return "BC Signal: {}".format(self.document.slug)
-
-    class Meta:
-        verbose_name = "BC Signal"

@@ -1030,26 +1030,6 @@ class RenderExpiresTests(UserTestCase):
 
         assert not d1.render_expires
 
-    @override_config(KUMASCRIPT_TIMEOUT=1.0)
-    @mock.patch("kuma.wiki.kumascript.get")
-    @mock.patch.object(tasks.render_document, "delay")
-    def test_render_stale(self, mock_render_document_delay, mock_kumascript_get):
-        mock_kumascript_get.return_value = ("MOCK CONTENT", None)
-
-        now = datetime.now()
-        earlier = now - timedelta(seconds=1000)
-
-        d1 = document(title="Aged 3")
-        d1.last_rendered_at = earlier
-        d1.render_expires = now - timedelta(seconds=100)
-        d1.save()
-
-        tasks.render_stale_documents()
-
-        d1_fresh = Document.objects.get(pk=d1.pk)
-        assert not mock_render_document_delay.called
-        assert d1_fresh.last_rendered_at > earlier
-
 
 class PageMoveTests(UserTestCase):
     """Tests for page-moving and associated functionality."""

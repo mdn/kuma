@@ -1,8 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from waffle import flag_is_active
 
-from . import akismet, constants
+from . import akismet
 
 
 class AkismetFormMixin(object):
@@ -55,14 +54,7 @@ class AkismetFormMixin(object):
         """
         Get parameter overrides based on user's waffle flags.
         """
-        parameters = {}
-        if flag_is_active(self.request, constants.SPAM_ADMIN_FLAG):
-            parameters["user_role"] = "administrator"
-        if flag_is_active(self.request, constants.SPAM_SPAMMER_FLAG):
-            parameters["comment_author"] = "viagra-test-123"
-        if flag_is_active(self.request, constants.SPAM_TESTING_FLAG):
-            parameters["is_test"] = True
-        return parameters
+        return {}
 
     def clean(self):
         cleaned_data = super(AkismetFormMixin, self).clean()
@@ -108,11 +100,7 @@ class AkismetSubmissionFormMixin(AkismetFormMixin):
 
         Checks the API client if it's ready by default.
         """
-        spam_submission = flag_is_active(self.request, constants.SPAM_SUBMISSIONS_FLAG)
-        return (
-            spam_submission
-            and super(AkismetSubmissionFormMixin, self).akismet_enabled()
-        )
+        return False
 
     def akismet_submission_type(self):
         """
