@@ -33,23 +33,11 @@ def search(request, locale=None):
         "page": form.cleaned_data["page"],
         "sort": form.cleaned_data["sort"],
     }
-    from pprint import pprint
-
-    pprint(params)
-
-    # from elasticsearch_dsl import A
-    # client = Elasticsearch(settings.ES_URLS)
-    # search = Search(using=client, index=settings.SEARCH_INDEX_NAME)
-    # agg = A("terms", field="locale", size=100)
-    # # search = SongDoc.search()
-    # search.aggs.bucket("per_locale", agg)
-    # search = search[:0]  # select no hits
-    # response = search.execute()
-    # for each in response.aggregations.per_locale.buckets:
-    #     print(each)
-
-    results = _find(params)
-
+    results = _find(
+        params,
+        # This is off by default because Yari isn't yet able to cope with it well.
+        make_suggestions=False,
+    )
     return JsonResponse(results)
 
 
@@ -93,24 +81,14 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
             Q("match_phrase", body={"query": params["query"], "boost": 5.0})
         )
 
-        # sub_queries.append(Q("match_phrase", title=params["query"], boost=10.0))
-        # sub_queries.append(Q("match_phrase", body=params["query"], boost=5.0))
-    # matcher = query.Bool(should=sub_queries)
     sub_query = query.Bool(should=sub_queries)
-
-    # matcher |= Q("match", query=params["query"], fields=["title^10", "body"])
 
     if params["locales"]:
         search_query = search_query.filter("terms", locale=params["locales"])
-        # filters.append(Q("terms", locale=params["locales"]))
-        # matcher &= Q("terms", locale=params["locales"])
-        # search_query = search_query.query("bool", filter=[Q("terms", locale=params["locales"])
     if params["archive"] == "exclude":
         search_query = search_query.filter("term", archived=False)
     elif params["archive"] == "only":
         search_query = search_query.filter("term", archived=True)
-        # filters.append(Q("term", archived=False))
-        # matcher &= Q("term", archived=False)
 
     search_query = search_query.highlight_options(
         pre_tags=["<mark>"],
@@ -133,7 +111,6 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
         score_mode = "max"
         search_query = search_query.query(
             "function_score",
-            # query=query.Bool(should=[matcher]),
             query=sub_query,
             functions=[
                 query.SF(
@@ -153,9 +130,6 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
         params["size"] * (params["page"] - 1) : params["size"] * params["page"]
     ]
 
-    # from pprint import pprint
-
-    # pprint(search_query.to_dict())
     retry_options = {
         "retry_exceptions": (
             # This is the standard operational exception.
