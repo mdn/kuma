@@ -5,7 +5,6 @@ from allauth.socialaccount import providers, views as socialaccount_views
 from django.urls import include, re_path
 from django.views.decorators.csrf import csrf_exempt
 
-from kuma.authkeys.views import list as list_keys
 from kuma.core.decorators import redirect_in_maintenance_mode
 
 from . import views
@@ -36,9 +35,6 @@ account_patterns = [
         redirect_in_maintenance_mode(account_views.confirm_email),
         name="account_confirm_email",
     ),
-    # Auth keys
-    re_path(r"^keys$", list_keys, name="authkeys.list"),
-    re_path(r"^keys/", include("kuma.authkeys.urls")),
 ]
 
 

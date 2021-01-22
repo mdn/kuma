@@ -11,7 +11,6 @@ from .constants import DOCUMENT_PATH_RE
 # These patterns inherit (?P<document_path>[^\$]+).
 document_patterns = [
     re_path(r"^$", views.document.document, name="wiki.document"),
-    re_path(r"^\$api$", views.document.document_api, name="wiki.document_api"),
     re_path(r"^\$revision$", views.revision.revision_api, name="wiki.revision_api"),
     re_path(
         r"^\$revision/(?P<revision_id>\d+)$",

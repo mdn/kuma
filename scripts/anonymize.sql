@@ -69,8 +69,6 @@ SET FOREIGN_KEY_CHECKS=0;
 -- wiki_taggeddocument
 
 TRUNCATE account_emailconfirmation;
-TRUNCATE authkeys_key;
-TRUNCATE authkeys_keyaction;
 TRUNCATE celery_taskmeta;
 TRUNCATE celery_tasksetmeta;
 TRUNCATE constance_config;

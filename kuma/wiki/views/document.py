@@ -1,10 +1,6 @@
-import json
-from io import BytesIO
-
 import newrelic.agent
 from django.conf import settings
 from django.contrib import messages
-from django.core.exceptions import PermissionDenied
 from django.http import (
     Http404,
     HttpResponse,
@@ -12,35 +8,30 @@ from django.http import (
     HttpResponsePermanentRedirect,
     JsonResponse,
 )
-from django.http.multipartparser import MultiPartParser
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.cache import add_never_cache_headers, patch_vary_headers
-from django.utils.http import parse_etags, quote_etag
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
-from pyquery import PyQuery as pq
 from ratelimit.decorators import ratelimit
 
 import kuma.wiki.content
-from kuma.authkeys.decorators import accepts_auth_key
 from kuma.core.decorators import (
     block_user_agents,
     ensure_wiki_domain,
     login_required,
     permission_required,
-    redirect_in_maintenance_mode,
     shared_cache_control,
     superuser_required,
 )
 from kuma.core.urlresolvers import reverse
-from kuma.core.utils import is_wiki, redirect_to_wiki, to_html, urlparams
+from kuma.core.utils import is_wiki, redirect_to_wiki, urlparams
 from kuma.search.store import get_search_url_from_referer
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
-from .utils import calculate_etag, split_slug
+from .utils import split_slug
 from .. import kumascript
 from ..constants import SLUG_CLEANSING_RE, WIKI_ONLY_DOCUMENT_QUERY_PARAMS
 from ..decorators import (
@@ -1061,146 +1052,3 @@ def document_api_data(doc=None, redirect_url=None):
         },
         "redirectURL": None,
     }
-
-
-@ensure_wiki_domain
-@shared_cache_control
-@csrf_exempt
-@require_http_methods(["GET", "HEAD", "PUT"])
-@redirect_in_maintenance_mode(methods=["PUT"])
-@allow_CORS_GET
-@accepts_auth_key
-@process_document_path
-@newrelic.agent.function_trace()
-@ratelimit(key="user_or_ip", rate="100/m", block=True)
-def document_api(request, document_slug, document_locale):
-    """
-    View/modify the content of a wiki document, or create a new wiki document.
-    """
-    if request.method == "PUT":
-        if not (request.authkey and request.user.is_authenticated):
-            raise PermissionDenied
-        return _document_api_PUT(request, document_slug, document_locale)
-
-    doc = get_object_or_404(Document, slug=document_slug, locale=document_locale)
-
-    section_id = request.GET.get("section", None)
-    response = HttpResponse(doc.get_html(section_id))
-    return _add_kuma_revision_header(doc, response)
-
-
-def _document_api_PUT(request, document_slug, document_locale):
-    """
-    Handle PUT requests for the document_api view.
-    """
-
-    # Try parsing one of the supported content types from the request
-    try:
-        content_type = request.META.get("CONTENT_TYPE", "")
-
-        if content_type.startswith("application/json"):
-            data = json.loads(request.body)
-
-        elif content_type.startswith("multipart/form-data"):
-            parser = MultiPartParser(
-                request.META,
-                BytesIO(request.body),
-                request.upload_handlers,
-                request.encoding,
-            )
-            data, _ = parser.parse()
-
-        elif content_type.startswith("text/html"):
-            # TODO: Refactor this into wiki.content ?
-            # First pass: Just assume the request body is an HTML fragment.
-            html = request.body.decode(request.encoding or settings.DEFAULT_CHARSET)
-            data = dict(content=html)
-
-            # Second pass: Try parsing the body as a fuller HTML document,
-            # and scrape out some of the interesting parts.
-            try:
-                doc = pq(html)
-                head_title = doc.find("head title")
-                if head_title.length > 0:
-                    data["title"] = head_title.text()
-                body_content = doc.find("body")
-                if body_content.length > 0:
-                    data["content"] = to_html(body_content)
-            except Exception:
-                pass
-
-        else:
-            resp = HttpResponse()
-            resp.status_code = 400
-            resp.content = gettext("Unsupported content-type: %s") % content_type
-            return resp
-
-    except Exception as e:
-        resp = HttpResponse()
-        resp.status_code = 400
-        resp.content = gettext("Request parsing error: %s") % e
-        return resp
-
-    try:
-        # Look for existing document to edit:
-        doc = Document.objects.get(locale=document_locale, slug=document_slug)
-        section_id = request.GET.get("section", None)
-        is_new = False
-
-        # Use ETags to detect mid-air edit collision
-        # see: http://www.w3.org/1999/04/Editing/
-        if_match = request.META.get("HTTP_IF_MATCH")
-        if if_match:
-            try:
-                expected_etags = parse_etags(if_match)
-            except ValueError:
-                expected_etags = []
-            # Django's parse_etags returns a list of quoted rather than
-            # un-quoted ETags starting with version 1.11.
-            current_etag = quote_etag(calculate_etag(doc.get_html(section_id)))
-            if current_etag not in expected_etags:
-                resp = HttpResponse()
-                resp.status_code = 412
-                resp.content = gettext("ETag precondition failed")
-                return resp
-
-    except Document.DoesNotExist:
-        # TODO: There should be a model utility for creating a doc...
-
-        # Let's see if this slug path implies a parent...
-        slug_parts = split_slug(document_slug)
-        if not slug_parts["parent"]:
-            # Apparently, this is a root page!
-            parent_doc = None
-        else:
-            # There's a parent implied, so make sure we can find it.
-            parent_doc = get_object_or_404(
-                Document, locale=document_locale, slug=slug_parts["parent"]
-            )
-
-        # Create and save the new document; we'll revise it immediately.
-        doc = Document(
-            slug=document_slug,
-            locale=document_locale,
-            title=data.get("title", document_slug),
-            parent_topic=parent_doc,
-        )
-        doc.save()
-        section_id = None  # No section editing for new document!
-        is_new = True
-
-    new_rev = doc.revise(request.user, data, section_id)
-    doc.schedule_rendering("max-age=0")
-
-    request.authkey.log(
-        "created" if is_new else "updated", new_rev, data.get("summary", None)
-    )
-
-    resp = HttpResponse()
-    if is_new:
-        resp["Location"] = request.build_absolute_uri(doc.get_absolute_url())
-        resp.status_code = 201
-    else:
-        resp.status_code = 205
-
-    return resp
