@@ -6,7 +6,6 @@ from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.text import slugify
-from elasticsearch.exceptions import NotFoundError
 from taggit.managers import TaggableManager
 
 from kuma.core.urlresolvers import reverse
