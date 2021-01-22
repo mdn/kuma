@@ -2,8 +2,6 @@ from django.conf import settings
 from elasticsearch_dsl import Q, query
 from rest_framework.filters import BaseFilterBackend
 
-from kuma.wiki.search import WikiDocumentType
-
 from .models import Filter, FilterGroup
 
 
@@ -216,13 +214,4 @@ class HighlightFilterBackend(BaseFilterBackend):
     """
 
     def filter_queryset(self, request, queryset, view):
-
-        highlight = view.query_params.get("highlight")
-
-        if highlight:
-            queryset = queryset.highlight(*WikiDocumentType.excerpt_fields)
-            queryset = queryset.highlight_options(
-                order="score", pre_tags=["<mark>"], post_tags=["</mark>"]
-            )
-
-        return queryset
+        raise NotImplementedError

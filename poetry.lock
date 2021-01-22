@@ -627,6 +627,19 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 version = "0.15.2"
 
 [[package]]
+category = "dev"
+description = "Python Elasticsearch Mock for test purposes"
+name = "elasticmock"
+optional = false
+python-versions = "*"
+version = "1.7.0"
+
+[package.dependencies]
+elasticsearch = "*"
+mock = "*"
+python-dateutil = "*"
+
+[[package]]
 category = "main"
 description = "Python client for Elasticsearch"
 name = "elasticsearch"
@@ -934,6 +947,19 @@ version = "1.0.1"
 
 [package.dependencies]
 greenlet = ">=0.4.5,<0.5"
+
+[[package]]
+category = "dev"
+description = "Rolling backport of unittest.mock for all Pythons"
+name = "mock"
+optional = false
+python-versions = ">=3.6"
+version = "4.0.3"
+
+[package.extras]
+build = ["twine", "wheel", "blurb"]
+docs = ["sphinx"]
+test = ["pytest (<5.4)", "pytest-cov"]
 
 [[package]]
 category = "dev"
@@ -1542,7 +1568,7 @@ test = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 
 [metadata]
-content-hash = "d845dce92642fabf2706dd583a9542fa687ecc029ec804989f8373564dacfd7c"
+content-hash = "8ef07afcb48f864300d4b82b88f3ded7f519fcddbd1f9a3efddccc6af55c0e26"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1801,6 +1827,9 @@ docutils = [
     {file = "docutils-0.15.2-py3-none-any.whl", hash = "sha256:6c4f696463b79f1fb8ba0c594b63840ebd41f059e92b31957c46b74a4599b6d0"},
     {file = "docutils-0.15.2.tar.gz", hash = "sha256:a2aeea129088da402665e92e0b25b04b073c04b2dce4ab65caaa38b7ce2e1a99"},
 ]
+elasticmock = [
+    {file = "ElasticMock-1.7.0.tar.gz", hash = "sha256:059a87daf934b74293ecf2cae7ada5e9fa84c6d9fa27ab01c8fec61c031b5bfa"},
+]
 elasticsearch = [
     {file = "elasticsearch-7.10.0-py2.py3-none-any.whl", hash = "sha256:9a21bfa7dc6a0b0dc142088bd653d8ce5ab284b4f7a3ded716185adf5276a7fe"},
     {file = "elasticsearch-7.10.0.tar.gz", hash = "sha256:9053ca99bc9db84f5d80e124a79a32dfa0f7079b2112b546a03241c0dbeda36d"},
@@ -1991,6 +2020,10 @@ mccabe = [
 ]
 meinheld = [
     {file = "meinheld-1.0.1.tar.gz", hash = "sha256:447de7189e4dc9c1f425aa1b9c8210aab492fda4d86f73a24059264e7d8b0134"},
+]
+mock = [
+    {file = "mock-4.0.3-py3-none-any.whl", hash = "sha256:122fcb64ee37cfad5b3f48d7a7d51875d7031aaf3d8be7c42e2bee25044eee62"},
+    {file = "mock-4.0.3.tar.gz", hash = "sha256:7d3fbbde18228f4ff2f1f119a45cdffa458b4c0dee32eb4d2bb2f82554bac7bc"},
 ]
 more-itertools = [
     {file = "more-itertools-8.2.0.tar.gz", hash = "sha256:b1ddb932186d8a6ac451e1d95844b382f55e12686d51ca0c68b6f61f2ab7a507"},

@@ -10,8 +10,6 @@ from ratelimit.decorators import ratelimit
 from kuma.api.v1.search import search as search_api
 from kuma.core.decorators import shared_cache_control
 
-from .search import SearchView
-
 
 # Since the search endpoint accepts user input (via query parameters) and its
 # response is compressed, use rate limiting to mitigate the BREACH attack
@@ -110,9 +108,6 @@ def search(request, *args, **kwargs):
 
         context = {"results": {"results": None if error else results, "error": error}}
     return render(request, "search/react.html", context, status=status)
-
-
-wiki_search = SearchView.as_view()
 
 
 class SearchRedirectView(RedirectView):

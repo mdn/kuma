@@ -4,10 +4,6 @@ from unittest import mock
 import pytest
 from django.db import DatabaseError
 from django.urls import reverse
-from elasticsearch.exceptions import (
-    ConnectionError as ES_ConnectionError,
-    NotFoundError,
-)
 from requests.exceptions import ConnectionError as Requests_ConnectionError
 
 from kuma.core.tests import assert_no_cache_header
@@ -61,14 +57,6 @@ def mock_document_objects_count():
 
 
 @pytest.fixture
-def mock_search_count():
-    with mock.patch("kuma.health.views.WikiDocumentType.search") as search:
-        search.return_value = mock.Mock(spec_set=["count"])
-        search.return_value.count.return_value = 90
-        yield search.return_value.count
-
-
-@pytest.fixture
 def mock_user_objects_filter():
     usernames = [
         "test-super",
@@ -94,13 +82,11 @@ def mock_user_objects_filter():
 def mock_status_externals(
     mock_request_revision_hash,
     mock_document_objects_count,
-    mock_search_count,
     mock_user_objects_filter,
 ):
     yield {
         "kumascript": mock_request_revision_hash,
         "document": mock_document_objects_count,
-        "search": mock_search_count,
         "test_users": mock_user_objects_filter,
     }
 
@@ -153,11 +139,6 @@ def test_status(client, settings, mock_status_externals):
     assert data["services"]["kumascript"] == {
         "available": True,
         "revision": "8da6b8f41",
-    }
-    assert data["services"]["search"] == {
-        "available": True,
-        "populated": True,
-        "count": 90,
     }
     assert data["services"]["test_accounts"] == {
         "available": True,
@@ -234,45 +215,6 @@ def test_status_empty_database(client, mock_status_externals):
         "available": True,
         "populated": False,
         "document_count": 0,
-    }
-
-
-def test_status_failed_search(client, mock_status_externals):
-    """The status JSON shows if ElasticSearch is unavailable."""
-    mock_status_externals["search"].side_effect = ES_ConnectionError("No ES")
-    url = reverse("health.status")
-    response = client.get(url)
-    data = json.loads(response.content)
-    assert data["services"]["search"] == {
-        "available": False,
-        "populated": False,
-        "count": 0,
-    }
-
-
-def test_status_missing_index(client, mock_status_externals):
-    """The status JSON shows if the ElasticSearch index is not found."""
-    mock_status_externals["search"].side_effect = NotFoundError("No Index")
-    url = reverse("health.status")
-    response = client.get(url)
-    data = json.loads(response.content)
-    assert data["services"]["search"] == {
-        "available": True,
-        "populated": False,
-        "count": 0,
-    }
-
-
-def test_status_empty_search(client, mock_status_externals):
-    """The status JSON shows if ElasticSearch is unpopulated."""
-    mock_status_externals["search"].return_value = 0
-    url = reverse("health.status")
-    response = client.get(url)
-    data = json.loads(response.content)
-    assert data["services"]["search"] == {
-        "available": True,
-        "populated": False,
-        "count": 0,
     }
 
 

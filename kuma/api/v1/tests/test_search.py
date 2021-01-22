@@ -1,4 +1,6 @@
 import pytest
+from elasticmock import FakeElasticsearch
+from mock import patch
 
 from kuma.core.urlresolvers import reverse
 
@@ -39,40 +41,50 @@ def test_search_validation_problems(user_client, settings):
     assert response.json()["errors"]["sort"][0]["code"] == "invalid_choice"
 
 
-def test_search_nothing_found(user_client):
-    url = reverse("api.v1.search")
-
-    response = user_client.get(url, {"q": "x"})
-    assert response.status_code == 200
-    assert response["content-type"] == "application/json"
-    assert response["Access-Control-Allow-Origin"] == "*"
-    data = response.json()
-    from pprint import pprint
-
-    pprint(data)
-
-    assert 0
+class FindEverythingFakeElasticsearch(FakeElasticsearch):
+    def search(self, *args, **kwargs):
+        # This trick is what makes the mock so basic. It basically removes
+        # any search query so that it just returns EVERYTHING that's been indexed.
+        kwargs.pop("body", None)
+        return super().search(*args, **kwargs)
 
 
-# class SearchViewTests(ElasticTestCase):
-#     fixtures = ElasticTestCase.fixtures + ["wiki/documents.json", "search/filters.json"]
+def test_search_basic_match(user_client, settings):
+    fake_elasticsearch = FindEverythingFakeElasticsearch()
 
-#     def test_search_basic(self):
-#         url = reverse("api.v1.search", args=["en-US"])
-#         response = self.client.get(url, {"q": "article"})
-#         assert response.status_code == 200
-#         assert response["content-type"] == "application/json"
-#         assert response["Access-Control-Allow-Origin"] == "*"
-#         data = response.json()
-#         assert data["documents"]
-#         assert data["count"] == 4
-#         assert data["locale"] == "en-US"
-
-#         # Now search in a non-en-US locale
-#         response = self.client.get(url, {"q": "title", "locale": "fr"})
-#         assert response.status_code == 200
-#         assert response["content-type"] == "application/json"
-#         data = response.json()
-#         assert data["documents"]
-#         assert data["count"] == 5
-#         assert data["locale"] == "fr"
+    with patch("kuma.api.v1.search.Elasticsearch", return_value=fake_elasticsearch):
+        fake_elasticsearch.index(
+            settings.SEARCH_INDEX_NAME,
+            {
+                "id": "/en-us/docs/Foo",
+                "title": "Foo Title",
+                "locale": "en-us",
+                "archived": False,
+                "slug": "Foo",
+                "popularity": 0,
+            },
+            id="/en-us/docs/Foo",
+        )
+        url = reverse("api.v1.search")
+        response = user_client.get(url, {"q": "x"})
+        assert response.status_code == 200
+        assert response["content-type"] == "application/json"
+        assert response["Access-Control-Allow-Origin"] == "*"
+        data = response.json()
+        assert data["metadata"]["page"] == 1
+        assert data["metadata"]["size"]
+        assert data["metadata"]["took_ms"]
+        assert data["metadata"]["total"] == 1
+        assert data["suggestions"] == []
+        assert data["documents"] == [
+            {
+                "archived": False,
+                "highlight": {"body": [], "title": []},
+                "locale": "en-us",
+                "mdn_url": "/en-us/docs/Foo",
+                "popularity": 0,
+                "score": 1.0,
+                "slug": "Foo",
+                "title": "Foo Title",
+            }
+        ]
