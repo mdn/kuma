@@ -46,7 +46,15 @@ class FindEverythingFakeElasticsearch(FakeElasticsearch):
         # This trick is what makes the mock so basic. It basically removes
         # any search query so that it just returns EVERYTHING that's been indexed.
         kwargs.pop("body", None)
-        return super().search(*args, **kwargs)
+        result = super().search(*args, **kwargs)
+        # Due to a bug in ElasticMock, instead of returning an object for the
+        # `response.hits.total`, it returns just an integer. We'll need to fix that.
+        if isinstance(result["hits"]["total"], int):
+            result["hits"]["total"] = {
+                "value": result["hits"]["total"],
+                "relation": "eq",
+            }
+        return result
 
 
 def test_search_basic_match(user_client, settings):
@@ -74,7 +82,8 @@ def test_search_basic_match(user_client, settings):
         assert data["metadata"]["page"] == 1
         assert data["metadata"]["size"]
         assert data["metadata"]["took_ms"]
-        assert data["metadata"]["total"] == 1
+        assert data["metadata"]["total"]["value"] == 1
+        assert data["metadata"]["total"]["relation"] == "eq"
         assert data["suggestions"] == []
         assert data["documents"] == [
             {

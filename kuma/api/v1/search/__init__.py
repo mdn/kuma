@@ -169,6 +169,8 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
     metadata = {
         "took_ms": response.took,
         "total": {
+            # The `response.hits.total` is a `elasticsearch_dsl.utils.AttrDict`
+            # instance. Pluck only the exact data needed.
             "value": response.hits.total.value,
             "relation": response.hits.total.relation,
         },
