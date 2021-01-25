@@ -168,7 +168,10 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
 
     metadata = {
         "took_ms": response.took,
-        "total": response.hits.total,
+        "total": {
+            "value": response.hits.total.value,
+            "relation": response.hits.total.relation,
+        },
         "size": params["size"],
         "page": params["page"],
     }
