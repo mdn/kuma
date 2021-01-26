@@ -1,6 +1,4 @@
 /* use developer_mozilla_org; */
-SELECT COUNT(*) AS authkeys_key_should_be_zero FROM authkeys_key;
-SELECT COUNT(*) AS authkeys_keyaction_should_be_zero FROM authkeys_keyaction;
 SELECT COUNT(*) AS django_admin_log_should_be_zero FROM django_admin_log;
 SELECT COUNT(*) AS django_session_should_be_zero FROM django_session;
 SELECT COUNT(*) AS djcelery_crontabschedule_should_be_zero FROM djcelery_crontabschedule;

@@ -5,22 +5,19 @@ Legacy tests are in test_views.py.
 """
 
 
-import base64
 import json
 from collections import namedtuple
 from datetime import datetime
 from unittest import mock
-from urllib.parse import quote, urlparse
+from urllib.parse import quote
 
 import pytest
 import requests_mock
 from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.test.client import BOUNDARY, encode_multipart, MULTIPART_CONTENT
-from django.utils.http import quote_etag
 from pyquery import PyQuery as pq
 
-from kuma.authkeys.models import Key
 from kuma.core.models import IPBan
 from kuma.core.tests import (
     assert_no_cache_header,
@@ -34,7 +31,6 @@ from ..constants import REDIRECT_CONTENT
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..models import Document, Revision
 from ..views.document import _apply_content_experiment
-from ..views.utils import calculate_etag
 
 
 AuthKey = namedtuple("AuthKey", "key header")
@@ -111,16 +107,6 @@ def ce_settings(settings):
     return settings
 
 
-@pytest.fixture
-def authkey(wiki_user):
-    key = Key(user=wiki_user, description="Test Key 1")
-    secret = key.generate_secret()
-    key.save()
-    auth = "%s:%s" % (key.key, secret)
-    header = "Basic %s" % base64.b64encode(auth.encode()).decode()
-    return AuthKey(key=key, header=header)
-
-
 @pytest.mark.parametrize("http_method", ["put", "post", "delete", "options", "head"])
 @pytest.mark.parametrize("endpoint", ["children", "toc", "json", "json_slug"])
 def test_disallowed_methods(client, http_method, endpoint):
@@ -135,263 +121,6 @@ def test_disallowed_methods(client, http_method, endpoint):
     response = getattr(client, http_method)(url, **headers)
     assert response.status_code == 405
     assert_shared_cache_header(response)
-
-
-@pytest.mark.parametrize("method", ("GET", "HEAD"))
-@pytest.mark.parametrize("if_none_match", (None, "match", "mismatch"))
-@pytest.mark.parametrize(
-    "section_case", ("no-section", "section", "another-section", "non-existent-section")
-)
-def test_api_safe(client, section_doc, section_case, if_none_match, method):
-    """
-    Test GET & HEAD on wiki.document_api endpoint.
-    """
-    section_id, exp_content = SECTION_CASE_TO_DETAILS[section_case]
-
-    url = section_doc.get_absolute_url() + "$api"
-
-    if section_id:
-        url += "?section={}".format(section_id)
-
-    headers = dict(HTTP_HOST=settings.WIKI_HOST)
-
-    if method == "GET":
-        # Starting with Django 1.11, condition headers will be
-        # considered only for GET requests. The one exception
-        # is a PUT request to the wiki.document_api endpoint,
-        # but that's not relevant here.
-        if if_none_match == "match":
-            response = getattr(client, method.lower())(url, **headers)
-            assert "etag" in response
-            headers["HTTP_IF_NONE_MATCH"] = response["etag"]
-        elif if_none_match == "mismatch":
-            headers["HTTP_IF_NONE_MATCH"] = "ABC"
-
-    response = getattr(client, method.lower())(url, **headers)
-
-    if (if_none_match == "match") and (method == "GET"):
-        exp_content = ""
-        assert response.status_code == 304
-    else:
-        assert response.status_code == 200
-        assert_shared_cache_header(response)
-        assert "last-modified" not in response
-        if method == "GET":
-            assert quote_etag(calculate_etag(exp_content)) in response["etag"]
-        assert response["x-kuma-revision"] == str(section_doc.current_revision_id)
-
-    if method == "GET":
-        assert response.content.decode(response.charset) == exp_content
-
-
-@pytest.mark.parametrize("user_case", ("authenticated", "anonymous"))
-def test_api_put_forbidden_when_no_authkey(client, user_client, root_doc, user_case):
-    """
-    A PUT to the wiki.document_api endpoint should forbid access without
-    an authkey, even for logged-in users.
-    """
-    url = root_doc.get_absolute_url() + "$api"
-    response = (client if user_case == "anonymous" else user_client).put(
-        url, HTTP_HOST=settings.WIKI_HOST
-    )
-    assert response.status_code == 403
-    assert_no_cache_header(response)
-
-
-def test_api_put_unsupported_content_type(client, authkey):
-    """
-    A PUT to the wiki.document_api endpoint with an unsupported content
-    type should return a 400.
-    """
-    url = "/en-US/docs/foobar$api"
-    response = client.put(
-        url,
-        data="stuff",
-        content_type="nonsense",
-        HTTP_AUTHORIZATION=authkey.header,
-        HTTP_HOST=settings.WIKI_HOST,
-    )
-    assert response.status_code == 400
-    assert_shared_cache_header(response)
-
-
-def test_api_put_authkey_tracking(client, authkey):
-    """
-    Revisions modified by PUT API should track the auth key used
-    """
-    url = "/en-US/docs/foobar$api"
-    data = dict(
-        title="Foobar, The Document",
-        content="<p>Hello, I am foobar.</p>",
-    )
-    content_type, encoded_data = get_content("json", data)
-    response = client.put(
-        url,
-        data=encoded_data,
-        content_type=content_type,
-        HTTP_AUTHORIZATION=authkey.header,
-        HTTP_HOST=settings.WIKI_HOST,
-    )
-    assert response.status_code == 201
-    assert_shared_cache_header(response)
-    last_log = authkey.key.history.order_by("-pk").all()[0]
-    assert last_log.action == "created"
-
-    data["title"] = "Foobar, The New Document"
-    content_type, encoded_data = get_content("json", data)
-    response = client.put(
-        url,
-        data=encoded_data,
-        content_type=content_type,
-        HTTP_AUTHORIZATION=authkey.header,
-        HTTP_HOST=settings.WIKI_HOST,
-    )
-    assert response.status_code == 205
-    assert_shared_cache_header(response)
-    last_log = authkey.key.history.order_by("-pk").all()[0]
-    assert last_log.action == "updated"
-
-
-@pytest.mark.parametrize("if_match", (None, "match", "mismatch"))
-@pytest.mark.parametrize("content_case", ("multipart", "json", "html-fragment", "html"))
-@pytest.mark.parametrize(
-    "section_case", ("no-section", "section", "another-section", "non-existent-section")
-)
-def test_api_put_existing(
-    settings, client, section_doc, authkey, section_case, content_case, if_match
-):
-    """
-    A PUT to the wiki.document_api endpoint should allow the modification
-    of an existing document's content.
-    """
-    orig_rev_id = section_doc.current_revision_id
-    section_id, section_content = SECTION_CASE_TO_DETAILS[section_case]
-
-    url = section_doc.get_absolute_url() + "$api"
-
-    if section_id:
-        url += "?section={}".format(section_id)
-
-    headers = dict(HTTP_AUTHORIZATION=authkey.header, HTTP_HOST=settings.WIKI_HOST)
-
-    if if_match == "match":
-        response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
-        assert "etag" in response
-        headers["HTTP_IF_MATCH"] = response["etag"]
-    elif if_match == "mismatch":
-        headers["HTTP_IF_MATCH"] = "ABC"
-
-    data = dict(
-        comment="I like this document.",
-        title="New Sectioned Root Document",
-        summary="An edited sectioned root document.",
-        content=EMPTY_IFRAME + "<p>This is an edit.</p>",
-        tags="tagA,tagB,tagC",
-        review_tags="editorial,technical",
-    )
-
-    content_type, encoded_data = get_content(content_case, data)
-
-    response = client.put(url, data=encoded_data, content_type=content_type, **headers)
-
-    if content_case == "html-fragment":
-        expected_title = section_doc.title
-    else:
-        expected_title = data["title"]
-
-    if section_content:
-        expected_content = SECTIONS.replace(section_content, data["content"])
-    else:
-        expected_content = SECTIONS
-
-    assert_shared_cache_header(response)
-
-    if if_match == "mismatch":
-        assert response.status_code == 412
-    else:
-        assert response.status_code == 205
-        # Confirm that the PUT worked.
-        section_doc.refresh_from_db()
-        assert section_doc.current_revision_id != orig_rev_id
-        assert section_doc.title == expected_title
-        assert section_doc.html == expected_content
-        if content_case in ("multipart", "json"):
-            rev = section_doc.current_revision
-            assert rev.summary == data["summary"]
-            assert rev.comment == data["comment"]
-            assert rev.tags == data["tags"]
-            assert set(rev.review_tags.names()) == set(data["review_tags"].split(","))
-
-
-@pytest.mark.parametrize("slug_case", ("root", "child", "nonexistent-parent"))
-@pytest.mark.parametrize("content_case", ("multipart", "json", "html-fragment", "html"))
-@pytest.mark.parametrize("section_case", ("no-section", "section"))
-def test_api_put_new(
-    settings, client, root_doc, authkey, section_case, content_case, slug_case
-):
-    """
-    A PUT to the wiki.document_api endpoint should allow the creation
-    of a new document and its initial revision.
-    """
-    locale = settings.WIKI_DEFAULT_LANGUAGE
-    section_id, _ = SECTION_CASE_TO_DETAILS[section_case]
-
-    if slug_case == "root":
-        slug = "foobar"
-    elif slug_case == "child":
-        slug = "Root/foobar"
-    else:
-        slug = "nonexistent/foobar"
-
-    url_path = "/{}/docs/{}".format(locale, slug)
-    url = url_path + "$api"
-
-    # The section_id should have no effect on the results, but we'll see.
-    if section_id:
-        url += "?section={}".format(section_id)
-
-    data = dict(
-        comment="I like this document.",
-        title="Foobar, The Document",
-        summary="A sectioned document named foobar.",
-        content=EMPTY_IFRAME + SECTIONS,
-        tags="tagA,tagB,tagC",
-        review_tags="editorial,technical",
-    )
-
-    content_type, encoded_data = get_content(content_case, data)
-
-    response = client.put(
-        url,
-        data=encoded_data,
-        content_type=content_type,
-        HTTP_AUTHORIZATION=authkey.header,
-        HTTP_HOST=settings.WIKI_HOST,
-    )
-
-    if content_case == "html-fragment":
-        expected_title = slug
-    else:
-        expected_title = data["title"]
-
-    if slug_case == "nonexistent-parent":
-        assert response.status_code == 404
-        assert_no_cache_header(response)
-    else:
-        assert response.status_code == 201
-        assert_shared_cache_header(response)
-        assert "location" in response
-        assert urlparse(response["location"]).path == url_path
-        # Confirm that the PUT worked.
-        doc = Document.objects.get(locale=locale, slug=slug)
-        assert doc.title == expected_title
-        assert doc.html == data["content"]
-        if content_case in ("multipart", "json"):
-            rev = doc.current_revision
-            assert rev.summary == data["summary"]
-            assert rev.comment == data["comment"]
-            assert rev.tags == data["tags"]
-            assert set(rev.review_tags.names()) == set(data["review_tags"].split(","))
 
 
 def test_apply_content_experiment_no_experiment(ce_settings, rf):

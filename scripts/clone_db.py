@@ -54,8 +54,6 @@ TABLES_TO_DUMP = [x.strip() for x in """
     auth_user
     auth_user_groups
     auth_user_user_permissions
-    authkeys_key
-    authkeys_keyaction
     celery_taskmeta
     celery_tasksetmeta
     constance_config

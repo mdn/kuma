@@ -549,15 +549,11 @@ def user_delete(request, username):
         user.save()
 
         user.socialaccount_set.all().delete()
-        user.key_set.all().delete()
 
     def force_logout():
         request.session.clear()
 
     def delete_user():
-        # Protected references to users need to be manually deleted first.
-        user.key_set.all().delete()
-
         # Some records are worth keeping prior to deleting the user
         # but "re-assign" to the anonymous user.
         anon, _ = User.objects.get_or_create(username="Anonymous")

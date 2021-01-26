@@ -17,7 +17,6 @@ from pytz import timezone, utc
 from requests.exceptions import ProxyError, SSLError
 
 from kuma.attachments.models import Attachment, AttachmentRevision
-from kuma.authkeys.models import Key
 from kuma.core.ga_tracking import (
     ACTION_AUTH_STARTED,
     ACTION_AUTH_SUCCESSFUL,
@@ -1506,7 +1505,6 @@ def test_delete_user_with_no_revisions(
 
 
 def test_delete_user_no_revisions_misc_related(db, user_client, wiki_user):
-    Key.objects.create(user=wiki_user)
     revision_akismet_submission = RevisionAkismetSubmission.objects.create(
         sender=wiki_user, type="spam"
     )
@@ -1532,9 +1530,6 @@ def test_delete_user_no_revisions_misc_related(db, user_client, wiki_user):
     response = user_client.post(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert not User.objects.filter(username=wiki_user.username).exists()
-
-    # These are plainly deleted
-    assert not Key.objects.all().exists()
 
     # Moved to anonymous user
     revision_akismet_submission.refresh_from_db()
@@ -1667,9 +1662,6 @@ def test_delete_user_keep_attributions(
         revision=revision, sender=wiki_user, type="ham"
     )
 
-    # Create an authentication key
-    Key.objects.create(user=wiki_user)
-
     url = reverse("users.user_delete", kwargs={"username": wiki_user.username})
     response = user_client.post(
         url, {"attributions": "keep"}, HTTP_HOST=settings.WIKI_HOST
@@ -1723,9 +1715,6 @@ def test_delete_user_keep_attributions(
     assert response.status_code == 200
     assert "username" not in response.json()
     assert "is_authenticated" not in response.json()
-
-    # There should be no Key left
-    assert not Key.objects.all().exists()
 
 
 @mock.patch("kuma.users.stripe_utils.stripe")
