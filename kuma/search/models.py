@@ -6,11 +6,9 @@ from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.text import slugify
-from elasticsearch.exceptions import NotFoundError
 from taggit.managers import TaggableManager
 
 from kuma.core.urlresolvers import reverse
-from kuma.wiki.search import WikiDocumentType
 
 from .jobs import AvailableFiltersJob
 from .managers import FilterManager, IndexManager
@@ -45,13 +43,7 @@ class Index(models.Model):
         super(Index, self).save(*args, **kwargs)
 
     def delete_if_exists(self):
-        es = WikiDocumentType.get_connection()
-        try:
-            es.indices.delete(self.prefixed_name)
-        except NotFoundError:
-            # Can ignore this since it indicates the index doesn't exist
-            # and therefore there's nothing to delete.
-            pass
+        raise NotImplementedError
 
     def __str__(self):
         return self.name
@@ -69,7 +61,7 @@ class Index(models.Model):
         return "%s-%s" % (settings.ES_INDEX_PREFIX, self.name)
 
     def populate(self):
-        return WikiDocumentType.reindex_all(index=self, chunk_size=250)
+        raise NotImplementedError
 
     def record_outdated(self, instance):
         if self.successor:

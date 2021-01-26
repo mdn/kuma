@@ -3,7 +3,6 @@ from types import SimpleNamespace
 from unittest import mock
 
 import pytest
-from django.conf import settings
 from django.core import mail
 from django.test import Client
 from stripe.error import APIError
@@ -18,7 +17,6 @@ from kuma.core.ga_tracking import (
 )
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
-from kuma.search.tests import ElasticTestCase
 from kuma.users.models import UserSubscription
 from kuma.users.tests import create_user
 
@@ -136,52 +134,6 @@ def test_whoami_subscriber(
     assert response.status_code == 200
     assert "is_subscriber" not in response.json()
     assert response.json()["subscriber_number"] == 1
-
-
-@pytest.mark.django_db
-def test_search_validation_problems(user_client):
-    url = reverse("api.v1.search", args=["en-US"])
-
-    # locale invalid
-    response = user_client.get(url, {"q": "x", "locale": "xxx"})
-    assert response.status_code == 400
-    assert response.json()["error"] == "Not a valid locale code"
-
-    # 'q' contains new line
-    response = user_client.get(url, {"q": r"test\nsomething"})
-    assert response.status_code == 400
-    assert response.json()["q"] == ["Search term must not contain new line"]
-
-    # 'q' exceeds max allowed characters
-    response = user_client.get(url, {"q": "x" * (settings.ES_Q_MAXLENGTH + 1)})
-    assert response.status_code == 400
-    assert response.json()["q"] == [
-        f"Ensure this field has no more than {settings.ES_Q_MAXLENGTH} characters."
-    ]
-
-
-class SearchViewTests(ElasticTestCase):
-    fixtures = ElasticTestCase.fixtures + ["wiki/documents.json", "search/filters.json"]
-
-    def test_search_basic(self):
-        url = reverse("api.v1.search", args=["en-US"])
-        response = self.client.get(url, {"q": "article"})
-        assert response.status_code == 200
-        assert response["content-type"] == "application/json"
-        assert response["Access-Control-Allow-Origin"] == "*"
-        data = response.json()
-        assert data["documents"]
-        assert data["count"] == 4
-        assert data["locale"] == "en-US"
-
-        # Now search in a non-en-US locale
-        response = self.client.get(url, {"q": "title", "locale": "fr"})
-        assert response.status_code == 200
-        assert response["content-type"] == "application/json"
-        data = response.json()
-        assert data["documents"]
-        assert data["count"] == 5
-        assert data["locale"] == "fr"
 
 
 @mock.patch("kuma.api.v1.views.track_event")

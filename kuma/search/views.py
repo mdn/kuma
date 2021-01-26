@@ -1,3 +1,5 @@
+from urllib.parse import parse_qs, urlencode
+
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.decorators.cache import never_cache
@@ -5,11 +7,8 @@ from django.views.decorators.http import require_GET
 from django.views.generic import RedirectView
 from ratelimit.decorators import ratelimit
 
-from kuma.api.v1.views import search as search_api
+from kuma.api.v1.search import search as search_api
 from kuma.core.decorators import shared_cache_control
-from kuma.core.utils import is_wiki
-
-from .search import SearchView
 
 
 # Since the search endpoint accepts user input (via query parameters) and its
@@ -23,10 +22,18 @@ from .search import SearchView
 def search(request, *args, **kwargs):
     """
     The search view.
-    """
-    if is_wiki(request):
-        return wiki_search(request, *args, **kwargs)
 
+    --2021-- THIS VIEW IS A HACK! --2021--
+    This Django view exists to server-side render the search results page.
+    But we're moving the search result page to Yari and that one will use a XHR
+    request (to /api/v1/search) from a skeleton page (aka. SPA).
+    But as a way to get to that, we need to transition from the old to the new.
+    So, this page uses the Django view in kuma.api.v1.search.search, which
+    returns a special `JsonResponse` instance whose data we can pluck out
+    to our needs for this old view.
+    Once we've fully moved to the Yari (static + XHR to v1 API) site-search,
+    we can comfortably delete this view.
+    """
     # The underlying v1 API supports searching without a 'q' but the web
     # UI doesn't. For example, the search input field requires a value.
     # So we match that here too.
@@ -34,23 +41,73 @@ def search(request, *args, **kwargs):
         status = 400
         context = {"results": {}}
     else:
-        results = search_api(request, *args, **kwargs).data
+        # TODO consider, if the current locale is *not* en-US, that we force
+        # it to do a search in both locales.
+        # This might come in handy for people searching in a locale where
+        # there's very little results but they'd be happy to get the en-US ones.
+        response = search_api(request, *args, **kwargs)
+        results = response.data
+
+        error = None
+        status = response.status_code
 
         # Determine if there were validation errors
-        error = results.get("error") or results.get("q")
-        # If q is returned in the data, there was a validation error for that field,
-        # so return 400 status.
-        status = 200 if results.get("q") is None else 400
-        # If there was an error with the pagination you'll get...
-        if results.get("detail"):
-            error = str(results["detail"])
-            status = 400
+        if status == 400:
+            error = ""
+            for key, messages in results["errors"].items():
+                for message in messages:
+                    error += f"{key}: {message['message']}\n"
+        else:
+            # Have to rearrange the 'results' in a way the old search expects it.
+            # ...which is as follows:
+            #  - `count`: integer number of matched documents
+            #  - `previous`: a URL or empty string
+            #  - `next`: a URL or empty string
+            #  - `query`: string
+            #  - `start`: pagination number
+            #  - `end`: pagination number
+            #  - `documents`:
+            #      - `title`
+            #      - `locale`
+            #      - `slug`
+            #      - `excerpt`: string of safe HTML
+            next_url = ""
+            previous_url = ""
+            page = results["metadata"]["page"]
+            size = results["metadata"]["size"]
+            count = results["metadata"]["total"]["value"]
+            query_string = request.META.get("QUERY_STRING")
+            query_string_parsed = parse_qs(query_string)
+            if (page + 1) * size < count:
+                query_string_parsed["page"] = f"{page + 1}"
+                next_url = f"?{urlencode(query_string_parsed, True)}"
+            if page > 1:
+                if page == 2:
+                    del query_string_parsed["page"]
+                else:
+                    query_string_parsed["page"] = f"{page - 1}"
+                previous_url = f"?{urlencode(query_string_parsed, True)}"
+
+            results = {
+                "count": count,
+                "next": next_url,
+                "previous": previous_url,
+                "query": request.GET.get("q"),
+                "start": (page - 1) * size + 1,
+                "end": page * size,
+                "documents": [
+                    {
+                        "title": x["title"],
+                        "slug": x["slug"],
+                        "locale": x["locale"],
+                        "excerpt": "<br>".join(x["highlight"].get("body", [])),
+                    }
+                    for x in results["documents"]
+                ],
+            }
 
         context = {"results": {"results": None if error else results, "error": error}}
     return render(request, "search/react.html", context, status=status)
-
-
-wiki_search = SearchView.as_view()
 
 
 class SearchRedirectView(RedirectView):

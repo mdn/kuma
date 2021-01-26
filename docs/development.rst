@@ -445,9 +445,9 @@ You may wish to run these commands inside of Docker::
 Using Poetry directly on your host computer is also fine; the resulting
 ``pyproject.toml`` and ``poetry.lock`` files should be the same either way.
 
-.. _Poetry: https://poetry.eustace.io/
-.. _adding: https://poetry.eustace.io/docs/cli/#add
-.. _updating: https://poetry.eustace.io/docs/cli/#update
+.. _Poetry: https://python-poetry.org/
+.. _adding: https://python-poetry.org/docs/cli/#add
+.. _updating: https://python-poetry.org/docs/cli/#update
 
 .. _front-end-asset-dependencies:
 

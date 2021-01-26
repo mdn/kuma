@@ -11,7 +11,6 @@ from django.db import transaction
 
 from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.utils import send_mail_retrying
-from kuma.search.models import Index
 from kuma.users.models import User
 
 from .events import first_edit_email
@@ -24,7 +23,6 @@ from .models import (
     Revision,
     RevisionIP,
 )
-from .search import WikiDocumentType
 
 
 log = logging.getLogger("kuma.wiki.tasks")
@@ -293,60 +291,6 @@ def send_first_edit_email(revision_pk):
     """ Make an 'edited' notification email for first-time editors """
     revision = Revision.objects.get(pk=revision_pk)
     first_edit_email(revision).send()
-
-
-@task
-@skip_in_maintenance_mode
-def index_documents(ids, index_pk, reraise=False):
-    """
-    Index a list of documents into the provided index.
-
-    :arg ids: Iterable of `Document` pks to index.
-    :arg index_pk: The `Index` pk of the index to index into.
-    :arg reraise: False if you want errors to be swallowed and True
-        if you want errors to be thrown.
-
-    .. Note::
-
-       This indexes all the documents in the chunk in one single bulk
-       indexing call. Keep that in mind when you break your indexing
-       task into chunks.
-
-    """
-    from kuma.wiki.models import Document
-
-    cls = WikiDocumentType
-    es = cls.get_connection("indexing")
-    index = Index.objects.get(pk=index_pk)
-
-    objects = Document.objects.filter(id__in=ids)
-    documents = []
-    for obj in objects.select_related("parent").prefetch_related("tags"):
-        try:
-            documents.append(cls.from_django(obj))
-        except Exception:
-            log.exception("Unable to extract/index document (id: %d)", obj.id)
-            if reraise:
-                raise
-
-    if documents:
-        cls.bulk_index(documents, id_field="id", es=es, index=index.prefixed_name)
-
-
-@task
-@skip_in_maintenance_mode
-def unindex_documents(ids, index_pk):
-    """
-    Delete a list of documents from the provided index.
-
-    :arg ids: Iterable of `Document` pks to remove.
-    :arg index_pk: The `Index` pk of the index to remove items from.
-    """
-    cls = WikiDocumentType
-    es = cls.get_connection("indexing")
-    index = Index.objects.get(pk=index_pk)
-
-    cls.bulk_delete(ids, es=es, index=index.prefixed_name)
 
 
 @task

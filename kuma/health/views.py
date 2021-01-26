@@ -7,17 +7,12 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST, require_safe
-from elasticsearch.exceptions import (
-    ConnectionError as ES_ConnectionError,
-    NotFoundError,
-)
 from raven.contrib.django.models import client
 from requests.exceptions import ConnectionError as Requests_ConnectionError, ReadTimeout
 
 from kuma.users.models import User
 from kuma.wiki.kumascript import request_revision_hash
 from kuma.wiki.models import Document
-from kuma.wiki.search import WikiDocumentType
 
 
 @never_cache
@@ -120,20 +115,6 @@ def status(request):
     else:
         ks_data["revision"] = ks_response.text
     data["services"]["kumascript"] = ks_data
-
-    # Check that ElasticSearch is reachable, populated
-    search_data = {"available": True, "populated": False, "count": 0}
-    try:
-        search_count = WikiDocumentType.search().count()
-    except ES_ConnectionError:
-        search_data["available"] = False
-    except NotFoundError:
-        pass  # available but unpopulated (and maybe uncreated)
-    else:
-        if search_count:
-            search_data["populated"] = True
-            search_data["count"] = search_count
-    data["services"]["search"] = search_data
 
     # Check if the testing accounts are available
     test_account_data = {"available": False}

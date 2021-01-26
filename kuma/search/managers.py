@@ -1,8 +1,5 @@
 from django.conf import settings
 from django.db import models
-from elasticsearch.exceptions import RequestError
-
-from kuma.wiki.search import WikiDocumentType
 
 
 class FilterManager(models.Manager):
@@ -49,21 +46,4 @@ class IndexManager(models.Manager):
         :arg index: The Index object to use.
 
         """
-        cls = WikiDocumentType
-
-        if es is None:
-            es = cls.get_connection()
-        if index is None:
-            index = self.get_current()
-
-        index.delete_if_exists()
-
-        # Simultaneously create the index and the mappings, so live
-        # indexing doesn't get a chance to index anything between the two
-        # causing ES to infer a possibly bogus mapping (which causes ES to
-        # freak out if the inferred mapping is incompatible with the
-        # explicit mapping).
-        try:
-            es.indices.create(index.prefixed_name, body=cls.get_settings())
-        except RequestError:
-            pass
+        raise NotImplementedError

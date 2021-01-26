@@ -1887,3 +1887,7 @@ ADDITIONAL_NEXT_URL_ALLOWED_HOSTS = config(
 # switches says otherwise. For example, the payments pages are skeletons for
 # React apps. This boolean settings disables all of that.
 ENABLE_SUBSCRIPTIONS = config("ENABLE_SUBSCRIPTIONS", cast=bool, default=False)
+
+# Kuma doesn't index anything, that's done by the Yari Deployer, but we need
+# to know what the index is called for searching.
+SEARCH_INDEX_NAME = config("SEARCH_INDEX_NAME", default="mdn_docs")

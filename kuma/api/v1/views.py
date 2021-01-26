@@ -6,17 +6,13 @@ from urllib.parse import urlparse
 import stripe
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.http import (
-    HttpResponse,
-    HttpResponseBadRequest,
-    JsonResponse,
-)
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.utils import translation
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 from raven.contrib.django.models import client as raven_client
-from rest_framework import serializers, status
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
@@ -26,7 +22,6 @@ from waffle import flag_is_active
 from waffle.decorators import waffle_flag
 from waffle.models import Flag, Switch
 
-from kuma.api.v1.decorators import allow_CORS_GET
 from kuma.api.v1.serializers import UserDetailsSerializer
 from kuma.core.email_utils import render_email
 from kuma.core.ga_tracking import (
@@ -38,14 +33,6 @@ from kuma.core.ga_tracking import (
 )
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import requests_retry_session, send_mail_retrying
-from kuma.search.filters import (
-    HighlightFilterBackend,
-    KeywordQueryBackend,
-    LanguageFilterBackend,
-    SearchQueryBackend,
-    TagGroupFilterBackend,
-)
-from kuma.search.search import SearchView
 from kuma.users.models import User, UserSubscription
 from kuma.users.newsletter.utils import refresh_is_user_newsletter_subscribed
 from kuma.users.signals import (
@@ -118,47 +105,6 @@ def whoami(request):
             data["waffle"]["flags"][flag.name] = True
 
     return JsonResponse(data)
-
-
-class APIDocumentSerializer(serializers.Serializer):
-    title = serializers.CharField(read_only=True, max_length=255)
-    slug = serializers.CharField(read_only=True, max_length=255)
-    locale = serializers.CharField(read_only=True, max_length=7)
-    excerpt = serializers.ReadOnlyField(source="get_excerpt")
-
-
-class APILanguageFilterBackend(LanguageFilterBackend):
-    """Override of kuma.search.filters:LanguageFilterBackend that is almost
-    exactly the same except the locale comes from custom code rather than
-    via kuma.core.i18n.get_language_from_request because that can't be used
-    in the API.
-
-    Basically, it's the same exact functionality but ...
-    """
-
-    def filter_queryset(self, request, queryset, view):
-        locale = request.GET.get("locale") or settings.LANGUAGE_CODE
-        if locale not in settings.ACCEPTED_LOCALES:
-            raise serializers.ValidationError({"error": "Not a valid locale code"})
-        request.LANGUAGE_CODE = locale
-        return super(APILanguageFilterBackend, self).filter_queryset(
-            request, queryset, view
-        )
-
-
-class APISearchView(SearchView):
-    serializer_class = APIDocumentSerializer
-    renderer_classes = [JSONRenderer]
-    filter_backends = (
-        SearchQueryBackend,
-        KeywordQueryBackend,
-        TagGroupFilterBackend,
-        APILanguageFilterBackend,
-        HighlightFilterBackend,
-    )
-
-
-search = never_cache(allow_CORS_GET(APISearchView.as_view()))
 
 
 @waffle_flag("subscription")
