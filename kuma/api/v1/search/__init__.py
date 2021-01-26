@@ -1,6 +1,6 @@
 from django import http
 from django.conf import settings
-from elasticsearch import Elasticsearch, exceptions
+from elasticsearch import exceptions
 from elasticsearch_dsl import Q, query, Search
 from redo import retrying
 
@@ -60,9 +60,7 @@ def search(request, locale=None):
 
 
 def _find(params, total_only=False, make_suggestions=False, min_suggestion_score=0.8):
-    client = Elasticsearch(settings.ES_URLS)
     search_query = Search(
-        using=client,
         index=settings.SEARCH_INDEX_NAME,
     )
     if make_suggestions:

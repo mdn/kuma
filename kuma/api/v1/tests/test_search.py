@@ -60,7 +60,9 @@ class FindEverythingFakeElasticsearch(FakeElasticsearch):
 def test_search_basic_match(user_client, settings):
     fake_elasticsearch = FindEverythingFakeElasticsearch()
 
-    with patch("kuma.api.v1.search.Elasticsearch", return_value=fake_elasticsearch):
+    with patch(
+        "elasticsearch_dsl.connections.Elasticsearch", return_value=fake_elasticsearch
+    ):
         fake_elasticsearch.index(
             settings.SEARCH_INDEX_NAME,
             {
