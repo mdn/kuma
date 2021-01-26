@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: docker/images/kuma_base/Dockerfile
+    image: mdnwebdocs/kuma_base
     command: ./scripts/start-worker
     user: ${UID:-1000}
     volumes:
