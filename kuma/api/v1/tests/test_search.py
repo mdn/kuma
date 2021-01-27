@@ -57,45 +57,68 @@ class FindEverythingFakeElasticsearch(FakeElasticsearch):
         return result
 
 
-def test_search_basic_match(user_client, settings):
+@pytest.fixture
+def mock_elasticsearch():
     fake_elasticsearch = FindEverythingFakeElasticsearch()
+    with patch("elasticsearch_dsl.search.get_connection") as get_connection:
+        get_connection.return_value = fake_elasticsearch
+        yield fake_elasticsearch
 
-    with patch(
-        "elasticsearch_dsl.connections.Elasticsearch", return_value=fake_elasticsearch
-    ):
-        fake_elasticsearch.index(
-            settings.SEARCH_INDEX_NAME,
-            {
-                "id": "/en-us/docs/Foo",
-                "title": "Foo Title",
-                "locale": "en-us",
-                "archived": False,
-                "slug": "Foo",
-                "popularity": 0,
-            },
-            id="/en-us/docs/Foo",
-        )
-        url = reverse("api.v1.search")
-        response = user_client.get(url, {"q": "x"})
-        assert response.status_code == 200
-        assert response["content-type"] == "application/json"
-        assert response["Access-Control-Allow-Origin"] == "*"
-        data = response.json()
-        assert data["metadata"]["page"] == 1
-        assert data["metadata"]["size"]
-        assert data["metadata"]["took_ms"]
-        assert data["metadata"]["total"]["value"] == 1
-        assert data["metadata"]["total"]["relation"] == "eq"
-        assert data["suggestions"] == []
-        assert data["documents"] == [
-            {
-                "archived": False,
-                "highlight": {"body": [], "title": []},
-                "locale": "en-us",
-                "mdn_url": "/en-us/docs/Foo",
-                "popularity": 0,
-                "score": 1.0,
-                "slug": "Foo",
-                "title": "Foo Title",
-            }
-        ]
+
+def test_search_basic_match(user_client, settings, mock_elasticsearch):
+    mock_elasticsearch.index(
+        settings.SEARCH_INDEX_NAME,
+        {
+            "id": "/en-us/docs/Foo",
+            "title": "Foo Title",
+            "locale": "en-us",
+            "archived": False,
+            "slug": "Foo",
+            "popularity": 0,
+        },
+        id="/en-us/docs/Foo",
+    )
+    url = reverse("api.v1.search")
+    response = user_client.get(url, {"q": "x"})
+    assert response.status_code == 200
+    assert response["content-type"] == "application/json"
+    assert response["Access-Control-Allow-Origin"] == "*"
+    data = response.json()
+    assert data["metadata"]["page"] == 1
+    assert data["metadata"]["size"]
+    assert data["metadata"]["took_ms"]
+    assert data["metadata"]["total"]["value"] == 1
+    assert data["metadata"]["total"]["relation"] == "eq"
+    assert data["suggestions"] == []
+    assert data["documents"] == [
+        {
+            "archived": False,
+            "highlight": {"body": [], "title": []},
+            "locale": "en-us",
+            "mdn_url": "/en-us/docs/Foo",
+            "popularity": 0,
+            "score": 1.0,
+            "slug": "Foo",
+            "title": "Foo Title",
+        }
+    ]
+
+
+def test_search_case_insensitive_locale(user_client, settings, mock_elasticsearch):
+    mock_elasticsearch.index(
+        settings.SEARCH_INDEX_NAME,
+        {
+            "id": "/en-us/docs/Foo",
+            "title": "Foo Title",
+            "locale": "en-us",
+            "archived": False,
+            "slug": "Foo",
+            "popularity": 0,
+        },
+        id="/en-us/docs/Foo",
+    )
+    url = reverse("api.v1.search")
+    response = user_client.get(url, {"q": "x", "locale": "EN-US"})
+    assert response.status_code == 200
+    response = user_client.get(url, {"q": "x", "locale": ["EN-US", "Fr"]})
+    assert response.status_code == 200

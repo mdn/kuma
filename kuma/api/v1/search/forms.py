@@ -34,6 +34,18 @@ class SearchForm(forms.Form):
         # See https://www.peterbe.com/plog/initial-values-bound-django-form-rendered
         data = MultiValueDict({**{k: [v] for k, v in initial.items()}, **data})
 
+        # Because the `?locale=en-US&locale=Fr` might come in from the `request.GET`
+        # we can't edit it there. So instead, we mutate it here in the `data`
+        if "locale" in data:
+            # Always force it to lowercase, because that's what the ChoiceField
+            # is configured to. And the searches should always be in lower case.
+            # Remember, Django forms will allow this to be a single string
+            # (e.g. `?locale=Fr`) or a multi-value (`?locale=fr&locale=En-US`).
+            if isinstance(data["locale"], str):
+                data["locale"] = data["locale"].lower()
+            else:
+                data["locale"] = [x.lower() for x in data["locale"]]
+
         # If, for keys we have an initial value for, it was passed an empty string,
         # then swap it for the initial value.
         # For example `?q=searching&page=` you probably meant to omit it

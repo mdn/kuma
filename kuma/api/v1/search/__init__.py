@@ -153,10 +153,13 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
             # This can happen if the search happened right as the index had
             # just been deleted due to a fresh re-indexing happening in Yari.
             exceptions.NotFoundError,
+            # This can happen when the index simply isn't ready yet.
+            exceptions.TransportError,
         ),
         # The default in redo is 60 seconds. Let's tone that down.
-        "sleeptime": 1,
-        "attempts": 5,
+        "sleeptime": settings.ES_RETRY_SLEEPTIME,
+        "attempts": settings.ES_RETRY_ATTEMPTS,
+        "jitter": settings.ES_RETRY_JITTER,
     }
     with retrying(search_query.execute, **retry_options) as retrying_function:
         response = retrying_function()
