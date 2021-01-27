@@ -124,6 +124,7 @@ def status(request):
     # Check that Elasticsearch is reachable and somewhat healthy
     search_data = {"available": None, "populated": None, "health": None, "count": None}
     try:
+        es_connections.create_connection(hosts=settings.ES_URLS)
         connection = es_connections.get_connection()
         search_data["available"] = True
         health = connection.cluster.health()
