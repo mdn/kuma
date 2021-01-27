@@ -68,6 +68,7 @@ def test_search_basic_match(user_client, settings):
             {
                 "id": "/en-us/docs/Foo",
                 "title": "Foo Title",
+                "summary": "Foo summary",
                 "locale": "en-us",
                 "archived": False,
                 "slug": "Foo",
@@ -91,7 +92,7 @@ def test_search_basic_match(user_client, settings):
             {
                 "archived": False,
                 "highlight": {"body": [], "title": []},
-                "summary": "Foo is a summary",
+                "summary": "Foo summary",
                 "locale": "en-us",
                 "mdn_url": "/en-us/docs/Foo",
                 "popularity": 0,
