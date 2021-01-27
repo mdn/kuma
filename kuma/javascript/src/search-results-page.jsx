@@ -19,7 +19,7 @@ type SearchResults = {
         title: string,
         locale: string,
         excerpt: string,
-        summary: String,
+        summary: string,
     }>,
     start: number,
     end: number,
