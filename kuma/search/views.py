@@ -1,5 +1,6 @@
 from urllib.parse import parse_qs, urlencode
 
+from django.conf import settings
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.decorators.cache import never_cache
@@ -115,11 +116,14 @@ class SearchRedirectView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         query_string = self.request.META.get("QUERY_STRING")
-        url = reverse_lazy(
-            "api.v1.search", kwargs={"locale": self.request.LANGUAGE_CODE}
-        )
-        if query_string:
-            url += "?" + query_string
+        url = reverse_lazy("api.v1.search")
+        qs = parse_qs(query_string)
+        # If you used `/en-Us/search.json` you can skip the `?locale=`
+        # because the default locale in `/api/v1/search` is `en-US`.
+        if self.request.LANGUAGE_CODE.lower() != settings.LANGUAGE_CODE.lower():
+            qs["locale"] = self.request.LANGUAGE_CODE
+        if qs:
+            url += "?" + urlencode(qs, True)
         return url
 
 
