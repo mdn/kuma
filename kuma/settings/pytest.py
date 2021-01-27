@@ -7,6 +7,9 @@ CELERY_TASK_ALWAYS_EAGER = True
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 ES_LIVE_INDEX = config("ES_LIVE_INDEX", default=False, cast=bool)
 
+# Always make sure we never test against a real Elasticsearch server
+ES_URLS = ["1.2.3.4:9200"]
+
 # Disable the Constance database cache
 CONSTANCE_DATABASE_CACHE_BACKEND = False
 
