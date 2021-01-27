@@ -91,6 +91,7 @@ def test_search_basic_match(user_client, settings):
             {
                 "archived": False,
                 "highlight": {"body": [], "title": []},
+                "summary": "Foo is a summary",
                 "locale": "en-us",
                 "mdn_url": "/en-us/docs/Foo",
                 "popularity": 0,

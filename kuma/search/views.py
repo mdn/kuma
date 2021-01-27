@@ -100,6 +100,7 @@ def search(request, *args, **kwargs):
                         "title": x["title"],
                         "slug": x["slug"],
                         "locale": x["locale"],
+                        "summary": x["summary"],
                         "excerpt": "<br>".join(x["highlight"].get("body", [])),
                     }
                     for x in results["documents"]

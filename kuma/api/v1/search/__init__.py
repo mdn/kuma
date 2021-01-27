@@ -194,6 +194,7 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
             "slug": hit.slug,
             "popularity": hit.popularity,
             "archived": hit.archived,
+            "summary": hit.summary,
             "highlight": {
                 "body": body_highlight,
                 "title": title_highlight,
