@@ -155,8 +155,9 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
             exceptions.NotFoundError,
         ),
         # The default in redo is 60 seconds. Let's tone that down.
-        "sleeptime": 1,
-        "attempts": 5,
+        "sleeptime": settings.ES_RETRY_SLEEPTIME,
+        "attempts": settings.ES_RETRY_ATTEMPTS,
+        "jitter": settings.ES_RETRY_JITTER,
     }
     with retrying(search_query.execute, **retry_options) as retrying_function:
         response = retrying_function()
