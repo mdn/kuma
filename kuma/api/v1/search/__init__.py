@@ -40,7 +40,11 @@ def search(request, locale=None):
     if not form.is_valid():
         return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
-    locales = form.cleaned_data["locale"] or [settings.LANGUAGE_CODE]
+    locales = form.cleaned_data["locale"]
+    if not locales:
+        locales = [request.LANGUAGE_CODE]
+    if not locales:
+        locales = [settings.LANGUAGE_CODE]
     assert isinstance(locales, list)
 
     params = {
@@ -73,6 +77,10 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
         search_query = search_query.suggest(
             "body_suggestions", params["query"], term={"field": "body"}
         )
+
+    from pprint import pprint
+
+    pprint(params)
 
     sub_queries = []
     sub_queries.append(Q("match", title={"query": params["query"], "boost": 2.0}))
