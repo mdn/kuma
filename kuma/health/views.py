@@ -7,8 +7,13 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST, require_safe
+from elasticsearch.exceptions import ConnectionError as ES_ConnectionError
+from elasticsearch.exceptions import NotFoundError, TransportError
+from elasticsearch_dsl import Search
+from elasticsearch_dsl.connections import connections as es_connections
 from raven.contrib.django.models import client
-from requests.exceptions import ConnectionError as Requests_ConnectionError, ReadTimeout
+from requests.exceptions import ConnectionError as Requests_ConnectionError
+from requests.exceptions import ReadTimeout
 
 from kuma.users.models import User
 from kuma.wiki.kumascript import request_revision_hash
@@ -115,6 +120,25 @@ def status(request):
     else:
         ks_data["revision"] = ks_response.text
     data["services"]["kumascript"] = ks_data
+
+    # Check that Elasticsearch is reachable and somewhat healthy
+    search_data = {"available": None, "populated": None, "health": None, "count": None}
+    try:
+        es_connections.create_connection(hosts=settings.ES_URLS)
+        connection = es_connections.get_connection()
+        search_data["available"] = True
+        health = connection.cluster.health()
+        search_data["health"] = health
+        count = Search(
+            index=settings.SEARCH_INDEX_NAME,
+        ).count()
+        search_data["populated"] = count > 0
+        search_data["count"] = count
+    except (ES_ConnectionError, TransportError):
+        search_data["available"] = False
+    except NotFoundError:
+        search_data["populated"] = False
+    data["services"]["search"] = search_data
 
     # Check if the testing accounts are available
     test_account_data = {"available": False}

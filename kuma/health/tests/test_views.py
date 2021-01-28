@@ -10,6 +10,15 @@ from kuma.core.tests import assert_no_cache_header
 from kuma.users.models import User
 
 
+@pytest.fixture
+def mock_search_count():
+    with mock.patch("elasticsearch_dsl.connections.Elasticsearch") as search:
+        instance = search()
+        instance.cluster.health.return_value = {"status": "pink"}
+        instance.count.return_value = {"count": 90}
+        yield instance
+
+
 @pytest.mark.parametrize("http_method", ["put", "post", "delete", "options"])
 @pytest.mark.parametrize("endpoint", ["liveness", "readiness", "status"])
 def test_disallowed_methods(client, http_method, endpoint):
@@ -82,11 +91,13 @@ def mock_user_objects_filter():
 def mock_status_externals(
     mock_request_revision_hash,
     mock_document_objects_count,
+    mock_search_count,
     mock_user_objects_filter,
 ):
     yield {
         "kumascript": mock_request_revision_hash,
         "document": mock_document_objects_count,
+        "search": mock_search_count,
         "test_users": mock_user_objects_filter,
     }
 
@@ -139,6 +150,12 @@ def test_status(client, settings, mock_status_externals):
     assert data["services"]["kumascript"] == {
         "available": True,
         "revision": "8da6b8f41",
+    }
+    assert data["services"]["search"] == {
+        "available": True,
+        "populated": True,
+        "count": 90,
+        "health": {"status": "pink"},
     }
     assert data["services"]["test_accounts"] == {
         "available": True,
