@@ -40,11 +40,7 @@ def search(request, locale=None):
     if not form.is_valid():
         return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
-    locales = form.cleaned_data["locale"]
-    if not locales:
-        locales = [request.LANGUAGE_CODE]
-    if not locales:
-        locales = [settings.LANGUAGE_CODE]
+    locales = form.cleaned_data["locale"] or [settings.LANGUAGE_CODE]
     assert isinstance(locales, list)
 
     params = {

@@ -46,7 +46,7 @@ def search(request, *args, **kwargs):
         # it to do a search in both locales.
         # This might come in handy for people searching in a locale where
         # there's very little results but they'd be happy to get the en-US ones.
-        response = search_api(request, *args, **kwargs)
+        response = search_api(request, locale=request.LANGUAGE_CODE, *args, **kwargs)
         results = response.data
 
         error = None
