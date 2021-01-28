@@ -74,18 +74,6 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
             "body_suggestions", params["query"], term={"field": "body"}
         )
 
-    # XXX
-    # The problem with multi_match is that it's not a phrase search
-    # so searching for "javascript yibberish" will basically be the
-    # same as searching for "javascript". And if you ask for suggestions
-    # it'll probably come back with a (term) suggestion of
-    # "javascript jibberish" which, yes, is different but still will just
-    # result in what you would have gotten if you searched for "javascript".
-    # The research to do is to see if it's better do use a boosted (OR) boolean
-    # search with `match_phrase` and make that the primary strategy. Then,
-    # only if nothing can be found, fall back to `multi_match`.
-    # This choice of strategy should probably inform the use of suggestions too.
-    # matcher = Q("multi_match", query=params["query"], fields=["title^10", "body"])
     sub_queries = []
     sub_queries.append(Q("match", title={"query": params["query"], "boost": 2.0}))
     sub_queries.append(Q("match", body={"query": params["query"], "boost": 1.0}))
