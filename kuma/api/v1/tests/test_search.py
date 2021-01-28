@@ -71,6 +71,7 @@ def test_search_basic_match(user_client, settings, mock_elasticsearch):
         {
             "id": "/en-us/docs/Foo",
             "title": "Foo Title",
+            "summary": "Foo summary",
             "locale": "en-us",
             "archived": False,
             "slug": "Foo",
@@ -100,6 +101,7 @@ def test_search_basic_match(user_client, settings, mock_elasticsearch):
             "score": 1.0,
             "slug": "Foo",
             "title": "Foo Title",
+            "summary": "Foo summary",
         }
     ]
 
@@ -110,6 +112,7 @@ def test_search_case_insensitive_locale(user_client, settings, mock_elasticsearc
         {
             "id": "/en-us/docs/Foo",
             "title": "Foo Title",
+            "summary": "Foo summary",
             "locale": "en-us",
             "archived": False,
             "slug": "Foo",

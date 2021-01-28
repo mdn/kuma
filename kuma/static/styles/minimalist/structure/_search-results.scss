@@ -22,7 +22,10 @@
         }
 
         .result-summary {
-            margin-bottom: 10px;
+            padding: 2px;
+            font-style: italic;
+            font-size: $tiny-font-size;
+            max-width: 42rem;
         }
 
         p.result-meta {

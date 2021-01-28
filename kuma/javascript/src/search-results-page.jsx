@@ -19,6 +19,7 @@ type SearchResults = {
         title: string,
         locale: string,
         excerpt: string,
+        summary: string,
     }>,
     start: number,
     end: number,
@@ -97,12 +98,16 @@ function Results({ results }: { results: SearchResults }) {
                             {result.title}
                         </a>
                     </div>
-                    <div
-                        className="result-excerpt"
-                        dangerouslySetInnerHTML={{
-                            __html: result.excerpt,
-                        }}
-                    />
+                    {result.excerpt ? (
+                        <div
+                            className="result-excerpt"
+                            dangerouslySetInnerHTML={{
+                                __html: result.excerpt,
+                            }}
+                        />
+                    ) : (
+                        <div className="result-summary">{result.summary}</div>
+                    )}
                     <div className="result-url">
                         <a href={path}>{path}</a>
                     </div>
