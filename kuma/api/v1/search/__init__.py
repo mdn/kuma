@@ -74,10 +74,6 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
             "body_suggestions", params["query"], term={"field": "body"}
         )
 
-    from pprint import pprint
-
-    pprint(params)
-
     sub_queries = []
     sub_queries.append(Q("match", title={"query": params["query"], "boost": 2.0}))
     sub_queries.append(Q("match", body={"query": params["query"], "boost": 1.0}))
