@@ -1,5 +1,4 @@
 import datetime
-import html
 import json
 
 import jinja2
@@ -18,7 +17,7 @@ from statici18n.templatetags.statici18n import statici18n
 from urlobject import URLObject
 
 from ..urlresolvers import reverse
-from ..utils import format_date_time, is_untrusted, is_wiki, order_params, urlparams
+from ..utils import format_date_time, order_params, urlparams
 
 
 # Yanking filters from Django.
@@ -28,21 +27,6 @@ library.filter(strip_tags)
 library.filter(defaultfilters.truncatewords)
 library.filter(urlparams)
 library.global_function(statici18n)
-
-
-library.global_function(is_wiki)
-library.global_function(is_untrusted)
-
-
-@library.global_function(name="assert")
-def assert_function(statement, message=None):
-    """Add runtime assertions to Jinja2 templates."""
-    if not statement:
-        if message:
-            raise RuntimeError("Failed assertion: {}".format(message))
-        else:
-            raise RuntimeError("Failed assertion")
-    return ""
 
 
 @library.filter
@@ -90,17 +74,6 @@ class Paginator(object):
         c = {"pager": self.pager, "num_pages": self.num_pages, "count": self.count}
         t = get_template("includes/paginator.html").render(c)
         return jinja2.Markup(t)
-
-
-@library.filter
-def yesno(boolean_value):
-    return jinja2.Markup(_("Yes") if boolean_value else _("No"))
-
-
-@library.filter
-def entity_decode(str):
-    """Turn HTML entities in a string into unicode."""
-    return html.unescape(str)
 
 
 @library.global_function

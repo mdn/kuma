@@ -6,7 +6,6 @@ from django.db import connection
 from django.utils import timezone
 
 from .decorators import skip_in_maintenance_mode
-from .models import IPBan
 
 
 LOCK_ID = "clean-sessions-lock"
@@ -55,9 +54,3 @@ def clean_sessions():
         logger.error(
             "The clean_sessions task is already running since %s" % cache.get(LOCK_ID)
         )
-
-
-@task
-@skip_in_maintenance_mode
-def delete_old_ip_bans(days=30):
-    IPBan.objects.delete_old(days=days)

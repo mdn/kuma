@@ -6,19 +6,12 @@ from django.urls import include, re_path
 from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
 
-from kuma.accountsettings.urls import (
-    lang_urlpatterns as accountsettings_lang_urlpatterns,
-)
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
-from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
+from kuma.core.decorators import shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
-from kuma.landing.urls import lang_urlpatterns as landing_lang_urlpatterns
 from kuma.users.urls import lang_urlpatterns as users_lang_urlpatterns
-from kuma.wiki.admin import purge_view
 from kuma.wiki.urls import lang_urlpatterns as wiki_lang_urlpatterns
-from kuma.wiki.views.document import as_json as document_as_json
-from kuma.wiki.views.legacy import mindtouch_to_kuma_redirect
 
 
 DAY = 60 * 60 * 24
@@ -27,15 +20,9 @@ MONTH = DAY * 30
 
 admin.autodiscover()
 
-handler403 = core_views.handler403
-handler404 = core_views.handler404
-handler500 = core_views.handler500
-
 urlpatterns = [re_path("", include("kuma.health.urls"))]
 # The non-locale-based landing URL's
 urlpatterns += [re_path("", include("kuma.landing.urls"))]
-# The locale-based landing URL's
-urlpatterns += i18n_patterns(re_path("", include(landing_lang_urlpatterns)))
 urlpatterns += i18n_patterns(
     re_path(
         r"^events",
@@ -45,7 +32,7 @@ urlpatterns += i18n_patterns(
         # redirected by the CDN instead of this Django service.
         shared_cache_control(s_maxage=MONTH)(
             RedirectView.as_view(
-                url="https://mozilla.org/contribute/events", permanent=False
+                url="https://community.mozilla.org/events/", permanent=False
             )
         ),
         name="events",
@@ -57,59 +44,25 @@ if settings.MAINTENANCE_MODE:
         re_path(
             r"^admin/.*",
             never_cache(
-                RedirectView.as_view(pattern_name="maintenance_mode", permanent=False)
+                RedirectView.as_view(url="/", permanent=False)
             ),
         )
     )
 else:
     # Django admin:
     urlpatterns += [
-        re_path(
-            r"^admin/wiki/document/purge/", purge_view, name="wiki.admin_bulk_purge"
-        ),
         # We don't worry about decorating the views within django.contrib.admin
         # with "never_cache", since most have already been decorated, and the
         # remaining can be safely cached.
         re_path(r"^admin/", admin.site.urls),
     ]
 
-urlpatterns += i18n_patterns(
-    re_path(r"^docs.json$", document_as_json, name="wiki.json")
-)
 urlpatterns += i18n_patterns(re_path(r"^docs/", include(wiki_lang_urlpatterns)))
 urlpatterns += [re_path("", include("kuma.attachments.urls"))]
 urlpatterns += [re_path("users/", include("kuma.users.urls"))]
 urlpatterns += i18n_patterns(
-    re_path(r"^account/", include(accountsettings_lang_urlpatterns))
-)
-urlpatterns += i18n_patterns(
     re_path("", decorator_include(never_cache, users_lang_urlpatterns))
 )
-
-if settings.MAINTENANCE_MODE:
-    urlpatterns += i18n_patterns(
-        # Redirect if we try to use the "tidings" unsubscribe.
-        re_path(
-            r"^unsubscribe/.*",
-            ensure_wiki_domain(
-                never_cache(
-                    RedirectView.as_view(
-                        pattern_name="maintenance_mode", permanent=False
-                    )
-                )
-            ),
-        )
-    )
-else:
-    urlpatterns += i18n_patterns(
-        # The first argument to "decorator_include" can be an iterable
-        # of view decorators, which are applied in reverse order.
-        re_path(
-            r"^", decorator_include((ensure_wiki_domain, never_cache), "tidings.urls")
-        ),
-    )
-
-
 urlpatterns += [
     # Services and sundry.
     re_path("^api/", include("kuma.api.urls")),
@@ -140,5 +93,4 @@ urlpatterns += [
         attachment_views.mindtouch_file_redirect,
         name="attachments.mindtouch_file_redirect",
     ),
-    re_path(r"^(?P<path>.*)$", mindtouch_to_kuma_redirect),
 ]

@@ -16,7 +16,6 @@ from kuma.core.ga_tracking import (
     track_event,
 )
 from kuma.users.stripe_utils import cancel_stripe_customer_subscriptions
-from kuma.wiki.jobs import DocumentContributorsJob
 
 from .models import User, UserBan
 from .tasks import send_welcome_email
@@ -138,7 +137,6 @@ def on_ban_save(sender, instance, **kwargs):
     user = instance.user
     user.is_active = not instance.is_active
     user.save()
-    invalidate_document_contribution(user)
 
 
 @receiver(post_delete, sender=UserBan, dispatch_uid="users.user_ban.delete")
@@ -149,21 +147,6 @@ def on_ban_delete(sender, instance, **kwargs):
     user = instance.user
     user.is_active = True
     user.save()
-    invalidate_document_contribution(user)
-
-
-def invalidate_document_contribution(user):
-    """
-    Invalidate the contributor list for Documents the user has edited.
-
-    This will remove them if they have been banned, and add them if they
-    have been unbanned.
-    """
-    revisions = user.created_revisions
-    doc_ids = set(revisions.values_list("document_id", flat=True))
-    job = DocumentContributorsJob()
-    for doc_id in doc_ids:
-        job.invalidate(doc_id)
 
 
 @receiver(pre_delete, sender=User, dispatch_uid="users.unsubscribe_payments")

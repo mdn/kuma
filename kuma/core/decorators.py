@@ -7,11 +7,9 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden, HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 
-from .jobs import BannedIPsJob
-from .urlresolvers import reverse
-from .utils import add_shared_cache_control, is_wiki, redirect_to_wiki
+from .utils import add_shared_cache_control
 
 
 def shared_cache_control(func=None, **kwargs):
@@ -61,9 +59,7 @@ def user_access_decorator(
     def decorator(view_fn):
         def _wrapped_view(request, *args, **kwargs):
             if redirect_func(request.user):
-                # We must call reverse at the view level, else the threadlocal
-                # locale prefixing doesn't take effect.
-                redirect_url = redirect_url_func() or reverse("account_login")
+                redirect_url = redirect_url_func() or f"/{request.LANGUAGE_CODE}{settings.LOGIN_URL}"
 
                 # Redirect back here afterwards?
                 if redirect_field:
@@ -89,7 +85,7 @@ def logout_required(redirect):
         return user_access_decorator(
             redirect_func,
             redirect_field=None,
-            redirect_url_func=lambda: reverse("home"),
+            redirect_url_func=lambda: "/",
         )(redirect)
     else:
         return user_access_decorator(
@@ -160,20 +156,6 @@ def block_user_agents(view_func):
     return wraps(view_func)(agent_blocked_view)
 
 
-def block_banned_ips(view_func):
-    """Block banned IP addresses."""
-
-    @wraps(view_func)
-    def block_if_banned(request, *args, **kwargs):
-        ip = request.META.get("REMOTE_ADDR", "10.0.0.1")
-        banned_ips = BannedIPsJob().get()
-        if ip in banned_ips:
-            return render(request, "403.html", {"reason": "ip_banned"}, status=403)
-        return view_func(request, *args, **kwargs)
-
-    return block_if_banned
-
-
 def skip_in_maintenance_mode(func):
     """
     Decorator for Celery task functions. If we're in MAINTENANCE_MODE, skip
@@ -193,9 +175,9 @@ def skip_in_maintenance_mode(func):
 def redirect_in_maintenance_mode(func=None, methods=None):
     """
     Decorator for view functions. If we're in MAINTENANCE_MODE, redirect
-    to the maintenance-mode view on requests using the given HTTP "methods"
-    (or all HTTP methods if "methods" is None). Otherwise, call the
-    wrapped view function as usual.
+    to the home page on requests using the given HTTP "methods" (or all
+    HTTP methods if "methods" is None). Otherwise, call the wrapped view
+    function as usual.
     """
     if not func:
         return partial(redirect_in_maintenance_mode, methods=methods)
@@ -205,22 +187,7 @@ def redirect_in_maintenance_mode(func=None, methods=None):
         if settings.MAINTENANCE_MODE and (
             (methods is None) or (request.method in methods)
         ):
-            return redirect("maintenance_mode")
-        return func(request, *args, **kwargs)
-
-    return wrapped
-
-
-def ensure_wiki_domain(func):
-    """
-    Decorator for view functions. If this request is not for the Wiki domain,
-    redirect it to that domain.
-    """
-
-    @wraps(func)
-    def wrapped(request, *args, **kwargs):
-        if not is_wiki(request):
-            return redirect_to_wiki(request)
+            return redirect("/")
         return func(request, *args, **kwargs)
 
     return wrapped

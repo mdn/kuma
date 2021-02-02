@@ -1,9 +1,0 @@
-{% extends "admin/delete_confirmation.html" %}
-
-{% block content %}
-{# not showing the deletion note in case for attachment app models other than the trashed attachments #}
-{% if opts.model_name != 'trashedattachment' %}
-  {% include "admin/attachments/includes/deletion_note.html" %}
-{% endif %}
-{{ block.super }}
-{% endblock %}

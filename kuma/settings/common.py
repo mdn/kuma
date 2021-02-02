@@ -6,7 +6,7 @@ import re
 from collections import namedtuple
 from email.utils import parseaddr
 from os.path import dirname
-from urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
+from urllib.parse import urlsplit
 
 import dj_database_url
 import dj_email_url
@@ -375,17 +375,12 @@ MIDDLEWARE = (
         if MAINTENANCE_MODE
         else "django.contrib.sessions.middleware.SessionMiddleware"
     ),
-    "kuma.core.middleware.LangSelectorMiddleware",
     "kuma.core.middleware.LocaleStandardizerMiddleware",
     # LocaleMiddleware must be before any middleware that uses
     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
     "kuma.core.middleware.LocaleMiddleware",
-    "kuma.wiki.middleware.ReadOnlyMiddleware",
-    "kuma.core.middleware.Forbidden403Middleware",
-    "ratelimit.middleware.RatelimitMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "kuma.core.middleware.SlashMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 )
 
@@ -398,13 +393,7 @@ MIDDLEWARE += (
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "kuma.core.middleware.WaffleWithCookieDomainMiddleware",
-    "kuma.core.middleware.RestrictedEndpointsMiddleware",
 )
-
-CSP_ENABLE_MIDDLEWARE = config("CSP_ENABLE_MIDDLEWARE", default=False, cast=bool)
-if CSP_ENABLE_MIDDLEWARE:
-    # For more config, see "Content Security Policy (CSP)" below
-    MIDDLEWARE += ("csp.middleware.CSPMiddleware",)
 
 ENABLE_QUERYCOUNT = config("ENABLE_QUERYCOUNT", default=False, cast=bool)
 if ENABLE_QUERYCOUNT:
@@ -432,33 +421,15 @@ else:
 
 ROOT_URLCONF = "kuma.urls"
 
-CKEDITOR_DEV = config("CKEDITOR_DEV", default=False, cast=bool)
-
 STATICFILES_FINDERS = (
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "pipeline.finders.CachedFileFinder",
-    "pipeline.finders.PipelineFinder",
+    # "django.contrib.staticfiles.finders.FileSystemFinder",
+    # "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 )
 
 STATICFILES_STORAGE = (
-    "pipeline.storage.NonPackagingPipelineStorage"
-    if DEBUG
-    else "kuma.core.pipeline.storage.ManifestPipelineStorage"
 )
 
-STATICFILES_DIRS = [
-    path("assets", "static"),
-    path("kuma", "static"),
-    path("kuma", "javascript", "dist"),
-    path("build", "locale"),
-    path("jinja2", "includes/icons"),
-    ("js/libs/ckeditor4/build", path("assets", "ckeditor4", "build")),
-]
-if CKEDITOR_DEV:
-    STATICFILES_DIRS.append(
-        ("js/libs/ckeditor4/source", path("assets", "ckeditor4", "source"))
-    )
+STATICFILES_DIRS = []
 
 # TODO: Figure out why changing the order of apps (for example, moving taggit
 # higher in the list) breaks tests.
@@ -468,11 +439,9 @@ INSTALLED_APPS = (
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.sites",
-    "django.contrib.messages",
     "django.contrib.admin",
-    "django.contrib.staticfiles",
+    # "django.contrib.staticfiles",
     # MDN
-    "kuma.accountsettings.apps.AccountSettingsConfig",
     "kuma.core.apps.CoreConfig",
     "kuma.banners",
     "kuma.landing",
@@ -491,13 +460,11 @@ INSTALLED_APPS = (
     "kuma.plus.apps.PlusConfig",
     # util
     "django_jinja",
-    "pipeline",
     "puente",
     "constance.backends.database",
     "constance",
     "waffle",
     "kuma.authkeys",
-    "tidings",
     "taggit",
     "honeypot",
     "cacheback",
@@ -536,7 +503,6 @@ TEMPLATES = [
                 "django_jinja.builtins.extensions.UrlsExtension",
                 "django_jinja.builtins.extensions.StaticFilesExtension",
                 "django_jinja.builtins.extensions.DjangoFiltersExtension",
-                "pipeline.jinja2.PipelineExtension",
                 "waffle.jinja.WaffleExtension",
                 "kuma.core.i18n.TranslationExtension",
             ],
@@ -598,463 +564,6 @@ STATICI18N_DOMAIN = "javascript"
 # Cache non-versioned static files for one week
 WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
 
-
-def pipeline_scss(output, sources, **kwargs):
-    """Define a CSS file generated from multiple SCSS files."""
-    definition = {
-        "source_filenames": tuple("styles/%s.scss" % src for src in sources),
-        "output_filename": "build/styles/%s.css" % output,
-    }
-    definition.update(kwargs)
-    return definition
-
-
-def pipeline_one_scss(slug, **kwargs):
-    """Define a CSS file that shares the name with the one input SCSS."""
-    return pipeline_scss(slug, [slug], **kwargs)
-
-
-PIPELINE_CSS = {
-    # Combines the mdn, wiki and wiki-compat-tables styles into
-    # one bundle for use by pages that are part of the new
-    # single page app.
-    "react-mdn": {
-        "source_filenames": ("styles/react-mdn.scss",),
-        "output_filename": "build/styles/react-mdn.css",
-    },
-    "react-header": {
-        "source_filenames": ("styles/minimalist/organisms/header.scss",),
-        "output_filename": "build/styles/react-header.css",
-    },
-    "accountsettings": {
-        "source_filenames": ("styles/minimalist/pages/accountsettings.scss",),
-        "output_filename": "build/styles/pages-accountsettings.css",
-    },
-    "accountsettings-user-details": {
-        "source_filenames": (
-            "styles/minimalist/components/accountsettings/user-details.scss",
-        ),
-        "output_filename": "build/styles/accountsettings-user-details.css",
-    },
-    "accountsettings-subscription": {
-        "source_filenames": (
-            "styles/minimalist/components/accountsettings/subscription.scss",
-        ),
-        "output_filename": "build/styles/accountsettings-subscription.css",
-    },
-    "mdn": {
-        "source_filenames": ("styles/main.scss",),
-        "output_filename": "build/styles/mdn.css",
-    },
-    "banners": {
-        "source_filenames": ("styles/components/banners/base.scss",),
-        "output_filename": "build/styles/banners.css",
-    },
-    "home": {
-        "source_filenames": ("styles/home.scss",),
-        "output_filename": "build/styles/home.css",
-    },
-    "home_base": {
-        "source_filenames": ("styles/minimalist/home.scss",),
-        "output_filename": "build/styles/home_base.css",
-    },
-    "callout": {
-        "source_filenames": ("styles/minimalist/components/callout.scss",),
-        "output_filename": "build/styles/callout.css",
-    },
-    "home_newsletter": {
-        "source_filenames": ("styles/minimalist/components/home-newsletter.scss",),
-        "output_filename": "build/styles/home_newsletter.css",
-    },
-    "mozilla_foundation": {
-        "source_filenames": (
-            "styles/minimalist/components/featured-banners/mozilla-foundation.scss",
-        ),
-        "output_filename": "build/styles/mozilla_foundation.css",
-    },
-    "home_featured": {
-        "source_filenames": (
-            "styles/minimalist/components/featured-banners/featured.scss",
-        ),
-        "output_filename": "build/styles/home_featured.css",
-    },
-    "print": {
-        "source_filenames": ("styles/minimalist/print.scss",),
-        "output_filename": "build/styles/print.css",
-        "extra_context": {"media": "print"},
-    },
-    "wiki": {
-        "source_filenames": ("styles/wiki.scss",),
-        "output_filename": "build/styles/wiki.css",
-    },
-    "wiki-revisions": {
-        "source_filenames": ("styles/wiki-revisions.scss",),
-        "output_filename": "build/styles/wiki-revisions.css",
-    },
-    "wiki-edit": {
-        "source_filenames": ("styles/wiki-edit.scss",),
-        "output_filename": "build/styles/wiki-edit.css",
-    },
-    "wiki-compat-tables": {
-        "source_filenames": ("styles/wiki-compat-tables.scss",),
-        "output_filename": "build/styles/wiki-compat-tables.css",
-        "template_name": "pipeline/javascript-array.jinja",
-    },
-    "users": {
-        "source_filenames": ("styles/users.scss",),
-        "output_filename": "build/styles/users.css",
-    },
-    "delete-user-modal": {
-        "source_filenames": ("styles/minimalist/components/delete-user-modal.scss",),
-        "output_filename": "build/styles/delete-user-modal.css",
-    },
-    "tagit": {
-        "source_filenames": ("styles/libs/jquery.tagit.css",),
-        "output_filename": "build/styles/tagit.css",
-    },
-    "promote": {
-        "source_filenames": ("styles/promote.scss",),
-        "output_filename": "build/styles/promote.css",
-    },
-    "error": {
-        "source_filenames": ("styles/error.scss",),
-        "output_filename": "build/styles/error.css",
-    },
-    "error-404": {
-        "source_filenames": ("styles/error-404.scss",),
-        "output_filename": "build/styles/error-404.css",
-    },
-    "submission": {
-        "source_filenames": ("styles/submission.scss",),
-        "output_filename": "build/styles/submission.css",
-    },
-    "signupflow": {
-        "source_filenames": ("styles/minimalist/structure/signup-flow.scss",),
-        "output_filename": "build/styles/signup-flow.css",
-    },
-    "auth-modal": {
-        "source_filenames": ("styles/minimalist/components/auth-modal.scss",),
-        "output_filename": "build/styles/auth-modal.css",
-    },
-    "user-banned": {
-        "source_filenames": ("styles/user-banned.scss",),
-        "output_filename": "build/styles/user-banned.css",
-    },
-    "user-delete": {
-        "source_filenames": ("styles/user-delete.scss",),
-        "output_filename": "build/styles/user-delete.css",
-    },
-    "stripe-subscription": {
-        "source_filenames": ("styles/stripe-subscription.scss",),
-        "output_filename": "build/styles/stripe-subscription.css",
-    },
-    "subscriptions": {
-        "source_filenames": (
-            "styles/minimalist/components/subscriptions/subscriptions.scss",
-        ),
-        "output_filename": "build/styles/subscriptions.css",
-    },
-    "error-403-alternate": {
-        "source_filenames": ("styles/error-403-alternate.scss",),
-        "output_filename": "build/styles/error-403-alternate.css",
-    },
-    "editor-content": {
-        "source_filenames": ("styles/editor-content.scss",),
-        "output_filename": "build/styles/editor-content.css",
-        "template_name": "pipeline/javascript-array.jinja",
-    },
-    # for maintenance mode page
-    "maintenance-mode": {
-        "source_filenames": ("styles/maintenance-mode.scss",),
-        "output_filename": "build/styles/maintenance-mode.css",
-    },
-    # global maintenance-mode-styles
-    "maintenance-mode-global": {
-        "source_filenames": ("styles/maintenance-mode-global.scss",),
-        "output_filename": "build/styles/maintenance-mode-global.css",
-    },
-    # embeded iframe for live samples
-    "samples": {
-        "source_filenames": ("styles/samples.scss",),
-        "output_filename": "build/styles/samples.css",
-    },
-    "prism": {
-        "source_filenames": (
-            "styles/libs/prism/prism.css",
-            "styles/libs/prism/prism-line-highlight.css",
-            "styles/libs/prism/prism-line-numbers.css",
-        ),
-        "output_filename": "build/styles/prism.css",
-    },
-    "jquery-ui": {
-        "source_filenames": (
-            "js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css",
-            "styles/libs/jqueryui/moz-jquery-plugins.css",
-            "css/jquery-ui-customizations.scss",
-        ),
-        "output_filename": "build/styles/jquery-ui.css",
-    },
-}
-
-# Locales that are well supported by the Zilla family
-LOCALE_USE_ZILLA = [
-    "ca",
-    "de",
-    "en-US",
-    "es",
-    "fi",
-    "fr",
-    "hu",
-    "id",
-    "it",
-    "kab",
-    "ms",
-    "nl",
-    "pl",
-    "pt-BR",
-    "pt-PT",
-    "sv-SE",
-]
-
-
-PIPELINE_JS = {
-    "main": {
-        "source_filenames": (
-            "js/libs/jquery/jquery.js",
-            "js/libs/jquery-ajax-prefilter.js",
-            "js/libs/icons.js",
-            "js/components.js",
-            "js/analytics.js",
-            "js/main.js",
-            "js/components/nav-main-search.js",
-            "js/auth.js",
-            "js/highlight.js",
-            "js/wiki-compat-trigger.js",
-            "js/lang-switcher.js",
-        ),
-        "output_filename": "build/js/main.js",
-    },
-    "react-main": {
-        "source_filenames": (
-            # TODO: these are the last legacy files from the wiki site
-            # that we're still using on the React-based pages. Ideally
-            # we should just move these to the React code so webpack
-            # can deal with them.
-            "js/utils/post-message-handler.js",
-            "js/analytics.js",
-            # Custom Prism build
-            # TODO: the prism.js file should be imported dynamcally
-            # when we need it instead of being hardcoded in here.
-            "js/libs/prism/prism-core.js",
-            "js/libs/prism/prism-bash.js",
-            "js/libs/prism/prism-markup.js",
-            "js/libs/prism/prism-css.js",
-            "js/libs/prism/prism-clike.js",
-            "js/libs/prism/prism-javascript.js",
-            "js/libs/prism/prism-json.js",
-            "js/libs/prism/prism-jsonp.js",
-            "js/libs/prism/prism-css-extras.js",
-            "js/libs/prism/prism-rust.js",
-            "js/libs/prism/prism-wasm.js",
-            "js/libs/prism/prism-line-highlight.js",
-            "js/libs/prism/prism-line-numbers.js",
-            # The react.js file is created by webpack and
-            # placed in the kuma/javascript/dist/ directory.
-            "react.js",
-        ),
-        "output_filename": "build/js/react-main.js",
-        "extra_context": {"defer": True},
-    },
-    "banners": {
-        "source_filenames": (
-            "js/components/banners/utils/banners-event-util.js",
-            "js/components/banners/utils/banners-state-util.js",
-            "js/components/banners/banners.js",
-        ),
-        "output_filename": "build/js/banners.js",
-    },
-    "mathml": {
-        "source_filenames": ("js/components/mathml.js",),
-        "output_filename": "build/js/mathml.js",
-        "extra_context": {"defer": True},
-    },
-    "users": {
-        "source_filenames": ("js/users.js",),
-        "output_filename": "build/js/users.js",
-    },
-    "user-signup": {
-        "source_filenames": ("js/components/user-signup/signup.js",),
-        "output_filename": "build/js/signup.js",
-    },
-    "delete-user-page": {
-        "source_filenames": (
-            "js/components/account-management/delete-user-confirmation-button.js",
-        ),
-        "output_filename": "build/js/delete-user-confirmation-button.js",
-        "extra_context": {"defer": True},
-    },
-    "delete-user-modal": {
-        "source_filenames": (
-            "js/components/modal.js",
-            "js/components/account-management/delete-user-modal.js",
-            "js/components/account-management/delete-user-confirmation-button.js",
-        ),
-        "output_filename": "build/js/delete-user-modal.js",
-        "extra_context": {"defer": True},
-    },
-    "auth-modal": {
-        "source_filenames": (
-            "js/components/modal.js",
-            "js/components/user-signup/auth-modal.js",
-        ),
-        "output_filename": "build/js/auth-modal.js",
-        "extra_context": {"defer": True},
-    },
-    "jquery-ui": {
-        "source_filenames": (
-            "js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js",
-            "js/libs/jquery-ajax-prefilter.js",
-            "js/moz-jquery-plugins.js",
-        ),
-        "output_filename": "build/js/jquery-ui.js",
-    },
-    "stripe-subscription": {
-        "source_filenames": ("js/stripe-subscription.js",),
-        "output_filename": "build/js/stripe-subscription.js",
-    },
-    "framebuster": {
-        "source_filenames": ("js/framebuster.js",),
-        "output_filename": "build/js/framebuster.js",
-    },
-    "syntax-prism": {
-        "source_filenames": (
-            # Custom Prism build
-            "js/libs/prism/prism-core.js",
-            "js/libs/prism/prism-bash.js",
-            "js/libs/prism/prism-markup.js",
-            "js/libs/prism/prism-css.js",
-            "js/libs/prism/prism-clike.js",
-            "js/libs/prism/prism-javascript.js",
-            "js/libs/prism/prism-json.js",
-            "js/libs/prism/prism-jsonp.js",
-            "js/libs/prism/prism-css-extras.js",
-            "js/libs/prism/prism-rust.js",
-            "js/libs/prism/prism-wasm.js",
-            "js/libs/prism/prism-line-highlight.js",
-            "js/libs/prism/prism-line-numbers.js",
-            "js/syntax-prism.js",
-        ),
-        "output_filename": "build/js/syntax-prism.js",
-        "template_name": "pipeline/javascript-array.jinja",
-    },
-    "wiki": {
-        "source_filenames": (
-            "js/utils/utils.js",
-            "js/utils/post-message-handler.js",
-            "js/wiki.js",
-            "js/interactive.js",
-            "js/wiki-samples.js",
-            "js/wiki-toc.js",
-            "js/components/local-anchor.js",
-            "js/components/page-load-actions.js",
-        ),
-        "output_filename": "build/js/wiki.js",
-    },
-    "wiki-edit": {
-        "source_filenames": (
-            "js/wiki-edit.js",
-            "js/wiki-edit-draft.js",
-            "js/libs/tag-it.js",
-            "js/wiki-tags-edit.js",
-        ),
-        "output_filename": "build/js/wiki-edit.js",
-    },
-    "wiki-move": {
-        "source_filenames": ("js/wiki-move.js",),
-        "output_filename": "build/js/wiki-move.js",
-    },
-    "wiki-compat-tables": {
-        "source_filenames": ("js/wiki-compat-tables.js",),
-        "output_filename": "build/js/wiki-compat-tables.js",
-        "template_name": "pipeline/javascript-array.jinja",
-    },
-    "newsletter": {
-        "source_filenames": ("js/newsletter.js",),
-        "output_filename": "build/js/newsletter.js",
-        "extra_context": {"defer": True},
-    },
-    "perf": {
-        "source_filenames": (
-            "js/utils/perf.js",
-            "js/utils/perf-post-message-handler.js",
-        ),
-        "output_filename": "build/js/perf.js",
-        "extra_context": {"async": True},
-    },
-    "fetch-polyfill": {
-        "source_filenames": ("js/libs/unfetch-4.1.0.min.js",),
-        "output_filename": "build/js/fetch-polyfill.js",
-        "template_name": "pipeline/javascript-embedded.jinja",
-    },
-    "js-polyfill": {
-        "source_filenames": ("js/libs/polyfill-v3.min.js",),
-        "output_filename": "build/js/js-polyfill.js",
-        "template_name": "pipeline/javascript-embedded.jinja",
-    },
-}
-
-PIPELINE = {
-    "STYLESHEETS": PIPELINE_CSS,
-    "JAVASCRIPT": PIPELINE_JS,
-    "DISABLE_WRAPPER": True,
-    "SHOW_ERRORS_INLINE": False,  # django-pipeline issue #614
-    "COMPILERS": (
-        (
-            "kuma.core.pipeline.sass.DebugSassCompiler"
-            if DEBUG
-            else "pipeline.compilers.sass.SASSCompiler"
-        ),
-    ),
-    "SASS_BINARY": config("PIPELINE_SASS_BINARY", default="/usr/bin/env node-sass"),
-    "SASS_ARGUMENTS": config("PIPELINE_SASS_ARGUMENTS", default=""),
-    "CSS_COMPRESSOR": config(
-        "PIPELINE_CSS_COMPRESSOR",
-        default="kuma.core.pipeline.cleancss.CleanCSSCompressor",
-    ),
-    "JS_COMPRESSOR": config(
-        "PIPELINE_JS_COMPRESSOR",
-        default="pipeline.compressors.uglifyjs.UglifyJSCompressor",
-    ),
-    "PIPELINE_ENABLED": config("PIPELINE_ENABLED", not DEBUG, cast=bool),
-    "PIPELINE_COLLECTOR_ENABLED": config(
-        "PIPELINE_COLLECTOR_ENABLED", not DEBUG, cast=bool
-    ),
-}
-# Pipeline compressor overrides
-# For example, PIPELINE_YUGLIFY_BINARY will set YUGLIFY_BINARY
-# https://django-pipeline.readthedocs.io/en/latest/compressors.html
-pipeline_overrides = (
-    "YUGLIFY_BINARY",
-    "YUGLIFY_CSS_ARGUMENTS" "YUGLIFY_JS_ARGUMENTS",
-    "YUI_BINARY",
-    "YUI_CSS_ARGUMENTS",
-    "YUI_JS_ARGUMENTS",
-    "CLOSURE_BINARY",
-    "CLOSURE_ARGUMENTS",
-    "UGLIFYJS_BINARY",
-    "UGLIFYJS_ARGUMENTS",
-    "CSSTIDY_BINARY",
-    "CSSTIDY_ARGUMENTS",
-    "CSSMIN_BINARY",
-    "CSSMIN_ARGUMENTS",
-    "CLEANCSS_BINARY",
-    "CLEANCSS_ARGUMENTS",
-)
-for override in pipeline_overrides:
-    env_value = config("PIPELINE_" + override, default=None)
-    if env_value is not None:
-        PIPELINE[override] = env_value
-
 # Session cookies
 SESSION_COOKIE_DOMAIN = DOMAIN
 SESSION_COOKIE_SECURE = config("SESSION_COOKIE_SECURE", default=True, cast=bool)
@@ -1104,7 +613,7 @@ ENABLE_RESTRICTIONS_BY_HOST = config(
 ALLOW_ROBOTS_WEB_DOMAINS = set(
     config(
         "ALLOW_ROBOTS_WEB_DOMAINS",
-        default="developer.mozilla.org,wiki.developer.mozilla.org",
+        default="developer.mozilla.org",
         cast=Csv(),
     )
 )
@@ -1187,70 +696,6 @@ EMAIL_BACKEND = config(
 )
 EMAIL_FILE_PATH = "/app/tmp/emails"
 
-# Content Security Policy (CSP)
-CSP_DEFAULT_SRC = ("'none'",)
-CSP_CONNECT_SRC = [
-    SITE_URL,
-    WIKI_SITE_URL,
-]
-CSP_FONT_SRC = [
-    SITE_URL,
-]
-CSP_FRAME_SRC = [
-    urlunsplit((scheme, netloc, "", "", ""))
-    for scheme, netloc, ignored_path in ALLOWED_IFRAME_PATTERNS
-]
-
-CSP_IMG_SRC = [
-    SITE_URL,
-    "data:",
-    PROTOCOL + "i2.wp.com",
-    "https://*.githubusercontent.com",
-    "https://www.google-analytics.com",
-    _PROD_ATTACHMENT_SITE_URL,
-    WIKI_SITE_URL,
-]
-if ATTACHMENT_SITE_URL not in (_PROD_ATTACHMENT_SITE_URL, SITE_URL):
-    CSP_IMG_SRC.append(ATTACHMENT_SITE_URL)
-
-CSP_SCRIPT_SRC = [
-    SITE_URL,
-    "www.google-analytics.com",
-    "cdn.speedcurve.com",
-    "static.codepen.io",
-    # TODO fix things so that we don't need this
-    "'unsafe-inline'",
-    WIKI_SITE_URL,
-]
-CSP_STYLE_SRC = [
-    SITE_URL,
-    # TODO fix things so that we don't need this
-    "'unsafe-inline'",
-    WIKI_SITE_URL,
-]
-CSP_REPORT_ONLY = config("CSP_REPORT_ONLY", default=False, cast=bool)
-CSP_REPORT_ENABLE = config("CSP_REPORT_ENABLE", default=False, cast=bool)
-SENTRY_ENVIRONMENT = config("SENTRY_ENVIRONMENT", default=None)
-if CSP_REPORT_ENABLE:
-    CSP_REPORT_URI = config("CSP_REPORT_URI", default="/csp-violation-capture")
-    if "sentry_key=" in CSP_REPORT_URI:
-        # Using sentry to report. Optionally add revision and environment
-        bits = urlsplit(CSP_REPORT_URI)
-        query = parse_qs(bits.query)
-        if REVISION_HASH and REVISION_HASH != "undefined":
-            query["sentry_release"] = REVISION_HASH
-        if SENTRY_ENVIRONMENT:
-            query["sentry_environment"] = SENTRY_ENVIRONMENT
-        CSP_REPORT_URI = urlunsplit(
-            (
-                bits.scheme,
-                bits.netloc,
-                bits.path,
-                urlencode(query, doseq=True),
-                bits.fragment,
-            )
-        )
-
 # Celery (asynchronous tasks)
 CELERY_BROKER_URL = config("CELERY_BROKER_URL", default="redis://0.0.0.0:6379/0")
 
@@ -1284,20 +729,9 @@ CELERY_TASK_ANNOTATIONS = {"cacheback.tasks.refresh_cache": {"rate_limit": "120/
 CELERY_TASK_ROUTES = {
     "cacheback.tasks.refresh_cache": {"queue": "mdn_purgeable"},
     "kuma.core.tasks.clean_sessions": {"queue": "mdn_purgeable"},
-    "kuma.core.tasks.delete_old_ip_bans": {"queue": "mdn_purgeable"},
-    "kuma.wiki.tasks.delete_old_revision_ips": {"queue": "mdn_purgeable"},
     "kuma.users.tasks.send_welcome_email": {"queue": "mdn_emails"},
     "kuma.users.tasks.email_document_progress": {"queue": "mdn_emails"},
-    "kuma.wiki.tasks.send_first_edit_email": {"queue": "mdn_emails"},
-    "tidings.events._fire_task": {"queue": "mdn_emails"},
-    "tidings.events.claim_watches": {"queue": "mdn_emails"},
-    "kuma.wiki.tasks.move_page": {"queue": "mdn_wiki"},
-    "kuma.wiki.tasks.acquire_render_lock": {"queue": "mdn_wiki"},
-    "kuma.wiki.tasks.release_render_lock": {"queue": "mdn_wiki"},
-    "kuma.wiki.tasks.render_document": {"queue": "mdn_wiki"},
-    "kuma.wiki.tasks.render_document_chunk": {"queue": "mdn_wiki"},
-    "kuma.wiki.tasks.clean_document_chunk": {"queue": "mdn_wiki"},
-    "kuma.wiki.tasks.build_json_data_for_document": {"queue": "mdn_wiki"},
+    "kuma.feeder.tasks.update_feeds": {"queue": "mdn_purgeable"},
     "kuma.api.tasks.publish": {"queue": "mdn_api"},
     "kuma.api.tasks.unpublish": {"queue": "mdn_api"},
     "kuma.api.tasks.request_cdn_cache_invalidation": {"queue": "mdn_api"},
@@ -1670,23 +1104,6 @@ BLOCKABLE_USER_AGENTS = [
     "curl",
 ]
 
-SENTRY_DSN = config("SENTRY_DSN", default=None)
-
-if SENTRY_DSN:
-    from raven.transport.requests import RequestsHTTPTransport
-
-    RAVEN_CONFIG = {
-        "dsn": SENTRY_DSN,
-        "transport": RequestsHTTPTransport,  # Sync transport
-        "ignore_exception": ["django.core.exceptions.DisallowedHost"],
-    }
-    if REVISION_HASH and REVISION_HASH != "undefined":
-        RAVEN_CONFIG["release"] = REVISION_HASH
-    # Loaded from environment for CSP reporting endpoint
-    if SENTRY_ENVIRONMENT:
-        RAVEN_CONFIG["environment"] = SENTRY_ENVIRONMENT
-    INSTALLED_APPS = INSTALLED_APPS + ("raven.contrib.django.raven_compat",)
-
 # Tell django-taggit to use case-insensitive search for existing tags
 TAGGIT_CASE_INSENSITIVE = True
 
@@ -1695,8 +1112,8 @@ NEWSLETTER = True
 NEWSLETTER_ARTICLE = True
 
 # Auth and permissions related constants
-LOGIN_URL = "socialaccount_signin"
-LOGIN_REDIRECT_URL = "home"
+LOGIN_URL = "/signin"
+LOGIN_REDIRECT_URL = "/"
 
 # Content Experiments
 # Must be kept up to date with PIPELINE_JS setting and the JS client-side
@@ -1708,11 +1125,6 @@ LOGIN_REDIRECT_URL = "home"
 ce_path = path("kuma", "settings", "content_experiments.json")
 with open(ce_path, "r") as ce_file:
     CONTENT_EXPERIMENTS = json.load(ce_file)
-
-# django-ratelimit
-RATELIMIT_ENABLE = config("RATELIMIT_ENABLE", default=True, cast=bool)
-RATELIMIT_USE_CACHE = config("RATELIMIT_USE_CACHE", default="default")
-RATELIMIT_VIEW = "kuma.core.views.rate_limited"
 
 # Caching constants for the Cache-Control header.
 CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
@@ -1737,11 +1149,6 @@ CONTRIBUTION_SUPPORT_EMAIL = config(
 # The reason it's not an environment variable is to simply indicate that it
 # can't be overridden at the moment based on the environment.
 CONTRIBUTION_AMOUNT_USD = 5.0
-
-CSP_CONNECT_SRC.append("https://checkout.stripe.com")
-CSP_FRAME_SRC.append("https://checkout.stripe.com")
-CSP_IMG_SRC.append("https://*.stripe.com")
-CSP_SCRIPT_SRC.append("https://checkout.stripe.com")
 
 # Settings used for communication with the React server side rendering server
 SSR_URL = config("SSR_URL", default="http://localhost:8002/ssr")

@@ -4,7 +4,6 @@ from unittest import mock
 import pytest
 from django.db import DatabaseError
 from django.urls import reverse
-from requests.exceptions import ConnectionError as Requests_ConnectionError
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.users.models import User
@@ -48,16 +47,6 @@ def test_readiness_with_db_error(mock_manager, db, client):
 
 
 @pytest.fixture
-def mock_request_revision_hash():
-    ks_hash = "8da6b8f41"
-    with mock.patch("kuma.health.views.request_revision_hash") as func:
-        func.return_value = mock.Mock(spec_set=["status_code", "text"])
-        func.return_value.status_code = 200
-        func.return_value.text = ks_hash
-        yield func
-
-
-@pytest.fixture
 def mock_document_objects_count():
     with mock.patch("kuma.health.views.Document") as model:
         model.objects = mock.Mock(spec_set=["count"])
@@ -89,13 +78,11 @@ def mock_user_objects_filter():
 
 @pytest.fixture
 def mock_status_externals(
-    mock_request_revision_hash,
     mock_document_objects_count,
     mock_search_count,
     mock_user_objects_filter,
 ):
     yield {
-        "kumascript": mock_request_revision_hash,
         "document": mock_document_objects_count,
         "search": mock_search_count,
         "test_users": mock_user_objects_filter,
@@ -116,7 +103,6 @@ def test_status(client, settings, mock_status_externals):
         "PROTOCOL": "http://",
         "REVISION_HASH": "3f45719d45f15da73ccc15747c28b80ccc8dfee5",
         "SITE_URL": "http://mdn.localhost:8000",
-        "WIKI_SITE_URL": "http://wiki.mdn.localhost:8000",
         "STATIC_URL": "/static/",
     }
     for name, value in dev_settings.items():
@@ -138,7 +124,6 @@ def test_status(client, settings, mock_status_externals):
     }
     assert sorted(data["services"].keys()) == [
         "database",
-        "kumascript",
         "search",
         "test_accounts",
     ]
@@ -146,10 +131,6 @@ def test_status(client, settings, mock_status_externals):
         "available": True,
         "populated": True,
         "document_count": 100,
-    }
-    assert data["services"]["kumascript"] == {
-        "available": True,
-        "revision": "8da6b8f41",
     }
     assert data["services"]["search"] == {
         "available": True,
@@ -232,30 +213,6 @@ def test_status_empty_database(client, mock_status_externals):
         "available": True,
         "populated": False,
         "document_count": 0,
-    }
-
-
-def test_status_no_kumascript(client, mock_status_externals):
-    """The status JSON shows if KumaScript is unavailable."""
-    mock_status_externals["kumascript"].side_effect = Requests_ConnectionError("Nope")
-    url = reverse("health.status")
-    response = client.get(url)
-    data = json.loads(response.content)
-    assert data["services"]["kumascript"] == {
-        "available": False,
-        "revision": None,
-    }
-
-
-def test_status_failed_kumascript(client, mock_status_externals):
-    """The status JSON shows if KumaScript returns an error code."""
-    mock_status_externals["kumascript"].return_value.status_code = 400
-    url = reverse("health.status")
-    response = client.get(url)
-    data = json.loads(response.content)
-    assert data["services"]["kumascript"] == {
-        "available": False,
-        "revision": None,
     }
 
 

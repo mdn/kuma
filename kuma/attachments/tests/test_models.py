@@ -1,17 +1,13 @@
 import datetime
 
-from constance.test import override_config
-from django.contrib.auth.models import Group, Permission
-from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
 from django.db.utils import IntegrityError
 
-from kuma.users.tests import create_user, UserTestCase
+from kuma.users.tests import UserTestCase
 from kuma.wiki.models import DocumentAttachment
 from kuma.wiki.tests import document
 
 from ..models import Attachment, AttachmentRevision, TrashedAttachment
-from ..utils import allow_add_attachment_by
 
 
 class AttachmentModelTests(UserTestCase):
@@ -124,71 +120,3 @@ class AttachmentModelTests(UserTestCase):
 
         # deleting the only revision left raises an IntegrityError exception
         self.assertRaises(IntegrityError, self.revision.delete)
-
-    def test_permissions(self):
-        """
-        Ensure that the negative and positive permissions for adding
-        attachments work.
-        """
-        # Get the negative and positive permissions
-        ct = ContentType.objects.get(app_label="attachments", model="attachment")
-        p1 = Permission.objects.get(codename="disallow_add_attachment", content_type=ct)
-        p2 = Permission.objects.get(codename="add_attachment", content_type=ct)
-
-        # Create a group with the negative permission.
-        g1, created = Group.objects.get_or_create(name="cannot_attach")
-        g1.permissions.set([p1])
-        g1.save()
-
-        # Create a group with the positive permission.
-        g2, created = Group.objects.get_or_create(name="can_attach")
-        g2.permissions.set([p2])
-        g2.save()
-
-        # User with no explicit permission is allowed
-        u2 = create_user(username="test_user2", save=True)
-        self.assertTrue(allow_add_attachment_by(u2))
-
-        # User in group with negative permission is disallowed
-        u3 = create_user(username="test_user3", save=True)
-        u3.groups.set([g1])
-        u3.save()
-        self.assertTrue(not allow_add_attachment_by(u3))
-
-        # Superusers can do anything, despite group perms
-        u1 = create_user(username="test_super", is_superuser=True, save=True)
-        u1.groups.set([g1])
-        u1.save()
-        self.assertTrue(allow_add_attachment_by(u1))
-
-        # User with negative permission is disallowed
-        u4 = create_user(username="test_user4", save=True)
-        u4.user_permissions.add(p1)
-        u4.save()
-        self.assertTrue(not allow_add_attachment_by(u4))
-
-        # User with positive permission overrides group
-        u5 = create_user(username="test_user5", save=True)
-        u5.groups.set([g1])
-        u5.user_permissions.add(p2)
-        u5.save()
-        self.assertTrue(allow_add_attachment_by(u5))
-
-        # Group with positive permission takes priority
-        u6 = create_user(username="test_user6", save=True)
-        u6.groups.set([g1, g2])
-        u6.save()
-        self.assertTrue(allow_add_attachment_by(u6))
-
-        # positive permission takes priority, period.
-        u7 = create_user(username="test_user7", save=True)
-        u7.user_permissions.add(p1)
-        u7.user_permissions.add(p2)
-        u7.save()
-        self.assertTrue(allow_add_attachment_by(u7))
-
-    @override_config(WIKI_ATTACHMENTS_DISABLE_UPLOAD=True)
-    def test_permissions_when_disabled(self):
-        # All users, including superusers, are denied
-        admin = self.user_model.objects.get(username="admin")
-        self.assertFalse(allow_add_attachment_by(admin))

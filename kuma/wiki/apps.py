@@ -10,8 +10,3 @@ class WikiConfig(AppConfig):
 
     name = "kuma.wiki"
     verbose_name = _("Wiki")
-
-    def ready(self):
-        """Configure kuma.wiki after models are loaded."""
-        # Register signal handlers
-        from . import signal_handlers  # noqa

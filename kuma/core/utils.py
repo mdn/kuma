@@ -13,7 +13,7 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, get_connection
 from django.core.paginator import EmptyPage, InvalidPage, Paginator
 from django.http import QueryDict
-from django.shortcuts import _get_queryset, redirect
+from django.shortcuts import _get_queryset
 from django.utils.cache import patch_cache_control
 from django.utils.encoding import force_text, smart_bytes
 from django.utils.http import urlencode
@@ -43,22 +43,6 @@ def to_html(pq):
     "<iframe></iframe>".
     """
     return pq.html(method="html")
-
-
-def is_wiki(request):
-    return request.get_host() == settings.WIKI_HOST
-
-
-def redirect_to_wiki(request, permanent=True):
-    request.META["HTTP_HOST"] = settings.WIKI_HOST
-    return redirect(request.build_absolute_uri(), permanent=permanent)
-
-
-def is_untrusted(request):
-    return request.get_host() in (
-        settings.ATTACHMENT_ORIGIN,
-        settings.ATTACHMENT_HOST,
-    )
 
 
 def paginate(request, queryset, per_page=20):

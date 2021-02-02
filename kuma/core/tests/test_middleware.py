@@ -1,13 +1,11 @@
 from unittest.mock import MagicMock
 
 import pytest
-from django.core.exceptions import MiddlewareNotUsed
 from django.http import HttpResponse
 from django.test import RequestFactory
 
 from ..middleware import (
     ForceAnonymousSessionMiddleware,
-    RestrictedEndpointsMiddleware,
     SetRemoteAddrFromForwardedFor,
     WaffleWithCookieDomainMiddleware,
 )
@@ -37,34 +35,6 @@ def test_force_anonymous_session_middleware(rf, settings):
     assert request.session
     assert request.session.session_key is None
     assert not response.method_calls
-
-
-@pytest.mark.parametrize(
-    "host,key,expected",
-    (
-        ("wiki", "WIKI_HOST", None),
-        ("demos", "ATTACHMENT_HOST", "kuma.urls_untrusted"),
-        ("demos-origin", "ATTACHMENT_ORIGIN", "kuma.urls_untrusted"),
-    ),
-    ids=("wiki", "attachment", "attachment-origin"),
-)
-def test_restricted_endpoints_middleware(rf, settings, host, key, expected):
-    setattr(settings, key, host)
-    settings.ENABLE_RESTRICTIONS_BY_HOST = True
-    settings.ALLOWED_HOSTS.append(host)
-    middleware = RestrictedEndpointsMiddleware(lambda req: None)
-    request = rf.get("/foo", HTTP_HOST=host)
-    middleware(request)
-    if expected:
-        assert request.urlconf == expected
-    else:
-        assert not hasattr(request, "urlconf")
-
-
-def test_restricted_endpoints_middleware_when_disabled(settings):
-    settings.ENABLE_RESTRICTIONS_BY_HOST = False
-    with pytest.raises(MiddlewareNotUsed):
-        RestrictedEndpointsMiddleware(lambda req: None)
 
 
 def test_waffle_cookie_domain_middleware(rf, settings):

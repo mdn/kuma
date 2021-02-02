@@ -1,6 +1,5 @@
 import pytest
 from django.conf import settings
-from django.urls import reverse
 
 from . import assert_shared_cache_header
 
@@ -48,80 +47,38 @@ REDIRECT_CASES = [
 ] + [(orig, new) for (orig, new) in SIMPLE_ACCEPT_CASES if orig != new]
 
 
-def test_locale_middleware_redirect_when_not_homepage(client, db):
-    """The LocaleMiddleware redirects via 302 when it's not the homepage."""
-    response = client.get("/docs/Web/HTML")
-    assert response.status_code == 302
-    assert response["Location"] == "/en-US/docs/Web/HTML"
-    assert_shared_cache_header(response)
-
-
 @pytest.mark.parametrize("accept_language,locale", PICKER_CASES)
 def test_locale_middleware_picker(accept_language, locale, client, db):
     """The LocaleMiddleware picks locale from the Accept-Language header."""
-    response = client.get("/", HTTP_ACCEPT_LANGUAGE=accept_language)
-    assert response.status_code == 301
-    url_locale = locale or "en-US"
-    assert response["Location"] == ("/%s/" % url_locale)
+    response = client.get("/events", HTTP_ACCEPT_LANGUAGE=accept_language)
+    assert response.status_code == 302
+    assert response["Location"] == f"/{locale or 'en-US'}/events"
     assert_shared_cache_header(response)
 
 
 @pytest.mark.parametrize("original,fixed", REDIRECT_CASES)
 def test_locale_middleware_fixer(original, fixed, client, db):
     """The LocaleStandardizerMiddleware redirects non-standard locale URLs."""
-    response = client.get(("/%s/" % original) if original else "/")
-    if original == "":
-        # LocaleMiddleware handles this case, and it's a 301 instead
-        # of a 302 since it's the homepage.
-        expected_status_code = 301
-    else:
-        expected_status_code = 302
-    assert response.status_code == expected_status_code
-    assert response["Location"] == "/%s/" % fixed
+    response = client.get(
+        (f"/{original}" if original else "") + "/events"
+    )
+    assert response.status_code == 302
+    assert response["Location"] == f"/{fixed}/events"
     assert_shared_cache_header(response)
 
 
 def test_locale_middleware_fixer_confusion(client, db):
     """The LocaleStandardizerMiddleware treats unknown locales as 404s."""
-    response = client.get("/xx/")
+    response = client.get("/xx/events")
     assert response.status_code == 404
 
 
 def test_locale_middleware_language_cookie(client, db):
     """The LocaleMiddleware uses the language cookie over the header."""
     client.cookies.load({settings.LANGUAGE_COOKIE_NAME: "ja"})
-    response = client.get("/", HTTP_ACCEPT_LANGUAGE="fr")
-    assert response.status_code == 301
-    assert response["Location"] == "/ja/"
-    assert_shared_cache_header(response)
-
-
-@pytest.mark.parametrize("path", ("/", "/en-US/"))
-def test_lang_selector_middleware(path, client):
-    """The LangSelectorMiddleware redirects on the ?lang query first."""
-    client.cookies.load({settings.LANGUAGE_COOKIE_NAME: "ja"})
-    response = client.get(f"{path}?lang=fr", HTTP_ACCEPT_LANGUAGE="en;q=0.9, fr;q=0.8")
+    response = client.get("/events", HTTP_ACCEPT_LANGUAGE="fr")
     assert response.status_code == 302
-    assert response["Location"] == "/fr/"
-    assert_shared_cache_header(response)
-
-
-def test_lang_selector_middleware_preserves_query(root_doc, client):
-    """The LangSelectorMiddleware preserves other parameters."""
-    url = reverse("wiki.json")
-    query = {"lang": root_doc.locale, "slug": root_doc.slug}
-    response = client.get(url, query)
-    assert response.status_code == 302
-    expected = f"{url}?slug={root_doc.slug}"
-    assert response["Location"] == expected
-    assert_shared_cache_header(response)
-
-
-def test_lang_selector_middleware_no_change(client, db):
-    """The LangSelectorMiddleware redirects on the same ?lang query."""
-    response = client.get("/fr/?lang=fr")
-    assert response.status_code == 302
-    assert response["Location"] == "/fr/"
+    assert response["Location"] == "/ja/events"
     assert_shared_cache_header(response)
 
 

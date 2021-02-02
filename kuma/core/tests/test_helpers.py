@@ -8,49 +8,21 @@ from django.conf import settings
 from django.test import override_settings, RequestFactory, TestCase
 
 from kuma.core.tests import KumaTestCase
-from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
 from ..exceptions import DateTimeFormatError
 from ..templatetags.jinja_helpers import (
-    assert_function,
     datetimeformat,
     in_utc,
     jsonencode,
     page_title,
-    yesno,
 )
-
-
-def test_assert_function():
-    with pytest.raises(RuntimeError) as exc:
-        assert_function(False, "Message")
-    assert str(exc.value) == "Failed assertion: Message"
-
-
-def test_assert_function_no_message():
-    with pytest.raises(RuntimeError) as exc:
-        assert_function(False)
-    assert str(exc.value) == "Failed assertion"
-
-
-def test_assert_function_passes():
-    assert assert_function(True, "Message") == ""
-
-
-class TestYesNo(KumaTestCase):
-    def test_yesno(self):
-        assert "Yes" == yesno(True)
-        assert "No" == yesno(False)
-        assert "Yes" == yesno(1)
-        assert "No" == yesno(0)
 
 
 class TestDateTimeFormat(UserTestCase):
     def setUp(self):
         super(TestDateTimeFormat, self).setUp()
-        url_ = reverse("home")
-        self.context = {"request": RequestFactory().get(url_)}
+        self.context = {"request": RequestFactory().get("/en-US/")}
         self.context["request"].LANGUAGE_CODE = "en-US"
         self.context["request"].user = self.user_model.objects.get(
             username="testuser01"

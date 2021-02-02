@@ -1,25 +1,11 @@
-import warnings
 from functools import wraps
 
 import newrelic.agent
+from django.conf import settings
 from django.http import Http404, HttpResponsePermanentRedirect
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
-
-from .utils import locale_and_slug_from_path
-
-
-def prevent_indexing(func):
-    """Decorator to prevent a page from being indexable by robots"""
-
-    @wraps(func)
-    def _added_header(request, *args, **kwargs):
-        response = func(request, *args, **kwargs)
-        response["X-Robots-Tag"] = "noindex"
-        return response
-
-    return _added_header
 
 
 def allow_CORS_GET(func):
@@ -34,16 +20,6 @@ def allow_CORS_GET(func):
         return response
 
     return _added_header
-
-
-def check_readonly(view):
-    """Decorator to enable readonly mode"""
-
-    def _check_readonly(request, *args, **kwargs):
-        warnings.warn("The check_readonly decorator is deprecated", DeprecationWarning)
-        return view(request, *args, **kwargs)
-
-    return _check_readonly
 
 
 @newrelic.agent.function_trace()
@@ -105,3 +81,43 @@ def process_document_path(func, reverse_name="wiki.document"):
         return func(request, *args, **kwargs)
 
     return process
+
+
+def locale_and_slug_from_path(path, request=None, path_locale=None):
+    """Given a proposed doc path, try to see if there's a legacy MindTouch
+    locale or even a modern Kuma domain in the path. If so, signal for a
+    redirect to a more canonical path. In any case, produce a locale and
+    slug derived from the given path."""
+    locale, slug, needs_redirect = "", path, False
+    mdn_locales = {lang[0].lower(): lang[0] for lang in settings.LANGUAGES}
+
+    # If there's a slash in the path, then the first segment could be a
+    # locale. And, that locale could even be a legacy MindTouch locale.
+    if "/" in path:
+        maybe_locale, maybe_slug = path.split("/", 1)
+        l_locale = maybe_locale.lower()
+
+        if l_locale in settings.MT_TO_KUMA_LOCALE_MAP:
+            # The first segment looks like a MindTouch locale, remap it.
+            needs_redirect = True
+            locale = settings.MT_TO_KUMA_LOCALE_MAP[l_locale]
+            slug = maybe_slug
+
+        elif l_locale in mdn_locales:
+            # The first segment looks like an MDN locale, redirect.
+            needs_redirect = True
+            locale = mdn_locales[l_locale]
+            slug = maybe_slug
+
+    # No locale yet? Try the locale detected by the request or in path
+    if locale == "":
+        if request:
+            locale = request.LANGUAGE_CODE
+        elif path_locale:
+            locale = path_locale
+
+    # Still no locale? Probably no request. Go with the site default.
+    if locale == "":
+        locale = getattr(settings, "WIKI_DEFAULT_LANGUAGE", "en-US")
+
+    return (locale, slug, needs_redirect)
