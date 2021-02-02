@@ -53,8 +53,7 @@ def search(request, locale=None):
     }
     results = _find(
         params,
-        # This is off by default because Yari isn't yet able to cope with it well.
-        make_suggestions=False,
+        make_suggestions=True,
     )
     return JsonResponse(results)
 
@@ -210,18 +209,16 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
             if score > min_suggestion_score or 1:
                 # Sure, this is different way to spell, but what will it yield
                 # if you actually search it?
-                # XXX Oftentimes, when searching for phrases, like "WORD GOOBLYGOK"
-                # Elasticsearch has already decided to ignore the "GOOBLYGOK" part,
-                # and what you have so far is the 123 search results that exists
-                # thanks to the "WORD" part. So if you re-attempt a search
-                # for "WORD GOOBLYGOOK" (extra "O"), you'll still get the same
-                # exact 123 search results.
                 total = _find(params, total_only=True)
                 if total["value"] > 0:
                     suggestions.append(
                         {
                             "text": string,
-                            "total": total,
+                            "total": {
+                                # This 'total' is an `AttrDict` instance.
+                                "value": total.value,
+                                "relation": total.relation,
+                            },
                         }
                     )
                     # Since they're sorted by score, it's usually never useful
