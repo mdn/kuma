@@ -50,6 +50,7 @@ def search(request, locale=None):
         "size": form.cleaned_data["size"],
         "page": form.cleaned_data["page"],
         "sort": form.cleaned_data["sort"],
+        "slug_prefixes": form.cleaned_data["slug_prefix"],
     }
     results = _find(
         params,
@@ -92,6 +93,10 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
         search_query = search_query.filter("term", archived=False)
     elif params["archive"] == "only":
         search_query = search_query.filter("term", archived=True)
+
+    if params["slug_prefixes"]:
+        sub_queries = [Q("prefix", slug=x) for x in params["slug_prefixes"]]
+        search_query = search_query.query(query.Bool(should=sub_queries))
 
     search_query = search_query.highlight_options(
         pre_tags=["<mark>"],

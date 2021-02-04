@@ -3,6 +3,15 @@ from django.conf import settings
 from django.utils.datastructures import MultiValueDict
 
 
+class TypedMultipleValueField(forms.TypedMultipleChoiceField):
+    """Unlike TypedMultipleChoiceField we don't care what the individual values
+    are as long as they're not empty."""
+
+    def valid_value(self, value):
+        # Basically, as long as it's not empty, it's fine
+        return bool(value)
+
+
 class SearchForm(forms.Form):
     q = forms.CharField(max_length=settings.ES_Q_MAXLENGTH)
     locale = forms.MultipleChoiceField(
@@ -24,6 +33,8 @@ class SearchForm(forms.Form):
 
     size = forms.IntegerField(required=True, min_value=1, max_value=100)
     page = forms.IntegerField(required=True, min_value=1, max_value=10)
+
+    slug_prefix = TypedMultipleValueField(required=False)
 
     def __init__(self, data, **kwargs):
         initial = kwargs.get("initial", {})
