@@ -89,6 +89,21 @@ def search(request, *args, **kwargs):
                     query_string_parsed["page"] = f"{page - 1}"
                 previous_url = f"?{urlencode(query_string_parsed, True)}"
 
+            def package_document(document):
+                # The `results['documents']` will have the `locale` in lowercase.
+                # That's good for searching but now what we want to display.
+                # Here in Kuma we can't use the `mdn_url` so to get that right
+                # we have to manually correct that.
+                locale, slug = document["mdn_url"][1:].split("/docs/")
+                data = {
+                    "title": document["title"],
+                    "slug": slug,
+                    "locale": locale,
+                    "summary": document["summary"],
+                    "excerpt": "<br>".join(document["highlight"].get("body", [])),
+                }
+                return data
+
             results = {
                 "count": count,
                 "next": next_url,
@@ -96,16 +111,7 @@ def search(request, *args, **kwargs):
                 "query": request.GET.get("q"),
                 "start": (page - 1) * size + 1,
                 "end": page * size,
-                "documents": [
-                    {
-                        "title": x["title"],
-                        "slug": x["slug"],
-                        "locale": x["locale"],
-                        "summary": x["summary"],
-                        "excerpt": "<br>".join(x["highlight"].get("body", [])),
-                    }
-                    for x in results["documents"]
-                ],
+                "documents": [package_document(x) for x in results["documents"]],
             }
 
         context = {"results": {"results": None if error else results, "error": error}}
