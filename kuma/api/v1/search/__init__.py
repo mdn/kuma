@@ -50,7 +50,8 @@ def search(request, locale=None):
         "size": form.cleaned_data["size"],
         "page": form.cleaned_data["page"],
         "sort": form.cleaned_data["sort"],
-        "slug_prefixes": form.cleaned_data["slug_prefix"],
+        # The `slug` is always stored, as a Keyword index, in lowercase.
+        "slug_prefixes": [x.lower() for x in form.cleaned_data["slug_prefix"]],
     }
     results = _find(
         params,
