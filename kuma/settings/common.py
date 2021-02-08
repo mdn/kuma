@@ -1327,10 +1327,7 @@ CELERY_RESULT_SERIALIZER = "pickle"
 CELERY_EVENT_SERIALIZER = "pickle"
 
 
-CELERY_IMPORTS = (
-    "kuma.search.tasks",
-    "tidings.events",
-)
+CELERY_IMPORTS = ("tidings.events",)
 
 CELERY_TASK_ANNOTATIONS = {"cacheback.tasks.refresh_cache": {"rate_limit": "120/m"}}
 
@@ -1339,8 +1336,6 @@ CELERY_TASK_ROUTES = {
     "kuma.core.tasks.clean_sessions": {"queue": "mdn_purgeable"},
     "kuma.core.tasks.delete_old_ip_bans": {"queue": "mdn_purgeable"},
     "kuma.wiki.tasks.delete_old_revision_ips": {"queue": "mdn_purgeable"},
-    "kuma.search.tasks.prepare_index": {"queue": "mdn_search"},
-    "kuma.search.tasks.finalize_index": {"queue": "mdn_search"},
     "kuma.wiki.tasks.index_documents": {"queue": "mdn_search"},
     "kuma.wiki.tasks.unindex_documents": {"queue": "mdn_search"},
     "kuma.users.tasks.send_welcome_email": {"queue": "mdn_emails"},
