@@ -27,7 +27,6 @@ There are other rendered outputs:
 * KumaScript renders the :ref:`triaged-content` as :ref:`preview-content`
 * Kuma filters the :ref:`bleached-content` and adds section IDs to publish the :ref:`raw-content`
 * Kuma extracts code sections from the :ref:`rendered-content` to flesh out a :ref:`live-sample`
-* Kuma extracts the text from the :ref:`rendered-content` for the :ref:`search-content`
 
 .. _revision-content:
 
