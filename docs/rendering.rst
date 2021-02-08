@@ -27,7 +27,6 @@ There are other rendered outputs:
 * KumaScript renders the :ref:`triaged-content` as :ref:`preview-content`
 * Kuma filters the :ref:`bleached-content` and adds section IDs to publish the :ref:`raw-content`
 * Kuma extracts code sections from the :ref:`rendered-content` to flesh out a :ref:`live-sample`
-* Kuma extracts the text from the :ref:`rendered-content` for the :ref:`search-content`
 
 .. _revision-content:
 
@@ -856,50 +855,6 @@ here for the curious:
 .. _EmbedGHLiveSample: https://github.com/mdn/kumascript/blob/master/macros/EmbedGHLiveSample.ejs
 .. _`mdn/interactive-examples repository`: https://github.com/mdn/interactive-examples
 .. _EmbedInteractiveExamples: https://github.com/mdn/kumascript/blob/master/macros/EmbedInteractiveExample.ejs
-
-
-.. _search-content:
-
-Search content
-==============
-Wiki documents are converted to a JSON format and indexed by
-:doc:`ElasticSearch </elasticsearch>` for `internal search`_. This allows searching
-for words in the wiki content.
-
-source
-   text extracted from :ref:`rendered-content`
-output
-   text sections from in-content results from `internal search`_
-database
-   stored in ElasticSearch
-code
-   ``kuma.wiki.search.WikiDocumentType.from_django(Document)``
-
-The Django utility strip_tags_ is used to quickly remove HTML tags. This
-utility is not guarenteed to generate an HTML safe string, as highlighted
-in a `security advisory`_. Kuma does not redisplay this string. ElasticSearch
-applies the `HTML Strip Char Filter`_ to this and other content, which also
-strips tags and replaces HTML entities like ``&amp;`` with the character
-equivalents like ``&``.
-
-When a search result is picked because of a content match, ElasticSearch
-returns the matching section, highlighting the matching terms in bold. This
-HTML is redisplayed on the search results page.
-
-Documents are indexed when created and when updated, as an asyncronous process.
-Documented are removed from the index when deleted. Administrators can also
-re-create the entire index, for ElasticSearch upgrades or to freshen the data.
-
-There is additional page metadata sent to ElasticSearch to power internal
-search. This includes page titles, tags, and locales. It also includes
-KumaScript macros, CSS class names, and HTML attributes, to allow
-`advanced search queries`_ and to power the `macro dashboard`_.
-
-.. _`internal search`: https://developer.mozilla.org/en-US/search
-.. _strip_tags: https://docs.djangoproject.com/en/1.11/ref/utils/#django.utils.html.strip_tags
-.. _`security advisory`: https://www.djangoproject.com/weblog/2014/mar/22/strip-tags-advisory/
-.. _`HTML Strip Char Filter`: https://www.elastic.co/guide/en/elasticsearch/reference/6.7/analysis-htmlstrip-charfilter.html
-.. _`advanced search queries`: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Tools/Search
 
 
 Future Changes

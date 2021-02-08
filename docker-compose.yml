@@ -11,7 +11,6 @@ services:
       - ./:/app:z
     depends_on:
       - mysql
-      - elasticsearch
       - redis
       - kumascript
       - minio
@@ -37,7 +36,6 @@ services:
       - DEBUG=${DEBUG:-True}
       - DOMAIN=${DOMAIN:-localhost}
       - ENABLE_RESTRICTIONS_BY_HOST=${ENABLE_RESTRICTIONS_BY_HOST:-False}
-      - ES_URLS=${ES_URLS:-elasticsearch:9200}
       - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
       - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
       - REDIS_CACHE_SERVER=redis://redis:6379/3
@@ -64,7 +62,6 @@ services:
     command: gunicorn -w ${GUNICORN_WORKERS:-4} --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=meinheld.gmeinheld.MeinheldWorker kuma.wsgi:application
     depends_on:
       - mysql
-      - elasticsearch
       - redis
       - ssr
       - minio
@@ -78,7 +75,6 @@ services:
     command: bash
     depends_on:
       - mysql
-      - elasticsearch
       - redis
       - ssr
       - kumascript
@@ -112,15 +108,6 @@ services:
       - --max-allowed-packet=100M
     volumes:
       - mysqlvolume:/var/lib/mysql
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.1 # change to 7.10.0 some day
-    environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=false
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
-    volumes:
-      - esdata:/usr/share/elasticsearch/data
 
   redis:
     # The version of this Redis image should be kept synchronized with production. It
