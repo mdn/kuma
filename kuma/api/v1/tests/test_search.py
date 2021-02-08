@@ -40,6 +40,11 @@ def test_search_validation_problems(user_client, settings):
     assert response.status_code == 400
     assert response.json()["errors"]["sort"][0]["code"] == "invalid_choice"
 
+    # 'slug_prefix' has to be anything but empty
+    response = user_client.get(url, {"q": "x", "slug_prefix": ""})
+    assert response.status_code == 400
+    assert response.json()["errors"]["slug_prefix"][0]["code"] == "invalid_choice"
+
 
 class FindEverythingFakeElasticsearch(FakeElasticsearch):
     def search(self, *args, **kwargs):
