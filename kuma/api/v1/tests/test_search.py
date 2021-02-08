@@ -104,24 +104,3 @@ def test_search_basic_match(user_client, settings, mock_elasticsearch):
             "summary": "Foo summary",
         }
     ]
-
-
-def test_search_case_insensitive_locale(user_client, settings, mock_elasticsearch):
-    mock_elasticsearch.index(
-        settings.SEARCH_INDEX_NAME,
-        {
-            "id": "/en-us/docs/Foo",
-            "title": "Foo Title",
-            "summary": "Foo summary",
-            "locale": "en-us",
-            "archived": False,
-            "slug": "Foo",
-            "popularity": 0,
-        },
-        id="/en-us/docs/Foo",
-    )
-    url = reverse("api.v1.search")
-    response = user_client.get(url, {"q": "x", "locale": "EN-US"})
-    assert response.status_code == 200
-    response = user_client.get(url, {"q": "x", "locale": ["EN-US", "Fr"]})
-    assert response.status_code == 200

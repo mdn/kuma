@@ -3,15 +3,26 @@ from django.conf import settings
 from django.utils.datastructures import MultiValueDict
 
 
+class MultipleChoiceFieldICase(forms.MultipleChoiceField):
+    """Just like forms.MultipleChoiceField but everything's case insentive.
+
+    For simplicity, this field assumes that each choice is a tuple where
+    the first element is always a string.
+    """
+
+    def valid_value(self, value):
+        return str(value).lower() in [x[0].lower() for x in self.choices]
+
+
 class SearchForm(forms.Form):
     q = forms.CharField(max_length=settings.ES_Q_MAXLENGTH)
-    locale = forms.MultipleChoiceField(
+    locale = MultipleChoiceFieldICase(
         required=False,
         # The `settings.LANGUAGES` looks like this:
         #   [('en-US', 'English (US)'), ...]
         # But all locales are stored in lowercase in Elasticsearch, so
         # force everything to lowercase.
-        choices=[(code.lower(), name) for code, name in settings.LANGUAGES],
+        choices=[(code, name) for code, name in settings.LANGUAGES],
     )
 
     SORT_CHOICES = ("best", "relevance", "popularity")
@@ -33,18 +44,6 @@ class SearchForm(forms.Form):
         # HTML generated form widgets.
         # See https://www.peterbe.com/plog/initial-values-bound-django-form-rendered
         data = MultiValueDict({**{k: [v] for k, v in initial.items()}, **data})
-
-        # Because the `?locale=en-US&locale=Fr` might come in from the `request.GET`
-        # we can't edit it there. So instead, we mutate it here in the `data`
-        if "locale" in data:
-            # Always force it to lowercase, because that's what the ChoiceField
-            # is configured to. And the searches should always be in lower case.
-            # Remember, Django forms will allow this to be a single string
-            # (e.g. `?locale=Fr`) or a multi-value (`?locale=fr&locale=En-US`).
-            if isinstance(data["locale"], str):
-                data["locale"] = data["locale"].lower()
-            else:
-                data["locale"] = [x.lower() for x in data["locale"]]
 
         # If, for keys we have an initial value for, it was passed an empty string,
         # then swap it for the initial value.
