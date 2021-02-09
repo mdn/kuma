@@ -1,5 +1,117 @@
-@import '../../includes/vars';
-@import '../../includes/mixins';
-@import 'vars';
-@import 'common';
-@import 'themes';
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+$browser-default-font-size: 16px;
+
+$mobile-ends: (767px / $browser-default-font-size) * 1em;
+$tablet-ends: (1023px / $browser-default-font-size) * 1em;
+$tablet-starts: $mobile-ends + 0.001em;
+$small-desktop-starts: $tablet-ends + 0.001em;
+$small-desktop-ends: (1199px / $browser-default-font-size) * 1em;
+
+$mq-tablet-and-up: 'all and (min-width: #{$tablet-starts})';
+$mq-small-desktop-and-up: 'all and (min-width: #{$small-desktop-starts})';
+$mq-large-desktop-and-up: 'all and (min-width: #{$small-desktop-ends})';
+
+.mdn-cta-container {
+    display: none;
+
+    @media #{$mq-tablet-and-up} {
+        background-image: linear-gradient(to right, #83d0f2, #ebf8e1);
+        bottom: 0;
+        display: block;
+        height: 190px;
+        padding: 24px;
+        position: fixed;
+        width: 100%;
+        z-index: 9999;
+
+        .mdn-cta-title {
+            margin: 0;
+            position: relative;
+
+            h2 {
+                background-color: #212121;
+                color: #fff;
+                display: inline-block;
+                font-size: 1.953rem;
+                font-weight: normal;
+                margin: 0;
+                padding: 0 12px;
+            }
+        }
+
+        .mdn-cta-copy {
+            margin: 12px 0;
+
+            @media #{$mq-large-desktop-and-up} {
+                margin-bottom: 0;
+            }
+        }
+
+        a.button {
+            background-color: #fff;
+            border: 2px solid #212121;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #212121;
+            display: block;
+            font-weight: bold;
+            line-height: inherit;
+            max-width: max-content;
+            min-height: 45px;
+            padding: 10px 20px;
+            text-decoration: none;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: #212121;
+                border: 2px solid #212121;
+                color: #fff;
+            }
+        }
+
+        .mdn-cta-close {
+            background-color: transparent;
+            border: 0;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+    }
+
+    @media #{$mq-small-desktop-and-up} {
+        height: 150px;
+        padding: 0 24px;
+
+        .mdn-cta-content {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+            justify-content: center;
+            margin: 0 auto;
+            max-width: 1400px;
+        }
+
+        .mdn-cta-content-container {
+            display: flex;
+            flex-basis: 80%;
+            flex-flow: column;
+        }
+    }
+
+    .mdn-cta-button-container {
+        position: relative;
+
+        @media #{$mq-small-desktop-and-up} {
+            flex-basis: 20%;
+            margin: 0;
+        }
+    }
+}

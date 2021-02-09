@@ -1,10 +1,7 @@
 //@flow
 import React from 'react';
 import { act, create } from 'react-test-renderer';
-import ActiveBanner, {
-    DEVELOPER_NEEDS_ID,
-    SUBSCRIPTION_ID,
-} from './active-banner.jsx';
+import ActiveBanner, { COMMON_SURVEY_ID } from './active-banner.jsx';
 import UserProvider from './user-provider.jsx';
 
 describe('ActiveBanner', () => {
@@ -25,7 +22,7 @@ describe('ActiveBanner', () => {
     });
 
     test('renders banners when their waffle flags are set', () => {
-        mockUserData.waffle.flags = { [DEVELOPER_NEEDS_ID]: true };
+        mockUserData.waffle.flags = { [COMMON_SURVEY_ID]: true };
         expect(
             JSON.stringify(
                 create(
@@ -34,84 +31,17 @@ describe('ActiveBanner', () => {
                     </UserProvider.context.Provider>
                 ).toJSON()
             )
-        ).toContain(DEVELOPER_NEEDS_ID);
-    });
-
-    test('renders banner for logged in users', () => {
-        mockUserData.isAuthenticated = true;
-        mockUserData.waffle.flags = {
-            [SUBSCRIPTION_ID]: true,
-        };
-
-        expect(
-            JSON.stringify(
-                create(
-                    <UserProvider.context.Provider value={mockUserData}>
-                        <ActiveBanner />
-                    </UserProvider.context.Provider>
-                ).toJSON()
-            )
-        ).toContain(SUBSCRIPTION_ID);
-    });
-
-    test('renders banner for anonymous users', () => {
-        mockUserData.isAuthenticated = false;
-        mockUserData.waffle.flags = {
-            [SUBSCRIPTION_ID]: true,
-        };
-
-        expect(
-            JSON.stringify(
-                create(
-                    <UserProvider.context.Provider value={mockUserData}>
-                        <ActiveBanner />
-                    </UserProvider.context.Provider>
-                ).toJSON()
-            )
-        ).toContain(SUBSCRIPTION_ID);
-    });
-
-    test('renders nothing for logged in users is active subscriber', () => {
-        mockUserData.isAuthenticated = true;
-        mockUserData.isSubscriber = true;
-        mockUserData.waffle.flags = {
-            [SUBSCRIPTION_ID]: true,
-        };
-
-        expect(
-            create(
-                <UserProvider.context.Provider value={mockUserData}>
-                    <ActiveBanner />
-                </UserProvider.context.Provider>
-            ).toJSON()
-        ).toBe(null);
-    });
-
-    test('renders first banner and not second when both flags are set', () => {
-        mockUserData.waffle.flags = {
-            [DEVELOPER_NEEDS_ID]: true,
-            [SUBSCRIPTION_ID]: true,
-        };
-        let banner = create(
-            <UserProvider.context.Provider value={mockUserData}>
-                <ActiveBanner />
-            </UserProvider.context.Provider>
-        );
-
-        let snapshot = JSON.stringify(banner.toJSON());
-        expect(snapshot).toContain(DEVELOPER_NEEDS_ID);
-        expect(snapshot).not.toContain(SUBSCRIPTION_ID);
+        ).toContain(COMMON_SURVEY_ID);
     });
 
     test('renders second active banner if first is embargoed', () => {
         mockUserData.isAuthenticated = true;
         mockUserData.waffle.flags = {
-            [DEVELOPER_NEEDS_ID]: true,
-            [SUBSCRIPTION_ID]: true,
+            [COMMON_SURVEY_ID]: true,
         };
 
         localStorage.setItem(
-            `banner.${DEVELOPER_NEEDS_ID}.embargoed_until`,
+            `banner.${COMMON_SURVEY_ID}.embargoed_until`,
             String(Date.now() + 10000)
         );
 
@@ -122,22 +52,16 @@ describe('ActiveBanner', () => {
         );
 
         let snapshot = JSON.stringify(banner.toJSON());
-        expect(snapshot).not.toContain(DEVELOPER_NEEDS_ID);
-        expect(snapshot).toContain(SUBSCRIPTION_ID);
+        expect(snapshot).not.toContain(COMMON_SURVEY_ID);
     });
 
     test('renders nothing if all active banners are embargoed', () => {
         mockUserData.waffle.flags = {
-            [DEVELOPER_NEEDS_ID]: true,
-            [SUBSCRIPTION_ID]: true,
+            [COMMON_SURVEY_ID]: true,
         };
 
         localStorage.setItem(
-            `banner.${DEVELOPER_NEEDS_ID}.embargoed_until`,
-            String(Date.now() + 10000)
-        );
-        localStorage.setItem(
-            `banner.${SUBSCRIPTION_ID}.embargoed_until`,
+            `banner.${COMMON_SURVEY_ID}.embargoed_until`,
             String(Date.now() + 10000)
         );
 
@@ -153,17 +77,12 @@ describe('ActiveBanner', () => {
     test('embargos expire', () => {
         mockUserData.isAuthenticated = true;
         mockUserData.waffle.flags = {
-            [DEVELOPER_NEEDS_ID]: true,
-            [SUBSCRIPTION_ID]: true,
+            [COMMON_SURVEY_ID]: true,
         };
 
         localStorage.setItem(
-            `banner.${DEVELOPER_NEEDS_ID}.embargoed_until`,
+            `banner.${COMMON_SURVEY_ID}.embargoed_until`,
             String(Date.now() + 10000)
-        );
-        localStorage.setItem(
-            `banner.${SUBSCRIPTION_ID}.embargoed_until`,
-            String(Date.now() - 1)
         );
 
         let banner = create(
@@ -173,10 +92,9 @@ describe('ActiveBanner', () => {
         );
 
         let snapshot = JSON.stringify(banner.toJSON());
-        expect(snapshot).toContain(SUBSCRIPTION_ID);
 
         localStorage.setItem(
-            `banner.${DEVELOPER_NEEDS_ID}.embargoed_until`,
+            `banner.${COMMON_SURVEY_ID}.embargoed_until`,
             String(Date.now() - 1)
         );
 
@@ -187,14 +105,13 @@ describe('ActiveBanner', () => {
         );
 
         snapshot = JSON.stringify(banner.toJSON());
-        expect(snapshot).toContain(DEVELOPER_NEEDS_ID);
+        expect(snapshot).toContain(COMMON_SURVEY_ID);
     });
 
     test('banners can be dismissed', () => {
         mockUserData.isAuthenticated = true;
-        mockUserData.waffle.flags = {
-            [DEVELOPER_NEEDS_ID]: true,
-            [SUBSCRIPTION_ID]: true,
+        mockUserData.waffle.switches = {
+            [COMMON_SURVEY_ID]: true,
         };
         let banner = create(
             <UserProvider.context.Provider value={mockUserData}>
@@ -202,7 +119,7 @@ describe('ActiveBanner', () => {
             </UserProvider.context.Provider>
         );
 
-        expect(JSON.stringify(banner.toJSON())).toContain(DEVELOPER_NEEDS_ID);
+        expect(JSON.stringify(banner.toJSON())).toContain(COMMON_SURVEY_ID);
 
         let button = banner.root.findByType('button');
         expect(button).toBeDefined();
@@ -214,40 +131,12 @@ describe('ActiveBanner', () => {
 
         // Now that it is dismissed expect to render null
         expect(banner.toJSON()).toBe(null);
-
-        // Re-render and expect the second banner
-        banner = create(
-            <UserProvider.context.Provider value={mockUserData}>
-                <ActiveBanner />
-            </UserProvider.context.Provider>
-        );
-
-        expect(JSON.stringify(banner.toJSON())).toContain(SUBSCRIPTION_ID);
-
-        // Dismiss the second banner
-        button = banner.root.findByType('button');
-        act(() => {
-            // Simulate a click on the dismiss button
-            button.props.onClick();
-        });
-
-        // Now that it is dismissed expect to render null
-        expect(banner.toJSON()).toBe(null);
-
-        // Do one final re-render and expect null since both are embargoed
-        banner = create(
-            <UserProvider.context.Provider value={mockUserData}>
-                <ActiveBanner />
-            </UserProvider.context.Provider>
-        );
-
-        expect(banner.toJSON()).toBe(null);
     });
 
     test('adds target and rel for banners set to open in new window', () => {
         mockUserData.isAuthenticated = false;
-        mockUserData.waffle.flags = {
-            [DEVELOPER_NEEDS_ID]: true,
+        mockUserData.waffle.switches = {
+            [COMMON_SURVEY_ID]: true,
         };
 
         let banner = create(
@@ -257,31 +146,11 @@ describe('ActiveBanner', () => {
         );
 
         let ctaButtonProps = banner.root.findByProps({
-            className: 'mdn-cta-button',
+            className: 'button light',
         }).props;
 
-        expect(JSON.stringify(banner.toJSON())).toContain(DEVELOPER_NEEDS_ID);
+        expect(JSON.stringify(banner.toJSON())).toContain(COMMON_SURVEY_ID);
         expect(ctaButtonProps.target).toBeDefined();
         expect(ctaButtonProps.rel).toBeDefined();
-    });
-
-    test('does not add target and rel for default banners', () => {
-        mockUserData.isAuthenticated = true;
-        mockUserData.waffle.flags = {
-            [SUBSCRIPTION_ID]: true,
-        };
-
-        let banner = create(
-            <UserProvider.context.Provider value={mockUserData}>
-                <ActiveBanner />
-            </UserProvider.context.Provider>
-        );
-
-        let ctaButtonProps = banner.root.findByProps({
-            className: 'mdn-cta-button',
-        }).props;
-
-        expect(ctaButtonProps.target).not.toBeDefined();
-        expect(ctaButtonProps.rel).not.toBeDefined();
     });
 });
