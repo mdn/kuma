@@ -49,16 +49,12 @@
  * @flow
  */
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import CloseIcon from './icons/close.svg';
-import { getLocale, gettext, interpolate } from './l10n.js';
+import { gettext } from './l10n.js';
 import UserProvider from './user-provider.jsx';
-import GAProvider, {
-    CATEGORY_MONTHLY_PAYMENTS,
-    gaSendOnNextPage,
-} from './ga-provider.jsx';
-import { formatMoney } from './formatters.js';
+import GAProvider from './ga-provider.jsx';
 
 // Set a localStorage key with a timestamp the specified number of
 // days into the future. When the user dismisses a banner we use this
@@ -194,6 +190,8 @@ function Banner(props: BannerProps) {
 export const COMMON_SURVEY_ID = 'common_survey_banner';
 
 function CommonSurveyBanner() {
+    const ga = useContext(GAProvider.context);
+
     return (
         <Banner
             id={COMMON_SURVEY_ID}
@@ -202,7 +200,15 @@ function CommonSurveyBanner() {
                 'Help us understand how to make MDN better for beginners (5 minute survey)'
             )}
             cta={gettext('Take the survey')}
-            url={'https://www.surveygizmo.com/s3/5897636/Mozilla'}
+            url={'https://www.surveygizmo.com/s3/6175365/59cfad9c04cf'}
+            onCTAClick={() => {
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'learning web development',
+                    eventAction: 'CTA clicked homepage',
+                    eventLabel: 'banner',
+                });
+            }}
             newWindow
         />
     );
