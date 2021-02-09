@@ -215,7 +215,7 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
             if score > min_suggestion_score or 1:
                 # Sure, this is different way to spell, but what will it yield
                 # if you actually search it?
-                total = _find(params, total_only=True)
+                total = _find(dict(params, query=string), total_only=True)
                 if total["value"] > 0:
                     suggestions.append(
                         {
