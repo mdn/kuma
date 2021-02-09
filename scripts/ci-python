@@ -51,20 +51,4 @@ docker-compose exec -T web ./manage.py migrate
 # This checks that running `./manage.py makemigrations` wasn't forgotten
 docker-compose exec -T web ./manage.py makemigrations --check --dry-run
 
-
-# The idea here is that coverage analysis on the pytest tests is
-# pretty slow. Around 1 minute slower than without.
-# So can it be skipped if there were no .py changes in the PR.
-is_pullrequest_build() {
-  [[ ${TRAVIS_PULL_REQUEST-default} != "false" ]]
-}
-has_python_changes() {
-    git diff --name-only $TRAVIS_COMMIT_RANGE | grep '\.py'
-}
-if is_pullrequest_build && has_python_changes; then
-    echo "IS PR and has Python changes!"
-    docker-compose exec -T web make coveragetest
-else
-    echo "Regular build, no coverage needed"
-    docker-compose exec -T web make test
-fi
+docker-compose exec -T web make coveragetest
