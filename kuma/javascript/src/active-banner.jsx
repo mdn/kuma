@@ -118,7 +118,7 @@ export type BannerProps = {
     id: string,
     // class name used on main banner container. Exclusively used
     // for styling purposes.
-    classname: string,
+    classname?: string,
     // The banner title. e.g. "MDN Survey"
     title?: string,
     // The banner description. e.g. "Help us understand the top 10 needs..."
@@ -142,7 +142,9 @@ export type BannerProps = {
 
 function Banner(props: BannerProps) {
     const [isDismissed, setDismissed] = useState(false);
-    const containerClassNames = `${props.classname} mdn-cta-container cta-background-linear`;
+    const containerClassNames = props.classname
+        ? `mdn-cta-container ${props.classname}`
+        : 'mdn-cta-container';
 
     if (isDismissed) {
         return null;
@@ -153,16 +155,16 @@ function Banner(props: BannerProps) {
             <div id="mdn-cta-content" className="mdn-cta-content">
                 <div id={props.id} className="mdn-cta-content-container">
                     {props.title && (
-                        <h2 className="mdn-cta-title slab-text">
-                            {props.title}
-                        </h2>
+                        <div className="mdn-cta-title">
+                            <h2>{props.title}</h2>
+                        </div>
                     )}
                     <p className="mdn-cta-copy">{props.copy}</p>
                 </div>
                 <p className="mdn-cta-button-container">
                     <a
                         href={props.url}
-                        className="mdn-cta-button"
+                        className="button light"
                         target={props.newWindow && '_blank'}
                         rel={props.newWindow && 'noopener noreferrer'}
                         onClick={props.onCTAClick}
@@ -189,62 +191,19 @@ function Banner(props: BannerProps) {
     );
 }
 
-export const DEVELOPER_NEEDS_ID = 'developer_needs';
-export const SUBSCRIPTION_ID = 'subscription_banner';
+export const COMMON_SURVEY_ID = 'common_survey_banner';
 
-function DeveloperNeedsBanner() {
+function CommonSurveyBanner() {
     return (
         <Banner
-            id={DEVELOPER_NEEDS_ID}
-            classname="developer-needs"
-            title={gettext('MDN Web DNA')}
+            id={COMMON_SURVEY_ID}
+            title={gettext('Learning web development survey')}
             copy={gettext(
-                'Help us understand the top 10 needs of web developers.'
+                'Help us understand how to make MDN better for beginners (5 minute survey)'
             )}
             cta={gettext('Take the survey')}
             url={'https://www.surveygizmo.com/s3/5897636/Mozilla'}
             newWindow
-        />
-    );
-}
-
-function SubscriptionBanner() {
-    const ga = useContext(GAProvider.context);
-    const locale = getLocale();
-
-    useEffect(() => {
-        ga('send', {
-            hitType: 'event',
-            eventCategory: CATEGORY_MONTHLY_PAYMENTS,
-            eventAction: 'CTA shown',
-            eventLabel: 'banner',
-        });
-    }, [ga]);
-
-    return (
-        <Banner
-            id={SUBSCRIPTION_ID}
-            classname="mdn-subscriptions"
-            title={gettext('Become a monthly supporter')}
-            copy={interpolate(
-                gettext('Support MDN with a %(amount)s monthly subscription'),
-                {
-                    amount: formatMoney(locale, 5),
-                }
-            )}
-            cta={gettext('Learn more')}
-            url={`/${locale}/payments/`}
-            onCTAClick={() => {
-                gaSendOnNextPage([
-                    {
-                        hitType: 'event',
-                        eventCategory: CATEGORY_MONTHLY_PAYMENTS,
-                        eventAction: 'subscribe intent',
-                        eventLabel: 'banner',
-                    },
-                ]);
-            }}
-            embargoDays={7}
         />
     );
 }
@@ -262,10 +221,8 @@ export default function ActiveBanner() {
 
     // The order of the if statements is important and it's our source of
     // truth about which banner is "more important" than the other.
-    if (isEnabled(DEVELOPER_NEEDS_ID)) {
-        return <DeveloperNeedsBanner />;
-    } else if (isEnabled(SUBSCRIPTION_ID) && !userData.isSubscriber) {
-        return <SubscriptionBanner />;
+    if (isEnabled(COMMON_SURVEY_ID)) {
+        return <CommonSurveyBanner />;
     }
     // No banner found in the waffle flags, so we have nothing to render
     return null;
