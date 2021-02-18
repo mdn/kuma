@@ -53,9 +53,19 @@ def search(request, locale=None):
         # The `slug` is always stored, as a Keyword index, in lowercase.
         "slug_prefixes": [x.lower() for x in form.cleaned_data["slug_prefix"]],
     }
+
+    # By default, assume that we will try to make suggestions.
+    make_suggestions = True
+    if len(params["query"]) > 100 or max(len(x) for x in params["query"].split()) > 30:
+        # For example, if it's a really long query, or a specific word is just too
+        # long, you can get those tricky
+        # TransportError(500, 'search_phase_execution_exception', 'Term too complex:
+        # errors which are hard to prevent against.
+        make_suggestions = False
+
     results = _find(
         params,
-        make_suggestions=True,
+        make_suggestions=make_suggestions,
     )
     return JsonResponse(results)
 
