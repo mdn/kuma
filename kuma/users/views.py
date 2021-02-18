@@ -1,5 +1,6 @@
 import json
 from datetime import datetime, timedelta
+from urllib.parse import urlencode, urljoin, urlparse
 
 import stripe
 from allauth.account.adapter import get_adapter
@@ -764,6 +765,40 @@ class SignupView(BaseSignupView):
         might trigger repeatedly if the form submission has validation
         errors that the user has to address.
         """
+
+        # This solution is meant to work for both Yari and for the old Kuma-
+        # front-end way of doing things. ...at the same time. For a slow
+        # and gentle rollout.
+        socialaccount_sociallogin = request.session.get("socialaccount_sociallogin")
+        if socialaccount_sociallogin:
+            state = socialaccount_sociallogin.get("state", {})
+            email_addresses = socialaccount_sociallogin.get("email_addresses", [])
+            next_url = state.get("next")
+            process = state.get("process")
+            if (
+                process == "login"
+                and next_url
+                and settings.ADDITIONAL_NEXT_URL_ALLOWED_HOSTS
+                and settings.ADDITIONAL_NEXT_URL_ALLOWED_HOSTS in next_url
+            ):
+                # It's a Yari sign-up process! Redirect to its static page.
+                signup_url = urlparse(next_url)
+                params = {
+                    "next": signup_url.path,
+                    "user_details": json.dumps(
+                        socialaccount_sociallogin["account"]["extra_data"]
+                    ),
+                    "csrfmiddlewaretoken": request.META["CSRF_COOKIE"],
+                }
+                for email_address in email_addresses:
+                    if email_address.get("primary"):
+                        params["email_address"] = email_address["email"]
+                        break
+                yari_signup_url = f"/{request.LANGUAGE_CODE}/signup"
+                return redirect(
+                    urljoin(next_url, yari_signup_url) + "?" + urlencode(params)
+                )
+
         if request.session.get("sociallogin_provider"):
             track_event(
                 CATEGORY_SIGNUP_FLOW,
