@@ -687,6 +687,7 @@ class SignupView(BaseSignupView):
         # Once Kuma id divorced from doing any
         is_yari_signup = self.request.session.get("yari_signup", False)
         if is_yari_signup:
+            form.data = form.data.copy()
             for key in form.initial:
                 if key not in form.data and form.initial[key]:
                     form.data[key] = form.initial[key]
@@ -838,10 +839,12 @@ class SignupView(BaseSignupView):
                 safe_user_details["name"] = extra_data["name"]
             if extra_data.get("picture"):  # Google OAuth2
                 safe_user_details["avatar_url"] = extra_data["picture"]
+            elif extra_data.get("avatar_url"):  # GitHub OAuth2
+                safe_user_details["avatar_url"] = extra_data["avatar_url"]
             params = {
                 "next": next_url,
                 "user_details": json.dumps(safe_user_details),
-                "csrfmiddlewaretoken": request.META["CSRF_COOKIE"],
+                "csrfmiddlewaretoken": request.META.get("CSRF_COOKIE"),
                 "provider": account.get("provider"),
             }
             yari_signup_url = f"{next_url_prefix}/{request.LANGUAGE_CODE}/signup"
