@@ -51,8 +51,19 @@ class KumaOAuth2LoginView(OAuth2LoginView):
             if urlparse(http_referer).netloc == request.get_host():
                 track_event(CATEGORY_SIGNUP_FLOW, ACTION_AUTH_STARTED, "github")
 
-        next_url = get_next_redirect_url(request) or reverse("users.my_edit_page")
-        request.session["sociallogin_next_url"] = next_url
+        next_url = get_next_redirect_url(request)
+        # This is a temporary solution whilst Kuma needs to work for the prod
+        # old Kuma front-end and at the same time the new redirects-based Yari.
+        # If `allauth` decides to render the `signup` view rather than redirect
+        # back based on the `?next=`, then that view will know this is Yari.
+        # We can remove this hack once Kuma does 0% HTML responses and just
+        # does redirects + JSON to back up Yari.
+        if request.GET.get("yarisignup"):
+            request.session["yari_signup"] = True
+
+        if next_url:
+            request.session["sociallogin_next_url"] = next_url
+
         request.session.modified = True
         return super(KumaOAuth2LoginView, self).dispatch(request)
 

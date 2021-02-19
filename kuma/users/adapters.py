@@ -200,8 +200,6 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         session_login_data = request.session.get("socialaccount_sociallogin", None)
         request_login = sociallogin
 
-        print("HI! session_login_data:", session_login_data)
-
         # Is there already a sociallogin_provider in the session?
         if session_login_data:
             session_login = SocialLogin.deserialize(session_login_data)
@@ -215,7 +213,6 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
                     level = messages.ERROR
                     message = "socialaccount/messages/account_not_found.txt"
                     get_adapter().add_message(request, level, message)
-                    print("REDIRECTING TO:", redirect("socialaccount_signup"))
                     raise ImmediateHttpResponse(redirect("socialaccount_signup"))
 
         # Is the user banned?
