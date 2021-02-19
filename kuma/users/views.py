@@ -1,6 +1,6 @@
 import json
 from datetime import datetime, timedelta
-from urllib.parse import urlencode, urljoin, urlparse
+from urllib.parse import urlencode, urlparse
 
 import stripe
 from allauth.account.adapter import get_adapter

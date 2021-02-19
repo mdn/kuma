@@ -9,7 +9,6 @@ from allauth.socialaccount.providers.oauth2.views import (
 
 from kuma.core.decorators import redirect_in_maintenance_mode
 from kuma.core.ga_tracking import ACTION_AUTH_STARTED, CATEGORY_SIGNUP_FLOW, track_event
-from kuma.core.urlresolvers import reverse
 from kuma.core.utils import requests_retry_session
 
 
