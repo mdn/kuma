@@ -263,7 +263,6 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         # class is used when calling this method from the one used when calling
         # is_auto_signup_allowed().
         user = get_existing_user(sociallogin)
-        print(f"get_existing_user({sociallogin}):", get_existing_user(sociallogin))
         if user:
             # We can re-use an existing user instead of creating a new one.
             # Let's guarantee this user has an unusable password, just in case

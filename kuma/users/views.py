@@ -736,6 +736,9 @@ class SignupView(BaseSignupView):
                     "username edit",
                 )
 
+        # This won't be needed once this view is entirely catering to Yari.
+        self.request.session.pop("yari_signup", None)
+
         return helpers.complete_social_signup(self.request, self.sociallogin)
 
     def form_invalid(self, form):
