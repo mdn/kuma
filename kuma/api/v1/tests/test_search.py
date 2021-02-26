@@ -13,6 +13,8 @@ def test_search_validation_problems(user_client, settings):
     response = user_client.get(url, {"q": "x", "locale": "xxx"})
     assert response.status_code == 400
     assert response.json()["errors"]["locale"][0]["code"] == "invalid_choice"
+    # all non-200 OK responses should NOT have a Cache-Control header set.
+    assert "cache-control" not in response
 
     # 'q' exceeds max allowed characters
     response = user_client.get(url, {"q": "x" * (settings.ES_Q_MAXLENGTH + 1)})
@@ -87,6 +89,10 @@ def test_search_basic_match(user_client, settings, mock_elasticsearch):
     url = reverse("api.v1.search")
     response = user_client.get(url, {"q": "x"})
     assert response.status_code == 200
+    assert "public" in response["Cache-Control"]
+    assert "max-age=" in response["Cache-Control"]
+    assert "max-age=0" not in response["Cache-Control"]
+
     assert response["content-type"] == "application/json"
     assert response["Access-Control-Allow-Origin"] == "*"
     data = response.json()
