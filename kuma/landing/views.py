@@ -1,37 +1,25 @@
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.views import static
 from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
 
 from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
-from kuma.core.utils import is_wiki
-from kuma.feeder.models import Bundle
-from kuma.feeder.sections import SECTION_HACKS
-from kuma.search.models import Filter
 
 from .utils import favicon_url
 
 
-@shared_cache_control
-def contribute_json(request):
-    return static.serve(request, "contribute.json", document_root=settings.ROOT)
-
-
-@shared_cache_control
 def home(request):
     """Home page."""
-    context = {}
-    # Need for both wiki and react homepage
-    context["updates"] = list(Bundle.objects.recent_entries(SECTION_HACKS.updates)[:5])
-
-    # The default template name
-    template_name = "landing/react_homepage.html"
-    if is_wiki(request):
-        template_name = "landing/homepage.html"
-        context["default_filters"] = Filter.objects.default_filters()
-    return render(request, template_name, context)
+    return HttpResponse(
+        """
+    <html>
+    End of an era. Kuma's no longer rendering a home page.<br>
+    See project Yari.
+    </html>
+    """,
+        content_type="text/html",
+    )
 
 
 @ensure_wiki_domain
@@ -41,13 +29,6 @@ def maintenance_mode(request):
         return render(request, "landing/maintenance-mode.html")
     else:
         return redirect("home")
-
-
-@ensure_wiki_domain
-@shared_cache_control
-def promote_buttons(request):
-    """Bug 646192: MDN affiliate buttons"""
-    return render(request, "landing/promote_buttons.html")
 
 
 ROBOTS_ALL_ALLOWED_TXT = """\
