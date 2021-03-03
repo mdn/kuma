@@ -1,5 +1,6 @@
 import json
 from datetime import datetime, timedelta
+from urllib.parse import urlencode, urlparse
 
 import stripe
 from allauth.account.adapter import get_adapter
@@ -680,6 +681,17 @@ class SignupView(BaseSignupView):
                     "verified": False,
                     "primary": False,
                 }
+
+        # This magic sauce only exists whilst this Django view is being used
+        # both by Yari (in testing) and by old Kuma (production).
+        # Once Kuma id divorced from doing any
+        is_yari_signup = self.request.session.get("yari_signup", False)
+        if is_yari_signup:
+            form.data = form.data.copy()
+            for key in form.initial:
+                if key not in form.data and form.initial[key]:
+                    form.data[key] = form.initial[key]
+
         return form
 
     def form_valid(self, form):
@@ -725,6 +737,9 @@ class SignupView(BaseSignupView):
                     "username edit",
                 )
 
+        # This won't be needed once this view is entirely catering to Yari.
+        self.request.session.pop("yari_signup", None)
+
         return helpers.complete_social_signup(self.request, self.sociallogin)
 
     def form_invalid(self, form):
@@ -739,6 +754,18 @@ class SignupView(BaseSignupView):
                 ACTION_PROFILE_EDIT_ERROR,
                 "username",
             )
+        is_yari_signup = self.request.session.get("yari_signup", False)
+        if is_yari_signup:
+            # Have to redirect instead of rendering HTML.
+            next_url = self.request.session.get("sociallogin_next_url")
+            next_url_prefix = self.get_next_url_prefix(self.request)
+            params = {
+                "next": next_url,
+                "errors": form.errors.as_json(),
+            }
+            yari_signup_url = f"{next_url_prefix}/{self.request.LANGUAGE_CODE}/signup"
+            return redirect(yari_signup_url + "?" + urlencode(params))
+
         return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
@@ -752,10 +779,22 @@ class SignupView(BaseSignupView):
         return context
 
     def dispatch(self, request, *args, **kwargs):
-        response = verify_honeypot_value(request, None)
-        if isinstance(response, HttpResponseBadRequest):
-            return response
+        is_yari_signup = request.session.get("yari_signup", False)
+        if not is_yari_signup:
+            response = verify_honeypot_value(request, None)
+            if isinstance(response, HttpResponseBadRequest):
+                return response
+
         return super(SignupView, self).dispatch(request, *args, **kwargs)
+
+    def get_next_url_prefix(self, request):
+        prefix = ""
+        next_url = request.session.get("sociallogin_next_url")
+        if next_url and "://" in next_url:
+            # If this is local development and the URL is absolute, use that.
+            parsed = urlparse(next_url)
+            prefix = f"{parsed.scheme}://{parsed.netloc}"
+        return prefix
 
     def get(self, request, *args, **kwargs):
         """This exists so we can squeeze in a tracking event exclusively
@@ -764,12 +803,53 @@ class SignupView(BaseSignupView):
         might trigger repeatedly if the form submission has validation
         errors that the user has to address.
         """
+
         if request.session.get("sociallogin_provider"):
             track_event(
                 CATEGORY_SIGNUP_FLOW,
                 ACTION_PROFILE_AUDIT,
                 request.session["sociallogin_provider"],
             )
+
+        # This view is meant to work for both Yari and for the old Kuma-
+        # front-end way of doing things. ...at the same time. For a slow
+        # and gentle rollout.
+        # Once Kuma is divorced of ever returning HTML in any form, we can
+        # refactor this whole view function to never have to depend
+        # on `request.session.get("yari_signup")`.
+        is_yari_signup = request.session.get("yari_signup", False)
+        # If this is the case, always redirect.
+        if is_yari_signup:
+            next_url = request.session.get("sociallogin_next_url")
+            next_url_prefix = self.get_next_url_prefix(request)
+
+            socialaccount_sociallogin = request.session.get("socialaccount_sociallogin")
+            if not socialaccount_sociallogin:
+                # This means first used Yari to attempt to sign in but arrived
+                # ignored the outcomes and manually went to the Kuma signup URL.
+                # We have to kick you out and ask you to start over. But where to?
+                yari_signin_url = f"{next_url_prefix}/{request.LANGUAGE_CODE}/signin"
+                return redirect(yari_signin_url)
+
+            # Things that are NOT PII.
+            safe_user_details = {}
+            account = socialaccount_sociallogin["account"]
+            extra_data = account["extra_data"]
+            if extra_data.get("name"):
+                safe_user_details["name"] = extra_data["name"]
+            if extra_data.get("picture"):  # Google OAuth2
+                safe_user_details["avatar_url"] = extra_data["picture"]
+            elif extra_data.get("avatar_url"):  # GitHub OAuth2
+                safe_user_details["avatar_url"] = extra_data["avatar_url"]
+            params = {
+                "next": next_url,
+                "user_details": json.dumps(safe_user_details),
+                "csrfmiddlewaretoken": request.META.get("CSRF_COOKIE"),
+                "provider": account.get("provider"),
+            }
+            yari_signup_url = f"{next_url_prefix}/{request.LANGUAGE_CODE}/signup"
+            return redirect(yari_signup_url + "?" + urlencode(params))
+
         return super().get(request, *args, **kwargs)
 
 

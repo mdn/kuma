@@ -68,7 +68,6 @@ def next_url(request):
                     "://" in request.GET["next"]
                     and settings.DEBUG
                     and settings.ADDITIONAL_NEXT_URL_ALLOWED_HOSTS
-                    and settings.ADDITIONAL_NEXT_URL_ALLOWED_HOSTS
                     in request.GET["next"]
                 ):
                     # The reason we don't need to make a much more elaborate
