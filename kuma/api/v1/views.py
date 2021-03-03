@@ -6,7 +6,12 @@ from urllib.parse import urlparse
 import stripe
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import (
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseForbidden,
+    JsonResponse,
+)
 from django.utils import translation
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
@@ -105,6 +110,53 @@ def whoami(request):
             data["waffle"]["flags"][flag.name] = True
 
     return JsonResponse(data)
+
+
+# @never_cache
+# @require_GET
+# def csrf(request):
+#     """
+#     Return a JSON object representing the current user, either
+#     authenticated or anonymous.
+#     """
+#     user = request.user
+#     if not user.is_authenticated:
+#         return HttpResponseForbidden("not signed in")
+
+#     context = {
+#         "csrfmiddlewaretoken": request.META.get("CSRF_COOKIE"),
+#     }
+#     return JsonResponse(context)
+
+
+@never_cache
+def settings_(request):
+    user = request.user
+    if not user.is_authenticated:
+        return HttpResponseForbidden("not signed in")
+    if request.method == "DELETE":
+        print("DELETE USER!!!!")
+        # user.delete()
+        return JsonResponse({"deleted": True})
+    elif request.method == "POST":
+        print("POST", list(request.POST.items()))
+        print("GET", list(request.GET.items()))
+        print("BODY", repr(request.body))
+        print()
+        # print(request.body)
+        # if edit_user.locale:
+        #     response.set_cookie(
+        #         key=settings.LANGUAGE_COOKIE_NAME,
+        #         value=edit_user.locale,
+        #         max_age=settings.LANGUAGE_COOKIE_AGE,
+        #         path=settings.LANGUAGE_COOKIE_PATH,
+        #         domain=settings.LANGUAGE_COOKIE_DOMAIN,
+        #         secure=settings.LANGUAGE_COOKIE_SECURE,
+        #     )
+        raise NotImplementedError("work harder!")
+
+    context = {"csrfmiddlewaretoken": request.META.get("CSRF_COOKIE"), "locale": "fr"}
+    return JsonResponse(context)
 
 
 @waffle_flag("subscription")
