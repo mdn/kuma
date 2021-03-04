@@ -505,7 +505,6 @@ INSTALLED_APPS = (
     "kuma.landing",
     "kuma.redirects",
     "kuma.scrape",
-    "kuma.search.apps.SearchConfig",
     "kuma.users.apps.UserConfig",
     "kuma.wiki.apps.WikiConfig",
     "kuma.api.apps.APIConfig",
@@ -656,10 +655,6 @@ PIPELINE_CSS = {
         "source_filenames": ("styles/minimalist/organisms/header.scss",),
         "output_filename": "build/styles/react-header.css",
     },
-    "react-search": {
-        "source_filenames": ("styles/minimalist/search-page.scss",),
-        "output_filename": "build/styles/react-search.css",
-    },
     "accountsettings": {
         "source_filenames": ("styles/minimalist/pages/accountsettings.scss",),
         "output_filename": "build/styles/pages-accountsettings.css",
@@ -716,10 +711,6 @@ PIPELINE_CSS = {
         "source_filenames": ("styles/minimalist/print.scss",),
         "output_filename": "build/styles/print.css",
         "extra_context": {"media": "print"},
-    },
-    "search": {
-        "source_filenames": ("styles/search.scss",),
-        "output_filename": "build/styles/search.css",
     },
     "wiki": {
         "source_filenames": ("styles/wiki.scss",),
@@ -955,10 +946,6 @@ PIPELINE_JS = {
             "js/moz-jquery-plugins.js",
         ),
         "output_filename": "build/js/jquery-ui.js",
-    },
-    "search": {
-        "source_filenames": ("js/search.js",),
-        "output_filename": "build/js/search.js",
     },
     "stripe-subscription": {
         "source_filenames": ("js/stripe-subscription.js",),
@@ -1328,8 +1315,6 @@ CELERY_TASK_ROUTES = {
     "kuma.core.tasks.clean_sessions": {"queue": "mdn_purgeable"},
     "kuma.core.tasks.delete_old_ip_bans": {"queue": "mdn_purgeable"},
     "kuma.wiki.tasks.delete_old_revision_ips": {"queue": "mdn_purgeable"},
-    "kuma.wiki.tasks.index_documents": {"queue": "mdn_search"},
-    "kuma.wiki.tasks.unindex_documents": {"queue": "mdn_search"},
     "kuma.users.tasks.send_welcome_email": {"queue": "mdn_emails"},
     "kuma.users.tasks.email_document_progress": {"queue": "mdn_emails"},
     "kuma.wiki.tasks.send_first_edit_email": {"queue": "mdn_emails"},

@@ -9,7 +9,6 @@ from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
 from kuma.core.utils import is_wiki
 from kuma.feeder.models import Bundle
 from kuma.feeder.sections import SECTION_HACKS
-from kuma.search.models import Filter
 
 from .utils import favicon_url
 
@@ -30,7 +29,6 @@ def home(request):
     template_name = "landing/react_homepage.html"
     if is_wiki(request):
         template_name = "landing/homepage.html"
-        context["default_filters"] = Filter.objects.default_filters()
     return render(request, template_name, context)
 
 
