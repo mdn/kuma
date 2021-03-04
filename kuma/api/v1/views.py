@@ -52,6 +52,7 @@ from kuma.users.stripe_utils import (
 )
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 from kuma.wiki.templatetags.jinja_helpers import absolutify
+from kuma.api.v1.forms import AccountSettingsForm
 
 
 @never_cache
@@ -130,7 +131,7 @@ def whoami(request):
 
 
 @never_cache
-def settings_(request):
+def account_settings(request):
     user = request.user
     if not user.is_authenticated:
         return HttpResponseForbidden("not signed in")
@@ -139,23 +140,32 @@ def settings_(request):
         # user.delete()
         return JsonResponse({"deleted": True})
     elif request.method == "POST":
-        print("POST", list(request.POST.items()))
-        print("GET", list(request.GET.items()))
-        print("BODY", repr(request.body))
-        print()
-        # print(request.body)
-        # if edit_user.locale:
-        #     response.set_cookie(
-        #         key=settings.LANGUAGE_COOKIE_NAME,
-        #         value=edit_user.locale,
-        #         max_age=settings.LANGUAGE_COOKIE_AGE,
-        #         path=settings.LANGUAGE_COOKIE_PATH,
-        #         domain=settings.LANGUAGE_COOKIE_DOMAIN,
-        #         secure=settings.LANGUAGE_COOKIE_SECURE,
-        #     )
-        raise NotImplementedError("work harder!")
+        form = AccountSettingsForm(request.POST)
+        if not form.is_valid():
+            return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
-    context = {"csrfmiddlewaretoken": request.META.get("CSRF_COOKIE"), "locale": "fr"}
+        set_locale = None
+        if "locale" in form.cleaned_data:
+            user.locale = set_locale = form.cleaned_data["locale"]
+            user.save()
+
+        response = JsonResponse({"ok": True})
+        if set_locale:
+            response.set_cookie(
+                key=settings.LANGUAGE_COOKIE_NAME,
+                value=set_locale,
+                max_age=settings.LANGUAGE_COOKIE_AGE,
+                path=settings.LANGUAGE_COOKIE_PATH,
+                domain=settings.LANGUAGE_COOKIE_DOMAIN,
+                secure=settings.LANGUAGE_COOKIE_SECURE,
+            )
+
+        return response
+
+    context = {
+        "csrfmiddlewaretoken": request.META.get("CSRF_COOKIE"),
+        "locale": user.locale,
+    }
     return JsonResponse(context)
 
 
