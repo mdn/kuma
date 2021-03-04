@@ -505,6 +505,7 @@ INSTALLED_APPS = (
     "kuma.landing",
     "kuma.redirects",
     "kuma.scrape",
+    "kuma.search.apps.SearchConfig",
     "kuma.users.apps.UserConfig",
     "kuma.wiki.apps.WikiConfig",
     "kuma.api.apps.APIConfig",

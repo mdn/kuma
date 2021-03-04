@@ -37,20 +37,6 @@
     <div class="center">
         <h1 class="highlight highlight-spanned"><span class="highlight-span">{{ _('Resources for developers, by developers.') }}</span></h1>
 
-        <form id="home-search-form" action="{{ url('search') }}" method="get" class="search nodisable">
-            <div class="home-search-form search-form">
-                <label for="home-q" class="offscreen">{{ _('Search') }}</label>
-                <span class="search-icon">
-                    {% include 'includes/icons/general/search.svg' %}
-                </span>
-                <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
-                <button type="submit" class="offscreen">{{ _('Search') }}</button>
-                {% for group, tag, shortcut in default_filters %}
-                  <input type="hidden" name="{{ group }}" value="{{ shortcut|default(tag, true) }}">
-                {% endfor %}
-            </div>
-        </form>
-
         <ul class="home-features">
           <li>
               <a href="{{ wiki_url('Web') }}" class="cta-link">
