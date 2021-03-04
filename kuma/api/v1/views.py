@@ -27,6 +27,7 @@ from waffle import flag_is_active
 from waffle.decorators import waffle_flag
 from waffle.models import Flag, Switch
 
+from kuma.api.v1.forms import AccountSettingsForm
 from kuma.api.v1.serializers import UserDetailsSerializer
 from kuma.core.email_utils import render_email
 from kuma.core.ga_tracking import (
@@ -52,7 +53,6 @@ from kuma.users.stripe_utils import (
 )
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 from kuma.wiki.templatetags.jinja_helpers import absolutify
-from kuma.api.v1.forms import AccountSettingsForm
 
 
 @never_cache
@@ -113,31 +113,19 @@ def whoami(request):
     return JsonResponse(data)
 
 
-# @never_cache
-# @require_GET
-# def csrf(request):
-#     """
-#     Return a JSON object representing the current user, either
-#     authenticated or anonymous.
-#     """
-#     user = request.user
-#     if not user.is_authenticated:
-#         return HttpResponseForbidden("not signed in")
-
-#     context = {
-#         "csrfmiddlewaretoken": request.META.get("CSRF_COOKIE"),
-#     }
-#     return JsonResponse(context)
-
-
 @never_cache
 def account_settings(request):
     user = request.user
     if not user.is_authenticated:
         return HttpResponseForbidden("not signed in")
     if request.method == "DELETE":
-        print("DELETE USER!!!!")
-        # user.delete()
+        # This should cease to be necessary once we get rid of the Wiki models.
+        anon, _ = User.objects.get_or_create(username="Anonymous")
+        user.revisionakismetsubmission_set.update(sender=anon)
+        user.created_revisions.update(creator=anon)
+        user.created_attachment_revisions.update(creator=anon)
+
+        user.delete()
         return JsonResponse({"deleted": True})
     elif request.method == "POST":
         form = AccountSettingsForm(request.POST)
@@ -145,7 +133,7 @@ def account_settings(request):
             return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
         set_locale = None
-        if "locale" in form.cleaned_data:
+        if form.cleaned_data.get("locale"):
             user.locale = set_locale = form.cleaned_data["locale"]
             user.save()
 
