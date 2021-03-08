@@ -9,6 +9,7 @@ from stripe.error import APIError
 from waffle.models import Flag, Switch
 from waffle.testutils import override_flag
 
+from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_CANCELED,
     ACTION_SUBSCRIPTION_CREATED,
@@ -17,8 +18,9 @@ from kuma.core.ga_tracking import (
 )
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
-from kuma.users.models import UserSubscription
+from kuma.users.models import User, UserSubscription
 from kuma.users.tests import create_user
+from kuma.wiki.models import RevisionAkismetSubmission
 
 
 @pytest.mark.parametrize("http_method", ["put", "post", "delete", "options", "head"])
@@ -679,3 +681,104 @@ def test_sendinblue_unsubscribe(mock_check_sendinblue, client):
 
     user.refresh_from_db()
     assert not user.is_newsletter_subscribed
+
+
+@pytest.mark.django_db
+def test_account_settings_auth(client):
+    url = reverse("api.v1.settings")
+    response = client.get(url)
+    assert response.status_code == 403
+    response = client.delete(url)
+    assert response.status_code == 403
+    response = client.post(url, {})
+    assert response.status_code == 403
+
+
+def test_account_settings_delete(user_client, wiki_user):
+    username = wiki_user.username
+    response = user_client.delete(reverse("api.v1.settings"))
+    assert response.status_code == 200
+    assert not User.objects.filter(username=username).exists()
+
+
+# DELETE this test once all the Wiki models are deleted.
+def test_account_settings_delete_legacy(user_client, wiki_user, root_doc):
+    # Imagine if the user still has a bunch of Wiki related models to their
+    # name. That should not block the deletion.
+    revision = root_doc.revisions.first()
+    assert revision.creator == wiki_user
+    RevisionAkismetSubmission.objects.create(sender=wiki_user)
+    attachment_revision = AttachmentRevision(
+        attachment=Attachment.objects.create(title="test attachment"),
+        file="some/path.ext",
+        mime_type="application/kuma",
+        creator=wiki_user,
+        title="test attachment",
+    )
+    attachment_revision.save()
+    assert AttachmentRevision.objects.filter(creator=wiki_user).exists()
+    username = wiki_user.username
+    response = user_client.delete(reverse("api.v1.settings"))
+    assert response.status_code == 200
+    assert not User.objects.filter(username=username).exists()
+
+
+@mock.patch("kuma.users.newsletter.tasks.create_or_update_contact.delay")
+@mock.patch("kuma.users.stripe_utils.stripe")
+def test_account_settings_delete_with_subscription(
+    mocked_stripe,
+    mock_create_or_update_newsletter_contact_delay,
+    user_client,
+    wiki_user,
+):
+    subscription_id = "sub_1234"
+    mock_subscription = mock.MagicMock()
+    mock_subscription.id = subscription_id
+    mock_customer = mock.MagicMock()
+    mock_customer.subscriptions.data.__iter__.return_value = [mock_subscription]
+    mocked_stripe.Customer.retrieve.return_value = mock_customer
+    mocked_stripe.Subscription.retrieve.return_value = mock_subscription
+
+    # Also, pretend that the user has a rich profile
+    wiki_user.stripe_customer_id = "cus_12345"
+    wiki_user.save()
+    UserSubscription.set_active(wiki_user, subscription_id)
+
+    wiki_user.is_newsletter_subscribed = False
+    wiki_user.save()
+
+    username = wiki_user.username
+    response = user_client.delete(reverse("api.v1.settings"))
+    assert response.status_code == 200
+    assert not User.objects.filter(username=username).exists()
+    assert not UserSubscription.objects.filter(stripe_subscription_id="sub_1234")
+
+
+def test_get_and_set_settings_happy_path(user_client, wiki_user):
+    url = reverse("api.v1.settings")
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert_no_cache_header(response)
+    assert response.json()["locale"] == "en-US"
+
+    response = user_client.post(url, {"locale": "zh-CN"})
+    assert response.status_code == 200
+
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert response.json()["locale"] == "zh-CN"
+
+    # You can also omit certain things and things won't be set
+    response = user_client.post(url, {})
+    assert response.status_code == 200
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert response.json()["locale"] == "zh-CN"
+
+
+def test_set_settings_validation_errors(user_client, wiki_user):
+    url = reverse("api.v1.settings")
+    response = user_client.post(url, {"locale": "never heard of"})
+    assert response.status_code == 400
+    assert response.json()["errors"]["locale"][0]["code"] == "invalid_choice"
+    assert response.json()["errors"]["locale"][0]["message"]

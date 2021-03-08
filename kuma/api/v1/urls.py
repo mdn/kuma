@@ -4,6 +4,7 @@ from . import search, views
 
 urlpatterns = [
     re_path(r"^whoami/?$", views.whoami, name="api.v1.whoami"),
+    path("settings", views.account_settings, name="api.v1.settings"),
     path("search/<locale>", search.search, name="api.v1.search_legacy"),
     path("search", search.search, name="api.v1.search"),
     path(
