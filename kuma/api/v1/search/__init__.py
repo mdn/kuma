@@ -76,7 +76,7 @@ def search(request, locale=None):
     )
     response = JsonResponse(results)
 
-    # The reasoning for caching is that most of the time, the seaches people make
+    # The reason for caching is that most of the time, the searches people make
     # are short and often stand a high chance of being reused by other users
     # in the CDN.
     # The worst that can happen is that we fill up the CDN with cached responses
@@ -84,7 +84,7 @@ def search(request, locale=None):
     # We could consider only bothering with this based on looking at the parameters.
     # For example, if someone made a search with "complex parameters" we could skip
     # cache-control because it'll just be a waste to store it (CDN and client).
-    # The reasoning for not using a "shared" cache-control, i.e. `s-max-age` is
+    # The reason for not using a "shared" cache-control, i.e. `s-max-age` is
     # because the cache-control seconds we intend to set are appropriate for both
     # the client and the CDN. If the value set is 3600 seconds, that means that
     # clients might potentially re-use their own browser cache if they trigger
