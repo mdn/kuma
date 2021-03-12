@@ -36,34 +36,6 @@ def test_init_non_english():
     assert source.locale == "fr"
 
 
-def test_gather_homepage(client, db):
-    source = LinksSource("/")
-    html = client.get("/en-US/", HTTP_HOST=settings.WIKI_HOST).content
-    requester = mock_requester(content=html)
-    storage = mock_storage()
-    resources = source.gather(requester, storage)
-    assert source.state == source.STATE_DONE
-    assert source.freshness == source.FRESH_YES
-
-    # The exact list of resources will change as the homepage changes
-    expected_paths = [
-        "/en-US/docs/Learn",
-        "/en-US/docs/Tools",
-        "/en-US/docs/Web/JavaScript",
-    ]
-    for path in expected_paths:
-        spec = ("document", path, {})
-        assert spec in resources
-
-    # These appear on the homepage, but shouldn't be in the paths to scrape
-    unexpected_paths = [
-        "/en-US/search",
-    ]
-    for path in unexpected_paths:
-        spec = ("document", path, {})
-        assert spec not in resources
-
-
 def test_gather_ignores_links(client, root_doc, simple_user):
     user_profile_url = simple_user.get_absolute_url()
     content = (

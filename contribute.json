@@ -1,6 +1,6 @@
 {
     "name": "Kuma",
-    "description": "The app powering MDN Web Docs.",
+    "description": "The backend app powering MDN Web Docs.",
     "repository": {
         "url": "https://github.com/mdn/kuma",
         "license": "MPL-2.0",
@@ -24,13 +24,7 @@
     },
     "keywords": [
         "python",
-        "node.js",
-        "sass",
         "django",
-        "html5",
-        "jquery",
-        "react",
-        "ckeditor",
         "docker",
         "mysql",
         "elasticsearch"
