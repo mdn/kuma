@@ -13,7 +13,6 @@ from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
 from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
-from kuma.landing.urls import lang_urlpatterns as landing_lang_urlpatterns
 from kuma.payments.urls import lang_urlpatterns as payments_lang_urlpatterns
 from kuma.users.urls import lang_urlpatterns as users_lang_urlpatterns
 from kuma.wiki.admin import purge_view
@@ -33,10 +32,6 @@ handler404 = core_views.handler404
 handler500 = core_views.handler500
 
 urlpatterns = [re_path("", include("kuma.health.urls"))]
-# The non-locale-based landing URL's
-urlpatterns += [re_path("", include("kuma.landing.urls"))]
-# The locale-based landing URL's
-urlpatterns += i18n_patterns(re_path("", include(landing_lang_urlpatterns)))
 urlpatterns += i18n_patterns(
     re_path(
         r"^events",
