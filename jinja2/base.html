@@ -16,7 +16,6 @@
   {% include "includes/preload.html" %}
 
   {%- if not untrusted %}
-    <link rel="home" href="{{ url('home') }}">
     <link rel="license" href="#license">
   {% endif %}
 
@@ -103,7 +102,7 @@
 
     <!-- Header -->
     <header id="main-header" class="header-main">
-      <a href="{{ url('home') }}" class="logo">{{ _('MDN Web Docs') }}</a>
+      <a href="/" class="logo">{{ _('MDN Web Docs') }}</a>
       <div class="nav-toolbox-wrapper">
         {% include "includes/header-main-nav.html" %}
         {% include "includes/header-toolbox.html" %}
