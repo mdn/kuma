@@ -164,36 +164,6 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         assert response.status_code == 302
         assert_no_cache_header(response)
 
-        # The rest of this test simply gets and checks the wiki home page.
-        response = self.client.get(
-            response["Location"], follow=True, HTTP_HOST=settings.WIKI_HOST
-        )
-        assert response.status_code == 200
-
-        user_url = reverse("users.user_detail", kwargs={"username": username})
-        logout_url = reverse("account_logout")
-        home_url = reverse("home")
-        signout_url = urlparams(logout_url)
-        parsed = pq(response.content)
-
-        login_info = parsed.find(".login")
-        # Check login user url is there
-        user_link = login_info.children(".user-url")
-        assert user_link.attr["href"] == user_url
-
-        form = login_info.find("form")
-        # There should be signout link in the form action
-        expected = signout_url.replace("%2F", "/")  # decode slashes
-        assert form.attr["action"] == expected
-        assert form.attr["method"] == "post"
-        # Check next url is provided as input field
-        next_input = form.children("input[name='next']")
-        assert next_input.val() == home_url
-        # Ensure CSRF protection has not been added, since it creates problems
-        # when used with a CDN like CloudFront (see bugzilla #1456165).
-        csrf_input = form.children("input[name='csrfmiddlewaretoken']")
-        assert not csrf_input
-
 
 class BanTestCase(UserTestCase):
     def test_common_reasons_in_template(self):

@@ -1,5 +1,6 @@
 from django import http
 from django.conf import settings
+from django.utils.cache import patch_cache_control
 from elasticsearch import exceptions
 from elasticsearch_dsl import Q, query, Search
 from redo import retrying
@@ -7,6 +8,12 @@ from redo import retrying
 from kuma.api.v1.decorators import allow_CORS_GET
 
 from .forms import SearchForm
+
+# This is the number of seconds to be put into the Cache-Control max-age header
+# if the search is successful.
+# We can increase the number as we feel more and more comfortable with how
+# the `/api/v1/search` works.
+SEARCH_CACHE_CONTROL_MAX_AGE = 60 * 60 * 12
 
 
 class JsonResponse(http.JsonResponse):
@@ -67,7 +74,25 @@ def search(request, locale=None):
         params,
         make_suggestions=make_suggestions,
     )
-    return JsonResponse(results)
+    response = JsonResponse(results)
+
+    # The reason for caching is that most of the time, the searches people make
+    # are short and often stand a high chance of being reused by other users
+    # in the CDN.
+    # The worst that can happen is that we fill up the CDN with cached responses
+    # that end up being stored there and never reused by another user.
+    # We could consider only bothering with this based on looking at the parameters.
+    # For example, if someone made a search with "complex parameters" we could skip
+    # cache-control because it'll just be a waste to store it (CDN and client).
+    # The reason for not using a "shared" cache-control, i.e. `s-max-age` is
+    # because the cache-control seconds we intend to set are appropriate for both
+    # the client and the CDN. If the value set is 3600 seconds, that means that
+    # clients might potentially re-use their own browser cache if they trigger
+    # a repeated search. And it's an appropriate number for the CDN too.
+    # For more info about how our search patterns behave,
+    # see https://github.com/mdn/kuma/issues/7799
+    patch_cache_control(response, public=True, max_age=SEARCH_CACHE_CONTROL_MAX_AGE)
+    return response
 
 
 def _find(params, total_only=False, make_suggestions=False, min_suggestion_score=0.8):

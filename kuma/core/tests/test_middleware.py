@@ -13,35 +13,6 @@ from ..middleware import (
 )
 
 
-@pytest.mark.parametrize("path", ("/missing_url", "/missing_url/"))
-def test_slash_middleware_keep_404(client, db, path):
-    """The SlashMiddleware retains 404s."""
-    response = client.get(path)
-    assert response.status_code == 404
-
-
-def test_slash_middleware_removes_slash(client, db):
-    """The SlashMiddleware fixes a URL that shouldn't have a trailing slash."""
-    response = client.get("/contribute.json/")
-    assert response.status_code == 301
-    assert response["Location"].endswith("/contribute.json")
-
-
-@pytest.mark.parametrize("path", ("/admin", "/en-US"))
-def test_slash_middleware_adds_slash(path, client, db):
-    """The SlashMiddleware fixes a URL that should have a trailing slash."""
-    response = client.get(path)
-    assert response.status_code == 301
-    assert response["Location"].endswith(path + "/")
-
-
-def test_slash_middleware_retains_querystring(client, db):
-    """The SlashMiddleware handles encoded querystrings."""
-    response = client.get("/contribute.json/?xxx=%C3%83")
-    assert response.status_code == 301
-    assert response["Location"].endswith("/contribute.json?xxx=%C3%83")
-
-
 @pytest.mark.parametrize(
     "forwarded_for,remote_addr",
     (("1.1.1.1", "1.1.1.1"), ("2.2.2.2", "2.2.2.2"), ("3.3.3.3, 4.4.4.4", "3.3.3.3")),

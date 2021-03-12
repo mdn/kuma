@@ -1,13 +1,10 @@
-from unittest import mock
 from urllib.parse import urlparse
 
 import pytest
 from django.core.cache import cache
-from ratelimit.exceptions import Ratelimited
 
 from kuma.core.tests import (
     assert_no_cache_header,
-    assert_redirect_to_wiki,
     assert_shared_cache_header,
 )
 from kuma.core.urlresolvers import reverse
@@ -18,39 +15,6 @@ def cleared_cache():
     cache.clear()
     yield cache
     cache.clear()
-
-
-def test_contribute_json(client, db):
-    response = client.get(reverse("contribute_json"))
-    response.close()  # Discard response body; prevents an unclosed file warning
-    assert response.status_code == 200
-    assert_shared_cache_header(response)
-    assert response["Content-Type"].startswith("application/json")
-
-
-@pytest.mark.parametrize("case", ("DOMAIN", "WIKI_HOST"))
-def test_home(client, db, settings, case):
-    response = client.get(
-        reverse("home", locale="en-US"), HTTP_HOST=getattr(settings, case)
-    )
-    assert response.status_code == 200
-    assert_shared_cache_header(response)
-    if case == "WIKI_HOST":
-        expected_template = "landing/homepage.html"
-    else:
-        expected_template = "landing/react_homepage.html"
-    assert expected_template in (t.name for t in response.templates)
-
-
-@mock.patch("kuma.landing.views.render")
-def test_home_when_rate_limited(mock_render, client, db):
-    """
-    Cloudfront CDN's don't cache 429's, but let's test this anyway.
-    """
-    mock_render.side_effect = Ratelimited()
-    response = client.get(reverse("home"))
-    assert response.status_code == 429
-    assert_no_cache_header(response)
 
 
 @pytest.mark.parametrize("mode", ["maintenance", "normal"])
@@ -66,12 +30,6 @@ def test_maintenance_mode(db, client, settings, mode):
         assert "Location" in response
         assert urlparse(response["Location"]).path == "/en-US/"
     assert_no_cache_header(response)
-
-
-def test_promote_buttons(client, db):
-    response = client.get(reverse("promote_buttons"), follow=True)
-    assert response.status_code == 200
-    assert_shared_cache_header(response)
 
 
 def test_robots_not_allowed(client):
@@ -137,11 +95,3 @@ def test_favicon_ico(client, settings):
     assert response.status_code == 302
     assert_shared_cache_header(response)
     assert response["Location"] == "/static/img/favicon32-local.png"
-
-
-@pytest.mark.parametrize("endpoint", ["maintenance_mode", "promote", "promote_buttons"])
-def test_redirect(client, endpoint):
-    """Redirect to the wiki domain if not already."""
-    url = reverse(endpoint)
-    response = client.get(url)
-    assert_redirect_to_wiki(response, url)

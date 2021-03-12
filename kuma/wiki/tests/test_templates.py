@@ -4,7 +4,7 @@ from urllib.parse import quote
 
 import pytest
 from django.conf import settings
-from django.contrib.auth.models import AnonymousUser, Group
+from django.contrib.auth.models import AnonymousUser
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.shortcuts import render
@@ -19,7 +19,6 @@ from kuma.core.tests import (
 )
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
-from kuma.users.models import User
 from kuma.users.tests import UserTestCase
 
 from . import (
@@ -473,48 +472,6 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         assert self.ga_create in content
         dim17 = "ga('set', 'dimension17',"
         assert dim17 not in content
-
-    def test_anon_user(self):
-        response = self.client.get("/en-US/", HTTP_HOST=settings.WIKI_HOST)
-        assert response.status_code == 200
-        content = response.content.decode(response.charset)
-        assert self.ga_create in content
-        assert self.dim1 not in content
-        assert self.dim2 not in content
-        assert self.dim18 not in content
-
-    def test_regular_user(self):
-        assert self.client.login(username="testuser", password="testpass")
-        response = self.client.get("/en-US/", HTTP_HOST=settings.WIKI_HOST)
-        assert response.status_code == 200
-        content = response.content.decode(response.charset)
-        assert self.ga_create in content
-        assert self.dim1 in content
-        assert self.dim2 not in content
-        assert self.dim18 not in content
-
-    def test_beta_user(self):
-        testuser = User.objects.get(username="testuser")
-        beta = Group.objects.get(name="Beta Testers")
-        testuser.groups.add(beta)
-        assert self.client.login(username="testuser", password="testpass")
-        response = self.client.get("/en-US/", HTTP_HOST=settings.WIKI_HOST)
-        assert response.status_code == 200
-        content = response.content.decode(response.charset)
-        assert self.ga_create in content
-        assert self.dim1 in content
-        assert self.dim2 in content
-        assert self.dim18 not in content
-
-    def test_staff_user(self):
-        assert self.client.login(username="admin", password="testpass")
-        response = self.client.get("/en-US/", HTTP_HOST=settings.WIKI_HOST)
-        assert response.status_code == 200
-        content = response.content.decode(response.charset)
-        assert self.ga_create in content
-        assert self.dim1 in content
-        assert self.dim2 not in content
-        assert self.dim18 in content
 
 
 def test_revision_template(root_doc, client):
