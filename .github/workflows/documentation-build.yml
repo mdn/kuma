@@ -15,7 +15,7 @@ jobs:
         with:
           submodules: 'true'
 
-      - uses: technote-space/get-diff-action@v3
+      - uses: technote-space/get-diff-action@v4.1
         id: git_diff_content
         with:
           PREFIX_FILTER: docs/
