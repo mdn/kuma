@@ -4,7 +4,7 @@
 # These should stay synced with other requirements files
 Babel==2.8.0
 docutils==0.12
-Jinja2==2.11.1
+Jinja2==2.11.3
 pytz==2018.5
 
 # These requirements are unique to docs
