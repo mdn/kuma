@@ -122,8 +122,13 @@ def account_settings(request):
         # This should cease to be necessary once we get rid of the Wiki models.
         anon, _ = User.objects.get_or_create(username="Anonymous")
         user.revisionakismetsubmission_set.update(sender=anon)
+        user.documentdeletionlog_set.update(user=anon)
+        user.documentspamattempt_set.update(user=anon)
+        user.documentspam_reviewed.update(reviewer=anon)
         user.created_revisions.update(creator=anon)
         user.created_attachment_revisions.update(creator=anon)
+        user.bans.update(user=anon)
+        user.bans_issued.update(by=anon)
 
         user.delete()
         return JsonResponse({"deleted": True})

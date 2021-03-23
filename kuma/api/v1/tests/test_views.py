@@ -18,9 +18,13 @@ from kuma.core.ga_tracking import (
 )
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
-from kuma.users.models import User, UserSubscription
+from kuma.users.models import User, UserBan, UserSubscription
 from kuma.users.tests import create_user
-from kuma.wiki.models import RevisionAkismetSubmission
+from kuma.wiki.models import (
+    DocumentDeletionLog,
+    DocumentSpamAttempt,
+    RevisionAkismetSubmission,
+)
 
 
 @pytest.mark.parametrize("http_method", ["put", "post", "delete", "options", "head"])
@@ -707,7 +711,28 @@ def test_account_settings_delete_legacy(user_client, wiki_user, root_doc):
     # name. That should not block the deletion.
     revision = root_doc.revisions.first()
     assert revision.creator == wiki_user
-    RevisionAkismetSubmission.objects.create(sender=wiki_user)
+
+    revision_akismet_submission = RevisionAkismetSubmission.objects.create(
+        sender=wiki_user, type="spam"
+    )
+    document_deletion_log = DocumentDeletionLog.objects.create(
+        locale="any", slug="Any/Thing", user=wiki_user, reason="..."
+    )
+    document_spam_attempt_user = DocumentSpamAttempt.objects.create(
+        user=wiki_user,
+    )
+    throwaway_user = User.objects.create(username="throwaway")
+    document_spam_attempt_reviewer = DocumentSpamAttempt.objects.create(
+        user=throwaway_user,
+        reviewer=wiki_user,
+    )
+    user_ban_by = UserBan.objects.create(user=throwaway_user, by=wiki_user)
+    user_ban_user = UserBan.objects.create(
+        user=wiki_user,
+        by=throwaway_user,
+        is_active=False,  # otherwise it logs the user out
+    )
+
     attachment_revision = AttachmentRevision(
         attachment=Attachment.objects.create(title="test attachment"),
         file="some/path.ext",
@@ -721,6 +746,20 @@ def test_account_settings_delete_legacy(user_client, wiki_user, root_doc):
     response = user_client.delete(reverse("api.v1.settings"))
     assert response.status_code == 200
     assert not User.objects.filter(username=username).exists()
+
+    # Moved to anonymous user
+    revision_akismet_submission.refresh_from_db()
+    assert revision_akismet_submission.sender.username == "Anonymous"
+    document_deletion_log.refresh_from_db()
+    assert document_deletion_log.user.username == "Anonymous"
+    document_spam_attempt_user.refresh_from_db()
+    assert document_spam_attempt_user.user.username == "Anonymous"
+    document_spam_attempt_reviewer.refresh_from_db()
+    assert document_spam_attempt_reviewer.reviewer.username == "Anonymous"
+    user_ban_by.refresh_from_db()
+    assert user_ban_by.by.username == "Anonymous"
+    user_ban_user.refresh_from_db()
+    assert user_ban_user.user.username == "Anonymous"
 
 
 @mock.patch("kuma.users.newsletter.tasks.create_or_update_contact.delay")
