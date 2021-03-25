@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
-from django.core.validators import ValidationError, validate_email
+from django.core.validators import validate_email, ValidationError
 from django.db import IntegrityError, transaction
 from django.http import (
     HttpResponseBadRequest,
