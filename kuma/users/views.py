@@ -14,13 +14,14 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
-from django.core.validators import validate_email, ValidationError
+from django.core.validators import ValidationError, validate_email
 from django.db import IntegrityError, transaction
 from django.http import (
     HttpResponseBadRequest,
     HttpResponseForbidden,
     HttpResponseRedirect,
 )
+from django.middleware.csrf import get_token
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -844,7 +845,7 @@ class SignupView(BaseSignupView):
             params = {
                 "next": next_url,
                 "user_details": json.dumps(safe_user_details),
-                "csrfmiddlewaretoken": request.META.get("CSRF_COOKIE"),
+                "csrfmiddlewaretoken": get_token(request),
                 "provider": account.get("provider"),
             }
             yari_signup_url = f"{next_url_prefix}/{request.LANGUAGE_CODE}/signup"
