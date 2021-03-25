@@ -21,6 +21,7 @@ from django.http import (
     HttpResponseForbidden,
     HttpResponseRedirect,
 )
+from django.middleware.csrf import get_token
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -844,7 +845,7 @@ class SignupView(BaseSignupView):
             params = {
                 "next": next_url,
                 "user_details": json.dumps(safe_user_details),
-                "csrfmiddlewaretoken": request.META.get("CSRF_COOKIE"),
+                "csrfmiddlewaretoken": get_token(request),
                 "provider": account.get("provider"),
             }
             yari_signup_url = f"{next_url_prefix}/{request.LANGUAGE_CODE}/signup"
