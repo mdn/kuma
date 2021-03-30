@@ -20,6 +20,7 @@ from django.http import (
     HttpResponseBadRequest,
     HttpResponseForbidden,
     HttpResponseRedirect,
+    JsonResponse,
 )
 from django.middleware.csrf import get_token
 from django.shortcuts import get_object_or_404, redirect, render
@@ -757,15 +758,7 @@ class SignupView(BaseSignupView):
             )
         is_yari_signup = self.request.session.get("yari_signup", False)
         if is_yari_signup:
-            # Have to redirect instead of rendering HTML.
-            next_url = self.request.session.get("sociallogin_next_url")
-            next_url_prefix = self.get_next_url_prefix(self.request)
-            params = {
-                "next": next_url,
-                "errors": form.errors.as_json(),
-            }
-            yari_signup_url = f"{next_url_prefix}/{self.request.LANGUAGE_CODE}/signup"
-            return redirect(yari_signup_url + "?" + urlencode(params))
+            return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
         return super().form_invalid(form)
 
