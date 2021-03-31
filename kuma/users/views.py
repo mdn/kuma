@@ -689,7 +689,7 @@ class SignupView(BaseSignupView):
         is_yari_signup = self.request.session.get("yari_signup", False)
         if is_yari_signup:
 
-            if not email:
+            if not email and extra_email_addresses:
                 # Pick the first primary email.
                 for data in extra_email_addresses:
                     if data["primary"]:
@@ -697,8 +697,7 @@ class SignupView(BaseSignupView):
                         break
                 else:
                     # Pick the first non-primary email.
-                    for data in extra_email_addresses:
-                        email = data["email"]
+                    email = extra_email_addresses[0]["email"]
 
             form.initial["email"] = email
 
