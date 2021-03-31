@@ -690,10 +690,16 @@ class SignupView(BaseSignupView):
         if is_yari_signup:
 
             if not email:
+                # Pick the first primary email.
                 for data in extra_email_addresses:
-                    if data["primary"] or not email:
+                    if data["primary"]:
                         email = data["email"]
                         break
+                else:
+                    # Pick the first non-primary email.
+                    for data in extra_email_addresses:
+                        email = data["email"]
+
             form.initial["email"] = email
 
             form.data = form.data.copy()
