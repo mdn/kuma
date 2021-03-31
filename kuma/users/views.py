@@ -686,9 +686,22 @@ class SignupView(BaseSignupView):
 
         # This magic sauce only exists whilst this Django view is being used
         # both by Yari (in testing) and by old Kuma (production).
-        # Once Kuma id divorced from doing any
+        # Once Kuma is divorced from doing any HTML rendering, we can refactor this.
         is_yari_signup = self.request.session.get("yari_signup", False)
         if is_yari_signup:
+
+            if not email and extra_email_addresses:
+                # Pick the first primary email.
+                for data in extra_email_addresses:
+                    if data["primary"]:
+                        email = data["email"]
+                        break
+                else:
+                    # Pick the first non-primary email.
+                    email = extra_email_addresses[0]["email"]
+
+            form.initial["email"] = email
+
             form.data = form.data.copy()
             for key in form.initial:
                 if key not in form.data and form.initial[key]:
@@ -704,7 +717,6 @@ class SignupView(BaseSignupView):
         We send our welcome email via celery during complete_signup.
         So, we need to manually commit the user to the db for it.
         """
-
         selected_email = form.cleaned_data["email"]
         if selected_email in self.email_addresses:
             data = self.email_addresses[selected_email]
