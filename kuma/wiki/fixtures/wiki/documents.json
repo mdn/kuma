@@ -345,14 +345,5 @@
             "tag": 101,
             "content_object": 2
         }
-    },
-    {
-        "pk": 1007,
-        "model": "taggit.taggeditem",
-        "fields": {
-            "tag": 101,
-            "content_type": ["search", "filter"],
-            "object_id": 1
-        }
     }
 ]

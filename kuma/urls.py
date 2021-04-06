@@ -15,10 +15,6 @@ from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
 from kuma.landing.urls import lang_urlpatterns as landing_lang_urlpatterns
 from kuma.payments.urls import lang_urlpatterns as payments_lang_urlpatterns
-from kuma.search.urls import (
-    lang_base_urlpatterns as search_lang_base_urlpatterns,
-    lang_urlpatterns as search_lang_urlpatterns,
-)
 from kuma.users.urls import lang_urlpatterns as users_lang_urlpatterns
 from kuma.wiki.admin import purge_view
 from kuma.wiki.urls import lang_urlpatterns as wiki_lang_urlpatterns
@@ -78,8 +74,6 @@ else:
         re_path(r"^admin/", admin.site.urls),
     ]
 
-urlpatterns += i18n_patterns(re_path(r"^search/", include(search_lang_urlpatterns)))
-urlpatterns += i18n_patterns(re_path(r"^search", include(search_lang_base_urlpatterns)))
 urlpatterns += i18n_patterns(
     re_path(r"^docs.json$", document_as_json, name="wiki.json")
 )

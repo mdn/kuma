@@ -21,7 +21,6 @@
 
   {% include "includes/preload.html" %}
 
-  <link rel="home" href="{{ url('home') }}">
   <link rel="license" href="#license">
 
   {% block site_css %}
@@ -104,15 +103,15 @@
     <!-- Footer -->
     <footer id="nav-footer" class="nav-footer">
       <div class="content-container">
-        <a href="{{ url('home') }}" class="nav-footer-logo">{{ _('MDN Web Docs') }}</a>
-        
+        <a href="/" class="nav-footer-logo">{{ _('MDN Web Docs') }}</a>
+
         <ul class="link-list-mdn">
           <li><a href="{{ wiki_url('Web') }}">{{ _('Web Technologies') }}</a></li>
           <li><a href="{{ wiki_url('Learn') }}">{{ _('Learn Web Development') }}</a></li>
           <li><a href="/docs/MDN/About">{{ _('About MDN') }}</a></li>
           <li><a href="{{ wiki_url('MDN/Feedback') }}">{{ _('Feedback') }}</a></li>
         </ul>
-        
+
         <ul class="link-list-moz">
           <li><a href="https://www.mozilla.org/about/" target="_blank" rel="noopener noreferrer">{{ _('About') }}</a></li>
           <li><a href="https://shop.spreadshirt.com/mdn-store/" target="_blank" rel="noopener noreferrer">MDN Web Docs Store</a></li>
@@ -121,7 +120,7 @@
               href="https://www.mozilla.org/firefox/?utm_source=developer.mozilla.org&utm_campaign=footer&utm_medium=referral" target="_blank" rel="noopener noreferrer">Firefox</a>
           </li>
         </ul>
-        
+
         <div class="social social-mdn">
           <h4>{{ _('MDN') }}</h4>
           <ul>
@@ -137,7 +136,7 @@
             </li>
           </ul>
         </div>
-        
+
         <div class="social social-moz">
           <h4>{{ _('Mozilla') }}</h4>
           <ul>
@@ -153,14 +152,14 @@
             </li>
           </ul>
         </div>
-        
+
         <div id="license" class="footer-license">
           {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
           &copy; 2005-{{ thisyear }} Mozilla and individual contributors. Content is available
           under <a href="{{ copyright_url }}">these licenses</a>.
           {% endtrans %}
         </div>
-        
+
         <ul class="footer-legal">
           <li>
             <a href="https://www.mozilla.org/about/legal/terms/mozilla" target="_blank" rel="noopener noreferrer">{{ _('Terms') }}</a>

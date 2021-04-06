@@ -28,7 +28,6 @@ from kuma.core.decorators import (
 )
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import is_wiki, redirect_to_wiki, urlparams
-from kuma.search.store import get_search_url_from_referer
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 from .utils import split_slug
@@ -834,7 +833,6 @@ def wiki_document(request, document_slug, document_locale):
             "seo_summary": seo_summary,
             "seo_parent_title": seo_parent_title,
             "share_text": share_text,
-            "search_url": get_search_url_from_referer(request) or "",
             "analytics_page_revision": doc.current_revision_id,
             "analytics_en_slug": en_slug,
             "content_experiment": rendering_params["experiment"],
