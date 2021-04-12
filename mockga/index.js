@@ -9,7 +9,7 @@ const express = require('express');
 const chalk = require('chalk');
 
 const app = express();
-const port = parseInt(process.env.PORT || '7000');
+const port = parseInt(process.env.PORT || '7777');
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
