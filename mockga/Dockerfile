@@ -3,7 +3,7 @@ COPY . /app
 WORKDIR /app
 RUN yarn install
 
-ENV PORT=7000
+ENV PORT=7777
 EXPOSE $PORT
 
 CMD yarn run start

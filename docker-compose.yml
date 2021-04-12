@@ -54,7 +54,7 @@ services:
       - SSR_PORT=8000
       - SSR_URL=http://ssr:8000/ssr
       - SSR_TIMEOUT=1
-      - GOOGLE_ANALYTICS_TRACKING_URL=http://mockga:7000/collect
+      - GOOGLE_ANALYTICS_TRACKING_URL=http://mockga:7777/collect
 
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
@@ -160,7 +160,7 @@ services:
       context: mockga
       dockerfile: Dockerfile
     ports:
-      - "7000:7000"
+      - "7777:7777"
 
 volumes:
     miniodata:
