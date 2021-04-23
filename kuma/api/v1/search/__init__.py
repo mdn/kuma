@@ -13,7 +13,7 @@ from .forms import SearchForm
 # if the search is successful.
 # We can increase the number as we feel more and more comfortable with how
 # the `/api/v1/search` works.
-SEARCH_CACHE_CONTROL_MAX_AGE = 60 * 60 * 12
+SEARCH_CACHE_CONTROL_MAX_AGE = 60 * 60 * 24
 
 
 class JsonResponse(http.JsonResponse):
