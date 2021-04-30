@@ -1593,15 +1593,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         """Tests multiple sequential valid transalation edits that occur as Ajax POSTs."""
         self.test_multiple_edits_ajax(translate_locale="es")
 
-    # test translation fails as well
-    def test_translation_midair_collission(self):
-        """Tests midair collisions for non-ajax translation revisions."""
-        self.test_edit_midair_collisions(is_ajax=False, translate_locale="ca")
-
-    def test_translation_midair_collission_ajax(self):
-        """Tests midair collisions for ajax translation revisions."""
-        self.test_edit_midair_collisions(is_ajax=True, translate_locale="it")
-
     def test_toc_toggle_off(self):
         """Toggling of table of contents in revisions"""
         self.client.login(username="admin", password="testpass")

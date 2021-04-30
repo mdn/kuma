@@ -253,55 +253,6 @@ class DocumentTests(UserTestCase, WikiTestCase):
         assert 200 == response.status_code
         assert b'<div class="page-toc">' not in response.content
 
-    def test_lang_switcher_footer(self):
-        """Test the language switcher footer"""
-        parent = document(locale=settings.WIKI_DEFAULT_LANGUAGE, save=True)
-        trans_bn = document(parent=parent, locale="bn", save=True)
-        trans_ar = document(parent=parent, locale="ar", save=True)
-        trans_pt_br = document(parent=parent, locale="pt-BR", save=True)
-        trans_fr = document(parent=parent, locale="fr", save=True)
-
-        response = self.client.get(
-            trans_pt_br.get_absolute_url(), HTTP_HOST=settings.WIKI_HOST
-        )
-        assert 200 == response.status_code
-        doc = pq(response.content)
-        options = doc(".languages.go select.wiki-l10n option")
-
-        # The requeseted document language name should be at first
-        assert trans_pt_br.language in options[0].text
-        assert parent.language not in options[0].text
-        # The parent document language should be at at second
-        assert parent.language in options[1].text
-        assert trans_ar.language not in options[1].text
-        # Then should be ar, bn, fr
-        assert trans_ar.language in options[2].text
-        assert trans_bn.language in options[3].text
-        assert trans_fr.language in options[4].text
-
-    def test_lang_switcher_button(self):
-        parent = document(locale=settings.WIKI_DEFAULT_LANGUAGE, save=True)
-        trans_bn = document(parent=parent, locale="bn", save=True)
-        trans_ar = document(parent=parent, locale="ar", save=True)
-        trans_pt_br = document(parent=parent, locale="pt-BR", save=True)
-        trans_fr = document(parent=parent, locale="fr", save=True)
-
-        response = self.client.get(
-            trans_pt_br.get_absolute_url(), HTTP_HOST=settings.WIKI_HOST
-        )
-        assert 200 == response.status_code
-        doc = pq(response.content)
-        options = doc("#languages-menu-submenu ul#translations li a")
-
-        # The requeseted document language name should not be at button
-        assert trans_pt_br.language not in options[0].text
-        # Parent document language name should be at first
-        assert parent.language in options[0].text
-        # Then should be ar, bn, fr
-        assert trans_ar.language in options[1].text
-        assert trans_bn.language in options[2].text
-        assert trans_fr.language in options[3].text
-
     def test_experiment_document_view(self):
         slug = EXPERIMENT_TITLE_PREFIX + "Test"
         r = revision(save=True, content="Experiment.", is_approved=True, slug=slug)

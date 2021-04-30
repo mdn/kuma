@@ -144,37 +144,14 @@ LANGUAGE_CODE = "en-US"
 # Candidate locales should be included here and in CANDIDATE_LOCALES
 ACCEPTED_LOCALES = (
     "en-US",  # English
-    "ar",  # Arabic
-    "bg",  # Bulgarian
-    "bm",  # Bambara
-    "bn",  # Bengali
-    "ca",  # Catalan
     "de",  # German
-    "el",  # Greek
     "es",  # Spanish
-    "fa",  # Persian
-    "fi",  # Finnish
     "fr",  # French
-    "he",  # Hebrew
-    "hi-IN",  # Hindi (India)
-    "hu",  # Hungarian
-    "id",  # Indonesian
-    "it",  # Italian
     "ja",  # Japanese
-    "kab",  # Kabyle
     "ko",  # Korean
-    "ms",  # Malay
-    "my",  # Burmese
-    "nl",  # Dutch
     "pl",  # Polish
-    "pt-PT",  # Portuguese (Portugal)
     "pt-BR",  # Portuguese (Brazil)
     "ru",  # Russian
-    "sv-SE",  # Swedish (Sweden)
-    "th",  # Thai
-    "tr",  # Turkish
-    "uk",  # Ukranian
-    "vi",  # Vietnamese
     "zh-CN",  # Chinese (China)
     "zh-TW",  # Chinese (Taiwan, Province of China)
 )
@@ -182,7 +159,6 @@ ACCEPTED_LOCALES = (
 # When there are multiple options for a given language, this gives the
 # preferred locale for that language (language => preferred locale).
 PREFERRED_LOCALE = {
-    "pt": "pt-PT",
     "zh": "zh-CN",
 }
 
@@ -206,7 +182,7 @@ else:
         locale for locale in ACCEPTED_LOCALES if locale not in CANDIDATE_LOCALES
     ]
 
-RTL_LANGUAGES = ("ar", "fa", "he")
+RTL_LANGUAGES = ()
 
 # Override generic locale handling with explicit mappings.
 # Keys are the requested locale (lowercase); values are the delivered locale.

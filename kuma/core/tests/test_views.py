@@ -62,7 +62,7 @@ def test_setting_language_cookie_disallowed_methods(client, http_method):
 
 def test_setting_language_cookie_working(client):
     url = reverse("set-language-cookie")
-    response = client.post(url, {"language": "bn"})
+    response = client.post(url, {"language": "ja"})
     assert response.status_code == 204
     assert_no_cache_header(response)
 
@@ -70,7 +70,7 @@ def test_setting_language_cookie_working(client):
 
     # Check language cookie is set
     assert lang_cookie
-    assert lang_cookie.value == "bn"
+    assert lang_cookie.value == "ja"
     # Check that the max-age from the cookie is the same as our settings
     assert lang_cookie["max-age"] == settings.LANGUAGE_COOKIE_AGE
 

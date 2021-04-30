@@ -13,21 +13,12 @@ def test_accepted_locales():
 
 @pytest.mark.parametrize(
     "primary,secondary",
-    (
-        ("pt-PT", "pt-BR"),
-        ("zh-CN", "zh-TW"),
-    ),
+    (("zh-CN", "zh-TW"),),
 )
 def test_preferred_locale_codes(primary, secondary):
     assert settings.ACCEPTED_LOCALES.index(primary) < settings.ACCEPTED_LOCALES.index(
         secondary
     )
-
-
-@pytest.mark.parametrize("locale", settings.RTL_LANGUAGES)
-def test_rtl_languages(locale):
-    """Check that each RTL language is also a supported locale."""
-    assert locale in settings.ACCEPTED_LOCALES
 
 
 @pytest.mark.parametrize("alias,locale", settings.LOCALE_ALIASES.items())

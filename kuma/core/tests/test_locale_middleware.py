@@ -22,7 +22,7 @@ WEIGHTED_ACCEPT_CASES = (
     ("fr, en-US;q=0.5", "fr"),  # Exact match of non-English language
     ("fr-FR, de-DE;q=0.5", "fr"),  # Highest locale-specific match wins
     ("fr-FR, de;q=0.5", "fr"),  # First generic match wins
-    ("pt, fr;q=0.5", "pt-PT"),  # Generic Portuguese matches pt-PT
+    ("pt, fr;q=0.5", "pt-BR"),  # Generic Portuguese matches pt-BR
     ("pt-BR, en-US;q=0.5", "pt-BR"),  # Portuguese-Brazil matches
     ("qaz-ZZ, fr-FR;q=0.5", "fr"),  # Respect partial match on prefix
     ("qaz-ZZ, qaz;q=0.5", False),  # No matches gets default en-US
@@ -36,8 +36,8 @@ PICKER_CASES = (
 )
 REDIRECT_CASES = [
     ("cn", "zh-CN"),  # General to locale-specific in different general locale
-    ("pt", "pt-PT"),  # General to locale-specific
-    ("PT", "pt-PT"),  # It does a case-insensitive comparison
+    ("pt", "pt-BR"),  # General to locale-specific
+    ("PT", "pt-BR"),  # It does a case-insensitive comparison
     ("fr-FR", "fr"),  # Country-specific to language-only
     ("Fr-fr", "fr"),  # It does a case-insensitive comparison
     ("en", "en-US"),  # Ensure that en redirects to en-US, case insensitive
@@ -89,17 +89,17 @@ def test_locale_middleware_fixer_confusion(client, db):
 
 def test_locale_middleware_language_cookie(client, db):
     """The LocaleMiddleware uses the language cookie over the header."""
-    client.cookies.load({settings.LANGUAGE_COOKIE_NAME: "bn"})
+    client.cookies.load({settings.LANGUAGE_COOKIE_NAME: "ja"})
     response = client.get("/", HTTP_ACCEPT_LANGUAGE="fr")
     assert response.status_code == 301
-    assert response["Location"] == "/bn/"
+    assert response["Location"] == "/ja/"
     assert_shared_cache_header(response)
 
 
 @pytest.mark.parametrize("path", ("/", "/en-US/"))
 def test_lang_selector_middleware(path, client):
     """The LangSelectorMiddleware redirects on the ?lang query first."""
-    client.cookies.load({settings.LANGUAGE_COOKIE_NAME: "bn"})
+    client.cookies.load({settings.LANGUAGE_COOKIE_NAME: "ja"})
     response = client.get(f"{path}?lang=fr", HTTP_ACCEPT_LANGUAGE="en;q=0.9, fr;q=0.8")
     assert response.status_code == 302
     assert response["Location"] == "/fr/"

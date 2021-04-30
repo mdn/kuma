@@ -11,11 +11,8 @@ from ..models import Document, Revision
 
 
 HREFLANG_TEST_CASES = {
-    "no-country": [["ar", "ca", "he"], ["ar", "ca", "he"]],
-    "single-country": [["hi-IN", "sv-SE"], ["hi", "sv"]],
-    "pt-preferred-only": [["pt-PT"], ["pt"]],
-    "pt-non-preferred-only": [["pt-BR"], ["pt"]],
-    "pt-both": [["pt-PT", "pt-BR"], ["pt", "pt-BR"]],
+    "no-country": [["fr", "ja", "ru"], ["fr", "ja", "ru"]],
+    "single-country": [["pt-BR"], ["pt"]],
     "zh-preferred-only": [["zh-CN"], ["zh"]],
     "zh-non-preferred-only": [["zh-TW"], ["zh"]],
     "zh-both": [["zh-CN", "zh-TW"], ["zh", "zh-TW"]],
