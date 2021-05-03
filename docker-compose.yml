@@ -94,6 +94,7 @@ services:
 
   mysql:
     image: mysql:5.6
+    # This is necessary for platforms using the Apple M1 chip.
     platform: linux/x86_64
     environment:
       - MYSQL_USER=kuma
