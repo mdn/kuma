@@ -640,9 +640,9 @@ def test_deleted_parent_redirect_url(client, root_doc):
     """A non-en-US document, gets deleted and you try to view. Instead of a 404,
     it at least redirects to the parent's URL."""
     doc = Document.objects.create(
-        locale="sv-SE",
-        slug="Rot",
-        title="Rot Dokument",
+        locale="fr",
+        slug="Racine",
+        title="Racine Document",
         rendered_html="<p>...</p>",
         parent=root_doc,
     )

@@ -541,20 +541,20 @@ def test_user_details_happy_path(user_client, wiki_user):
             "fullname": "Art Vandelay",
             "username": "art",
             "is_newsletter_subscribed": False,
-            "locale": "sv-SE",
+            "locale": "ja",
         },
     )
     assert response.status_code == 200
     assert response.json()["username"] == "art"
     assert response.json()["fullname"] == "Art Vandelay"
     assert response.json()["is_newsletter_subscribed"] is False
-    assert response.json()["locale"] == "sv-SE"
+    assert response.json()["locale"] == "ja"
 
     wiki_user.refresh_from_db()
     assert wiki_user.username == "art"
     assert wiki_user.fullname == "Art Vandelay"
     assert wiki_user.is_newsletter_subscribed is False
-    assert wiki_user.locale == "sv-SE"
+    assert wiki_user.locale == "ja"
 
 
 @pytest.mark.django_db

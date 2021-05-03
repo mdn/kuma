@@ -14,10 +14,10 @@ def test_search_form_locale_happy_path():
     assert form.cleaned_data["locale"] == []
 
     request = RequestFactory().get("/api/v1/search?q=foo")
-    initial["locale"] = "sv-Se"
+    initial["locale"] = "ja"
     form = SearchForm(request.GET, initial=initial)
     assert form.is_valid()
-    assert form.cleaned_data["locale"] == ["sv-Se"]
+    assert form.cleaned_data["locale"] == ["ja"]
 
     request = RequestFactory().get("/api/v1/search?q=foo&locale=Fr")
     form = SearchForm(request.GET, initial=initial)
@@ -31,15 +31,15 @@ def test_search_form_locale_happy_path():
     assert form.cleaned_data["locale"] == ["Fr", "de"]
 
     # Note, same as the initial default
-    request = RequestFactory().get("/api/v1/search?q=foo&locale=SV-se")
+    request = RequestFactory().get("/api/v1/search?q=foo&locale=ja")
     form = SearchForm(request.GET, initial=initial)
     assert form.is_valid()
-    assert form.cleaned_data["locale"] == ["SV-se"]
+    assert form.cleaned_data["locale"] == ["ja"]
 
-    request = RequestFactory().get("/api/v1/search?q=foo&locale=SV-se&locale=fr")
+    request = RequestFactory().get("/api/v1/search?q=foo&locale=ja&locale=fr")
     form = SearchForm(request.GET, initial=initial)
     assert form.is_valid()
-    assert form.cleaned_data["locale"] == ["SV-se", "fr"]
+    assert form.cleaned_data["locale"] == ["ja", "fr"]
 
 
 def test_search_form_locale_validation_error():
