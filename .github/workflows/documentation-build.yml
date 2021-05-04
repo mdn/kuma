@@ -3,8 +3,7 @@ name: Documentation Build
 on:
   pull_request:
     paths:
-      - docs/**/*.md
-      - docs/requirements.txt
+      - docs/**
       - .github/workflows/documentation-build.yml
 
 jobs:
@@ -13,6 +12,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          # Needed because of how our documentation includes kumascript/docker/README.rst
+          submodules: 'true'
 
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
