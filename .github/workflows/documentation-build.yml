@@ -3,7 +3,7 @@ name: Documentation Build
 on:
   pull_request:
     paths:
-      - docs/**
+      - 'docs/**'
       - .github/workflows/documentation-build.yml
 
 jobs:
