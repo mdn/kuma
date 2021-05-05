@@ -1,6 +1,6 @@
 from django.urls import path, re_path
 
-from . import search, views
+from . import search, views, mdnplusplus
 
 urlpatterns = [
     re_path(r"^whoami/?$", views.whoami, name="api.v1.whoami"),
@@ -11,6 +11,11 @@ urlpatterns = [
         "subscriptions/feedback/",
         views.send_subscriptions_feedback,
         name="api.v1.send_subscriptions_feedback",
+    ),
+    path(
+        "mdnplusplus/landing-page-survey/",
+        mdnplusplus.landing_page_survey,
+        name="api.v1.mdnplusplus.landing_page_survey",
     ),
     path("subscriptions/", views.subscriptions, name="api.v1.subscriptions"),
     path("stripe_hooks/", views.stripe_hooks, name="api.v1.stripe_hooks"),
