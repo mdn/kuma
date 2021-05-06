@@ -375,7 +375,7 @@ tests = ["pytest (<4.0)", "pytest-django", "pytest-flakes (==1.0.1)", "pytest-pe
 
 [[package]]
 name = "django-debug-toolbar"
-version = "2.2"
+version = "2.2.1"
 description = "A configurable set of panels that display various debug information about the current request/response."
 category = "dev"
 optional = false
@@ -1717,8 +1717,8 @@ django-csp = [
     {file = "django_csp-3.6.tar.gz", hash = "sha256:0a38aa9618c675cbf5f5e517e20d5846a3e100ef7b307e32e7fb18c58aa47723"},
 ]
 django-debug-toolbar = [
-    {file = "django-debug-toolbar-2.2.tar.gz", hash = "sha256:eabbefe89881bbe4ca7c980ff102e3c35c8e8ad6eb725041f538988f2f39a943"},
-    {file = "django_debug_toolbar-2.2-py3-none-any.whl", hash = "sha256:ff94725e7aae74b133d0599b9bf89bd4eb8f5d2c964106e61d11750228c8774c"},
+    {file = "django-debug-toolbar-2.2.1.tar.gz", hash = "sha256:7aadab5240796ffe8e93cc7dfbe2f87a204054746ff7ff93cd6d4a0c3747c853"},
+    {file = "django_debug_toolbar-2.2.1-py3-none-any.whl", hash = "sha256:7feaee934608f5cdd95432154be832fe30fda6c1249018191e2c27bc0b6a965e"},
 ]
 django-decorator-include = [
     {file = "django-decorator-include-2.1.tar.gz", hash = "sha256:41df70c2b9bd5fe0143d01d6469c522c5e301d3e34f2df5c22a25cae798d8971"},
