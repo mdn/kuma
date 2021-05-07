@@ -38,14 +38,14 @@ def landing_page_survey(request):
         if request.GET.get("uuid"):
             survey = get_object_or_404(LandingPageSurvey, uuid=request.GET.get("uuid"))
         else:
-            # Ryan said it was called 'CloudFront-Viewer-Country'
-            # but https://aws.amazon.com/about-aws/whats-new/2020/07/cloudfront-geolocation-headers/
-            # says it's called 'CloudFront-Viewer-Country-Name'
-            geo_information = request.META.get(
-                "CloudFront-Viewer-Country"
-            ) or request.META.get("CloudFront-Viewer-Country-Name")
+            # Inspired by https://github.com/mdn/kuma/pull/7849/files
+            geo_information = (
+                request.META.get("HTTP_CLOUDFRONT_VIEWER_COUNTRY_NAME") or ""
+            )
             survey = LandingPageSurvey.objects.create(
-                variant=variant, geo_information=geo_information
+                variant=variant,
+                geo_information=geo_information,
+                user=request.user if request.user.is_authenticated else None,
             )
         context["uuid"] = survey.uuid
 
