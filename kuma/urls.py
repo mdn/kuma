@@ -2,7 +2,7 @@ from decorator_include import decorator_include
 from django.conf import settings
 from django.contrib import admin
 from django.shortcuts import render
-from django.urls import include, re_path, reverse_lazy
+from django.urls import include, re_path
 from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
 
@@ -14,7 +14,6 @@ from kuma.core import views as core_views
 from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
 from kuma.landing.urls import lang_urlpatterns as landing_lang_urlpatterns
-from kuma.payments.urls import lang_urlpatterns as payments_lang_urlpatterns
 from kuma.users.urls import lang_urlpatterns as users_lang_urlpatterns
 from kuma.wiki.admin import purge_view
 from kuma.wiki.urls import lang_urlpatterns as wiki_lang_urlpatterns
@@ -81,16 +80,8 @@ urlpatterns += i18n_patterns(re_path(r"^docs/", include(wiki_lang_urlpatterns)))
 urlpatterns += [re_path("", include("kuma.attachments.urls"))]
 urlpatterns += [re_path("users/", include("kuma.users.urls"))]
 urlpatterns += i18n_patterns(
-    re_path(
-        r"^contribute/$",
-        RedirectView.as_view(url=reverse_lazy("payments_index")),
-        name="redirect-to-payments",
-    ),
-)
-urlpatterns += i18n_patterns(
     re_path(r"^account/", include(accountsettings_lang_urlpatterns))
 )
-urlpatterns += i18n_patterns(re_path(r"^payments/", include(payments_lang_urlpatterns)))
 urlpatterns += i18n_patterns(
     re_path("", decorator_include(never_cache, users_lang_urlpatterns))
 )
