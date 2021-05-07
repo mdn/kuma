@@ -9,7 +9,6 @@ from django.test import Client
 from django.urls import reverse
 from waffle.testutils import override_flag
 
-from kuma.core.utils import safer_pyquery as pq
 from kuma.users.models import User, UserSubscription
 
 
@@ -94,17 +93,6 @@ def test_create_stripe_subscription(mock1, mock2, test_user):
     assert response["location"].endswith("#subscription")
 
 
-@override_flag("subscription", True)
-@override_flag("subscription_form", True)
-def test_next_subscriber_number_shown_for_non_subscribers(test_user):
-    client = Client()
-    client.force_login(test_user)
-    response = client.get(reverse("users.user_edit", args=[test_user.username]))
-    assert response.status_code == 200
-    page = pq(response.content)
-    assert "You will be MDN member number 1" in page("#subscription p").text()
-
-
 @patch("kuma.users.stripe_utils.get_stripe_subscription_info")
 @patch("kuma.users.stripe_utils.get_stripe_customer")
 @override_flag("subscription", True)
@@ -122,18 +110,6 @@ def test_user_edit_with_subscription_info(mock1, mock2, test_user):
     # sanity check
     test_user.refresh_from_db()
     assert test_user.subscriber_number == 1
-
-    client = Client()
-    client.force_login(test_user)
-    response = client.post(
-        reverse("users.user_edit", args=[test_user.username]),
-        HTTP_HOST=settings.WIKI_HOST,
-    )
-    assert response.status_code == 200
-    page = pq(response.content)
-    assert page("#subscription h2").text() == "You are MDN member number 1"
-    assert not page(".stripe-error").size()
-    assert "MagicCard ending in 4242" in page(".card-info p").text()
 
 
 @patch("kuma.users.stripe_utils.create_stripe_customer_and_subscription_for_user")

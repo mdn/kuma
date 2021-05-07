@@ -38,7 +38,6 @@ from kuma.core.ga_tracking import (
     CATEGORY_MONTHLY_PAYMENTS,
     track_event,
 )
-from kuma.core.urlresolvers import reverse
 from kuma.core.utils import requests_retry_session, send_mail_retrying
 from kuma.users.models import User, UserSubscription
 from kuma.users.newsletter.utils import refresh_is_user_newsletter_subscribed
@@ -53,7 +52,6 @@ from kuma.users.stripe_utils import (
     retrieve_and_synchronize_subscription_info,
 )
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
-from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
 @never_cache
@@ -272,8 +270,8 @@ def _send_payment_received_email(invoice, locale):
         "invoice_number": invoice.number,
         "cost": invoice.total / 100,
         "credit_card_brand": subscription_info["brand"],
-        "manage_subscription_url": absolutify(reverse("payment_management")),
-        "faq_url": absolutify(reverse("payments_index")),
+        "manage_subscription_url": "TBD",
+        "faq_url": "TBD",
         "contact_email": settings.CONTRIBUTION_SUPPORT_EMAIL,
     }
     with translation.override(locale):
