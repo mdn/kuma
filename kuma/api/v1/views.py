@@ -82,6 +82,14 @@ def whoami(request):
     else:
         data = {}
 
+    geo = {}
+    # https://aws.amazon.com/about-aws/whats-new/2020/07/cloudfront-geolocation-headers/
+    cloudfront_country_header = "HTTP_CLOUDFRONT_VIEWER_COUNTRY_NAME"
+    cloudfront_country_value = request.META.get(cloudfront_country_header)
+    if cloudfront_country_value:
+        geo["country"] = cloudfront_country_value
+    data["geo"] = geo
+
     data["waffle"] = {
         "flags": {},
         "switches": {s.name: True for s in Switch.get_all() if s.is_active()},
