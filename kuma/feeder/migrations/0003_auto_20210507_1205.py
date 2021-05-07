@@ -6,25 +6,25 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('feeder', '0002_auto_20191023_0405'),
+        ("feeder", "0002_auto_20191023_0405"),
     ]
 
     operations = [
         migrations.AlterUniqueTogether(
-            name='entry',
+            name="entry",
             unique_together=None,
         ),
         migrations.RemoveField(
-            model_name='entry',
-            name='feed',
+            model_name="entry",
+            name="feed",
         ),
         migrations.DeleteModel(
-            name='Bundle',
+            name="Bundle",
         ),
         migrations.DeleteModel(
-            name='Entry',
+            name="Entry",
         ),
         migrations.DeleteModel(
-            name='Feed',
+            name="Feed",
         ),
     ]
