@@ -1,8 +1,6 @@
 from django.apps import AppConfig
 from django.utils.translation import gettext_lazy as _
 
-from kuma.celery import app
-
 
 class FeederConfig(AppConfig):
     """
@@ -12,11 +10,3 @@ class FeederConfig(AppConfig):
 
     name = "kuma.feeder"
     verbose_name = _("Feeder")
-
-    def ready(self):
-        """Configure kuma.feeder after models are loaded."""
-
-        # Refresh Hacks Blog: every 10 minutes
-        from kuma.feeder.tasks import update_feeds
-
-        app.add_periodic_task(60 * 10, update_feeds.s())

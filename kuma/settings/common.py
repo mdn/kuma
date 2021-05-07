@@ -1304,7 +1304,6 @@ CELERY_TASK_ROUTES = {
     "kuma.wiki.tasks.render_document_chunk": {"queue": "mdn_wiki"},
     "kuma.wiki.tasks.clean_document_chunk": {"queue": "mdn_wiki"},
     "kuma.wiki.tasks.build_json_data_for_document": {"queue": "mdn_wiki"},
-    "kuma.feeder.tasks.update_feeds": {"queue": "mdn_purgeable"},
     "kuma.api.tasks.publish": {"queue": "mdn_api"},
     "kuma.api.tasks.unpublish": {"queue": "mdn_api"},
     "kuma.api.tasks.request_cdn_cache_invalidation": {"queue": "mdn_api"},
