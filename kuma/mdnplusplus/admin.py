@@ -59,7 +59,7 @@ class LandingPageSurveyAdmin(admin.ModelAdmin):
         HasEmailFilter,
         HasResponseFilter,
     )
-    search_fields = ("email",)
+    search_fields = ("email", "uuid")
     ordering = ("created",)
 
     def has_email(self, obj):

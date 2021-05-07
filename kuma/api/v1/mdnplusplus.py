@@ -1,6 +1,7 @@
 import json
 
 from django.http import HttpResponseBadRequest, JsonResponse
+from django.middleware.csrf import get_token
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_http_methods
 from ratelimit.decorators import ratelimit
@@ -13,19 +14,20 @@ from kuma.mdnplusplus.models import LandingPageSurvey
 def landing_page_survey(request):
     context = {}
     if request.method == "POST":
-        variant = request.POST.get("variant")
-        if not variant:
-            return HttpResponseBadRequest("missing 'variant'")
-        uuid = request.POST.get("variant")
+        print(request.POST)
+        uuid = request.POST.get("uuid")
         if not uuid:
             return HttpResponseBadRequest("missing 'uuid'")
-        survey = get_object_or_404(LandingPageSurvey, uuid=request.POST.get("uuid"))
-        if request.POST.get("email"):
-            survey.email = request.POST.get("email").strip()
+        survey = get_object_or_404(LandingPageSurvey, uuid=uuid)
+        email = request.POST.get("email")
+        if email:
+            survey.email = email.strip()
             survey.save()
-        if request.POST.get("response"):
+
+        response_json = request.POST.get("response")
+        if response_json:
             try:
-                response = json.loads(request.POST.get("response"))
+                response = json.loads(response_json)
             except ValueError:
                 return HttpResponseBadRequest("invalid response JSON")
             survey.response = json.dumps(response)
@@ -48,5 +50,6 @@ def landing_page_survey(request):
                 user=request.user if request.user.is_authenticated else None,
             )
         context["uuid"] = survey.uuid
+        context["csrfmiddlewaretoken"] = get_token(request)
 
     return JsonResponse(context)
