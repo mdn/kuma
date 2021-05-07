@@ -88,7 +88,8 @@ def whoami(request):
     cloudfront_country_value = request.META.get(cloudfront_country_header)
     if cloudfront_country_value:
         geo["country"] = cloudfront_country_value
-    data["geo"] = geo
+    if geo:
+        data["geo"] = geo
 
     data["waffle"] = {
         "flags": {},
