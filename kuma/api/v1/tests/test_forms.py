@@ -27,7 +27,6 @@ def test_search_form_locale_happy_path():
     request = RequestFactory().get("/api/v1/search?q=foo&locale=Fr&locale=de")
     form = SearchForm(request.GET, initial=initial)
     assert form.is_valid()
-    print(form.cleaned_data)
     assert form.cleaned_data["locale"] == ["Fr", "de"]
 
     # Note, same as the initial default

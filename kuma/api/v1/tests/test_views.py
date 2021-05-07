@@ -60,6 +60,16 @@ def test_whoami_anonymous(client, settings):
 
 
 @pytest.mark.django_db
+def test_whoami_anonymous_cloudfront_geo(client, settings):
+    """Test response for anonymous users."""
+    url = reverse("api.v1.whoami")
+    response = client.get(url, HTTP_CLOUDFRONT_VIEWER_COUNTRY_NAME="US of A")
+    assert response.status_code == 200
+    assert response["content-type"] == "application/json"
+    assert response.json()["geo"] == {"country": "US of A"}
+
+
+@pytest.mark.django_db
 @pytest.mark.parametrize(
     "is_staff,is_superuser,is_beta_tester",
     [(False, False, False), (True, True, True)],
