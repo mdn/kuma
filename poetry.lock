@@ -121,7 +121,7 @@ urllib3 = {version = ">=1.20,<1.26", markers = "python_version != \"3.4\""}
 
 [[package]]
 name = "braceexpand"
-version = "0.1.5"
+version = "0.1.6"
 description = "Bash-style brace expansion for Python"
 category = "dev"
 optional = false
@@ -1541,7 +1541,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "298e07be958fde3b170900cc3e8bb4cea5bbd5c7381daf5041b65135bd5fd2ff"
+content-hash = "1d7512952db291d795d17bcd9a5335070e8008364c94825ec81ca713daf9b707"
 
 [metadata.files]
 amqp = [
@@ -1584,8 +1584,8 @@ botocore = [
     {file = "botocore-1.15.13.tar.gz", hash = "sha256:2fce3cc8fae3bbf89984f3065d9eecf0a906b96bee491a4fb54ad7ec7f4261dc"},
 ]
 braceexpand = [
-    {file = "braceexpand-0.1.5-py2.py3-none-any.whl", hash = "sha256:ae6b7de1e88d3132177bd6cbda8b22487ea645b25c4ca5b1cf948b326ac27e34"},
-    {file = "braceexpand-0.1.5.tar.gz", hash = "sha256:d3d932030c3ab4740b33df68a58d70f3a10368f33b3a56eb951da649bec0bb52"},
+    {file = "braceexpand-0.1.6-py2.py3-none-any.whl", hash = "sha256:c37571ad130213247fac9921f3fd1032c81057490b9ca29be6884fd6d9dc1013"},
+    {file = "braceexpand-0.1.6.tar.gz", hash = "sha256:c1bf4fdc1713e46feacac0f1acbbb12239bdda7c7c4183fc8fb22bf6f285f854"},
 ]
 cachetools = [
     {file = "cachetools-4.0.0-py3-none-any.whl", hash = "sha256:b304586d357c43221856be51d73387f93e2a961598a9b6b6670664746f3b6c6c"},
