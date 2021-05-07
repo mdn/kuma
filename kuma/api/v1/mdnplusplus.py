@@ -9,12 +9,11 @@ from ratelimit.decorators import ratelimit
 from kuma.mdnplusplus.models import LandingPageSurvey
 
 
-@ratelimit(key="user_or_ip", rate="10/m", block=True)
+@ratelimit(key="user_or_ip", rate="100/m", block=True)
 @require_http_methods(["GET", "POST"])
 def landing_page_survey(request):
     context = {}
     if request.method == "POST":
-        print(request.POST)
         uuid = request.POST.get("uuid")
         if not uuid:
             return HttpResponseBadRequest("missing 'uuid'")
