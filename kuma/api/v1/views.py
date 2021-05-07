@@ -12,6 +12,7 @@ from django.http import (
     HttpResponseForbidden,
     JsonResponse,
 )
+from django.middleware.csrf import get_token
 from django.utils import translation
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
@@ -165,7 +166,7 @@ def account_settings(request):
         return response
 
     context = {
-        "csrfmiddlewaretoken": request.META.get("CSRF_COOKIE"),
+        "csrfmiddlewaretoken": get_token(request),
         "locale": user.locale,
     }
     return JsonResponse(context)
