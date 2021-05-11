@@ -492,15 +492,15 @@ Django = ">=1.11"
 
 [[package]]
 name = "django-redis"
-version = "4.11.0"
+version = "4.12.1"
 description = "Full featured redis cache backend for Django."
 category = "main"
 optional = false
 python-versions = ">=3.5"
 
 [package.dependencies]
-Django = ">=1.11"
-redis = ">=2.10.0"
+Django = ">=2.2"
+redis = ">=3.0.0"
 
 [[package]]
 name = "django-soapbox"
@@ -1541,7 +1541,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "1d7512952db291d795d17bcd9a5335070e8008364c94825ec81ca713daf9b707"
+content-hash = "ad65f4e9d390a0e1b4a23049accc2fc88ebfe0a82ceb4dc9283002440dcd63a3"
 
 [metadata.files]
 amqp = [
@@ -1759,8 +1759,8 @@ django-redirect-urls = [
     {file = "django_redirect_urls-1.0-py2.py3-none-any.whl", hash = "sha256:c4cd7818b06ccf0a5307656a33f3ecea47ee22f0cceb374ea559eb2d1402d5d8"},
 ]
 django-redis = [
-    {file = "django-redis-4.11.0.tar.gz", hash = "sha256:a5b1e3ffd3198735e6c529d9bdf38ca3fcb3155515249b98dc4d966b8ddf9d2b"},
-    {file = "django_redis-4.11.0-py3-none-any.whl", hash = "sha256:e1aad4cc5bd743d8d0b13d5cae0cef5410eaace33e83bff5fc3a139ad8db50b4"},
+    {file = "django-redis-4.12.1.tar.gz", hash = "sha256:306589c7021e6468b2656edc89f62b8ba67e8d5a1c8877e2688042263daa7a63"},
+    {file = "django_redis-4.12.1-py3-none-any.whl", hash = "sha256:1133b26b75baa3664164c3f44b9d5d133d1b8de45d94d79f38d1adc5b1d502e5"},
 ]
 django-soapbox = [
     {file = "django-soapbox-1.6.tar.gz", hash = "sha256:debd41b4186bc1249fcb3a16e8b645b2a7a5271b9046b5f34ce4b8cac6caae76"},
