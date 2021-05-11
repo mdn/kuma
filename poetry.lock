@@ -420,14 +420,14 @@ python-versions = "*"
 
 [[package]]
 name = "django-jinja"
-version = "2.6.0"
+version = "2.7.0"
 description = "Jinja2 templating language integrated in Django."
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
-django = ">=1.11,<3.1"
+django = ">=2.2"
 jinja2 = ">=2.10"
 
 [[package]]
@@ -1541,7 +1541,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "fedcaadcf45eb70fdd0d596bfcaa28bc04dafba1addc786859771187f29848c6"
+content-hash = "4fdfaa923abcd39f67fb391e0ffc9c8984d6b92d70bc9dd0b5b97cc3ebf0197f"
 
 [metadata.files]
 amqp = [
@@ -1732,8 +1732,8 @@ django-honeypot = [
     {file = "django-honeypot-0.9.0.tar.gz", hash = "sha256:419fea300bb00d71ea80224c654cd242e529d9404ff472ad32828ede9ea4ac73"},
 ]
 django-jinja = [
-    {file = "django-jinja-2.6.0.tar.gz", hash = "sha256:7459985c25ddb6584c6bab345761c8c5557713448e6fbb322af1b6dd7f5512bd"},
-    {file = "django_jinja-2.6.0-py3-none-any.whl", hash = "sha256:4e3e97d7b40669926a9517eb4522cd98dce2e32dcba908aad156810b74744148"},
+    {file = "django-jinja-2.7.0.tar.gz", hash = "sha256:d56ecddaa6d3caf508509aae5a979ebd8a3427477c34fcbcac14bf8389a21a12"},
+    {file = "django_jinja-2.7.0-py3-none-any.whl", hash = "sha256:ce4640e4bc329d9e938c3a7673dafc66dfcc921e4667cfd1002f0089e2599103"},
 ]
 django-mysql = [
     {file = "django-mysql-3.3.0.tar.gz", hash = "sha256:b984dfe75bedeb01bfcb974fe8400c224a6b55677b98a799f1c96274d96c5a72"},
