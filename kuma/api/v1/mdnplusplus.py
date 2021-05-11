@@ -1,4 +1,5 @@
 import json
+from uuid import UUID
 
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.middleware.csrf import get_token
@@ -36,8 +37,17 @@ def landing_page_survey(request):
         variant = request.GET.get("variant")
         if not variant:
             return HttpResponseBadRequest("missing 'variant'")
-        if request.GET.get("uuid"):
-            survey = get_object_or_404(LandingPageSurvey, uuid=request.GET.get("uuid"))
+        try:
+            variant = int(variant)
+        except ValueError:
+            return HttpResponseBadRequest("invalid 'variant'")
+        uuid = request.GET.get("uuid")
+        if uuid:
+            try:
+                UUID(uuid)
+            except ValueError:
+                return HttpResponseBadRequest("invalid 'uuid'")
+            survey = get_object_or_404(LandingPageSurvey, uuid=uuid)
         else:
             # Inspired by https://github.com/mdn/kuma/pull/7849/files
             geo_information = (

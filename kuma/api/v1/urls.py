@@ -1,6 +1,6 @@
 from django.urls import path, re_path
 
-from . import search, views, mdnplusplus
+from . import mdnplusplus, search, views
 
 urlpatterns = [
     re_path(r"^whoami/?$", views.whoami, name="api.v1.whoami"),
