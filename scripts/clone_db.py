@@ -69,10 +69,6 @@ TABLES_TO_DUMP = [x.strip() for x in """
     djcelery_periodictasks
     djcelery_taskstate
     djcelery_workerstate
-    feeder_bundle
-    feeder_bundle_feeds
-    feeder_entry
-    feeder_feed
     search_filter
     search_filtergroup
     search_index

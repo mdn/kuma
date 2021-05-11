@@ -42,11 +42,6 @@ class FixtureLoader(object):
         },
         "contenttypes.contenttype": {"natural_key": ("app_label", "model")},
         "database.constance": {"natural_key": ("key",)},
-        "feeder.bundle": {
-            "natural_key": ("shortname",),
-            "relations": {"feeds": {"link": "to_many", "resource": "feeder.feed"}},
-        },
-        "feeder.feed": {"natural_key": ("shortname",)},
         "search.filter": {
             "natural_key": ("name", "slug"),
             "relations": {
