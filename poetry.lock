@@ -412,7 +412,7 @@ six = ">=1.2"
 
 [[package]]
 name = "django-honeypot"
-version = "0.8.0"
+version = "0.9.0"
 description = "Django honeypot field utilities"
 category = "main"
 optional = false
@@ -492,15 +492,15 @@ Django = ">=1.11"
 
 [[package]]
 name = "django-redis"
-version = "4.11.0"
+version = "4.12.1"
 description = "Full featured redis cache backend for Django."
 category = "main"
 optional = false
 python-versions = ">=3.5"
 
 [package.dependencies]
-Django = ">=1.11"
-redis = ">=2.10.0"
+Django = ">=2.2"
+redis = ">=3.0.0"
 
 [[package]]
 name = "django-soapbox"
@@ -849,6 +849,14 @@ i18n = ["Babel (>=0.8)"]
 name = "jmespath"
 version = "0.9.5"
 description = "JSON Matching Expressions"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "jsonpickle"
+version = "1.3"
+description = "Python library for serializing any arbitrary object graph into JSON"
 category = "main"
 optional = false
 python-versions = "*"
@@ -1533,7 +1541,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "5923096a0afb24d37034f30fe41273895fba32364bff2fddc039ff0e5dd812ff"
+content-hash = "fedcaadcf45eb70fdd0d596bfcaa28bc04dafba1addc786859771187f29848c6"
 
 [metadata.files]
 amqp = [
@@ -1721,7 +1729,7 @@ django-extensions = [
     {file = "django_extensions-2.2.8-py2.py3-none-any.whl", hash = "sha256:1a03c4e8bade575f8c2be6c76456f8a2be3f9b02ab9f47d3535afa9562dc0493"},
 ]
 django-honeypot = [
-    {file = "django-honeypot-0.8.0.tar.gz", hash = "sha256:28474d20ee1037e70b1e760b5aa7390a7e1ebfc9978688127a2dda8c174ed50c"},
+    {file = "django-honeypot-0.9.0.tar.gz", hash = "sha256:419fea300bb00d71ea80224c654cd242e529d9404ff472ad32828ede9ea4ac73"},
 ]
 django-jinja = [
     {file = "django-jinja-2.6.0.tar.gz", hash = "sha256:7459985c25ddb6584c6bab345761c8c5557713448e6fbb322af1b6dd7f5512bd"},
@@ -1751,8 +1759,8 @@ django-redirect-urls = [
     {file = "django_redirect_urls-1.0-py2.py3-none-any.whl", hash = "sha256:c4cd7818b06ccf0a5307656a33f3ecea47ee22f0cceb374ea559eb2d1402d5d8"},
 ]
 django-redis = [
-    {file = "django-redis-4.11.0.tar.gz", hash = "sha256:a5b1e3ffd3198735e6c529d9bdf38ca3fcb3155515249b98dc4d966b8ddf9d2b"},
-    {file = "django_redis-4.11.0-py3-none-any.whl", hash = "sha256:e1aad4cc5bd743d8d0b13d5cae0cef5410eaace33e83bff5fc3a139ad8db50b4"},
+    {file = "django-redis-4.12.1.tar.gz", hash = "sha256:306589c7021e6468b2656edc89f62b8ba67e8d5a1c8877e2688042263daa7a63"},
+    {file = "django_redis-4.12.1-py3-none-any.whl", hash = "sha256:1133b26b75baa3664164c3f44b9d5d133d1b8de45d94d79f38d1adc5b1d502e5"},
 ]
 django-soapbox = [
     {file = "django-soapbox-1.6.tar.gz", hash = "sha256:debd41b4186bc1249fcb3a16e8b645b2a7a5271b9046b5f34ce4b8cac6caae76"},
@@ -1905,6 +1913,10 @@ jinja2 = [
 jmespath = [
     {file = "jmespath-0.9.5-py2.py3-none-any.whl", hash = "sha256:695cb76fa78a10663425d5b73ddc5714eb711157e52704d69be03b1a02ba4fec"},
     {file = "jmespath-0.9.5.tar.gz", hash = "sha256:cca55c8d153173e21baa59983015ad0daf603f9cb799904ff057bfb8ff8dc2d9"},
+]
+jsonpickle = [
+    {file = "jsonpickle-1.3-py2.py3-none-any.whl", hash = "sha256:efc6839cb341985f0c24f98650a4c1063a2877c236ffd3d7e1662f0c482bac93"},
+    {file = "jsonpickle-1.3.tar.gz", hash = "sha256:71bca2b80ae28af4e3f86629ef247100af7f97032b5ca8d791c1f8725b411d95"},
 ]
 kombu = [
     {file = "kombu-4.6.10-py2.py3-none-any.whl", hash = "sha256:dc282bb277197d723bccda1a9ba30a27a28c9672d0ab93e9e51bb05a37bd29c3"},
