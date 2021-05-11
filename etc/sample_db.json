@@ -569,25 +569,6 @@
       {"name": "WebGL"},
       {"name": "XPCOM"},
       {"name": "XUL"}
-    ],
-    "feeder.feed": [
-      {
-        "shortname": "moz-hacks",
-        "title": "Mozilla Hacks - the Web developer blog",
-        "url": "https://hacks.mozilla.org/feed/",
-        "etag": "stale",
-        "last_modified": "2017-01-01",
-        "enabled": true,
-        "keep": 10
-      }
-    ],
-    "feeder.bundle": [
-      {
-        "shortname": "updates-moz-hacks",
-        "feeds": [
-          ["moz-hacks"]
-        ]
-      }
     ]
   }
 }
