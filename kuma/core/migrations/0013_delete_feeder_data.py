@@ -10,8 +10,8 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunSQL("DROP TABLE feeder_entry"),
-        migrations.RunSQL("DROP TABLE feeder_bundle_feeds"),
-        migrations.RunSQL("DROP TABLE feeder_feed"),
-        migrations.RunSQL("DROP TABLE feeder_bundle"),
+        migrations.RunSQL("DROP TABLE IF EXISTS feeder_entry"),
+        migrations.RunSQL("DROP TABLE IF EXISTS feeder_bundle_feeds"),
+        migrations.RunSQL("DROP TABLE IF EXISTS feeder_feed"),
+        migrations.RunSQL("DROP TABLE IF EXISTS feeder_bundle"),
     ]
