@@ -477,7 +477,6 @@ INSTALLED_APPS = (
     "kuma.payments.apps.PaymentsConfig",
     "kuma.core.apps.CoreConfig",
     "kuma.banners",
-    "kuma.feeder.apps.FeederConfig",
     "kuma.landing",
     "kuma.redirects",
     "kuma.scrape",
@@ -512,9 +511,6 @@ INSTALLED_APPS = (
     # other
     "redirect_urls",
 )
-
-# Feed fetcher config
-FEEDER_TIMEOUT = 6  # in seconds
 
 TEMPLATES = [
     {
