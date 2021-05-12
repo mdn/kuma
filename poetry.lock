@@ -504,7 +504,7 @@ redis = ">=3.0.0"
 
 [[package]]
 name = "django-soapbox"
-version = "1.6"
+version = "1.6.1"
 description = "Site-wide and page-specific announcements/messages for Django sites"
 category = "main"
 optional = false
@@ -1755,8 +1755,8 @@ django-redis = [
     {file = "django_redis-4.12.1-py3-none-any.whl", hash = "sha256:1133b26b75baa3664164c3f44b9d5d133d1b8de45d94d79f38d1adc5b1d502e5"},
 ]
 django-soapbox = [
-    {file = "django-soapbox-1.6.tar.gz", hash = "sha256:debd41b4186bc1249fcb3a16e8b645b2a7a5271b9046b5f34ce4b8cac6caae76"},
-    {file = "django_soapbox-1.6-py3-none-any.whl", hash = "sha256:ba5cc6719e712607296e4759e6198b5fd12d131a0f22f44d7feb98a19a177556"},
+    {file = "django-soapbox-1.6.1.tar.gz", hash = "sha256:5cd74a76d220e90905a6c5e90e4b72cd759e91da518336864fde9af9b2acd5ad"},
+    {file = "django_soapbox-1.6.1-py3-none-any.whl", hash = "sha256:2893a737fccea9975384e92ed0ac36d856b9e6f9318b071bba5c2981b46c287e"},
 ]
 django-statici18n = [
     {file = "django-statici18n-1.9.0.tar.gz", hash = "sha256:913dd056c1abcbe129b1db806cb4cfb821c4077d7e857d6eb29043ea64f4d1d0"},
