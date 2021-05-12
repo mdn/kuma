@@ -14,16 +14,17 @@
         </p>
         <p>
           {% trans
-              words_link='https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_1_I_like_words',
-              code_link='https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_2_I_like_code',
-              both_link='https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_3_I_like_both_words_and_code',
-              translate_link='https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_4_I_want_MDN_in_my_language'
+              get_started_link='https://developer.mozilla.org/en-US/docs/MDN/Contribute/Getting_started',
+              contribute_link='https://developer.mozilla.org/en-US/docs/MDN/Contribute',
+              content_readme_link='https://github.com/mdn/content/blob/main/README.md',
+              translated_content_link='https://github.com/mdn/translated-content/blob/main/README.md'
           %}
-            Soon, we'll share with you opportunities to customize MDN to get the most out of it. In the meantime, MDN is from web developers for web developers, it thrives on contributions from developers like you. We have a bunch of intro tasks you can choose based on your interests, and we can't wait for you to join us. Do you
-            <a href="{{ words_link }}">like words</a>,
-            <a href="{{ code_link }}">like code</a>,
-            <a href="{{ both_link }}">like both words and code</a>,
-            or want to <a href="{{ translate_link }}">translate MDN to your language</a>?
+            MDN is written by web developers, for web developers — it thrives on contributions from developers like you. We can't wait for you to join us. Look at our
+            <a href="{{ get_started_link }}">Getting started on MDN</a> to get set up,
+            check out <a href="{{ contribute_link }}">Contributing to MDN</a> to find out what you can do,
+            see our <a href="{{ content_readme_link }}">content repo README</a> for info on how to make changes,
+            and finally check out our <a href="{{ translated_content_link }}">translated-content repo README</a>
+            if you are interested in contributing to MDN translations.
           {% endtrans %}
         </p>
         <strong>{{ _('Talk to us!') }}</strong>
