@@ -8,16 +8,16 @@
     <body>
         <p>{{ _('Hey %(username)s!', username=username) }}</p>
         <p>
-          {% trans mdn_link=add_utm('https://developer.mozilla.org', 'welcome') %}
+          {% trans mdn_link='https://developer.mozilla.org' %}
             Thanks for creating an account on <a href="{{ mdn_link }}">MDN Web Docs</a> - a community making great resources for developers like you.
           {% endtrans %}
         </p>
         <p>
           {% trans
-              words_link=add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_1_I_like_words', 'welcome'),
-              code_link=add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_2_I_like_code', 'welcome'),
-              both_link=add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_3_I_like_both_words_and_code', 'welcome'),
-              translate_link=add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_4_I_want_MDN_in_my_language', 'welcome')
+              words_link='https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_1_I_like_words',
+              code_link='https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_2_I_like_code',
+              both_link='https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_3_I_like_both_words_and_code',
+              translate_link='https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_4_I_want_MDN_in_my_language'
           %}
             Soon, we'll share with you opportunities to customize MDN to get the most out of it. In the meantime, MDN is from web developers for web developers, it thrives on contributions from developers like you. We have a bunch of intro tasks you can choose based on your interests, and we can't wait for you to join us. Do you
             <a href="{{ words_link }}">like words</a>,
@@ -30,14 +30,14 @@
         <p>{{ _('Want to talk to someone about MDN? There are a few ways you can do that:') }}</p>
         <ul>
             <li>
-              {% trans list_link=add_utm('https://discourse.mozilla.org/c/mdn', 'welcome') %}
+              {% trans list_link='https://discourse.mozilla.org/c/mdn' %}
                 Discussion forum: <a href="{{ list_link }}">join</a> to tell us about what you're interested in on MDN and ask questions about the site.
               {% endtrans %}
             </li>
             <li>
               {% trans
                 room_link='https://chat.mozilla.org/#/room/#mdn:mozilla.org',
-                matrix_link=add_utm('https://wiki.mozilla.org/Matrix', 'welcome')
+                matrix_link='https://wiki.mozilla.org/Matrix'
               %}
                 Real-time chat: <a href="{{ room_link }}">#mdn room on chat.mozilla.org</a>.  (Get more info about <a href="{{ matrix_link }}">Matrix</a>.)
               {% endtrans %}

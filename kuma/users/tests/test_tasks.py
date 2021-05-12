@@ -48,7 +48,6 @@ class TestWelcomeEmails(UserTestCase):
         welcome_email = mail.outbox[0]
         expected_to = [testuser.email]
         self.assertEqual(expected_to, welcome_email.to)
-        self.assertTrue("utm_campaign=welcome" in welcome_email.body)
 
     @mock.patch("kuma.users.tasks.strings_are_translated")
     def test_dont_send_untranslated_language_email(self, strings_are_translated):
@@ -88,7 +87,6 @@ class TestWelcomeEmails(UserTestCase):
         welcome_email = mail.outbox[0]
         expected_to = [testuser.email]
         self.assertEqual(expected_to, welcome_email.to)
-        self.assertTrue("utm_campaign=welcome" in welcome_email.body)
 
     @override_switch("welcome_email", True)
     @call_on_commit_immediately
@@ -131,7 +129,6 @@ class TestWelcomeEmails(UserTestCase):
         welcome_email = mail.outbox[1]
         expected_to = [email_address.email]
         self.assertEqual(expected_to, welcome_email.to)
-        self.assertTrue("utm_campaign=welcome" in welcome_email.body)
 
         # now add second unverified email address to the user
         # and check if the usual confirmation email is sent out
