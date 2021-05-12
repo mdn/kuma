@@ -7,24 +7,24 @@
 {{ _('Thanks for creating an account on MDN Web Docs -- a community making great resources for developers like you.') }}
 
 {# L10n: This is an email. Whitespace matters! #}
-{{ _("Soon, we'll share with you opportunities to customize MDN to get the most out of it. In the meantime, MDN is from web developers for web developers, it thrives on contributions from developers like you. We have a bunch of intro tasks you can choose based on your interests, and we can't wait for you to join us.") }}
+{{ _("MDN is written by web developers, for web developers — it thrives on contributions from developers like you. We can't wait for you to join us.") }}
 
 {# Note: If you change this string also change ``WELCOME_EMAIL_STRINGS`` in kuma/users/tasks.py #}
 {# L10n: This is an email. Whitespace matters! #}
-{{ _('Like words?') }}
-{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_1_I_like_words', 'welcome') }}
+{{ _('Getting started on MDN') }}
+{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Contribute/Getting_started', 'welcome') }}
 
 {# L10n: This is an email. Whitespace matters! #}
-{{ _('Like code?') }}
-{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_2_I_like_code', 'welcome') }}
+{{ _('Contributing to MDN') }}
+{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Contribute', 'welcome') }}
 
 {# L10n: This is an email. Whitespace matters! #}
-{{ _('Like both words and code?') }}
-{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_3_I_like_both_words_and_code', 'welcome') }}
+{{ _('content repo README') }}
+{{ add_utm('https://github.com/mdn/content/blob/main/README.md', 'welcome') }}
 
 {# L10n: This is an email. Whitespace matters! #}
-{{ _('Want to translate MDN to your language?') }}
-{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_4_I_want_MDN_in_my_language', 'welcome') }}
+{{ _('translated-content repo README') }}
+{{ add_utm('https://github.com/mdn/translated-content/blob/main/README.md', 'welcome') }}
 
 {# L10n: This is an email. Whitespace matters! #}
 {{ _('Want to talk to someone about MDN? There are a few ways you can do that:') }}
