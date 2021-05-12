@@ -562,11 +562,11 @@ tests = ["tox"]
 
 [[package]]
 name = "django-taggit"
-version = "0.24.0"
+version = "1.4.0"
 description = "django-taggit is a reusable Django application for simple tagging."
 category = "main"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+python-versions = ">=3.6"
 
 [package.dependencies]
 Django = ">=1.11"
@@ -1533,7 +1533,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "5b56a4ee77e62fb81cc81151a26bf523b5d577647f375e1411eca9a32e0b1145"
+content-hash = "ede7c6155545b6eb3cdfaa246d36683fa1e1cc8fc059f86f5a3d097fe8eed16d"
 
 [metadata.files]
 amqp = [
@@ -1771,8 +1771,8 @@ django-sundial = [
     {file = "django_sundial-1.0.6-py2.py3-none-any.whl", hash = "sha256:08361afffc0da2358d4283e83a0426b862342af211e60d50f273213093306208"},
 ]
 django-taggit = [
-    {file = "django-taggit-0.24.0.tar.gz", hash = "sha256:bb8f27684814cd1414b2af75b857b5e26a40912631904038a7ecacd2bfafc3ac"},
-    {file = "django_taggit-0.24.0-py2.py3-none-any.whl", hash = "sha256:710b4d15ec1996550cc68a0abbc41903ca7d832540e52b1336e6858737e410d8"},
+    {file = "django-taggit-1.4.0.tar.gz", hash = "sha256:b9ed6e94bad0bed3bf062a6be7ee3db117fda02c6419c680d614197364ea018b"},
+    {file = "django_taggit-1.4.0-py3-none-any.whl", hash = "sha256:9f947b7fe330875ac7f05f9616f42ef90df9253b639ca102a9449dd34cec0cab"},
 ]
 django-tidings = [
     {file = "django-tidings-2.0.1.tar.gz", hash = "sha256:0900f28c332f30fd7b2d4f92578c8504601584762524876786dd0a266cf06cd6"},
