@@ -492,7 +492,7 @@ INSTALLED_APPS = (
     "kuma.users.providers.github",
     "kuma.users.providers.google",
     "kuma.users.newsletter.apps.UserNewsletterConfig",
-    "kuma.mdnplusplus.apps.MDNPlusplusConfig",
+    "kuma.plus.apps.PlusConfig",
     # util
     "django_jinja",
     "pipeline",

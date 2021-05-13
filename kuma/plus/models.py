@@ -5,13 +5,13 @@ from django.db import models
 
 
 class LandingPageSurvey(models.Model):
+    uuid = models.UUIDField(default=uuid4, editable=False, primary_key=True)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
     )
     # An insecure random string so that when a survey is submitted with more information
     # it can not easily be guessed and the ratelimit will make it impossible to try
     # all combinations.
-    uuid = models.UUIDField(default=uuid4, editable=False)
     email = models.CharField(max_length=100, blank=True)
     variant = models.PositiveIntegerField()
     # Wish we had a proper JSON model but this is MySQL and Django 2.

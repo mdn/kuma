@@ -3,12 +3,12 @@ import json
 import pytest
 
 from kuma.core.urlresolvers import reverse
-from kuma.mdnplusplus.models import LandingPageSurvey
+from kuma.plus.models import LandingPageSurvey
 
 
 @pytest.mark.django_db
 def test_ping_landing_page_survey_happy_path(client):
-    url = reverse("api.v1.mdnplusplus.landing_page_survey")
+    url = reverse("api.v1.plus.landing_page_survey")
     response = client.get(
         url, {"variant": 1}, HTTP_CLOUDFRONT_VIEWER_COUNTRY_NAME="Antartica"
     )
@@ -48,7 +48,7 @@ def test_ping_landing_page_survey_happy_path(client):
 
 @pytest.mark.django_db
 def test_ping_landing_page_survey_bad_request(client):
-    url = reverse("api.v1.mdnplusplus.landing_page_survey")
+    url = reverse("api.v1.plus.landing_page_survey")
 
     # No ?variant=...
     response = client.get(url)
@@ -71,7 +71,7 @@ def test_ping_landing_page_survey_bad_request(client):
 
 @pytest.mark.django_db
 def test_ping_landing_page_survey_reuse_uuid(client):
-    url = reverse("api.v1.mdnplusplus.landing_page_survey")
+    url = reverse("api.v1.plus.landing_page_survey")
     response1 = client.get(
         url, {"variant": 1}, HTTP_CLOUDFRONT_VIEWER_COUNTRY_NAME="Sweden"
     )
@@ -87,8 +87,8 @@ def test_ping_landing_page_survey_reuse_uuid(client):
 
 
 @pytest.mark.django_db
-def test_ping_landing_page_survey_authenticated(client, user_client, wiki_user):
-    url = reverse("api.v1.mdnplusplus.landing_page_survey")
+def test_ping_landing_page_survey_authenticated(user_client, wiki_user):
+    url = reverse("api.v1.plus.landing_page_survey")
     response = user_client.get(url, {"variant": 1})
     assert response.status_code == 200
     (result,) = LandingPageSurvey.objects.all()
