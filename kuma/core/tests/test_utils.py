@@ -10,27 +10,7 @@ from kuma.core.utils import (
     requests_retry_session,
     safer_pyquery,
     send_mail_retrying,
-    smart_int,
 )
-
-
-def test_smart_int():
-    # Sanity check
-    assert 10 == smart_int("10")
-    assert 10 == smart_int("10.5")
-
-    # Test int
-    assert 10 == smart_int(10)
-
-    # Invalid string
-    assert 0 == smart_int("invalid")
-
-    # Empty string
-    assert 0 == smart_int("")
-
-    # Wrong type
-    assert 0 == smart_int(None)
-    assert 10 == smart_int([], 10)
 
 
 @pytest.mark.parametrize(

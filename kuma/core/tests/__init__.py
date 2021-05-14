@@ -4,7 +4,6 @@ from unittest import mock
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.messages.storage.fallback import FallbackStorage
 from django.core.cache import cache
 from django.test import TestCase
 from django.utils.translation import trans_real
@@ -44,14 +43,6 @@ class KumaTestMixin(object):
         trans_real.deactivate()
         trans_real._translations = {}  # Django fails to clear this cache.
         trans_real.activate(settings.LANGUAGE_CODE)
-
-    def get_messages(self, request):
-        # Django 1.4 RequestFactory requests can't be used to test views that
-        # call messages.add (https://code.djangoproject.com/ticket/17971)
-        # FIXME: HACK from http://stackoverflow.com/q/11938164/571420
-        messages = FallbackStorage(request)
-        request._messages = messages
-        return messages
 
     def assertFileExists(self, path):
         self.assertTrue(os.path.exists(path), "Path %r does not exist" % path)

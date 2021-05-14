@@ -59,7 +59,10 @@ def user_access_decorator(
     def decorator(view_fn):
         def _wrapped_view(request, *args, **kwargs):
             if redirect_func(request.user):
-                redirect_url = redirect_url_func() or f"/{request.LANGUAGE_CODE}{settings.LOGIN_URL}"
+                redirect_url = (
+                    redirect_url_func()
+                    or f"/{getattr(request, 'LANGUAGE_CODE', settings.LANGUAGE_CODE)}{settings.LOGIN_URL}"
+                )
 
                 # Redirect back here afterwards?
                 if redirect_field:
