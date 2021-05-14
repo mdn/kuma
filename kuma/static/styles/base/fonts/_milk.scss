@@ -1,9 +1,0 @@
-@font-face {
-    font-family: Milk;
-    src: url('#{$path-to-fonts}#{'ABTSmilk.eot'}');
-    src: url('#{$path-to-fonts}#{'ABTSmilk.eot?#iefix'}') format('embedded-opentype'),
-         url('#{$path-to-fonts}#{'ABTSmilk.woff'}') format('woff'),
-         url('#{$path-to-fonts}#{'ABTSmilk.ttf'}') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}

@@ -1,7 +1,0 @@
-@import 'includes/vars';
-@import 'includes/mixins';
-
-p.notice {
-    margin-bottom: $grid-spacing;
-    padding-bottom: ($grid-spacing / 2);
-}
