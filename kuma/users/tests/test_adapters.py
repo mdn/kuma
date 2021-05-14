@@ -286,9 +286,7 @@ def test_user_reuse_on_social_login(wiki_user, client, rf, case, provider):
     # If we found a matching user, we should have been logged-in without
     # any further steps, and redirected to the home page. Otherwise we should
     # have been redirected to the account-signup page to continue the process.
-    assert response.url == (
-        "/" if case == "match" else "/en-US/users/account/signup"
-    )
+    assert response.url == ("/" if case == "match" else "/en-US/users/account/signup")
     # The wiki_user's password should have been made unusable but only if we
     # found a match.
     wiki_user.refresh_from_db()

@@ -59,9 +59,7 @@ def test_locale_middleware_picker(accept_language, locale, client, db):
 @pytest.mark.parametrize("original,fixed", REDIRECT_CASES)
 def test_locale_middleware_fixer(original, fixed, client, db):
     """The LocaleStandardizerMiddleware redirects non-standard locale URLs."""
-    response = client.get(
-        (f"/{original}" if original else "") + "/events"
-    )
+    response = client.get((f"/{original}" if original else "") + "/events")
     assert response.status_code == 302
     assert response["Location"] == f"/{fixed}/events"
     assert_shared_cache_header(response)

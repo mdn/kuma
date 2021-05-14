@@ -16,6 +16,7 @@ from django.http import (
 from django.middleware.csrf import get_token
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
+
 # from honeypot.decorators import verify_honeypot_value
 
 from kuma.core.decorators import redirect_in_maintenance_mode
@@ -259,7 +260,9 @@ class SignupView(BaseSignupView):
             # This means first used Yari to attempt to sign in but arrived
             # ignored the outcomes and manually went to the Kuma signup URL.
             # We have to kick you out and ask you to start over. But where to?
-            yari_signin_url = f"{next_url_prefix}/{request.LANGUAGE_CODE}{settings.LOGIN_URL}"
+            yari_signin_url = (
+                f"{next_url_prefix}/{request.LANGUAGE_CODE}{settings.LOGIN_URL}"
+            )
             return redirect(yari_signin_url)
 
         # Things that are NOT PII.

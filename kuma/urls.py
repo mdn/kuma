@@ -43,9 +43,7 @@ if settings.MAINTENANCE_MODE:
     urlpatterns.append(
         re_path(
             r"^admin/.*",
-            never_cache(
-                RedirectView.as_view(url="/", permanent=False)
-            ),
+            never_cache(RedirectView.as_view(url="/", permanent=False)),
         )
     )
 else:

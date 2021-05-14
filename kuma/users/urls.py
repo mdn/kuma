@@ -27,7 +27,6 @@ users_patterns = [
         name="account_logout",
     ),
     re_path(r"^account/signup/?$", views.signup, name="socialaccount_signup"),
-
     # re_path(
     #     r"^account/recover/send",
     #     views.send_recovery_email,

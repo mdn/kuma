@@ -426,8 +426,7 @@ STATICFILES_FINDERS = (
     # "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 )
 
-STATICFILES_STORAGE = (
-)
+STATICFILES_STORAGE = ()
 
 STATICFILES_DIRS = []
 
