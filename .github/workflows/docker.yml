@@ -29,9 +29,6 @@ jobs:
       - name: Compile locales
         run: docker-compose run testing make localecompile
 
-      - name: Build static
-        run: docker-compose run testing make build-static
-
       - name: DB migrations
         run: |
           docker-compose run testing ./manage.py migrate
@@ -52,10 +49,6 @@ jobs:
       - name: Submit code coverage
         run: |
           bash <(curl -s --retry 3 --retry-connrefused https://codecov.io/bash)
-
-      - name: Run JavaScript tests
-        run: |
-          docker-compose run testing yarn test-ci
 
       - name: Run localerefresh
         run: |

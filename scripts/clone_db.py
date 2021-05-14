@@ -105,12 +105,12 @@ TABLES_TO_DUMP = [x.strip() for x in """
 
 def print_info(s):
     if opts and not opts.quiet:
-        print s
+        print(s)
 
 
 def print_debug(s):
     if opts and (not opts.quiet and opts.debug):
-        print s
+        print(s)
 
 
 class NotFound(Exception):
@@ -323,8 +323,8 @@ if __name__ == '__main__':
         error = "Command failed: %s" % e
         retcode = 127
     if error:
-        print >>sys.stderr, error
-        print >>sys.stderr, "Clone FAILED."
+        print(error, file=sys.stderr)
+        print("Clone FAILED.", file=sys.stderr)
         sys.exit(retcode)
     else:
-        print >>sys.stderr, "Clone complete."
+        print("Clone complete.", file=sys.stderr)

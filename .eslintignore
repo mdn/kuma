@@ -1,8 +1,0 @@
-kuma/static/js/libs/*
-kuma/static/js/prism-mdn/*
-kuma/wiki/jinja2/wiki/ckeditor_config.js
-kuma/static/js/utils/perf.min.js
-kuma/static/js/utils/perf-post-message-handler.min.js
-kuma/static/layout-tests/js/*.js
-kuma/javascript/dist/*.js
-kuma/javascript/src/flow-typed

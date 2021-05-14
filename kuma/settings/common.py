@@ -439,6 +439,7 @@ INSTALLED_APPS = (
     "django.contrib.sessions",
     "django.contrib.sites",
     "django.contrib.admin",
+    "django.contrib.messages",
     # "django.contrib.staticfiles",
     # MDN
     "kuma.core.apps.CoreConfig",
@@ -531,31 +532,15 @@ PUENTE = {
     # handles the extraction.
     "DOMAIN_METHODS": {
         "django": [
-            ("kumascript/node_modules/**", "ignore"),
             ("kuma/**.py", "python"),
             ("**/templates/**.html", "enmerkar.extract.extract_django"),
             ("**/jinja2/**.html", "jinja2"),
             ("**/jinja2/**.ltxt", "jinja2"),
         ],
-        "javascript": [
-            # We can't say **.js because that would dive into any libraries.
-            ("kuma/static/js/*.js", "javascript"),
-            ("kuma/static/js/components/**.js", "javascript"),
-            ("assets/ckeditor4/source/plugins/mdn-**/*.js", "javascript"),
-        ],
-        "react": [
-            ("kuma/javascript/src/**.js", "javascript"),
-            ("kuma/javascript/src/**.jsx", "javascript"),
-        ],
     },
     "PROJECT": "MDN",
     "MSGID_BUGS_ADDRESS": ADMIN_EMAILS[0],
 }
-
-# Combine JavaScript strings into React domain
-PUENTE["DOMAIN_METHODS"]["react"] = (
-    PUENTE["DOMAIN_METHODS"]["javascript"] + PUENTE["DOMAIN_METHODS"]["react"]
-)
 
 STATICI18N_ROOT = "build/locale"
 STATICI18N_DOMAIN = "javascript"

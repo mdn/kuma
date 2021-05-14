@@ -40,15 +40,7 @@ docker-compose exec -T web urlwait http://elasticsearch:9200 30
 docker-compose exec -T web make clean
 # Needed for Django's check_for_language
 docker-compose exec -T web make localecompile
-docker-compose exec -T web make build-static
-# Chicken-and-egg problem. The `docker-compose up` above won't be able to start
-# the `ssr` service because `kuma/javascript/dist/ssr.js` does not exist *until*
-# you run the `build-static` command which is part of the `web` service.
-# So, now that that's been done, let's give the `ssr` service another chance.
-docker-compose restart ssr
-
 docker-compose exec -T web ./manage.py migrate
 # This checks that running `./manage.py makemigrations` wasn't forgotten
 docker-compose exec -T web ./manage.py makemigrations --check --dry-run
-
 docker-compose exec -T web make coveragetest
