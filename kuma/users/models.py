@@ -2,19 +2,14 @@ import datetime
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.tokens import default_token_generator
 from django.core import validators
 from django.core.cache import cache
 from django.db import models, transaction
 from django.db.models import Max
 from django.dispatch import receiver
 from django.utils import timezone
-from django.utils.encoding import force_bytes
 from django.utils.functional import cached_property
-from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
-
-from kuma.core.urlresolvers import reverse
 
 from .constants import USERNAME_REGEX
 
@@ -231,13 +226,6 @@ class User(AbstractUser):
 
     def allows_editing_by(self, user):
         return user.is_staff or user.is_superuser or user.pk == self.pk
-
-    def get_recovery_url(self):
-        """Creates a recovery URL for the user."""
-        uidb64 = urlsafe_base64_encode(force_bytes(self.pk))
-        token = default_token_generator.make_token(self)
-        link = reverse("users.recover", kwargs={"token": token, "uidb64": uidb64})
-        return link
 
     def set_next_subscriber_number_and_save(self):
         assert not self.subscriber_number, "already set"

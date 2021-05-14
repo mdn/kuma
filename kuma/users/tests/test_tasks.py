@@ -4,30 +4,14 @@ from allauth.account.models import EmailAddress, EmailConfirmationHMAC
 from allauth.account.signals import user_signed_up
 from django.conf import settings
 from django.core import mail
-from django.test import RequestFactory, TestCase
+from django.test import RequestFactory
 from waffle.testutils import override_switch
 
 from kuma.core.tests import assert_no_cache_header, call_on_commit_immediately
 from kuma.core.urlresolvers import reverse
-from kuma.users.tasks import send_recovery_email, send_welcome_email
+from kuma.users.tasks import send_welcome_email
 
 from . import create_user, UserTestCase
-
-
-class SendRecoveryEmailTests(TestCase):
-    def test_send_email(self):
-        testuser = create_user(username="legacy", email="legacy@example.com")
-        testuser.set_unusable_password()
-        testuser.save()
-        send_recovery_email(testuser.pk, email="actual@example.com")
-        testuser.refresh_from_db()
-        assert not testuser.has_usable_password()
-        recovery_url = testuser.get_recovery_url()
-        assert len(mail.outbox) == 1
-        recovery_email = mail.outbox[0]
-        assert recovery_email.to == ["actual@example.com"]
-        assert recovery_url in recovery_email.body
-        assert testuser.username in recovery_email.subject
 
 
 class TestWelcomeEmails(UserTestCase):
@@ -70,7 +54,6 @@ class TestWelcomeEmails(UserTestCase):
             save=True,
         )
         request = self.setup_request_for_messages()
-        self.get_messages(request)
         user_signed_up.send(sender=testuser.__class__, request=request, user=testuser)
 
         # no email sent

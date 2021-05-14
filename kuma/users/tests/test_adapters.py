@@ -5,7 +5,6 @@ from allauth.account.models import EmailAddress
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.helpers import complete_social_login
 from allauth.socialaccount.models import SocialAccount, SocialLogin
-from django.contrib import messages as django_messages
 from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory
 
@@ -62,7 +61,6 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         session["socialaccount_sociallogin"] = github_login.serialize()
         session.save()
         request.session = session
-        messages = self.get_messages(request)
 
         # Set up an un-matching alternate SocialLogin for request
         other_account = SocialAccount(
@@ -73,9 +71,6 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         self.assertRaises(
             ImmediateHttpResponse, self.adapter.pre_social_login, request, other_login
         )
-        queued_messages = list(messages)
-        assert len(queued_messages) == 1
-        assert queued_messages[0].level == django_messages.ERROR
 
     def test_pre_social_login_matched_github_login(self):
         """
