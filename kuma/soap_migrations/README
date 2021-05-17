@@ -1,3 +1,0 @@
-# Needs to exist so we don't have outstanding migrations for
-# django-soapbox.
-# See https://github.com/ubernostrum/django-soapbox/issues/5

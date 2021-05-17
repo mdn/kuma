@@ -503,17 +503,6 @@ Django = ">=2.2"
 redis = ">=3.0.0"
 
 [[package]]
-name = "django-soapbox"
-version = "1.6"
-description = "Site-wide and page-specific announcements/messages for Django sites"
-category = "main"
-optional = false
-python-versions = ">=3.5"
-
-[package.dependencies]
-Django = ">=2.2"
-
-[[package]]
 name = "django-statici18n"
 version = "1.9.0"
 description = "A Django app that provides helper for generating Javascript catalog to static files."
@@ -1533,7 +1522,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "f66823f58096a958f7c7fc663e34dbb39e8b5ca7811f81c3ff1eff204540c2e3"
+content-hash = "d45f865abd03b2de2d9f8e5725f2a66aa0bdde04afa1bf2403a7fe8324958727"
 
 [metadata.files]
 amqp = [
@@ -1753,10 +1742,6 @@ django-redirect-urls = [
 django-redis = [
     {file = "django-redis-4.12.1.tar.gz", hash = "sha256:306589c7021e6468b2656edc89f62b8ba67e8d5a1c8877e2688042263daa7a63"},
     {file = "django_redis-4.12.1-py3-none-any.whl", hash = "sha256:1133b26b75baa3664164c3f44b9d5d133d1b8de45d94d79f38d1adc5b1d502e5"},
-]
-django-soapbox = [
-    {file = "django-soapbox-1.6.tar.gz", hash = "sha256:debd41b4186bc1249fcb3a16e8b645b2a7a5271b9046b5f34ce4b8cac6caae76"},
-    {file = "django_soapbox-1.6-py3-none-any.whl", hash = "sha256:ba5cc6719e712607296e4759e6198b5fd12d131a0f22f44d7feb98a19a177556"},
 ]
 django-statici18n = [
     {file = "django-statici18n-1.9.0.tar.gz", hash = "sha256:913dd056c1abcbe129b1db806cb4cfb821c4077d7e857d6eb29043ea64f4d1d0"},

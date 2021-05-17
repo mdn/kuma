@@ -86,8 +86,6 @@
 <body>
   {% include "includes/config.html" %}
 
-  {{ soapbox_messages(get_soapbox_messages(request.path)) }}
-
   {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(),
                   document_data)|safe }}
 

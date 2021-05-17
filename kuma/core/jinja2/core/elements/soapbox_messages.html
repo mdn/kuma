@@ -1,9 +1,0 @@
-{% if soapbox_messages|count > 0 %}
-  <div class="global-notice">
-    <div class="wrap center">
-      {% for message in soapbox_messages %}
-        <p><bdi>{{ message|urlize }}</bdi></p>
-      {% endfor %}
-    </div>
-  </div>
-{% endif %}

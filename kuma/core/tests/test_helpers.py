@@ -6,7 +6,6 @@ import pytz
 from babel.dates import format_date, format_datetime, format_time
 from django.conf import settings
 from django.test import override_settings, RequestFactory, TestCase
-from soapbox.models import Message
 
 from kuma.core.tests import KumaTestCase
 from kuma.core.urlresolvers import reverse
@@ -16,11 +15,9 @@ from ..exceptions import DateTimeFormatError
 from ..templatetags.jinja_helpers import (
     assert_function,
     datetimeformat,
-    get_soapbox_messages,
     in_utc,
     jsonencode,
     page_title,
-    soapbox_messages,
     yesno,
 )
 
@@ -47,39 +44,6 @@ class TestYesNo(KumaTestCase):
         assert "No" == yesno(False)
         assert "Yes" == yesno(1)
         assert "No" == yesno(0)
-
-
-class TestSoapbox(KumaTestCase):
-    def test_global_message(self):
-        m = Message(message="Global", is_global=True, is_active=True, url="/")
-        m.save()
-        assert m.message == get_soapbox_messages("/")[0].message
-        assert m.message == get_soapbox_messages("/en-US/")[0].message
-
-    def test_subsection_message(self):
-        m = Message(
-            message="Search down", is_global=False, is_active=True, url="/search"
-        )
-        m.save()
-        assert 0 == len(get_soapbox_messages("/"))
-        assert 0 == len(get_soapbox_messages("/docs"))
-        assert 0 == len(get_soapbox_messages("/en-US/docs"))
-        assert m.message == get_soapbox_messages("/en-US/search")[0].message
-        assert m.message == get_soapbox_messages("/de/search")[0].message
-
-    def test_message_with_url_is_link(self):
-        m = Message(
-            message="Go to http://bit.ly/sample-demo",
-            is_global=True,
-            is_active=True,
-            url="/",
-        )
-        m.save()
-        assert (
-            'Go to <a href="http://bit.ly/sample-demo" rel="noopener">'
-            "http://bit.ly/sample-demo</a>"
-            in soapbox_messages(get_soapbox_messages("/"))
-        )
 
 
 class TestDateTimeFormat(UserTestCase):

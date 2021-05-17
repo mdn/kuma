@@ -14,11 +14,10 @@ from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 from django_jinja import library
 from pytz import timezone, utc
-from soapbox.models import Message
 from statici18n.templatetags.statici18n import statici18n
 from urlobject import URLObject
 
-from ..urlresolvers import reverse, split_path
+from ..urlresolvers import reverse
 from ..utils import format_date_time, is_untrusted, is_wiki, order_params, urlparams
 
 
@@ -125,18 +124,6 @@ def thisyear():
 @library.filter
 def jsonencode(data):
     return jinja2.Markup(json.dumps(data))
-
-
-@library.global_function
-def get_soapbox_messages(url):
-    _, path = split_path(url)
-    return Message.objects.match(path)
-
-
-@library.global_function
-@library.render_with("core/elements/soapbox_messages.html")
-def soapbox_messages(soapbox_messages):
-    return {"soapbox_messages": soapbox_messages}
 
 
 @library.global_function

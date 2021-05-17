@@ -10,9 +10,6 @@ Main CSS file for MDN.  Holds the site structure and key styles.
 Pre-header
 ====================================================================== */
 
-/* soapbox notice */
-@import 'structure/_global-notice.scss';
-
 /* keyboard/screen reader skip link menu */
 @import 'structure/_nav-access.scss';
 
