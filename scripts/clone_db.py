@@ -73,7 +73,6 @@ TABLES_TO_DUMP = [x.strip() for x in """
     search_filtergroup
     search_index
     search_outdatedobject
-    soapbox_message
     socialaccount_socialaccount
     socialaccount_socialapp
     socialaccount_socialapp_sites

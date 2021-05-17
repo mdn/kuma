@@ -44,7 +44,6 @@ SET FOREIGN_KEY_CHECKS=0;
 -- search_filtergroup
 -- search_index
 -- search_outdatedobject
--- soapbox_message
 -- taggit_tag
 -- taggit_taggeditem
 -- waffle_flag
