@@ -23,18 +23,21 @@ jobs:
         run: |
           docker-compose --version
 
-      - name: Build docker
-        run: docker-compose build
+      - name: Build base image, start containers, and wait for services
+        run: |
+          docker-compose up --build -d
+          # Hang tight until MySQL appears to be working
+          docker-compose exec -T web urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30
 
       - name: Compile locales
-        run: docker-compose run testing make localecompile
+        run: docker-compose exec -T web make localecompile
 
       - name: DB migrations
         run: |
-          docker-compose run testing ./manage.py migrate
+          docker-compose exec -T web ./manage.py migrate
           # Essentially compares **/models.py with **/migrations/*.py and
           # makes sure the developer didn't forget to create a new migration.
-          docker-compose run testing ./manage.py makemigrations --check --dry-run
+          docker-compose exec -T web ./manage.py makemigrations --check --dry-run
 
       - name: Run Python tests
         run: |
@@ -42,9 +45,9 @@ jobs:
           # We might be able to use something
           # like `if [ ${{ github.head_ref}} eq 'master']` but not sure.
           # Slower...
-          docker-compose run testing make coveragetest
+          docker-compose exec -T web make coveragetest
           # Faster...
-          #docker-compose run testing make test
+          #docker-compose exec -T web make test
 
       - name: Submit code coverage
         run: |
