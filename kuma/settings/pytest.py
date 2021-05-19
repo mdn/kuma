@@ -116,4 +116,4 @@ SENDINBLUE_LIST_ID = 7327
 ENABLE_SUBSCRIPTIONS = True
 
 # Hardcode this option
-PLUS_PRICE_VARIANTS = ["Foo", "Bar", "Buz"]
+PLUS_VARIANTS = ["Foo", "Bar", "Buz"]

@@ -7,17 +7,18 @@ from kuma.plus.models import LandingPageSurvey
 
 
 @pytest.mark.django_db
-def test_ping_landing_page_survey_happy_path(client):
+def test_ping_landing_page_survey_happy_path(client, settings):
     # This sets the needed session cookie
     variant_url = reverse("api.v1.plus.landing_page_variant")
     response = client.get(variant_url)
     assert response.status_code == 200
+    variant = response.json()["variant"]
 
     url = reverse("api.v1.plus.landing_page_survey")
     response = client.get(url, HTTP_CLOUDFRONT_VIEWER_COUNTRY_NAME="Antartica")
     assert response.status_code == 200
     (result,) = LandingPageSurvey.objects.all()
-    assert result.variant == 1
+    assert result.variant == variant
     assert not result.email
     assert not result.response
     assert result.geo_information == "Antartica"
@@ -29,7 +30,7 @@ def test_ping_landing_page_survey_happy_path(client):
     )
     assert response.status_code == 200
     (result,) = LandingPageSurvey.objects.all()
-    assert result.variant == 1
+    assert result.variant == variant
     assert result.email == "peterbe@example.com"
     assert not result.response
 
@@ -43,7 +44,7 @@ def test_ping_landing_page_survey_happy_path(client):
     )
     assert response.status_code == 200
     (result,) = LandingPageSurvey.objects.all()
-    assert result.variant == 1
+    assert result.variant == variant
     assert result.email == "peterbe@example.com"
     assert result.response == json.dumps({"price": "perfect"})
 
@@ -106,14 +107,14 @@ def test_ping_landing_page_survey_authenticated(user_client, wiki_user):
 
 @pytest.mark.django_db
 def test_landing_page_variant_happy_path(client, settings):
-    # Note `settings.PLUS_PRICE_VARIANTS` is set in `kuma.settings.pytest`
+    # Note `settings.PLUS_VARIANTS` is set in `kuma.settings.pytest`
     url = reverse("api.v1.plus.landing_page_variant")
     response = client.get(url)
     assert response.status_code == 200
     first_time = response.json()
     assert first_time["variant"] > 0
-    assert first_time["variant"] <= len(settings.PLUS_PRICE_VARIANTS)
-    assert first_time["price"] in settings.PLUS_PRICE_VARIANTS
+    assert first_time["variant"] <= len(settings.PLUS_VARIANTS)
+    assert first_time["price"] in settings.PLUS_VARIANTS
 
     # It should stick no matter how many times you run it
     for _ in range(10):

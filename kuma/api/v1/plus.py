@@ -72,7 +72,7 @@ def landing_page_survey(request):
 @ratelimit(key="user_or_ip", rate="100/m", block=True)
 @require_GET
 def landing_page_variant(request):
-    variants = settings.PLUS_PRICE_VARIANTS
+    variants = settings.PLUS_VARIANTS
     assert isinstance(variants, list)
     variant = request.session.get(VARIANTS_SESSION_KEY)
     if not variant:
