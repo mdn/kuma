@@ -73,8 +73,8 @@ def landing_page_variant(request):
     session_key = "plus-landing-page-variant-v1"
     variant = request.session.get(session_key)
     if not variant:
-        variant = random.randint(0, len(variants) - 1)
+        variant = random.randint(1, len(variants))
         request.session[session_key] = variant
-    assert variant < len(variants), variant
-    context = {"variant": variant, "price": variants[variant]}
+    assert variant <= len(variants), variant
+    context = {"variant": variant, "price": variants[variant - 1]}
     return JsonResponse(context)

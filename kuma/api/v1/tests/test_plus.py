@@ -102,7 +102,8 @@ def test_landing_page_variant_happy_path(client, settings):
     response = client.get(url)
     assert response.status_code == 200
     first_time = response.json()
-    assert first_time["variant"] < len(settings.PLUS_PRICE_VARIANTS)
+    assert first_time["variant"] > 0
+    assert first_time["variant"] <= len(settings.PLUS_PRICE_VARIANTS)
     assert first_time["price"] in settings.PLUS_PRICE_VARIANTS
 
     # It should stick no matter how many times you run it
