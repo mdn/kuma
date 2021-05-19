@@ -97,7 +97,7 @@ def test_ping_landing_page_survey_authenticated(user_client, wiki_user):
 
 @pytest.mark.django_db
 def test_landing_page_variant_happy_path(client, settings):
-    settings.PLUS_PRICE_VARIANTS = ["Foo", "Bar", "Buzz"]
+    # Note `settings.PLUS_PRICE_VARIANTS` is set in `kuma.settings.pytest`
     url = reverse("api.v1.plus.landing_page_variant")
     response = client.get(url)
     assert response.status_code == 200

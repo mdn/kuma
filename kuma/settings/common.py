@@ -1831,14 +1831,13 @@ ENABLE_SUBSCRIPTIONS = config("ENABLE_SUBSCRIPTIONS", cast=bool, default=False)
 # to know what the index is called for searching.
 SEARCH_INDEX_NAME = config("SEARCH_INDEX_NAME", default="mdn_docs")
 
-PLUS_PRICE_VARIANTS = json.loads(
-    config(
-        "PLUS_PRICE_VARIANTS_JSON",
-        default=json.dumps(
-            [
-                "$X a month or $XX a year",
-                "$Y a month or $YY a year",
-            ]
-        ),
-    )
+PLUS_PRICE_VARIANTS = config(
+    "PLUS_PRICE_VARIANTS_JSON",
+    default=json.dumps(
+        [
+            "$X a month or $XX a year",
+            "$Y a month or $YY a year",
+        ]
+    ),
+    cast=json.loads,
 )

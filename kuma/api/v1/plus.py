@@ -6,10 +6,13 @@ from django.conf import settings
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.middleware.csrf import get_token
 from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_GET, require_http_methods
 from ratelimit.decorators import ratelimit
 
 from kuma.plus.models import LandingPageSurvey
+
+
+VARIANTS_SESSION_KEY = "plus-landing-page-variant-v1"
 
 
 @ratelimit(key="user_or_ip", rate="100/m", block=True)
@@ -36,7 +39,7 @@ def landing_page_survey(request):
             survey.save()
         context["ok"] = True
     else:
-        variant = request.GET.get("variant")
+        variant = request.session.get(VARIANTS_SESSION_KEY)
         if not variant:
             return HttpResponseBadRequest("missing 'variant'")
         try:
@@ -67,14 +70,14 @@ def landing_page_survey(request):
 
 
 @ratelimit(key="user_or_ip", rate="100/m", block=True)
+@require_GET
 def landing_page_variant(request):
     variants = settings.PLUS_PRICE_VARIANTS
     assert isinstance(variants, list)
-    session_key = "plus-landing-page-variant-v1"
-    variant = request.session.get(session_key)
+    variant = request.session.get(VARIANTS_SESSION_KEY)
     if not variant:
         variant = random.randint(1, len(variants))
-        request.session[session_key] = variant
+        request.session[VARIANTS_SESSION_KEY] = variant
     assert variant <= len(variants), variant
     context = {"variant": variant, "price": variants[variant - 1]}
     return JsonResponse(context)
