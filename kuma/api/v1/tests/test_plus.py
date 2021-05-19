@@ -93,3 +93,21 @@ def test_ping_landing_page_survey_authenticated(user_client, wiki_user):
     assert response.status_code == 200
     (result,) = LandingPageSurvey.objects.all()
     assert result.user == wiki_user
+
+
+@pytest.mark.django_db
+def test_landing_page_variant_happy_path(client, settings):
+    settings.PLUS_PRICE_VARIANTS = ["Foo", "Bar", "Buzz"]
+    url = reverse("api.v1.plus.landing_page_variant")
+    response = client.get(url)
+    assert response.status_code == 200
+    first_time = response.json()
+    assert first_time["variant"] < len(settings.PLUS_PRICE_VARIANTS)
+    assert first_time["price"] in settings.PLUS_PRICE_VARIANTS
+
+    # It should stick no matter how many times you run it
+    for _ in range(10):
+        response = client.get(url)
+        assert response.status_code == 200
+        assert response.json()["variant"] == first_time["variant"]
+        assert response.json()["price"] == first_time["price"]

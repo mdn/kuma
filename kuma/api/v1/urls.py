@@ -13,6 +13,11 @@ urlpatterns = [
         name="api.v1.send_subscriptions_feedback",
     ),
     path(
+        "plus/landing-page/",
+        plus.landing_page_variant,
+        name="api.v1.plus.landing_page_variant",
+    ),
+    path(
         "plus/landing-page-survey/",
         plus.landing_page_survey,
         name="api.v1.plus.landing_page_survey",

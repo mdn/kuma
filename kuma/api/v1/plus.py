@@ -1,6 +1,8 @@
 import json
+import random
 from uuid import UUID
 
+from django.conf import settings
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.middleware.csrf import get_token
 from django.shortcuts import get_object_or_404
@@ -61,4 +63,18 @@ def landing_page_survey(request):
         context["uuid"] = survey.uuid
         context["csrfmiddlewaretoken"] = get_token(request)
 
+    return JsonResponse(context)
+
+
+@ratelimit(key="user_or_ip", rate="100/m", block=True)
+def landing_page_variant(request):
+    variants = settings.PLUS_PRICE_VARIANTS
+    assert isinstance(variants, list)
+    session_key = "plus-landing-page-variant-v1"
+    variant = request.session.get(session_key)
+    if not variant:
+        variant = random.randint(0, len(variants) - 1)
+        request.session[session_key] = variant
+    assert variant < len(variants), variant
+    context = {"variant": variant, "price": variants[variant]}
     return JsonResponse(context)
