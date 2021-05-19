@@ -114,3 +114,6 @@ SENDINBLUE_LIST_ID = 7327
 # This is False by default, to so we don't have to rewrite all the existing
 # tests, it's True in this context.
 ENABLE_SUBSCRIPTIONS = True
+
+# Hardcode this option
+PLUS_VARIANTS = ["Foo", "Bar", "Buz"]
