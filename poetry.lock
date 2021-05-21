@@ -561,18 +561,6 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 Django = ">=1.11"
 
 [[package]]
-name = "django-tidings"
-version = "2.0.1"
-description = "Framework for asynchronous email notifications from Django"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-celery = ">=3.1"
-django = "*"
-
-[[package]]
 name = "django-waffle"
 version = "0.20.0"
 description = "A feature flipper for Django."
@@ -1511,7 +1499,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "239c1bc9603e2caaa1f1af31f03600a5b3acf706e93b8bcc13be8178f70b9049"
+content-hash = "e334b685c20232779eb9a9467928fb4c505444ffb76ad3cb4d0f2fe12d597dc5"
 
 [metadata.files]
 amqp = [
@@ -1747,10 +1735,6 @@ django-sundial = [
 django-taggit = [
     {file = "django-taggit-0.24.0.tar.gz", hash = "sha256:bb8f27684814cd1414b2af75b857b5e26a40912631904038a7ecacd2bfafc3ac"},
     {file = "django_taggit-0.24.0-py2.py3-none-any.whl", hash = "sha256:710b4d15ec1996550cc68a0abbc41903ca7d832540e52b1336e6858737e410d8"},
-]
-django-tidings = [
-    {file = "django-tidings-2.0.1.tar.gz", hash = "sha256:0900f28c332f30fd7b2d4f92578c8504601584762524876786dd0a266cf06cd6"},
-    {file = "django_tidings-2.0.1-py2.py3-none-any.whl", hash = "sha256:a144628acdd9ddafdc921cdb70fb8ee297886b1dc38b00fab8fffbbf46163012"},
 ]
 django-waffle = [
     {file = "django-waffle-0.20.0.tar.gz", hash = "sha256:744c3fe6cedbd175d2247cb93904e931f056b503f6e4a4836a0b9b66b43be625"},

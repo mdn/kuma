@@ -705,7 +705,7 @@ CELERY_RESULT_SERIALIZER = "pickle"
 CELERY_EVENT_SERIALIZER = "pickle"
 
 
-CELERY_IMPORTS = ("tidings.events",)
+CELERY_IMPORTS = ()
 
 CELERY_TASK_ANNOTATIONS = {"cacheback.tasks.refresh_cache": {"rate_limit": "120/m"}}
 
@@ -722,9 +722,6 @@ CELERY_TASK_ROUTES = {
 
 # Do not change this without also deleting all wiki documents:
 WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
-
-TIDINGS_FROM_ADDRESS = "notifications@developer.mozilla.org"
-TIDINGS_CONFIRM_ANONYMOUS_WATCHES = True
 
 CONSTANCE_BACKEND = (
     "kuma.core.backends.ReadOnlyConstanceDatabaseBackend"

@@ -7,7 +7,6 @@ SELECT COUNT(*) AS djcelery_periodictask_should_be_zero FROM djcelery_periodicta
 SELECT COUNT(*) AS djcelery_periodictasks_should_be_zero FROM djcelery_periodictasks;
 SELECT COUNT(*) AS djcelery_taskstate_should_be_zero FROM djcelery_taskstate;
 SELECT COUNT(*) AS djcelery_workerstate_should_be_zero FROM djcelery_workerstate;
-SELECT COUNT(*) AS tidings_watch_should_be_zero FROM tidings_watch;
 
 SELECT COUNT(password) AS auth_user_password_should_be_zero FROM auth_user WHERE password!='!';
 SELECT COUNT(email) as auth_user_email_should_be_zero from auth_user WHERE email not like '%@example.com';
