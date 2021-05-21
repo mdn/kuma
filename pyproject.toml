@@ -69,7 +69,6 @@ stripe = "^2.42.0"
 urllib3 = "^1.25.11"
 urlobject = "^2.4.3"
 urlwait = "^1.0"
-whitenoise = "^5.0.1"
 gevent = {extras = ["gevent"], version = "^20.5.2"}
 
 [tool.poetry.dev-dependencies]

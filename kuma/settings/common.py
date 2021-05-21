@@ -366,7 +366,6 @@ _CONTEXT_PROCESSORS = (
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     # must come before LocaleMiddleware
     "redirect_urls.middleware.RedirectsMiddleware",
     "kuma.core.middleware.SetRemoteAddrFromForwardedFor",
