@@ -124,7 +124,13 @@ class SocialTestMixin(object):
             "primary": True,
             # Added Feb 2017, bug 1339375
             "visibility": "private",
-        }
+        },
+        {
+            "email": "octocat@example.com",
+            "verified": True,
+            "primary": False,
+            "visibility": "public",
+        },
     ]
 
     google_token_data = {
@@ -223,6 +229,9 @@ class SocialTestMixin(object):
                     status_code=email_status_code,
                 )
 
+            print(f"login_url = {login_url}")
+            print(f"callback_url = {callback_url}")
+
             # Simulate the callback from Github
             data = {"code": "github_code", "state": state}
             response = self.client.get(callback_url, data, follow=follow)
@@ -263,8 +272,6 @@ class SocialTestMixin(object):
         """
         login_url = reverse("google_login")
         callback_url = reverse("google_callback")
-        print(f"RYAN: login_url = {login_url}")
-        print(f"RYAN: callback_url = {callback_url}")
         self.ensure_google_app()
 
         headers = headers or {}
@@ -302,11 +309,9 @@ class SocialTestMixin(object):
                     status_code=profile_status_code,
                 )
 
-            print(f"RYAN: here!!!!!")
             # Simulate the callback from Google
             data = {"code": "google_code", "state": state}
             response = self.client.get(callback_url, data, follow=True)
-            print(f"RYAN: here 2222!!!!!")
 
         return response
 

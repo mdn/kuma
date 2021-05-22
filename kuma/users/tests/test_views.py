@@ -1,6 +1,6 @@
 from datetime import timedelta
 from unittest import mock
-from urllib.parse import urlencode
+from urllib.parse import parse_qs, urlparse
 
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount
@@ -13,7 +13,6 @@ from kuma.core.ga_tracking import (
     ACTION_FREE_NEWSLETTER,
     ACTION_PROFILE_AUDIT,
     ACTION_PROFILE_CREATED,
-    ACTION_PROFILE_EDIT,
     ACTION_PROFILE_EDIT_ERROR,
     ACTION_RETURNING_USER_SIGNIN,
     CATEGORY_SIGNUP_FLOW,
@@ -25,48 +24,84 @@ from . import create_user, SocialTestMixin, UserTestCase
 from ..models import User
 
 
+def mock_reverse(viewname, **kwargs):
+    """
+    Mock reverse function for the error-handling tests, since these
+    "views" don't exist in Kuma. They are provided by Yari.
+    """
+    if viewname == "account_signup":
+        return "/en-US/signup"
+    elif viewname == "account_login":
+        return "/en-US/signin"
+    raise Exception(f"unknown endpoint: {viewname}")
+
+
 class KumaGitHubTests(UserTestCase, SocialTestMixin):
     def setUp(self):
         self.signup_url = reverse("socialaccount_signup")
 
     def test_login(self):
+        """
+        We're testing that the GitHub login process eventually redirects
+        to the Yari signup page, passing along public information via the
+        query string.
+        """
         resp = self.github_login()
-        self.assertRedirects(resp, self.signup_url)
+        assert hasattr(resp, "redirect_chain")
+        signup_url = urlparse(resp.redirect_chain[-1][0])
+        assert signup_url.path == "/en-US/signup"
+        query = parse_qs(signup_url.query)
+        assert query["next"][0] == "None"
+        assert query["provider"][0] == "github"
+        user_details = query["user_details"][0]
+        assert f'"name": "{self.github_profile_data["name"]}"' in user_details
+        assert f'"avatar_url": "{self.github_profile_data["avatar_url"]}"' in user_details
+        assert "csrfmiddlewaretoken" in query
+        assert resp.redirect_chain[-1][1] == 302
+
+        data = {
+            "locale": "en-US",
+            "next": "/en-US/",
+            "terms": True,
+        }
+        response = self.client.post(self.signup_url, data=data)
+        assert response.status_code == 302
+        assert_no_cache_header(response)
+        user = User.objects.get(username="octocat")
+        assert user.email == self.github_profile_data["email"]
 
     def test_login_500_on_token(self):
-        resp = self.github_login(token_status_code=500)
-        # No redirect!
-        assert resp.status_code == 200
-        doc = pq(resp.content)
-        assert "Account Sign In Failure" in doc.find("h1").text()
+        # TODO: We're simply testing here that the error is acknowledged properly.
+        # We need to work on a different way to handle these errors so they can be
+        # displayed on our Yari-built signin page "/{locale}/signin".
+        with mock.patch("django.urls.reverse", side_effect=mock_reverse):
+            resp = self.github_login(token_status_code=500)
+            assert resp.status_code == 200
+            assert pq(resp.content).find("h1").text() == "Social Network Login Failure"
 
     def test_login_500_on_getting_profile(self):
-        resp = self.github_login(profile_status_code=500)
-        # No redirect!
-        assert resp.status_code == 200
-        doc = pq(resp.content)
-        assert "Account Sign In Failure" in doc.find("h1").text()
+        with mock.patch("django.urls.reverse", side_effect=mock_reverse):
+            resp = self.github_login(profile_status_code=500)
+            assert resp.status_code == 200
+            assert pq(resp.content).find("h1").text() == "Social Network Login Failure"
 
     def test_login_500_on_getting_email_addresses(self):
-        resp = self.github_login(email_status_code=500)
-        # No redirect!
-        assert resp.status_code == 200
-        doc = pq(resp.content)
-        assert "Account Sign In Failure" in doc.find("h1").text()
+        with mock.patch("django.urls.reverse", side_effect=mock_reverse):
+            resp = self.github_login(email_status_code=500)
+            assert resp.status_code == 200
+            assert pq(resp.content).find("h1").text() == "Social Network Login Failure"
 
     def test_login_SSLError_on_getting_profile(self):
-        resp = self.github_login(profile_exc=SSLError)
-        # No redirect!
-        assert resp.status_code == 200
-        doc = pq(resp.content)
-        assert "Account Sign In Failure" in doc.find("h1").text()
+        with mock.patch("django.urls.reverse", side_effect=mock_reverse):
+            resp = self.github_login(profile_exc=SSLError)
+            assert resp.status_code == 200
+            assert pq(resp.content).find("h1").text() == "Social Network Login Failure"
 
     def test_login_ProxyError_on_getting_email_addresses(self):
-        resp = self.github_login(email_exc=ProxyError)
-        # No redirect!
-        assert resp.status_code == 200
-        doc = pq(resp.content)
-        assert "Account Sign In Failure" in doc.find("h1").text()
+        with mock.patch("django.urls.reverse", side_effect=mock_reverse):
+            resp = self.github_login(email_exc=ProxyError)
+            assert resp.status_code == 200
+            assert pq(resp.content).find("h1").text() == "Social Network Login Failure"
 
     def test_email_addresses(self):
         public_email = "octocat-public@example.com"
@@ -76,29 +111,19 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         profile_data = self.github_profile_data.copy()
         profile_data["email"] = public_email
         email_data = [
-            # It might be unrealistic but let's make sure the primary email
-            # is NOT first in the list. Just to prove that pick that email not
-            # on it coming first but that's the primary verified one.
+            # It might be unrealistic but let's make sure the primary email is
+            # NOT first in the list. Just to prove that email is picked because
+            # it's the primary verified one, not because it's first in the list.
             {"email": unverified_email, "verified": False, "primary": False},
             {"email": private_email, "verified": True, "primary": True},
             {"email": invalid_email, "verified": False, "primary": False},
         ]
         self.github_login(profile_data=profile_data, email_data=email_data)
-        response = self.client.get(self.signup_url)
-        assert response.status_code == 200
-        assert_no_cache_header(response)
-        doc = pq(response.content)
-
-        # The hidden input should display the primary verified email
-        assert doc.find('input[name="email"]').val() == email_data[1]["email"]
-        # But whatever's in the hidden email input is always displayed to the user
-        # as "plain text". Check that that also is right.
-        assert doc.find("#email-static-container").text() == email_data[1]["email"]
 
         unverified_email = "o.ctocat@gmail.com"
         data = {
-            "website": "",
-            "username": "octocat",
+            "locale": "en-US",
+            "next": "/en-US/",
             "email": email_data[1]["email"],
             "terms": True,
         }
@@ -108,36 +133,18 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         assert_no_cache_header(response)
 
         # Check that the user.email field became the primary verified one.
-        user = User.objects.get(username=data["username"])
+        user = User.objects.get(username="octocat")
         assert user.email == email_data[1]["email"]
         assert user.emailaddress_set.count() == 1
         assert user.emailaddress_set.first().email == user.email
         assert user.emailaddress_set.first().verified
         assert user.emailaddress_set.first().primary
 
-    def test_signup_public_github(self, is_public=True):
-        resp = self.github_login()
-        assert resp.redirect_chain[-1][0].endswith(self.signup_url)
-
-        data = {
-            "website": "",
-            "username": "octocat",
-            "email": "octocat-private@example.com",
-            "terms": True,
-            "is_github_url_public": is_public,
-        }
-        response = self.client.post(self.signup_url, data=data)
-        assert response.status_code == 302
-        assert_no_cache_header(response)
-        user = User.objects.get(username="octocat")
-        assert user.is_github_url_public == is_public
-
-    def test_signup_private_github(self):
-        self.test_signup_public_github(is_public=False)
-
     def test_signup_github_event_tracking(self):
-        """Tests that kuma.core.ga_tracking.track_event is called when you
-        sign up with GitHub for the first time."""
+        """
+        Tests that kuma.core.ga_tracking.track_event is called when you
+        sign up with GitHub for the first time.
+        """
         with self.settings(
             GOOGLE_ANALYTICS_ACCOUNT="UA-XXXX-1",
             GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True,
@@ -155,11 +162,9 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                 )
 
                 data = {
-                    "website": "",
-                    "username": "octocat",
-                    "email": "octocat-private@example.com",
+                    "locale": "en-US",
+                    "next": "/en-US/",
                     "terms": True,
-                    "is_github_url_public": True,
                 }
                 response = self.client.post(self.signup_url, data=data)
                 assert response.status_code == 302
@@ -187,82 +192,19 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                 )
 
     def test_signup_github_email_manual_override(self):
-        """Tests if a POST request comes in with an email that is NOT one of the
+        """
+        Tests if a POST request comes in with an email that is NOT one of the
         options, it should reject it.
-        Basically, in the sign up, you are shown what you primary default is and
-        it's also in a hidden input.
-        So, the only want to try to sign up with anything outside of that would
-        be if you manually control the POST request or fiddle with the DOM to
-        edit the hidden email input.
         """
         self.github_login()
         data = {
-            "website": "",
-            "username": "octocat",
             "email": "wasnot@anoption.biz",
+            "locale": "en-US",
+            "next": "/en-US/",
             "terms": True,
-            "is_github_url_public": True,
         }
         response = self.client.post(self.signup_url, data=data)
         assert response.status_code == 400
-
-    def test_signup_username_edit_event_tracking(self):
-        """
-        Tests that GA tracking events are sent for editing the default suggested
-        username when signing-up with a new account.
-        """
-        with self.settings(
-            GOOGLE_ANALYTICS_ACCOUNT="UA-XXXX-1",
-            GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True,
-        ):
-            p1 = mock.patch("kuma.users.signal_handlers.track_event")
-            p2 = mock.patch("kuma.users.views.track_event")
-            p3 = mock.patch("kuma.users.providers.google.views.track_event")
-            with p1, p2 as track_event_mock_views, p3:
-
-                response = self.google_login()
-
-                doc = pq(response.content)
-                # Just sanity check what's the defaults in the form.
-                # Remember, the self.google_login relies on the provider giving an
-                # email that is 'example@gmail.com'
-                assert doc.find('input[name="username"]').val() == "example"
-                assert doc.find('input[name="email"]').val() == "example@gmail.com"
-
-                data = {
-                    "website": "",
-                    "username": "better",
-                    "email": "example@gmail.com",
-                    "terms": False,  # Note!
-                    "is_newsletter_subscribed": True,
-                }
-                response = self.client.post(self.signup_url, data=data)
-                assert response.status_code == 200
-
-                track_event_mock_views.assert_has_calls(
-                    [
-                        mock.call(CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_AUDIT, "google"),
-                        # Note the lack of 'ACTION_PROFILE_EDIT' because the form
-                        # submission was invalid and the save didn't go ahead.
-                    ]
-                )
-
-                # This time, the form submission will work.
-                data["terms"] = True
-                response = self.client.post(self.signup_url, data=data)
-                assert response.status_code == 302
-
-                # Sanity check that the right user got created
-                assert User.objects.get(username="better")
-
-                track_event_mock_views.assert_has_calls(
-                    [
-                        mock.call(CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_AUDIT, "google"),
-                        mock.call(
-                            CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT, "username edit"
-                        ),
-                    ]
-                )
 
     def test_signin_github_event_tracking(self):
         """Tests that kuma.core.ga_tracking.track_event is called when you
@@ -270,11 +212,9 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         # First sign up.
         self.github_login()
         data = {
-            "website": "",
-            "username": "octocat",
-            "email": "octocat-private@example.com",
+            "locale": "en-US",
+            "next": "/en-US/",
             "terms": True,
-            "is_github_url_public": True,
         }
         response = self.client.post(self.signup_url, data=data)
         assert response.status_code == 302
@@ -375,29 +315,30 @@ class KumaGoogleTests(UserTestCase, SocialTestMixin):
         self.signup_url = reverse("socialaccount_signup")
 
     def test_signup_google(self):
-        response = self.google_login()
-        assert response.status_code == 200
+        """
+        We're testing that the Google login process eventually redirects
+        to the Yari signup page, passing along public information via the
+        query string.
+        """
+        resp = self.google_login()
+        assert hasattr(resp, "redirect_chain")
+        signup_url = urlparse(resp.redirect_chain[-1][0])
+        assert signup_url.path == "/en-US/signup"
+        query = parse_qs(signup_url.query)
+        assert query["next"][0] == "None"
+        assert query["provider"][0] == "google"
+        user_details = query["user_details"][0]
+        print(f"user_details = {user_details}")
+        assert f'"name": "{self.google_profile_data["name"]}"' in user_details
+        assert f'"avatar_url": "{self.google_profile_data["picture"]}"' in user_details
+        assert "csrfmiddlewaretoken" in query
+        assert resp.redirect_chain[-1][1] == 302
 
-        doc = pq(response.content)
-        # The default suggested username should be the `email.split('@')[0]`
         email = self.google_profile_data["email"]
         username = email.split("@")[0]
-        assert doc.find('input[name="username"]').val() == username
-        # first remove the button from that container
-        doc("#username-static-container button").remove()
-        # so that what's left is just the username
-        assert doc.find("#username-static-container").text() == username
-
-        # The hidden input should display the primary verified email
-        assert doc.find('input[name="email"]').val() == email
-        # But whatever's in the hidden email input is always displayed to the user
-        # as "plain text". Check that that also is right.
-        assert doc.find("#email-static-container").text() == email
-
         data = {
-            "website": "",  # for the honeypot
-            "username": username,
-            "email": email,
+            "locale": "en-US",
+            "next": "/en-US/",
             "terms": True,
         }
         response = self.client.post(self.signup_url, data=data)
@@ -412,39 +353,45 @@ class KumaGoogleTests(UserTestCase, SocialTestMixin):
         ).exists()
 
     def test_signup_google_changed_email(self):
-        """When you load the signup form, our backend recognizes what your valid
-        email address can be. But what if someone changes the hidden input to
-        something other that what's there by default. That should get kicked out.
+        """
+        Reject an invalid email address.
         """
         self.google_login()
-        email = self.google_profile_data["email"]
-        username = email.split("@")[0]
-
         data = {
-            "website": "",  # for the honeypot
-            "username": username,
             "email": "somethingelse@example.biz",
+            "locale": "en-US",
+            "next": "/en-US/",
             "terms": True,
         }
         response = self.client.post(self.signup_url, data=data)
         assert response.status_code == 400
 
     def test_clashing_username(self):
-        """First a GitHub user exists. Then a Google user tries to sign up
-        whose email address, when `email.split('@')[0]` would become the same
+        """
+        First a GitHub user exists. Then a Google user tries to sign up
+        whose email address (`email.split('@')[0]`) would become the same
         as the existing GitHub user.
         """
-        create_user(username="octocat", save=True)
-        self.google_login(
-            profile_data=dict(
-                self.google_profile_data,
-                email="octocat@gmail.com",
-            )
-        )
-        response = self.client.get(self.signup_url)
-        assert response.status_code == 200
-        doc = pq(response.content)
-        assert doc.find('input[name="username"]').val() == "octocat2"
+        create_user(username="example", save=True)
+        self.google_login()
+        data = {
+            "locale": "en-US",
+            "next": "/en-US/",
+            "terms": True,
+        }
+        response = self.client.post(self.signup_url, data=data)
+        assert response.status_code == 302
+        assert_no_cache_header(response)
+
+        user = User.objects.get(username="example")
+        assert not user.email
+
+        user = User.objects.get(username="example2")
+        assert user.email == self.google_profile_data["email"]
+
+        assert EmailAddress.objects.filter(
+            email=self.google_profile_data["email"], primary=True, verified=True
+        ).exists()
 
     def test_signup_username_error_event_tracking(self):
         """
@@ -469,14 +416,12 @@ class KumaGoogleTests(UserTestCase, SocialTestMixin):
                 )
 
                 data = {
-                    "website": "",
                     "username": "octocat",
-                    "email": "octocat-private@example.com",
+                    "locale": "en-US",
+                    "next": "/en-US/",
                     "terms": True,
-                    "is_newsletter_subscribed": True,
                 }
-                response = self.client.post(self.signup_url, data=data)
-                assert response.status_code == 200
+                self.client.post(self.signup_url, data=data)
 
                 track_event_mock_signals.assert_called_with(
                     CATEGORY_SIGNUP_FLOW, ACTION_AUTH_SUCCESSFUL, "google"
@@ -492,34 +437,3 @@ class KumaGoogleTests(UserTestCase, SocialTestMixin):
                         ),
                     ]
                 )
-
-
-def test_signin_landing(db, client, settings):
-    response = client.get(f"/en-US{settings.LOGIN_URL}")
-    github_login_url = "/users/github/login/"
-    google_login_url = "/users/google/login/"
-    # first, make sure that the page loads
-    assert response.status_code == 200
-    doc = pq(response.content)
-    # ensure that both auth buttons are present
-    assert doc(".auth-button-container a").length == 2
-    # ensure each button links to the appropriate endpoint
-    assert doc(".github-auth").attr.href == github_login_url
-    assert doc(".google-auth").attr.href == google_login_url
-    # just to be absolutely clear, there is no ?next=... on *this* page
-    assert "next" not in doc(".github-auth").attr.href
-    assert "next" not in doc(".google-auth").attr.href
-
-
-def test_signin_landing_next(db, client, settings):
-    """Going to /en-US/users/account/signup-landing?next=THIS should pick put
-    that 'THIS' and put it into the Google and GitHub auth links."""
-    next_page = "/en-US/Foo/Bar"
-    response = client.get(f"/en-US{settings.LOGIN_URL}", {"next": next_page})
-    assert response.status_code == 200
-    doc = pq(response.content)
-    github_login_url = "/users/github/login/"
-    google_login_url = "/users/google/login/"
-    next = f"?{urlencode({'next': next_page})}"
-    assert doc(".github-auth").attr.href == github_login_url + next
-    assert doc(".google-auth").attr.href == google_login_url + next

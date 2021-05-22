@@ -110,12 +110,6 @@ class SignupView(BaseSignupView):
                     "primary": False,
                 }
 
-        # This magic sauce only exists whilst this Django view is being used
-        # both by Yari (in testing) and by old Kuma (production).
-        # Once Kuma is divorced from doing any HTML rendering, we can refactor this.
-        is_yari_signup = self.request.session.get("yari_signup", False)
-        # if is_yari_signup:
-
         if not email and extra_email_addresses:
             # Pick the first primary email.
             for data in extra_email_addresses:
@@ -194,8 +188,6 @@ class SignupView(BaseSignupView):
                 ACTION_PROFILE_EDIT_ERROR,
                 "username",
             )
-        is_yari_signup = self.request.session.get("yari_signup", False)
-        # if is_yari_signup:
         return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
         # return super().form_invalid(form)
@@ -209,15 +201,6 @@ class SignupView(BaseSignupView):
             }
         )
         return context
-
-    def dispatch(self, request, *args, **kwargs):
-        is_yari_signup = request.session.get("yari_signup", False)
-        # if not is_yari_signup:
-        #     response = verify_honeypot_value(request, None)
-        #     if isinstance(response, HttpResponseBadRequest):
-        #         return response
-
-        return super(SignupView, self).dispatch(request, *args, **kwargs)
 
     def get_next_url_prefix(self, request):
         prefix = ""
@@ -243,15 +226,6 @@ class SignupView(BaseSignupView):
                 request.session["sociallogin_provider"],
             )
 
-        # This view is meant to work for both Yari and for the old Kuma-
-        # front-end way of doing things. ...at the same time. For a slow
-        # and gentle rollout.
-        # Once Kuma is divorced of ever returning HTML in any form, we can
-        # refactor this whole view function to never have to depend
-        # on `request.session.get("yari_signup")`.
-        is_yari_signup = request.session.get("yari_signup", False)
-        # If this is the case, always redirect.
-        # if is_yari_signup:
         next_url = request.session.get("sociallogin_next_url")
         next_url_prefix = self.get_next_url_prefix(request)
 
@@ -283,8 +257,6 @@ class SignupView(BaseSignupView):
         }
         yari_signup_url = f"{next_url_prefix}/{request.LANGUAGE_CODE}/signup"
         return redirect(yari_signup_url + "?" + urlencode(params))
-
-        # return super().get(request, *args, **kwargs)
 
 
 signup = redirect_in_maintenance_mode(SignupView.as_view())
