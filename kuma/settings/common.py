@@ -544,9 +544,6 @@ PUENTE = {
 STATICI18N_ROOT = "build/locale"
 STATICI18N_DOMAIN = "javascript"
 
-# Cache non-versioned static files for one week
-WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
-
 # Session cookies
 SESSION_COOKIE_DOMAIN = DOMAIN
 SESSION_COOKIE_SECURE = config("SESSION_COOKIE_SECURE", default=True, cast=bool)
@@ -583,8 +580,6 @@ ATTACHMENT_ORIGIN = config("ATTACHMENT_ORIGIN", default=_PROD_ATTACHMENT_ORIGIN)
 ATTACHMENTS_CACHE_CONTROL_MAX_AGE = config(
     "ATTACHMENTS_CACHE_CONTROL_MAX_AGE", default=60 * 60 * 24, cast=int
 )
-WIKI_HOST = config("WIKI_HOST", default="wiki." + DOMAIN)
-WIKI_SITE_URL = PROTOCOL + WIKI_HOST
 
 # This should never be false for the production and stage deployments.
 ENABLE_RESTRICTIONS_BY_HOST = config(
@@ -1018,7 +1013,6 @@ LOGGING = {
     },
 }
 
-
 CSRF_COOKIE_DOMAIN = DOMAIN
 CSRF_COOKIE_SECURE = config("CSRF_COOKIE_SECURE", default=True, cast=bool)
 # We need to explcitly set the trusted origins, because when CSRF_COOKIE_DOMAIN
@@ -1028,7 +1022,7 @@ CSRF_COOKIE_SECURE = config("CSRF_COOKIE_SECURE", default=True, cast=bool)
 # appended as well, and we don't want that behavior (a server port of 8000 is
 # added both in secure local development as well as in K8s stage/production, so
 # that will guarantee a mismatch with the referer).
-CSRF_TRUSTED_ORIGINS = [WIKI_HOST, DOMAIN]
+CSRF_TRUSTED_ORIGINS = [DOMAIN]
 X_FRAME_OPTIONS = "DENY"
 
 

@@ -1,14 +1,13 @@
 from unittest import mock
 
-from allauth.account.models import EmailAddress, EmailConfirmationHMAC
+from allauth.account.models import EmailAddress
 from allauth.account.signals import user_signed_up
 from django.conf import settings
 from django.core import mail
 from django.test import RequestFactory
 from waffle.testutils import override_switch
 
-from kuma.core.tests import assert_no_cache_header, call_on_commit_immediately
-from kuma.core.urlresolvers import reverse
+from kuma.core.tests import call_on_commit_immediately
 from kuma.users.tasks import send_welcome_email
 
 from . import create_user, UserTestCase
@@ -70,71 +69,3 @@ class TestWelcomeEmails(UserTestCase):
         welcome_email = mail.outbox[0]
         expected_to = [testuser.email]
         self.assertEqual(expected_to, welcome_email.to)
-
-    @override_switch("welcome_email", True)
-    @call_on_commit_immediately
-    def test_welcome_mail_for_unverified_email(self):
-        testuser = create_user(
-            username="welcome2",
-            email="welcome2@tester.com",
-            password="welcome2",
-            save=True,
-        )
-        email_address = EmailAddress.objects.create(
-            user=testuser, email="welcome2@tester.com", verified=False
-        )
-        request = self.rf.get("/")
-        request.LANGUAGE_CODE = "en-US"
-
-        # emulate the phase in which the request for email confirmation is
-        # sent as the user's email address is not verified
-        confirmation = EmailConfirmationHMAC(email_address)
-        confirmation.send()
-
-        # only one email, the confirmation email is sent
-        self.assertEqual(len(mail.outbox), 1)
-        confirm_email = mail.outbox[0]
-        expected_to = [email_address.email]
-        self.assertEqual(expected_to, confirm_email.to)
-        self.assertTrue("Confirm" in confirm_email.subject)
-
-        # Click on a similar confirm link (HMAC has timestamp, changes)
-        link = reverse("account_confirm_email", args=[confirmation.key])
-        resp = self.client.get(link)
-        assert resp.status_code == 200
-        assert_no_cache_header(resp)
-        resp = self.client.post(link)
-        assert resp.status_code == 302
-        assert_no_cache_header(resp)
-
-        # a second email, the welcome email, is sent
-        self.assertEqual(len(mail.outbox), 2)
-        welcome_email = mail.outbox[1]
-        expected_to = [email_address.email]
-        self.assertEqual(expected_to, welcome_email.to)
-
-        # now add second unverified email address to the user
-        # and check if the usual confirmation email is sent out
-        email_address2 = EmailAddress.objects.create(
-            user=testuser, email="welcome3@tester.com", verified=False
-        )
-        confirmation2 = EmailConfirmationHMAC(email_address2)
-        confirmation2.send()
-        self.assertEqual(len(mail.outbox), 3)
-        confirm_email2 = mail.outbox[2]
-        expected_to = [email_address2.email]
-        self.assertEqual(expected_to, confirm_email2.to)
-        self.assertTrue("Confirm" in confirm_email2.subject)
-
-        # Confirm the second email address
-        link2 = reverse("account_confirm_email", args=[confirmation2.key])
-        resp = self.client.get(link2)
-        assert resp.status_code == 200
-        assert_no_cache_header(resp)
-        resp = self.client.post(link2)
-        assert resp.status_code == 302
-        assert_no_cache_header(resp)
-
-        # no increase in number of emails (no 2nd welcome email)
-        self.assertEqual(len(mail.outbox), 3)
-        self.assertTrue("Confirm" in mail.outbox[2].subject)

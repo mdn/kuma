@@ -40,16 +40,6 @@ for cache_settings in CACHES.values():
     current_prefix = cache_settings.get("KEY_PREFIX", "")
     cache_settings["KEY_PREFIX"] = "test." + current_prefix
 
-# Use un-versioned file names, like main.css, instead of versioned
-# filenames requiring hashing, like mdn.1cb62215bf0c.css
-STATICFILES_STORAGE = "pipeline.storage.PipelineStorage"
-
-# Defer to django-pipeline's finders for testing
-# This avoids reading the static folder for each test client request, for
-# a 10x speedup on Docker on MacOS.
-WHITENOISE_AUTOREFRESH = True
-WHITENOISE_USE_FINDERS = True
-
 # Never rely on the .env
 GOOGLE_ANALYTICS_ACCOUNT = None
 

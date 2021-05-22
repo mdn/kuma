@@ -23,13 +23,11 @@ ES_DEFAULT_NUM_SHARDS = 1
 ES_LIVE_INDEX = config("ES_LIVE_INDEX", default=True, cast=bool)
 
 # Don't cache non-versioned static files in DEBUG mode
-if DEBUG:
-    WHITENOISE_MAX_AGE = 0
-    if DEBUG_TOOLBAR:
-        INSTALLED_APPS = INSTALLED_APPS + ("debug_toolbar",)
-        MIDDLEWARE = list(MIDDLEWARE)
-        common_index = MIDDLEWARE.index("django.middleware.common.CommonMiddleware")
-        MIDDLEWARE.insert(
-            common_index + 1, "debug_toolbar.middleware.DebugToolbarMiddleware"
-        )
-        DEBUG_TOOLBAR_INSTALLED = 1
+if DEBUG and DEBUG_TOOLBAR:
+    INSTALLED_APPS = INSTALLED_APPS + ("debug_toolbar",)
+    MIDDLEWARE = list(MIDDLEWARE)
+    common_index = MIDDLEWARE.index("django.middleware.common.CommonMiddleware")
+    MIDDLEWARE.insert(
+        common_index + 1, "debug_toolbar.middleware.DebugToolbarMiddleware"
+    )
+    DEBUG_TOOLBAR_INSTALLED = 1

@@ -190,7 +190,8 @@ def redirect_in_maintenance_mode(func=None, methods=None):
         if settings.MAINTENANCE_MODE and (
             (methods is None) or (request.method in methods)
         ):
-            return redirect("/")
+            locale = getattr(request, "LANGUAGE_CODE", None)
+            return redirect(f"/{locale}/" if locale else "/")
         return func(request, *args, **kwargs)
 
     return wrapped
