@@ -60,7 +60,6 @@ SET FOREIGN_KEY_CHECKS=0;
 -- wiki_reviewtag
 -- wiki_reviewtaggedrevision
 -- wiki_revision
--- wiki_revisionakismetsubmission
 -- wiki_taggeddocument
 
 TRUNCATE account_emailconfirmation;
@@ -150,8 +149,6 @@ UPDATE wiki_revisionip SET
     referrer = CONCAT("https://example.com/", MD5(CONCAT(referrer, @common_hash_secret)))
     WHERE referrer != "";
 UPDATE wiki_revisionip SET data = null;
-
-UPDATE wiki_documentspamattempt SET data = null;
 
 UPDATE users_userban SET
     reason = MD5(reason)

@@ -14,5 +14,4 @@ SELECT count(first_name) as auth_user_first_name_should_be_zero FROM auth_user W
 SELECT count(last_name) AS auth_user_last_name_should_be_zero FROM auth_user where last_name like '%a%' or last_name like '%b%' or last_name like '%c%' or last_name like '%d%' or last_name like '%e%' or last_name like '%f%' or last_name like '%g%' or last_name like '%h%' or last_name like '%i%' or last_name like '%j%' or last_name like '%k%' or last_name like '%l%' or last_name like '%m%' or last_name like '%n%' or last_name like '%o%' or last_name like '%p%' or last_name like '%q%' or last_name like '%r%' or last_name like '%s%' or last_name like '%t%' or last_name like '%u%' or last_name like '%v%' or last_name like '%w%' or last_name like '%x%' or last_name like '%y%' or last_name like '%z%';
 SELECT COUNT(*) AS auth_user_stripe_customer_id_should_be_zero FROM auth_user where stripe_customer_id!='';
 
-SELECT COUNT(*) AS wiki_documentspamattempts_with_data_should_be_zero FROM wiki_documentspamattempt WHERE data is not null;
 SELECT COUNT(*) AS wiki_revisionip_with_data_should_be_zero FROM wiki_revisionip WHERE data is not null;
