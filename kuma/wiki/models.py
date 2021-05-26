@@ -8,8 +8,6 @@ from django.utils.translation import gettext_lazy as _
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
 
-from kuma.spam.models import AkismetSubmission, SpamAttempt
-
 from .content import Extractor
 from .managers import (
     AllDocumentManager,
@@ -418,41 +416,6 @@ class RevisionIP(models.Model):
         return "%s (revision %d)" % (self.ip or "No IP", self.revision.id)
 
 
-class RevisionAkismetSubmission(AkismetSubmission):
-    """
-    The Akismet submission per wiki document revision.
-
-    Stores only a reference to the submitted revision.
-    """
-
-    revision = models.ForeignKey(
-        Revision,
-        related_name="akismet_submissions",
-        null=True,
-        blank=True,
-        verbose_name=_("Revision"),
-        # don't delete the akismet submission but set the revision to null
-        on_delete=models.SET_NULL,
-    )
-
-    class Meta:
-        verbose_name = _("Akismet submission")
-        verbose_name_plural = _("Akismet submissions")
-
-    def __str__(self):
-        if self.revision:
-            return "%(type)s submission by %(sender)s (Revision %(revision_id)d)" % {
-                "type": self.get_type_display(),
-                "sender": self.sender,
-                "revision_id": self.revision.id,
-            }
-        else:
-            return "%(type)s submission by %(sender)s (no revision)" % {
-                "type": self.get_type_display(),
-                "sender": self.sender,
-            }
-
-
 class EditorToolbar(models.Model):
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -465,70 +428,3 @@ class EditorToolbar(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class DocumentSpamAttempt(SpamAttempt):
-    """
-    The wiki document specific spam attempt.
-
-    Stores title, slug and locale of the documet revision to be able
-    to see where it happens. Stores data sent to Akismet so that staff can
-    review Akismet's spam detection for false positives.
-    """
-
-    title = models.CharField(
-        verbose_name=_("Title"),
-        max_length=255,
-    )
-    slug = models.CharField(
-        verbose_name=_("Slug"),
-        max_length=255,
-    )
-    document = models.ForeignKey(
-        Document,
-        related_name="spam_attempts",
-        null=True,
-        blank=True,
-        verbose_name=_("Document (optional)"),
-        on_delete=models.SET_NULL,
-    )
-    data = models.TextField(
-        editable=False,
-        blank=True,
-        null=True,
-        verbose_name=_("Data submitted to Akismet"),
-    )
-    reviewed = models.DateTimeField(
-        _("reviewed"),
-        blank=True,
-        null=True,
-    )
-
-    NEEDS_REVIEW = 0
-    HAM = 1
-    SPAM = 2
-    REVIEW_UNAVAILABLE = 3
-    AKISMET_ERROR = 4
-    REVIEW_CHOICES = (
-        (NEEDS_REVIEW, _("Needs Review")),
-        (HAM, _("Ham / False Positive")),
-        (SPAM, _("Confirmed as Spam")),
-        (REVIEW_UNAVAILABLE, _("Review Unavailable")),
-        (AKISMET_ERROR, _("Akismet Error")),
-    )
-    review = models.IntegerField(
-        choices=REVIEW_CHOICES,
-        default=NEEDS_REVIEW,
-        verbose_name=_("Review of Akismet's classification as spam"),
-    )
-    reviewer = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        related_name="documentspam_reviewed",
-        blank=True,
-        null=True,
-        verbose_name=_("Staff reviewer"),
-        on_delete=models.SET_NULL,
-    )
-
-    def __str__(self):
-        return f"{self.slug} ({self.title})"
