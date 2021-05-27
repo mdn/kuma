@@ -65,7 +65,6 @@ SET FOREIGN_KEY_CHECKS=0;
 TRUNCATE account_emailconfirmation;
 TRUNCATE celery_taskmeta;
 TRUNCATE celery_tasksetmeta;
-TRUNCATE constance_config;
 TRUNCATE core_ipban;
 TRUNCATE django_admin_log;
 TRUNCATE django_session;

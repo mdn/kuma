@@ -95,8 +95,7 @@ SILENCED_SYSTEM_CHECKS = [
     # settings.RECAPTCHA_PRIVATE_KEY or settings.RECAPTCHA_PUBLIC_KEY.
     # If you haven't it assumes to use the default test keys (from Google).
     # We don't set either of these keys so they think we haven't thought
-    # about using real values. However, we use django-constance for this
-    # and not django.conf.settings so the warning doesn't make sense to us.
+    # about using real values.
     "captcha.recaptcha_test_key_error",
 ]
 
@@ -360,7 +359,6 @@ _CONTEXT_PROCESSORS = (
     "kuma.core.context_processors.global_settings",
     "kuma.core.context_processors.i18n",
     "kuma.core.context_processors.next_url",
-    "constance.context_processors.config",
 )
 
 
@@ -460,8 +458,6 @@ INSTALLED_APPS = (
     # util
     "django_jinja",
     "puente",
-    "constance.backends.database",
-    "constance",
     "waffle",
     "kuma.authkeys",
     "taggit",
@@ -705,81 +701,6 @@ CELERY_TASK_ROUTES = {
 
 # Do not change this without also deleting all wiki documents:
 WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
-
-CONSTANCE_BACKEND = (
-    "kuma.core.backends.ReadOnlyConstanceDatabaseBackend"
-    if MAINTENANCE_MODE
-    else "constance.backends.database.DatabaseBackend"
-)
-# must be an entry in the CACHES setting!
-CONSTANCE_DATABASE_CACHE_BACKEND = "default"
-
-# Settings and defaults controllable by Constance in admin
-CONSTANCE_CONFIG = dict(
-    KUMA_DOCUMENT_RENDER_TIMEOUT=(
-        180.0,
-        "Maximum seconds to wait before considering a rendering in progress or "
-        "scheduled as failed and allowing another attempt.",
-    ),
-    KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT=(
-        10.0,
-        "Maximum seconds to allow a document to spend rendering during the "
-        "response cycle before flagging it to be sent to the deferred rendering "
-        "queue for future renders.",
-    ),
-    KUMASCRIPT_TIMEOUT=(
-        0.0,
-        "Maximum seconds to wait for a response from the kumascript service. "
-        "On timeout, the document gets served up as-is and without macro "
-        "evaluation as an attempt at graceful failure. NOTE: a value of 0 "
-        "disables kumascript altogether.",
-    ),
-    KUMASCRIPT_MAX_AGE=(
-        600,
-        "Maximum acceptable age (in seconds) of a cached response from "
-        "kumascript. Passed along in a Cache-Control: max-age={value} header, "
-        "which tells kumascript whether or not to serve up a cached response.",
-    ),
-    DIFF_CONTEXT_LINES=(
-        0,
-        "Number of lines of context to show in diff display.",
-    ),
-    FEED_DIFF_CONTEXT_LINES=(
-        3,
-        "Number of lines of context to show in feed diff display.",
-    ),
-    WIKI_ATTACHMENT_ALLOWED_TYPES=(
-        "image/gif image/jpeg image/png image/svg+xml text/html image/vnd.adobe.photoshop",
-        "Allowed file types for wiki file attachments",
-    ),
-    WIKI_ATTACHMENTS_DISABLE_UPLOAD=(
-        False,
-        "Disable uploading of new or revised attachments via the Wiki. "
-        "Attachments may still be modified via the Django Admin.",
-    ),
-    KUMA_WIKI_IFRAME_ALLOWED_HOSTS=(
-        (
-            r"^https?\:\/\/"
-            r"(stage-files.mdn.moz.works"  # Staging demos
-            r"|mdn.mozillademos.org"  # Production demos
-            r"|testserver"  # Unit test demos
-            r"|localhost\:8000"  # Docker development demos
-            r"|localhost\:8080"  # Embedded samples server
-            r"|rpm.newrelic.com\/public\/charts\/.*"  # MDN/Kuma/Server_charts
-            r"|(www.)?youtube.com\/embed\/(\.*)"  # Embedded videos
-            r"|jsfiddle.net\/.*embedded.*"  # Embedded samples
-            r"|mdn.github.io"  # Embedded samples
-            r"|interactive-examples.mdn.mozilla.net"  # Embedded samples
-            r")"
-        ),
-        "Regex comprised of domain names that are allowed for IFRAME SRCs",
-    ),
-    GOOGLE_ANALYTICS_CREDENTIALS=(
-        "{}",
-        "Google Analytics (read-only) API credentials",
-    ),
-    AKISMET_KEY=("", "API key for Akismet spam checks, leave empty to disable"),
-)
 
 # Number of days to keep the trashed attachments files before they are removed from
 # the file storage.

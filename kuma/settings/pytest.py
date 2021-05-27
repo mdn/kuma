@@ -15,9 +15,6 @@ ES_RETRY_SLEEPTIME = 0
 ES_RETRY_ATTEMPTS = 1
 ES_RETRY_JITTER = 0
 
-# Disable the Constance database cache
-CONSTANCE_DATABASE_CACHE_BACKEND = False
-
 # SHA1 because it is fast, and hard-coded in the test fixture JSON.
 PASSWORD_HASHERS = ("django.contrib.auth.hashers.SHA1PasswordHasher",)
 

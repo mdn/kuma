@@ -55,36 +55,6 @@ def reset_urlconf():
     set_urlconf(None)
 
 
-class ConstanceConfigWrapper(object):
-    """A Constance configuration wrapper to allow overriding the config."""
-
-    _original_values = []
-
-    def __setattr__(self, attr, value):
-        from constance import config
-
-        self._original_values.append((attr, getattr(config, attr)))
-        setattr(config, attr, value)
-        # This can fail if Constance uses a cached database backend
-        # CONSTANCE_DATABASE_CACHE_BACKEND = False to disable
-        assert getattr(config, attr) == value
-
-    def finalize(self):
-        from constance import config
-
-        for attr, value in reversed(self._original_values):
-            setattr(config, attr, value)
-        del self._original_values[:]
-
-
-@pytest.fixture
-def constance_config(db, settings):
-    """A Constance config object which restores changes after the testrun."""
-    wrapper = ConstanceConfigWrapper()
-    yield wrapper
-    wrapper.finalize()
-
-
 @pytest.fixture
 def beta_testers_group(db):
     return Group.objects.create(name="Beta Testers")
@@ -115,26 +85,6 @@ def wiki_user_github_account(wiki_user):
 
 
 @pytest.fixture
-def wiki_user_2(db, django_user_model):
-    """A second test user."""
-    return django_user_model.objects.create(
-        username="wiki_user_2",
-        email="wiki_user_2@example.com",
-        date_joined=datetime(2017, 4, 17, 10, 30),
-    )
-
-
-@pytest.fixture
-def wiki_user_3(db, django_user_model):
-    """A third test user."""
-    return django_user_model.objects.create(
-        username="wiki_user_3",
-        email="wiki_user_3@example.com",
-        date_joined=datetime(2017, 4, 23, 11, 45),
-    )
-
-
-@pytest.fixture
 def user_client(client, wiki_user):
     """A test client with wiki_user logged in."""
     wiki_user.set_password("password")
@@ -160,12 +110,6 @@ def stripe_user_client(client, stripe_user):
 
 
 @pytest.fixture
-def editor_client(user_client):
-    """A test client with wiki_user logged in for editing."""
-    yield user_client
-
-
-@pytest.fixture
 def root_doc(wiki_user):
     """A newly-created top-level English document."""
     root_doc = Document.objects.create(
@@ -179,32 +123,6 @@ def root_doc(wiki_user):
         created=datetime(2017, 4, 14, 12, 15),
     )
     return root_doc
-
-
-@pytest.fixture
-def create_revision(root_doc):
-    """A revision that created an English document."""
-    return root_doc.revisions.first()
-
-
-@pytest.fixture
-def trans_doc(create_revision, wiki_user):
-    """Translate the root document into French."""
-    trans_doc = Document.objects.create(
-        locale="fr",
-        parent=create_revision.document,
-        slug="Racine",
-        title="Racine du Document",
-    )
-    Revision.objects.create(
-        document=trans_doc,
-        creator=wiki_user,
-        based_on=create_revision,
-        content="<p>Mise en route...</p>",
-        title="Racine du Document",
-        created=datetime(2017, 4, 14, 12, 20),
-    )
-    return trans_doc
 
 
 @pytest.fixture

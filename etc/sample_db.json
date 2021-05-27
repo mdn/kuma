@@ -27,15 +27,6 @@
     ["user", "jwhitlock", {"social": true, "email": "jwhitlock@mozilla.com"}]
   ],
   "fixtures": {
-    "database.constance": [
-      {
-        "key": "KUMASCRIPT_TIMEOUT",
-        "value": 30
-      }, {
-        "key": "KUMASCRIPT_MAX_AGE",
-        "value": 30
-      }
-    ],
     "auth.group": [
       {
         "name": "Attachment Moderators",

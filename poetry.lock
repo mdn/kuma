@@ -344,21 +344,6 @@ rq = ["django-rq (>=0.9)"]
 tests = ["tox", "tox-pyenv", "mock", "freezegun (>=0.3.7)", "pytest (>=3.0.3)", "pytest-cov (>=2.4.0)", "pytest-flakes (>=1.0.1)", "pytest-pep8 (>=1.0.6)", "pytest-django (>=3.0.0)", "pytest-isort (>=0.1.0)", "celery", "django-rq (>=0.9)"]
 
 [[package]]
-name = "django-constance"
-version = "2.6.0"
-description = "Django live settings with pluggable backends, including Redis."
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-django-picklefield = {version = "*", optional = true, markers = "extra == \"database\""}
-
-[package.extras]
-database = ["django-picklefield"]
-redis = ["redis"]
-
-[[package]]
 name = "django-csp"
 version = "3.6"
 description = "Django Content Security Policy support."
@@ -440,20 +425,6 @@ python-versions = ">=3.5"
 
 [package.dependencies]
 Django = ">=1.11"
-
-[[package]]
-name = "django-picklefield"
-version = "2.1.1"
-description = "Pickled object field for Django"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-Django = ">=1.11"
-
-[package.extras]
-tests = ["tox"]
 
 [[package]]
 name = "django-pipeline"
@@ -1499,7 +1470,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "e334b685c20232779eb9a9467928fb4c505444ffb76ad3cb4d0f2fe12d597dc5"
+content-hash = "7975e6390f32e49aa0d8dabab3cf163db324cbd0f5769b5edc6c311a17f51ce5"
 
 [metadata.files]
 amqp = [
@@ -1667,9 +1638,6 @@ django-cacheback = [
     {file = "django-cacheback-1.4.0.tar.gz", hash = "sha256:6483eb8744d001b8505c38a5217be36998f9c11858b2126974a9060dfc74ae50"},
     {file = "django_cacheback-1.4.0-py2.py3-none-any.whl", hash = "sha256:972c7697f1929bf9676893a8e6cb1f7873a2c14e835a8d24fbb59bbf37731c18"},
 ]
-django-constance = [
-    {file = "django-constance-2.6.0.tar.gz", hash = "sha256:12d827f9d5552ee39884fb6fb356f231f32b1ab8958acc715e3d1a6ecf913653"},
-]
 django-csp = [
     {file = "django_csp-3.6-py2.py3-none-any.whl", hash = "sha256:d9ee5a8c6442aa54854e8de627c2826786208ed38fb4ea8ced08c42332673eb1"},
     {file = "django_csp-3.6.tar.gz", hash = "sha256:0a38aa9618c675cbf5f5e517e20d5846a3e100ef7b307e32e7fb18c58aa47723"},
@@ -1696,10 +1664,6 @@ django-jinja = [
 django-mysql = [
     {file = "django-mysql-3.3.0.tar.gz", hash = "sha256:b984dfe75bedeb01bfcb974fe8400c224a6b55677b98a799f1c96274d96c5a72"},
     {file = "django_mysql-3.3.0-py3-none-any.whl", hash = "sha256:ceaf6d93396b7f7b3798ac5f9a819dd70d5f0e1112850f2a34c57f062fa19398"},
-]
-django-picklefield = [
-    {file = "django-picklefield-2.1.1.tar.gz", hash = "sha256:67a5e156343e3b032cac2f65565f0faa81635a99c7da74b0f07a0f5db467b646"},
-    {file = "django_picklefield-2.1.1-py2.py3-none-any.whl", hash = "sha256:e03cb181b7161af38ad6b573af127e4fe9b7cc2c455b42c1ec43eaad525ade0a"},
 ]
 django-pipeline = [
     {file = "django-pipeline-1.7.0.tar.gz", hash = "sha256:0ded22b974e3d627c27fc490ef5b23fcdcf0cdb00b704d628b5ca6d0b010d6fe"},

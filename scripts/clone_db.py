@@ -56,7 +56,6 @@ TABLES_TO_DUMP = [x.strip() for x in """
     auth_user_user_permissions
     celery_taskmeta
     celery_tasksetmeta
-    constance_config
     core_ipban
     django_admin_log
     django_content_type
