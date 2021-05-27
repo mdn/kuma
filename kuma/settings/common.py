@@ -466,7 +466,6 @@ INSTALLED_APPS = (
     "kuma.authkeys",
     "taggit",
     "honeypot",
-    "cacheback",
     "django_extensions",
     "statici18n",
     "rest_framework",
@@ -699,20 +698,9 @@ CELERY_TASK_SERIALIZER = "pickle"
 CELERY_RESULT_SERIALIZER = "pickle"
 CELERY_EVENT_SERIALIZER = "pickle"
 
-
-CELERY_IMPORTS = ()
-
-CELERY_TASK_ANNOTATIONS = {"cacheback.tasks.refresh_cache": {"rate_limit": "120/m"}}
-
 CELERY_TASK_ROUTES = {
-    "cacheback.tasks.refresh_cache": {"queue": "mdn_purgeable"},
     "kuma.core.tasks.clean_sessions": {"queue": "mdn_purgeable"},
     "kuma.users.tasks.send_welcome_email": {"queue": "mdn_emails"},
-    "kuma.users.tasks.email_document_progress": {"queue": "mdn_emails"},
-    "kuma.feeder.tasks.update_feeds": {"queue": "mdn_purgeable"},
-    "kuma.api.tasks.publish": {"queue": "mdn_api"},
-    "kuma.api.tasks.unpublish": {"queue": "mdn_api"},
-    "kuma.api.tasks.request_cdn_cache_invalidation": {"queue": "mdn_api"},
 }
 
 # Do not change this without also deleting all wiki documents:
