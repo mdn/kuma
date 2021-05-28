@@ -21,7 +21,6 @@ Contents:
    celery
    elasticsearch
    localization
-   ckeditor
    data
    documentation
 
