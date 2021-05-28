@@ -812,17 +812,6 @@ NEWSLETTER_ARTICLE = True
 LOGIN_URL = "/signin"
 LOGIN_REDIRECT_URL = "/"
 
-# Content Experiments
-# Must be kept up to date with PIPELINE_JS setting and the JS client-side
-#  configuration. The 'id' should be a key in PIPELINE_JS, that loads
-#  Traffic Cop and a client-side configuration like
-#  kuma/static/js/experiment-wiki-content.js
-# Only one experiment should be active for a given locale and slug.
-#
-ce_path = path("kuma", "settings", "content_experiments.json")
-with open(ce_path, "r") as ce_file:
-    CONTENT_EXPERIMENTS = json.load(ce_file)
-
 # Caching constants for the Cache-Control header.
 CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
     "CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE", default=60 * 5, cast=int
