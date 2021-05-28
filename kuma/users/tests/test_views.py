@@ -55,7 +55,9 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         assert query["provider"][0] == "github"
         user_details = query["user_details"][0]
         assert f'"name": "{self.github_profile_data["name"]}"' in user_details
-        assert f'"avatar_url": "{self.github_profile_data["avatar_url"]}"' in user_details
+        assert (
+            f'"avatar_url": "{self.github_profile_data["avatar_url"]}"' in user_details
+        )
         assert "csrfmiddlewaretoken" in query
         assert resp.redirect_chain[-1][1] == 302
 

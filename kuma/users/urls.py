@@ -26,5 +26,9 @@ lang_urlpatterns = [
         redirect_in_maintenance_mode(csrf_exempt(account_views.logout)),
         name="account_logout",
     ),
-    re_path(r"^users/account/signup/?$", redirect_in_maintenance_mode(views.signup), name="socialaccount_signup"),
+    re_path(
+        r"^users/account/signup/?$",
+        redirect_in_maintenance_mode(views.signup),
+        name="socialaccount_signup",
+    ),
 ]

@@ -31,7 +31,9 @@ def process_document_path(func):
     def process(request, document_path=None, *args, **kwargs):
         # Set the kwargs that decorated methods will expect.
         kwargs["document_slug"] = document_path.rstrip("/")
-        kwargs["document_locale"] = getattr(request, "LANGUAGE_CODE", settings.LANGUAGE_CODE)
+        kwargs["document_locale"] = getattr(
+            request, "LANGUAGE_CODE", settings.LANGUAGE_CODE
+        )
         return func(request, *args, **kwargs)
 
     return process

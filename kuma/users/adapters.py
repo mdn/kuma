@@ -102,7 +102,9 @@ class KumaAccountAdapter(DefaultAccountAdapter):
         Adds an extra "account" tag to the success and error messages.
         """
         # let's ignore some messages
-        if message_template.endswith(self.message_templates("logged_in", "logged_out", "account_connected")):
+        if message_template.endswith(
+            self.message_templates("logged_in", "logged_out", "account_connected")
+        ):
             return
 
         # and add an extra tag to the account messages
@@ -220,7 +222,7 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         connecting a social account.
         """
         assert request.user.is_authenticated
-        locale = getattr(request, 'LANGUAGE_CODE', None)
+        locale = getattr(request, "LANGUAGE_CODE", None)
         return (f"/{locale}/" if locale else "/") + "settings"
 
     def save_user(self, request, sociallogin, form=None):

@@ -6,22 +6,22 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wiki', '0015_auto_20210430_1617'),
+        ("wiki", "0015_auto_20210430_1617"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='revisionakismetsubmission',
-            name='revision',
+            model_name="revisionakismetsubmission",
+            name="revision",
         ),
         migrations.RemoveField(
-            model_name='revisionakismetsubmission',
-            name='sender',
+            model_name="revisionakismetsubmission",
+            name="sender",
         ),
         migrations.DeleteModel(
-            name='DocumentSpamAttempt',
+            name="DocumentSpamAttempt",
         ),
         migrations.DeleteModel(
-            name='RevisionAkismetSubmission',
+            name="RevisionAkismetSubmission",
         ),
     ]
