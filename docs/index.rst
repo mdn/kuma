@@ -26,6 +26,3 @@ Contents:
 
    docker
    deploy
-
-   rendering
-   assets
