@@ -328,22 +328,6 @@ django = "*"
 six = "*"
 
 [[package]]
-name = "django-cacheback"
-version = "1.4.0"
-description = "Caching library for Django that uses Celery or RQ to refresh cache items asynchronously"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-django = ">=1.8"
-
-[package.extras]
-celery = ["celery"]
-rq = ["django-rq (>=0.9)"]
-tests = ["tox", "tox-pyenv", "mock", "freezegun (>=0.3.7)", "pytest (>=3.0.3)", "pytest-cov (>=2.4.0)", "pytest-flakes (>=1.0.1)", "pytest-pep8 (>=1.0.6)", "pytest-django (>=3.0.0)", "pytest-isort (>=0.1.0)", "celery", "django-rq (>=0.9)"]
-
-[[package]]
 name = "django-csp"
 version = "3.6"
 description = "Django Content Security Policy support."
@@ -1470,7 +1454,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "7975e6390f32e49aa0d8dabab3cf163db324cbd0f5769b5edc6c311a17f51ce5"
+content-hash = "3972900709d5f064d60b569133ae016304e81a66c1da9fc01c7fbe22d6dfa842"
 
 [metadata.files]
 amqp = [
@@ -1633,10 +1617,6 @@ django-allauth = [
 django-appconf = [
     {file = "django-appconf-1.0.3.tar.gz", hash = "sha256:35f13ca4d567f132b960e2cd4c832c2d03cb6543452d34e29b7ba10371ba80e3"},
     {file = "django_appconf-1.0.3-py2.py3-none-any.whl", hash = "sha256:c98a7af40062e996b921f5962a1c4f3f0c979fa7885f7be4710cceb90ebe13a6"},
-]
-django-cacheback = [
-    {file = "django-cacheback-1.4.0.tar.gz", hash = "sha256:6483eb8744d001b8505c38a5217be36998f9c11858b2126974a9060dfc74ae50"},
-    {file = "django_cacheback-1.4.0-py2.py3-none-any.whl", hash = "sha256:972c7697f1929bf9676893a8e6cb1f7873a2c14e835a8d24fbb59bbf37731c18"},
 ]
 django-csp = [
     {file = "django_csp-3.6-py2.py3-none-any.whl", hash = "sha256:d9ee5a8c6442aa54854e8de627c2826786208ed38fb4ea8ced08c42332673eb1"},

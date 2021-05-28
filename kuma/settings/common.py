@@ -918,7 +918,6 @@ LOGGING = {
             "propagate": False,
         },
         "urllib3": {"handlers": ["console-simple"], "level": "ERROR"},
-        "cacheback": {"handlers": ["console-simple"], "level": "ERROR"},
     },
 }
 
@@ -1070,14 +1069,6 @@ ATTACHMENTS_AWS_S3_ENDPOINT_URL = config(
 # Silence warnings about defaults that change in django-storages 2.0
 AWS_BUCKET_ACL = None
 AWS_DEFAULT_ACL = None
-
-# We use django-cacheback for a bunch of tasks. By default, when cacheback,
-# has called the `.fetch` of a job class, it calls `cache.set(key, ...)`
-# and then it immediately does `cache.get(key)` just to see that the `.set`
-# worked.
-# See https://bugzilla.mozilla.org/show_bug.cgi?id=1567587 for some more
-# details about why we don't want or need this.
-CACHEBACK_VERIFY_CACHE_WRITE = False
 
 # html_attributes and css_classnames get indexed into Elasticsearch on every
 # document when sent in. These can be very memory consuming since the
