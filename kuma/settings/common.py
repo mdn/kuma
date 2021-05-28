@@ -91,12 +91,6 @@ DATABASES = {
 SILENCED_SYSTEM_CHECKS = [
     # https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
     "django_mysql.W003",
-    # As of django-recaptcha==2.0.4 it checks that you have set either
-    # settings.RECAPTCHA_PRIVATE_KEY or settings.RECAPTCHA_PUBLIC_KEY.
-    # If you haven't it assumes to use the default test keys (from Google).
-    # We don't set either of these keys so they think we haven't thought
-    # about using real values.
-    "captcha.recaptcha_test_key_error",
 ]
 
 # Cache Settings
@@ -181,8 +175,6 @@ else:
         locale for locale in ACCEPTED_LOCALES if locale not in CANDIDATE_LOCALES
     ]
 
-RTL_LANGUAGES = ()
-
 # Override generic locale handling with explicit mappings.
 # Keys are the requested locale (lowercase); values are the delivered locale.
 LOCALE_ALIASES = {
@@ -225,65 +217,6 @@ LANGUAGES = [(locale, LOCALES[locale].native) for locale in ENABLED_LOCALES]
 
 # Language list sorted for forms (English, then alphabetical by locale code)
 SORTED_LANGUAGES = [LANGUAGES[0]] + sorted(LANGUAGES[1:])
-
-# List of MindTouch locales mapped to Kuma locales.
-#
-# Language in MindTouch pages are first determined from the locale in the page
-# title, with a fallback to the language in the page record.
-#
-# So, first MindTouch locales were inventoried like so:
-#
-#     mysql --skip-column-names -uroot wikidb -B \
-#           -e 'select page_title from pages  where page_namespace=0' \
-#           > page-titles.txt
-#
-#     grep '/' page-titles.txt | cut -d'/' -f1 | sort -f | uniq -ci | sort -rn
-#
-# Then, the database languages were inventoried like so:
-#
-#     select page_language, count(page_id) as ct
-#     from pages group by page_language order by ct desc;
-#
-# Also worth noting, these are locales configured in the prod Control Panel:
-#
-# en,ar,ca,cs,de,el,es,fa,fi,fr,he,hr,hu,it,ja,
-# ka,ko,nl,pl,pt,ro,ru,th,tr,uk,vi,zh-cn,zh-tw
-#
-# The Kuma side was picked from elements of the MDN_LANGUAGES list in
-# settings.py, and a few were added to match MindTouch locales.
-#
-# Most of these end up being direct mappings, but it's instructive to go
-# through the mapping exercise.
-
-MT_TO_KUMA_LOCALE_MAP = {
-    "en": "en-US",
-    "ja": "ja",
-    "pl": "pl",
-    "fr": "fr",
-    "es": "es",
-    "": "en-US",
-    "cn": "zh-CN",
-    "zh_cn": "zh-CN",
-    "zh-cn": "zh-CN",
-    "zh_tw": "zh-TW",
-    "zh-tw": "zh-TW",
-    "ko": "ko",
-    "pt": "pt-PT",
-    "de": "de",
-    "it": "it",
-    "ca": "ca",
-    "ru": "ru",
-    "nl": "nl",
-    "hu": "hu",
-    "he": "he",
-    "el": "el",
-    "fi": "fi",
-    "tr": "tr",
-    "vi": "vi",
-    "ar": "ar",
-    "th": "th",
-    "fa": "fa",
-}
 
 LANGUAGE_COOKIE_NAME = "preferredlocale"
 # The number of seconds we are keeping the language preference cookie. (3 years)
@@ -440,7 +373,6 @@ INSTALLED_APPS = (
     # "django.contrib.staticfiles",
     # MDN
     "kuma.core.apps.CoreConfig",
-    "kuma.banners",
     "kuma.landing",
     "kuma.redirects",
     "kuma.search.apps.SearchConfig",
@@ -461,7 +393,6 @@ INSTALLED_APPS = (
     "waffle",
     "kuma.authkeys",
     "taggit",
-    "honeypot",
     "django_extensions",
     "statici18n",
     "rest_framework",
@@ -708,112 +639,6 @@ WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS = config(
     "WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS", default=14, cast=int
 )
 
-# JSON array listing tag suggestions for documents
-WIKI_DOCUMENT_TAG_SUGGESTIONS = config(
-    "WIKI_DOCUMENT_TAG_SUGGESTIONS",
-    default=json.dumps(
-        [
-            "Accessibility",
-            "Advanced",
-            "AJAX",
-            "API",
-            "Apps",
-            "Attribute",
-            "Audio",
-            "Beginner",
-            "Canvas",
-            "CodingScripting",
-            "Collaborating",
-            "Community",
-            "Composing",
-            "Credibility",
-            "CSS",
-            "Deprecated",
-            "Design",
-            "Device",
-            "DOM",
-            "ECMAScript6",
-            "Events",
-            "Event Handler",
-            "Example",
-            "Experimental",
-            "Extensions",
-            "Featured",
-            "Firefox",
-            "Games",
-            "Gecko",
-            "Glossary",
-            "Graphics",
-            "Guide",
-            "History",
-            "HTML",
-            "HTTP",
-            "Infrastructure",
-            "Interface",
-            "Intermediate",
-            "Internationalization",
-            "Intro",
-            "JavaScript",
-            "JSAPI Reference",
-            "l10n:exclude",
-            "l10n:priority",
-            "Landing",
-            "Layout",
-            "Learn",
-            "Localization",
-            "MDN",
-            "Media",
-            "Method",
-            "Mobile",
-            "Mozilla",
-            "Navigation",
-            "NeedsBrowserCompatibility",
-            "NeedsCompatTable",
-            "NeedsContent",
-            "NeedsExample",
-            "NeedsLiveSample",
-            "NeedsMarkupWork",
-            "NeedsMobileBrowserCompatibility",
-            "NeedsUpdate",
-            "Networking",
-            "Non-standard",
-            "Obsolete",
-            "OpenPractices",
-            "Privacy",
-            "Property",
-            "Protocols",
-            "Pseudo-class",
-            "Pseudo-element",
-            "Reference",
-            "Remixing",
-            "Search",
-            "Security",
-            "Sharing",
-            "SpiderMonkey",
-            "SVG",
-            "Tutorial",
-            "Video",
-            "WebGL",
-            "WebRTC",
-            "WebMechanics",
-        ]
-    ),
-)
-
-# JSON array listing some common reasons to ban users
-COMMON_REASONS_TO_BAN_USERS = config(
-    "COMMON_REASONS_TO_BAN_USERS",
-    default=json.dumps(
-        [
-            "Spam",
-            "Profile Spam ",
-            "Sandboxing",
-            "Incorrect Translation",
-            "Penetration Testing",
-        ]
-    ),
-)
-
 # Number of expired sessions to cleanup up in one go.
 SESSION_CLEANUP_CHUNK_SIZE = config(
     "SESSION_CLEANUP_CHUNK_SIZE", default=1000, cast=int
@@ -862,10 +687,6 @@ GOOGLE_ANALYTICS_TRACKING_URL = config(
 # incorrectly mocked requests.
 GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = config(
     "GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS", cast=bool, default=DEBUG
-)
-
-KUMASCRIPT_URL_TEMPLATE = config(
-    "KUMASCRIPT_URL_TEMPLATE", default="http://localhost:9080/docs/{path}"
 )
 
 # Elasticsearch related settings.
@@ -970,8 +791,6 @@ SOCIALACCOUNT_EMAIL_VERIFICATION = "mandatory"
 SOCIALACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_AUTO_SIGNUP = False  # forces the use of the signup view
 SOCIALACCOUNT_QUERY_EMAIL = True  # used by the custom github provider
-
-HONEYPOT_FIELD_NAME = "website"
 
 BLOCKABLE_USER_AGENTS = [
     "Yahoo! Slurp",

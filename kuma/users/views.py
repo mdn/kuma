@@ -17,7 +17,6 @@ from django.middleware.csrf import get_token
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 
-# from honeypot.decorators import verify_honeypot_value
 
 from kuma.core.decorators import redirect_in_maintenance_mode
 from kuma.core.ga_tracking import (

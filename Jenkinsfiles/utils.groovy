@@ -6,7 +6,6 @@ PROD_BRANCH_NAME = 'prod-push'
 STAGE_BRANCH_NAME = 'stage-push'
 STANDBY_BRANCH_NAME = 'standby-push'
 KUMA_PIPELINE = 'kuma'
-KUMASCRIPT_PIPELINE= 'kumascript'
 
 def get_commit_tag() {
     return env.GIT_COMMIT.take(7)
@@ -66,9 +65,6 @@ def get_region() {
 def get_repo_name() {
     if (env.JOB_NAME.startsWith(KUMA_PIPELINE + '/')) {
         return 'kuma'
-    }
-    if (env.JOB_NAME.startsWith(KUMASCRIPT_PIPELINE + '/')) {
-        return 'kumascript'
     }
     throw new Exception(
         'Unable to determine the repo name from the job name.'

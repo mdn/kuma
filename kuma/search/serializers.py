@@ -12,7 +12,6 @@ class SearchQuerySerializer(serializers.Serializer):
     # Advanced search query paramenters.
     css_classnames = serializers.CharField(required=False)
     html_attributes = serializers.CharField(required=False)
-    kumascript_macros = serializers.CharField(required=False)
 
     def validate_q(self, value):
         # Check that \n not in query

@@ -116,7 +116,6 @@ html_theme_options = {
         "MDN": "https://developer.mozilla.org",
         "MDN Staging": "https://developer.allizom.org",
         "Kuma on GitHub": "https://github.com/mdn/kuma",
-        "KumaScript on GitHub": "https://github.com/mdn/kumascript",
     },
     "show_related": True,
     "page_width": "100%",

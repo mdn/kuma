@@ -14,7 +14,6 @@ from kuma.wiki.urls import lang_urlpatterns as wiki_lang_urlpatterns
 
 
 DAY = 60 * 60 * 24
-WEEK = DAY * 7
 MONTH = DAY * 30
 
 admin.autodiscover()

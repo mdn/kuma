@@ -121,7 +121,6 @@ class KeywordQueryBackend(BaseFilterBackend):
     """
 
     fields = (
-        "kumascript_macros",
         "css_classnames",
         "html_attributes",
     )
