@@ -297,8 +297,6 @@ _CONTEXT_PROCESSORS = (
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
-    # must come before LocaleMiddleware
-    "redirect_urls.middleware.RedirectsMiddleware",
     "kuma.core.middleware.SetRemoteAddrFromForwardedFor",
     (
         "kuma.core.middleware.ForceAnonymousSessionMiddleware"
@@ -398,8 +396,6 @@ INSTALLED_APPS = (
     "rest_framework",
     "rest_framework.authtoken",
     "django_mysql",
-    # other
-    "redirect_urls",
 )
 
 TEMPLATES = [
