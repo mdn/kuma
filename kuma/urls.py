@@ -1,7 +1,6 @@
 from decorator_include import decorator_include
 from django.conf import settings
 from django.contrib import admin
-from django.shortcuts import render
 from django.urls import include, re_path
 from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
@@ -66,12 +65,6 @@ urlpatterns += [
     re_path("^api/", include("kuma.api.urls")),
     re_path("", include("kuma.version.urls")),
     re_path(r"^humans.txt$", core_views.humans_txt, name="humans_txt"),
-    re_path(
-        r"^miel$",
-        shared_cache_control(s_maxage=WEEK)(render),
-        {"template_name": "500.html", "status": 500},
-        name="users.honeypot",
-    ),
     # We use our own views for setting language in cookies. But to just align with django, set it like this.
     re_path(r"^i18n/setlang/", core_views.set_language, name="set-language-cookie"),
 ]
