@@ -372,7 +372,6 @@ INSTALLED_APPS = (
     # MDN
     "kuma.core.apps.CoreConfig",
     "kuma.landing",
-    "kuma.redirects",
     "kuma.search.apps.SearchConfig",
     "kuma.users.apps.UserConfig",
     "kuma.wiki.apps.WikiConfig",
