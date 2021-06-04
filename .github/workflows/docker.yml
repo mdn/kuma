@@ -23,21 +23,19 @@ jobs:
         run: |
           docker-compose --version
 
-      - name: Build base image, start containers, and wait for services
-        run: |
-          docker-compose up --build -d
-          # Hang tight until MySQL appears to be working
-          docker-compose exec -T web urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30
+      - name: Build docker
+        run: docker-compose build
 
       - name: Compile locales
-        run: docker-compose exec -T web make localecompile
+        run: docker-compose run -T testing make localecompile
 
       - name: DB migrations
         run: |
-          docker-compose exec -T web ./manage.py migrate
+          docker-compose run -T testing urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30
+          docker-compose run -T testing ./manage.py migrate
           # Essentially compares **/models.py with **/migrations/*.py and
           # makes sure the developer didn't forget to create a new migration.
-          docker-compose exec -T web ./manage.py makemigrations --check --dry-run
+          docker-compose run -T testing ./manage.py makemigrations --check --dry-run
 
       - name: Run Python tests
         run: |
@@ -45,9 +43,9 @@ jobs:
           # We might be able to use something
           # like `if [ ${{ github.head_ref}} eq 'master']` but not sure.
           # Slower...
-          docker-compose exec -T web make coveragetest
+          docker-compose run -T testing make coveragetest
           # Faster...
-          #docker-compose exec -T web make test
+          #docker-compose run -T testing make test
 
       - name: Submit code coverage
         run: |
@@ -56,9 +54,9 @@ jobs:
       - name: Run localerefresh
         run: |
           set -e
-          docker-compose run testing make localeextract
-          docker-compose run testing make localetest
-          docker-compose run testing make localecompile
+          docker-compose run -T testing make localeextract
+          docker-compose run -T testing make localetest
+          docker-compose run -T testing make localecompile
 
           cd locale
           export GIT_PAGER=cat
