@@ -1,6 +1,7 @@
 from django.urls import path, re_path
 
-from . import plus, search, views
+from . import search, views
+from .plus import landing_page, notes
 
 urlpatterns = [
     re_path(r"^whoami/?$", views.whoami, name="api.v1.whoami"),
@@ -14,13 +15,18 @@ urlpatterns = [
     ),
     path(
         "plus/landing-page/variant/",
-        plus.landing_page_variant,
-        name="api.v1.plus.landing_page_variant",
+        landing_page.variant,
+        name="api.v1.plus.landing_page.variant",
     ),
     path(
         "plus/landing-page/survey/",
-        plus.landing_page_survey,
-        name="api.v1.plus.landing_page_survey",
+        landing_page.survey,
+        name="api.v1.plus.landing_page.survey",
+    ),
+    path(
+        "plus/notes/document/",
+        notes.document,
+        name="api.v1.plus.notes.document",
     ),
     path("subscriptions/", views.subscriptions, name="api.v1.subscriptions"),
     path("stripe_hooks/", views.stripe_hooks, name="api.v1.stripe_hooks"),
