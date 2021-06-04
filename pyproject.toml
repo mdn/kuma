@@ -59,6 +59,7 @@ urllib3 = "^1.25.11"
 urlobject = "^2.4.3"
 urlwait = "^1.0"
 gevent = {extras = ["gevent"], version = "^20.5.2"}
+whitenoise = "^5.2.0"
 
 [tool.poetry.dev-dependencies]
 # Development Tools

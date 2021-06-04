@@ -1,0 +1,13 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+
+{% block content_title %}
+  {{ block.super }}
+
+  {% if settings.ES_URLS %}
+  <div class="g-d-c grp-rte">
+    {# 'safe_es_urls' comes from a context processor #}
+    <p>{% blocktrans with backend=safe_es_urls|join:", " %}Elasticsearch server: {{ backend }}{% endblocktrans %}</p>
+  </div>
+  {% endif %}
+{% endblock %}

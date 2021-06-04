@@ -204,7 +204,7 @@ class Document(models.Model):
     admin_objects = DocumentAdminManager()
 
     def __str__(self):
-        return "%s (%s)" % (self.get_absolute_url(), self.title)
+        return "%s (%s)" % (self.slug, self.title)
 
     @cached_property
     def extract(self):

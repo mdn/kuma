@@ -11,4 +11,4 @@ COPY --chown=kuma:kuma . /app
 # environments, but still defaults to disabled in production.
 # Also generate react.po translation files for beta.
 RUN ENABLE_CANDIDATE_LANGUAGES=True \
-    make localecompile
+    make localecompile build-static

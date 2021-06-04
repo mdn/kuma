@@ -57,6 +57,17 @@ localecompile:
 
 localerefresh: localeextract localetest localecompile
 
+compilejsi18n:
+	@ echo "## Generating JavaScript translation catalogs ##"
+	@ mkdir -p build/locale
+	@ python manage.py compilejsi18n
+
+collectstatic:
+	@ echo "## Collecting static files ##"
+	@ python manage.py collectstatic --noinput
+
+build-static: compilejsi18n collectstatic
+
 pull-base:
 	docker pull ${BASE_IMAGE}
 

@@ -297,6 +297,7 @@ _CONTEXT_PROCESSORS = (
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "kuma.core.middleware.SetRemoteAddrFromForwardedFor",
     (
         "kuma.core.middleware.ForceAnonymousSessionMiddleware"
@@ -349,14 +350,9 @@ else:
 
 ROOT_URLCONF = "kuma.urls"
 
-STATICFILES_FINDERS = (
-    # "django.contrib.staticfiles.finders.FileSystemFinder",
-    # "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-)
-
-STATICFILES_STORAGE = ()
-
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [
+    path("build", "locale"),
+]
 
 # TODO: Figure out why changing the order of apps (for example, moving taggit
 # higher in the list) breaks tests.
@@ -368,7 +364,7 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.admin",
     "django.contrib.messages",
-    # "django.contrib.staticfiles",
+    "django.contrib.staticfiles",
     # MDN
     "kuma.core.apps.CoreConfig",
     "kuma.landing",
@@ -464,6 +460,9 @@ PUENTE = {
 
 STATICI18N_ROOT = "build/locale"
 STATICI18N_DOMAIN = "javascript"
+
+# Cache non-versioned static files for one week
+WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
 
 # Session cookies
 SESSION_COOKIE_DOMAIN = DOMAIN
