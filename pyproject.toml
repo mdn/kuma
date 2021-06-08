@@ -65,7 +65,7 @@ whitenoise = "^5.2.0"
 # Development Tools
 django-debug-toolbar = "^2.2"
 django-querycount = "^0.7.0"
-werkzeug = "^1.0" # Enables runserver_plus from django-extensions
+werkzeug = "^2.0" # Enables runserver_plus from django-extensions
 
 # Testing
 braceexpand = "^0.1.6"
