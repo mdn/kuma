@@ -33,7 +33,7 @@ def test_whoami_disallowed_methods(client, http_method):
 
 
 @pytest.mark.django_db
-def test_whoami_anonymous(client, settings):
+def test_whoami_anonymous(client):
     """Test response for anonymous users."""
     # Create some fake waffle objects
     Flag.objects.create(name="vip_only", authenticated=True)
@@ -46,17 +46,12 @@ def test_whoami_anonymous(client, settings):
     response = client.get(url)
     assert response.status_code == 200
     assert response["content-type"] == "application/json"
-    assert response.json() == {
-        "waffle": {
-            "flags": {"flag_all": True},
-            "switches": {"switch_on": True},
-        },
-    }
+    assert response.json() == {}
     assert_no_cache_header(response)
 
 
 @pytest.mark.django_db
-def test_whoami_anonymous_cloudfront_geo(client, settings):
+def test_whoami_anonymous_cloudfront_geo(client):
     """Test response for anonymous users."""
     url = reverse("api.v1.whoami")
     response = client.get(url, HTTP_CLOUDFRONT_VIEWER_COUNTRY_NAME="US of A")
@@ -106,10 +101,6 @@ def test_whoami(
         "is_authenticated": True,
         "avatar_url": wiki_user_github_account.get_avatar_url(),
         "subscriber_number": None,
-        "waffle": {
-            "flags": {"vip_only": True, "flag_all": True},
-            "switches": {"switch_on": True},
-        },
         "email": "wiki_user@example.com",
     }
     if is_staff:

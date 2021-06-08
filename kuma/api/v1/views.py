@@ -23,7 +23,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from waffle import flag_is_active
 from waffle.decorators import waffle_flag
-from waffle.models import Flag, Switch
 
 from kuma.api.v1.forms import AccountSettingsForm
 from kuma.core.email_utils import render_email
@@ -79,34 +78,6 @@ def whoami(request):
         geo["country"] = cloudfront_country_value
     if geo:
         data["geo"] = geo
-
-    data["waffle"] = {
-        "flags": {},
-        "switches": {s.name: True for s in Switch.get_all() if s.is_active()},
-    }
-    # Specifically and more smartly loop over the waffle Flag objects
-    # to avoid unnecessary `cache.get(...)` calls within the `flag.is_active(request)`.
-    for flag in Flag.get_all():
-        if not request.user.is_authenticated:
-            # Majority of users are anonymous, so let's focus on that.
-            # Let's see if there's a quick reason to bail the
-            # expensive `flag.is_active(request)` call.
-            if (
-                flag.authenticated or flag.staff or flag.superusers
-            ) and not flag.everyone:
-                continue
-            if not (flag.languages or flag.percent or flag.everyone):
-                continue
-            if flag.languages:
-                languages = [ln.strip() for ln in flag.languages.split(",")]
-                if (
-                    not hasattr(request, "LANGUAGE_CODE")
-                    or request.LANGUAGE_CODE not in languages
-                ):
-                    continue
-
-        if flag.is_active(request):
-            data["waffle"]["flags"][flag.name] = True
 
     return JsonResponse(data)
 
