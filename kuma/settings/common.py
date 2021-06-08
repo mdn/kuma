@@ -6,7 +6,7 @@ import re
 from collections import namedtuple
 from email.utils import parseaddr
 from os.path import dirname
-from urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
+from urllib.parse import urlsplit
 
 import dj_database_url
 import dj_email_url
@@ -91,13 +91,6 @@ DATABASES = {
 SILENCED_SYSTEM_CHECKS = [
     # https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
     "django_mysql.W003",
-    # As of django-recaptcha==2.0.4 it checks that you have set either
-    # settings.RECAPTCHA_PRIVATE_KEY or settings.RECAPTCHA_PUBLIC_KEY.
-    # If you haven't it assumes to use the default test keys (from Google).
-    # We don't set either of these keys so they think we haven't thought
-    # about using real values. However, we use django-constance for this
-    # and not django.conf.settings so the warning doesn't make sense to us.
-    "captcha.recaptcha_test_key_error",
 ]
 
 # Cache Settings
@@ -182,8 +175,6 @@ else:
         locale for locale in ACCEPTED_LOCALES if locale not in CANDIDATE_LOCALES
     ]
 
-RTL_LANGUAGES = ()
-
 # Override generic locale handling with explicit mappings.
 # Keys are the requested locale (lowercase); values are the delivered locale.
 LOCALE_ALIASES = {
@@ -226,65 +217,6 @@ LANGUAGES = [(locale, LOCALES[locale].native) for locale in ENABLED_LOCALES]
 
 # Language list sorted for forms (English, then alphabetical by locale code)
 SORTED_LANGUAGES = [LANGUAGES[0]] + sorted(LANGUAGES[1:])
-
-# List of MindTouch locales mapped to Kuma locales.
-#
-# Language in MindTouch pages are first determined from the locale in the page
-# title, with a fallback to the language in the page record.
-#
-# So, first MindTouch locales were inventoried like so:
-#
-#     mysql --skip-column-names -uroot wikidb -B \
-#           -e 'select page_title from pages  where page_namespace=0' \
-#           > page-titles.txt
-#
-#     grep '/' page-titles.txt | cut -d'/' -f1 | sort -f | uniq -ci | sort -rn
-#
-# Then, the database languages were inventoried like so:
-#
-#     select page_language, count(page_id) as ct
-#     from pages group by page_language order by ct desc;
-#
-# Also worth noting, these are locales configured in the prod Control Panel:
-#
-# en,ar,ca,cs,de,el,es,fa,fi,fr,he,hr,hu,it,ja,
-# ka,ko,nl,pl,pt,ro,ru,th,tr,uk,vi,zh-cn,zh-tw
-#
-# The Kuma side was picked from elements of the MDN_LANGUAGES list in
-# settings.py, and a few were added to match MindTouch locales.
-#
-# Most of these end up being direct mappings, but it's instructive to go
-# through the mapping exercise.
-
-MT_TO_KUMA_LOCALE_MAP = {
-    "en": "en-US",
-    "ja": "ja",
-    "pl": "pl",
-    "fr": "fr",
-    "es": "es",
-    "": "en-US",
-    "cn": "zh-CN",
-    "zh_cn": "zh-CN",
-    "zh-cn": "zh-CN",
-    "zh_tw": "zh-TW",
-    "zh-tw": "zh-TW",
-    "ko": "ko",
-    "pt": "pt-PT",
-    "de": "de",
-    "it": "it",
-    "ca": "ca",
-    "ru": "ru",
-    "nl": "nl",
-    "hu": "hu",
-    "he": "he",
-    "el": "el",
-    "fi": "fi",
-    "tr": "tr",
-    "vi": "vi",
-    "ar": "ar",
-    "th": "th",
-    "fa": "fa",
-}
 
 LANGUAGE_COOKIE_NAME = "preferredlocale"
 # The number of seconds we are keeping the language preference cookie. (3 years)
@@ -360,32 +292,24 @@ _CONTEXT_PROCESSORS = (
     "kuma.core.context_processors.global_settings",
     "kuma.core.context_processors.i18n",
     "kuma.core.context_processors.next_url",
-    "constance.context_processors.config",
 )
 
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    # must come before LocaleMiddleware
-    "redirect_urls.middleware.RedirectsMiddleware",
     "kuma.core.middleware.SetRemoteAddrFromForwardedFor",
     (
         "kuma.core.middleware.ForceAnonymousSessionMiddleware"
         if MAINTENANCE_MODE
         else "django.contrib.sessions.middleware.SessionMiddleware"
     ),
-    "kuma.core.middleware.LangSelectorMiddleware",
     "kuma.core.middleware.LocaleStandardizerMiddleware",
     # LocaleMiddleware must be before any middleware that uses
     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
     "kuma.core.middleware.LocaleMiddleware",
-    "kuma.wiki.middleware.ReadOnlyMiddleware",
-    "kuma.core.middleware.Forbidden403Middleware",
-    "ratelimit.middleware.RatelimitMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "kuma.core.middleware.SlashMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 )
 
@@ -398,13 +322,7 @@ MIDDLEWARE += (
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "kuma.core.middleware.WaffleWithCookieDomainMiddleware",
-    "kuma.core.middleware.RestrictedEndpointsMiddleware",
 )
-
-CSP_ENABLE_MIDDLEWARE = config("CSP_ENABLE_MIDDLEWARE", default=False, cast=bool)
-if CSP_ENABLE_MIDDLEWARE:
-    # For more config, see "Content Security Policy (CSP)" below
-    MIDDLEWARE += ("csp.middleware.CSPMiddleware",)
 
 ENABLE_QUERYCOUNT = config("ENABLE_QUERYCOUNT", default=False, cast=bool)
 if ENABLE_QUERYCOUNT:
@@ -432,33 +350,9 @@ else:
 
 ROOT_URLCONF = "kuma.urls"
 
-CKEDITOR_DEV = config("CKEDITOR_DEV", default=False, cast=bool)
-
-STATICFILES_FINDERS = (
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "pipeline.finders.CachedFileFinder",
-    "pipeline.finders.PipelineFinder",
-)
-
-STATICFILES_STORAGE = (
-    "pipeline.storage.NonPackagingPipelineStorage"
-    if DEBUG
-    else "kuma.core.pipeline.storage.ManifestPipelineStorage"
-)
-
 STATICFILES_DIRS = [
-    path("assets", "static"),
-    path("kuma", "static"),
-    path("kuma", "javascript", "dist"),
     path("build", "locale"),
-    path("jinja2", "includes/icons"),
-    ("js/libs/ckeditor4/build", path("assets", "ckeditor4", "build")),
 ]
-if CKEDITOR_DEV:
-    STATICFILES_DIRS.append(
-        ("js/libs/ckeditor4/source", path("assets", "ckeditor4", "source"))
-    )
 
 # TODO: Figure out why changing the order of apps (for example, moving taggit
 # higher in the list) breaks tests.
@@ -468,15 +362,12 @@ INSTALLED_APPS = (
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.sites",
-    "django.contrib.messages",
     "django.contrib.admin",
+    "django.contrib.messages",
     "django.contrib.staticfiles",
     # MDN
-    "kuma.accountsettings.apps.AccountSettingsConfig",
     "kuma.core.apps.CoreConfig",
-    "kuma.banners",
     "kuma.landing",
-    "kuma.redirects",
     "kuma.search.apps.SearchConfig",
     "kuma.users.apps.UserConfig",
     "kuma.wiki.apps.WikiConfig",
@@ -491,23 +382,15 @@ INSTALLED_APPS = (
     "kuma.plus.apps.PlusConfig",
     # util
     "django_jinja",
-    "pipeline",
     "puente",
-    "constance.backends.database",
-    "constance",
     "waffle",
     "kuma.authkeys",
-    "tidings",
     "taggit",
-    "honeypot",
-    "cacheback",
     "django_extensions",
     "statici18n",
     "rest_framework",
     "rest_framework.authtoken",
     "django_mysql",
-    # other
-    "redirect_urls",
 )
 
 TEMPLATES = [
@@ -536,7 +419,6 @@ TEMPLATES = [
                 "django_jinja.builtins.extensions.UrlsExtension",
                 "django_jinja.builtins.extensions.StaticFilesExtension",
                 "django_jinja.builtins.extensions.DjangoFiltersExtension",
-                "pipeline.jinja2.PipelineExtension",
                 "waffle.jinja.WaffleExtension",
                 "kuma.core.i18n.TranslationExtension",
             ],
@@ -566,494 +448,21 @@ PUENTE = {
     # handles the extraction.
     "DOMAIN_METHODS": {
         "django": [
-            ("kumascript/node_modules/**", "ignore"),
             ("kuma/**.py", "python"),
             ("**/templates/**.html", "enmerkar.extract.extract_django"),
             ("**/jinja2/**.html", "jinja2"),
             ("**/jinja2/**.ltxt", "jinja2"),
-        ],
-        "javascript": [
-            # We can't say **.js because that would dive into any libraries.
-            ("kuma/static/js/*.js", "javascript"),
-            ("kuma/static/js/components/**.js", "javascript"),
-            ("assets/ckeditor4/source/plugins/mdn-**/*.js", "javascript"),
-        ],
-        "react": [
-            ("kuma/javascript/src/**.js", "javascript"),
-            ("kuma/javascript/src/**.jsx", "javascript"),
         ],
     },
     "PROJECT": "MDN",
     "MSGID_BUGS_ADDRESS": ADMIN_EMAILS[0],
 }
 
-# Combine JavaScript strings into React domain
-PUENTE["DOMAIN_METHODS"]["react"] = (
-    PUENTE["DOMAIN_METHODS"]["javascript"] + PUENTE["DOMAIN_METHODS"]["react"]
-)
-
 STATICI18N_ROOT = "build/locale"
 STATICI18N_DOMAIN = "javascript"
 
 # Cache non-versioned static files for one week
 WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
-
-
-def pipeline_scss(output, sources, **kwargs):
-    """Define a CSS file generated from multiple SCSS files."""
-    definition = {
-        "source_filenames": tuple("styles/%s.scss" % src for src in sources),
-        "output_filename": "build/styles/%s.css" % output,
-    }
-    definition.update(kwargs)
-    return definition
-
-
-def pipeline_one_scss(slug, **kwargs):
-    """Define a CSS file that shares the name with the one input SCSS."""
-    return pipeline_scss(slug, [slug], **kwargs)
-
-
-PIPELINE_CSS = {
-    # Combines the mdn, wiki and wiki-compat-tables styles into
-    # one bundle for use by pages that are part of the new
-    # single page app.
-    "react-mdn": {
-        "source_filenames": ("styles/react-mdn.scss",),
-        "output_filename": "build/styles/react-mdn.css",
-    },
-    "react-header": {
-        "source_filenames": ("styles/minimalist/organisms/header.scss",),
-        "output_filename": "build/styles/react-header.css",
-    },
-    "accountsettings": {
-        "source_filenames": ("styles/minimalist/pages/accountsettings.scss",),
-        "output_filename": "build/styles/pages-accountsettings.css",
-    },
-    "accountsettings-user-details": {
-        "source_filenames": (
-            "styles/minimalist/components/accountsettings/user-details.scss",
-        ),
-        "output_filename": "build/styles/accountsettings-user-details.css",
-    },
-    "accountsettings-subscription": {
-        "source_filenames": (
-            "styles/minimalist/components/accountsettings/subscription.scss",
-        ),
-        "output_filename": "build/styles/accountsettings-subscription.css",
-    },
-    "mdn": {
-        "source_filenames": ("styles/main.scss",),
-        "output_filename": "build/styles/mdn.css",
-    },
-    "banners": {
-        "source_filenames": ("styles/components/banners/base.scss",),
-        "output_filename": "build/styles/banners.css",
-    },
-    "home": {
-        "source_filenames": ("styles/home.scss",),
-        "output_filename": "build/styles/home.css",
-    },
-    "home_base": {
-        "source_filenames": ("styles/minimalist/home.scss",),
-        "output_filename": "build/styles/home_base.css",
-    },
-    "callout": {
-        "source_filenames": ("styles/minimalist/components/callout.scss",),
-        "output_filename": "build/styles/callout.css",
-    },
-    "home_newsletter": {
-        "source_filenames": ("styles/minimalist/components/home-newsletter.scss",),
-        "output_filename": "build/styles/home_newsletter.css",
-    },
-    "mozilla_foundation": {
-        "source_filenames": (
-            "styles/minimalist/components/featured-banners/mozilla-foundation.scss",
-        ),
-        "output_filename": "build/styles/mozilla_foundation.css",
-    },
-    "home_featured": {
-        "source_filenames": (
-            "styles/minimalist/components/featured-banners/featured.scss",
-        ),
-        "output_filename": "build/styles/home_featured.css",
-    },
-    "print": {
-        "source_filenames": ("styles/minimalist/print.scss",),
-        "output_filename": "build/styles/print.css",
-        "extra_context": {"media": "print"},
-    },
-    "wiki": {
-        "source_filenames": ("styles/wiki.scss",),
-        "output_filename": "build/styles/wiki.css",
-    },
-    "wiki-revisions": {
-        "source_filenames": ("styles/wiki-revisions.scss",),
-        "output_filename": "build/styles/wiki-revisions.css",
-    },
-    "wiki-edit": {
-        "source_filenames": ("styles/wiki-edit.scss",),
-        "output_filename": "build/styles/wiki-edit.css",
-    },
-    "wiki-compat-tables": {
-        "source_filenames": ("styles/wiki-compat-tables.scss",),
-        "output_filename": "build/styles/wiki-compat-tables.css",
-        "template_name": "pipeline/javascript-array.jinja",
-    },
-    "users": {
-        "source_filenames": ("styles/users.scss",),
-        "output_filename": "build/styles/users.css",
-    },
-    "delete-user-modal": {
-        "source_filenames": ("styles/minimalist/components/delete-user-modal.scss",),
-        "output_filename": "build/styles/delete-user-modal.css",
-    },
-    "tagit": {
-        "source_filenames": ("styles/libs/jquery.tagit.css",),
-        "output_filename": "build/styles/tagit.css",
-    },
-    "promote": {
-        "source_filenames": ("styles/promote.scss",),
-        "output_filename": "build/styles/promote.css",
-    },
-    "error": {
-        "source_filenames": ("styles/error.scss",),
-        "output_filename": "build/styles/error.css",
-    },
-    "error-404": {
-        "source_filenames": ("styles/error-404.scss",),
-        "output_filename": "build/styles/error-404.css",
-    },
-    "submission": {
-        "source_filenames": ("styles/submission.scss",),
-        "output_filename": "build/styles/submission.css",
-    },
-    "signupflow": {
-        "source_filenames": ("styles/minimalist/structure/signup-flow.scss",),
-        "output_filename": "build/styles/signup-flow.css",
-    },
-    "auth-modal": {
-        "source_filenames": ("styles/minimalist/components/auth-modal.scss",),
-        "output_filename": "build/styles/auth-modal.css",
-    },
-    "user-banned": {
-        "source_filenames": ("styles/user-banned.scss",),
-        "output_filename": "build/styles/user-banned.css",
-    },
-    "user-delete": {
-        "source_filenames": ("styles/user-delete.scss",),
-        "output_filename": "build/styles/user-delete.css",
-    },
-    "stripe-subscription": {
-        "source_filenames": ("styles/stripe-subscription.scss",),
-        "output_filename": "build/styles/stripe-subscription.css",
-    },
-    "subscriptions": {
-        "source_filenames": (
-            "styles/minimalist/components/subscriptions/subscriptions.scss",
-        ),
-        "output_filename": "build/styles/subscriptions.css",
-    },
-    "error-403-alternate": {
-        "source_filenames": ("styles/error-403-alternate.scss",),
-        "output_filename": "build/styles/error-403-alternate.css",
-    },
-    "editor-content": {
-        "source_filenames": ("styles/editor-content.scss",),
-        "output_filename": "build/styles/editor-content.css",
-        "template_name": "pipeline/javascript-array.jinja",
-    },
-    # for maintenance mode page
-    "maintenance-mode": {
-        "source_filenames": ("styles/maintenance-mode.scss",),
-        "output_filename": "build/styles/maintenance-mode.css",
-    },
-    # global maintenance-mode-styles
-    "maintenance-mode-global": {
-        "source_filenames": ("styles/maintenance-mode-global.scss",),
-        "output_filename": "build/styles/maintenance-mode-global.css",
-    },
-    # embeded iframe for live samples
-    "samples": {
-        "source_filenames": ("styles/samples.scss",),
-        "output_filename": "build/styles/samples.css",
-    },
-    "prism": {
-        "source_filenames": (
-            "styles/libs/prism/prism.css",
-            "styles/libs/prism/prism-line-highlight.css",
-            "styles/libs/prism/prism-line-numbers.css",
-        ),
-        "output_filename": "build/styles/prism.css",
-    },
-    "jquery-ui": {
-        "source_filenames": (
-            "js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css",
-            "styles/libs/jqueryui/moz-jquery-plugins.css",
-            "css/jquery-ui-customizations.scss",
-        ),
-        "output_filename": "build/styles/jquery-ui.css",
-    },
-}
-
-# Locales that are well supported by the Zilla family
-LOCALE_USE_ZILLA = [
-    "ca",
-    "de",
-    "en-US",
-    "es",
-    "fi",
-    "fr",
-    "hu",
-    "id",
-    "it",
-    "kab",
-    "ms",
-    "nl",
-    "pl",
-    "pt-BR",
-    "pt-PT",
-    "sv-SE",
-]
-
-
-PIPELINE_JS = {
-    "main": {
-        "source_filenames": (
-            "js/libs/jquery/jquery.js",
-            "js/libs/jquery-ajax-prefilter.js",
-            "js/libs/icons.js",
-            "js/components.js",
-            "js/analytics.js",
-            "js/main.js",
-            "js/components/nav-main-search.js",
-            "js/auth.js",
-            "js/highlight.js",
-            "js/wiki-compat-trigger.js",
-            "js/lang-switcher.js",
-        ),
-        "output_filename": "build/js/main.js",
-    },
-    "react-main": {
-        "source_filenames": (
-            # TODO: these are the last legacy files from the wiki site
-            # that we're still using on the React-based pages. Ideally
-            # we should just move these to the React code so webpack
-            # can deal with them.
-            "js/utils/post-message-handler.js",
-            "js/analytics.js",
-            # Custom Prism build
-            # TODO: the prism.js file should be imported dynamcally
-            # when we need it instead of being hardcoded in here.
-            "js/libs/prism/prism-core.js",
-            "js/libs/prism/prism-bash.js",
-            "js/libs/prism/prism-markup.js",
-            "js/libs/prism/prism-css.js",
-            "js/libs/prism/prism-clike.js",
-            "js/libs/prism/prism-javascript.js",
-            "js/libs/prism/prism-json.js",
-            "js/libs/prism/prism-jsonp.js",
-            "js/libs/prism/prism-css-extras.js",
-            "js/libs/prism/prism-rust.js",
-            "js/libs/prism/prism-wasm.js",
-            "js/libs/prism/prism-line-highlight.js",
-            "js/libs/prism/prism-line-numbers.js",
-            # The react.js file is created by webpack and
-            # placed in the kuma/javascript/dist/ directory.
-            "react.js",
-        ),
-        "output_filename": "build/js/react-main.js",
-        "extra_context": {"defer": True},
-    },
-    "banners": {
-        "source_filenames": (
-            "js/components/banners/utils/banners-event-util.js",
-            "js/components/banners/utils/banners-state-util.js",
-            "js/components/banners/banners.js",
-        ),
-        "output_filename": "build/js/banners.js",
-    },
-    "mathml": {
-        "source_filenames": ("js/components/mathml.js",),
-        "output_filename": "build/js/mathml.js",
-        "extra_context": {"defer": True},
-    },
-    "users": {
-        "source_filenames": ("js/users.js",),
-        "output_filename": "build/js/users.js",
-    },
-    "user-signup": {
-        "source_filenames": ("js/components/user-signup/signup.js",),
-        "output_filename": "build/js/signup.js",
-    },
-    "delete-user-page": {
-        "source_filenames": (
-            "js/components/account-management/delete-user-confirmation-button.js",
-        ),
-        "output_filename": "build/js/delete-user-confirmation-button.js",
-        "extra_context": {"defer": True},
-    },
-    "delete-user-modal": {
-        "source_filenames": (
-            "js/components/modal.js",
-            "js/components/account-management/delete-user-modal.js",
-            "js/components/account-management/delete-user-confirmation-button.js",
-        ),
-        "output_filename": "build/js/delete-user-modal.js",
-        "extra_context": {"defer": True},
-    },
-    "auth-modal": {
-        "source_filenames": (
-            "js/components/modal.js",
-            "js/components/user-signup/auth-modal.js",
-        ),
-        "output_filename": "build/js/auth-modal.js",
-        "extra_context": {"defer": True},
-    },
-    "jquery-ui": {
-        "source_filenames": (
-            "js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js",
-            "js/libs/jquery-ajax-prefilter.js",
-            "js/moz-jquery-plugins.js",
-        ),
-        "output_filename": "build/js/jquery-ui.js",
-    },
-    "stripe-subscription": {
-        "source_filenames": ("js/stripe-subscription.js",),
-        "output_filename": "build/js/stripe-subscription.js",
-    },
-    "framebuster": {
-        "source_filenames": ("js/framebuster.js",),
-        "output_filename": "build/js/framebuster.js",
-    },
-    "syntax-prism": {
-        "source_filenames": (
-            # Custom Prism build
-            "js/libs/prism/prism-core.js",
-            "js/libs/prism/prism-bash.js",
-            "js/libs/prism/prism-markup.js",
-            "js/libs/prism/prism-css.js",
-            "js/libs/prism/prism-clike.js",
-            "js/libs/prism/prism-javascript.js",
-            "js/libs/prism/prism-json.js",
-            "js/libs/prism/prism-jsonp.js",
-            "js/libs/prism/prism-css-extras.js",
-            "js/libs/prism/prism-rust.js",
-            "js/libs/prism/prism-wasm.js",
-            "js/libs/prism/prism-line-highlight.js",
-            "js/libs/prism/prism-line-numbers.js",
-            "js/syntax-prism.js",
-        ),
-        "output_filename": "build/js/syntax-prism.js",
-        "template_name": "pipeline/javascript-array.jinja",
-    },
-    "wiki": {
-        "source_filenames": (
-            "js/utils/utils.js",
-            "js/utils/post-message-handler.js",
-            "js/wiki.js",
-            "js/interactive.js",
-            "js/wiki-samples.js",
-            "js/wiki-toc.js",
-            "js/components/local-anchor.js",
-            "js/components/page-load-actions.js",
-        ),
-        "output_filename": "build/js/wiki.js",
-    },
-    "wiki-edit": {
-        "source_filenames": (
-            "js/wiki-edit.js",
-            "js/wiki-edit-draft.js",
-            "js/libs/tag-it.js",
-            "js/wiki-tags-edit.js",
-        ),
-        "output_filename": "build/js/wiki-edit.js",
-    },
-    "wiki-move": {
-        "source_filenames": ("js/wiki-move.js",),
-        "output_filename": "build/js/wiki-move.js",
-    },
-    "wiki-compat-tables": {
-        "source_filenames": ("js/wiki-compat-tables.js",),
-        "output_filename": "build/js/wiki-compat-tables.js",
-        "template_name": "pipeline/javascript-array.jinja",
-    },
-    "newsletter": {
-        "source_filenames": ("js/newsletter.js",),
-        "output_filename": "build/js/newsletter.js",
-        "extra_context": {"defer": True},
-    },
-    "perf": {
-        "source_filenames": (
-            "js/utils/perf.js",
-            "js/utils/perf-post-message-handler.js",
-        ),
-        "output_filename": "build/js/perf.js",
-        "extra_context": {"async": True},
-    },
-    "fetch-polyfill": {
-        "source_filenames": ("js/libs/unfetch-4.1.0.min.js",),
-        "output_filename": "build/js/fetch-polyfill.js",
-        "template_name": "pipeline/javascript-embedded.jinja",
-    },
-    "js-polyfill": {
-        "source_filenames": ("js/libs/polyfill-v3.min.js",),
-        "output_filename": "build/js/js-polyfill.js",
-        "template_name": "pipeline/javascript-embedded.jinja",
-    },
-}
-
-PIPELINE = {
-    "STYLESHEETS": PIPELINE_CSS,
-    "JAVASCRIPT": PIPELINE_JS,
-    "DISABLE_WRAPPER": True,
-    "SHOW_ERRORS_INLINE": False,  # django-pipeline issue #614
-    "COMPILERS": (
-        (
-            "kuma.core.pipeline.sass.DebugSassCompiler"
-            if DEBUG
-            else "pipeline.compilers.sass.SASSCompiler"
-        ),
-    ),
-    "SASS_BINARY": config("PIPELINE_SASS_BINARY", default="/usr/bin/env node-sass"),
-    "SASS_ARGUMENTS": config("PIPELINE_SASS_ARGUMENTS", default=""),
-    "CSS_COMPRESSOR": config(
-        "PIPELINE_CSS_COMPRESSOR",
-        default="kuma.core.pipeline.cleancss.CleanCSSCompressor",
-    ),
-    "JS_COMPRESSOR": config(
-        "PIPELINE_JS_COMPRESSOR",
-        default="pipeline.compressors.uglifyjs.UglifyJSCompressor",
-    ),
-    "PIPELINE_ENABLED": config("PIPELINE_ENABLED", not DEBUG, cast=bool),
-    "PIPELINE_COLLECTOR_ENABLED": config(
-        "PIPELINE_COLLECTOR_ENABLED", not DEBUG, cast=bool
-    ),
-}
-# Pipeline compressor overrides
-# For example, PIPELINE_YUGLIFY_BINARY will set YUGLIFY_BINARY
-# https://django-pipeline.readthedocs.io/en/latest/compressors.html
-pipeline_overrides = (
-    "YUGLIFY_BINARY",
-    "YUGLIFY_CSS_ARGUMENTS" "YUGLIFY_JS_ARGUMENTS",
-    "YUI_BINARY",
-    "YUI_CSS_ARGUMENTS",
-    "YUI_JS_ARGUMENTS",
-    "CLOSURE_BINARY",
-    "CLOSURE_ARGUMENTS",
-    "UGLIFYJS_BINARY",
-    "UGLIFYJS_ARGUMENTS",
-    "CSSTIDY_BINARY",
-    "CSSTIDY_ARGUMENTS",
-    "CSSMIN_BINARY",
-    "CSSMIN_ARGUMENTS",
-    "CLEANCSS_BINARY",
-    "CLEANCSS_ARGUMENTS",
-)
-for override in pipeline_overrides:
-    env_value = config("PIPELINE_" + override, default=None)
-    if env_value is not None:
-        PIPELINE[override] = env_value
 
 # Session cookies
 SESSION_COOKIE_DOMAIN = DOMAIN
@@ -1091,8 +500,6 @@ ATTACHMENT_ORIGIN = config("ATTACHMENT_ORIGIN", default=_PROD_ATTACHMENT_ORIGIN)
 ATTACHMENTS_CACHE_CONTROL_MAX_AGE = config(
     "ATTACHMENTS_CACHE_CONTROL_MAX_AGE", default=60 * 60 * 24, cast=int
 )
-WIKI_HOST = config("WIKI_HOST", default="wiki." + DOMAIN)
-WIKI_SITE_URL = PROTOCOL + WIKI_HOST
 
 # This should never be false for the production and stage deployments.
 ENABLE_RESTRICTIONS_BY_HOST = config(
@@ -1104,7 +511,7 @@ ENABLE_RESTRICTIONS_BY_HOST = config(
 ALLOW_ROBOTS_WEB_DOMAINS = set(
     config(
         "ALLOW_ROBOTS_WEB_DOMAINS",
-        default="developer.mozilla.org,wiki.developer.mozilla.org",
+        default="developer.mozilla.org",
         cast=Csv(),
     )
 )
@@ -1187,70 +594,6 @@ EMAIL_BACKEND = config(
 )
 EMAIL_FILE_PATH = "/app/tmp/emails"
 
-# Content Security Policy (CSP)
-CSP_DEFAULT_SRC = ("'none'",)
-CSP_CONNECT_SRC = [
-    SITE_URL,
-    WIKI_SITE_URL,
-]
-CSP_FONT_SRC = [
-    SITE_URL,
-]
-CSP_FRAME_SRC = [
-    urlunsplit((scheme, netloc, "", "", ""))
-    for scheme, netloc, ignored_path in ALLOWED_IFRAME_PATTERNS
-]
-
-CSP_IMG_SRC = [
-    SITE_URL,
-    "data:",
-    PROTOCOL + "i2.wp.com",
-    "https://*.githubusercontent.com",
-    "https://www.google-analytics.com",
-    _PROD_ATTACHMENT_SITE_URL,
-    WIKI_SITE_URL,
-]
-if ATTACHMENT_SITE_URL not in (_PROD_ATTACHMENT_SITE_URL, SITE_URL):
-    CSP_IMG_SRC.append(ATTACHMENT_SITE_URL)
-
-CSP_SCRIPT_SRC = [
-    SITE_URL,
-    "www.google-analytics.com",
-    "cdn.speedcurve.com",
-    "static.codepen.io",
-    # TODO fix things so that we don't need this
-    "'unsafe-inline'",
-    WIKI_SITE_URL,
-]
-CSP_STYLE_SRC = [
-    SITE_URL,
-    # TODO fix things so that we don't need this
-    "'unsafe-inline'",
-    WIKI_SITE_URL,
-]
-CSP_REPORT_ONLY = config("CSP_REPORT_ONLY", default=False, cast=bool)
-CSP_REPORT_ENABLE = config("CSP_REPORT_ENABLE", default=False, cast=bool)
-SENTRY_ENVIRONMENT = config("SENTRY_ENVIRONMENT", default=None)
-if CSP_REPORT_ENABLE:
-    CSP_REPORT_URI = config("CSP_REPORT_URI", default="/csp-violation-capture")
-    if "sentry_key=" in CSP_REPORT_URI:
-        # Using sentry to report. Optionally add revision and environment
-        bits = urlsplit(CSP_REPORT_URI)
-        query = parse_qs(bits.query)
-        if REVISION_HASH and REVISION_HASH != "undefined":
-            query["sentry_release"] = REVISION_HASH
-        if SENTRY_ENVIRONMENT:
-            query["sentry_environment"] = SENTRY_ENVIRONMENT
-        CSP_REPORT_URI = urlunsplit(
-            (
-                bits.scheme,
-                bits.netloc,
-                bits.path,
-                urlencode(query, doseq=True),
-                bits.fragment,
-            )
-        )
-
 # Celery (asynchronous tasks)
 CELERY_BROKER_URL = config("CELERY_BROKER_URL", default="redis://0.0.0.0:6379/0")
 
@@ -1276,224 +619,18 @@ CELERY_TASK_SERIALIZER = "pickle"
 CELERY_RESULT_SERIALIZER = "pickle"
 CELERY_EVENT_SERIALIZER = "pickle"
 
-
-CELERY_IMPORTS = ("tidings.events",)
-
-CELERY_TASK_ANNOTATIONS = {"cacheback.tasks.refresh_cache": {"rate_limit": "120/m"}}
-
 CELERY_TASK_ROUTES = {
-    "cacheback.tasks.refresh_cache": {"queue": "mdn_purgeable"},
     "kuma.core.tasks.clean_sessions": {"queue": "mdn_purgeable"},
-    "kuma.core.tasks.delete_old_ip_bans": {"queue": "mdn_purgeable"},
-    "kuma.wiki.tasks.delete_old_revision_ips": {"queue": "mdn_purgeable"},
     "kuma.users.tasks.send_welcome_email": {"queue": "mdn_emails"},
-    "kuma.users.tasks.email_document_progress": {"queue": "mdn_emails"},
-    "kuma.wiki.tasks.send_first_edit_email": {"queue": "mdn_emails"},
-    "tidings.events._fire_task": {"queue": "mdn_emails"},
-    "tidings.events.claim_watches": {"queue": "mdn_emails"},
-    "kuma.wiki.tasks.move_page": {"queue": "mdn_wiki"},
-    "kuma.wiki.tasks.acquire_render_lock": {"queue": "mdn_wiki"},
-    "kuma.wiki.tasks.release_render_lock": {"queue": "mdn_wiki"},
-    "kuma.wiki.tasks.render_document": {"queue": "mdn_wiki"},
-    "kuma.wiki.tasks.render_document_chunk": {"queue": "mdn_wiki"},
-    "kuma.wiki.tasks.clean_document_chunk": {"queue": "mdn_wiki"},
-    "kuma.wiki.tasks.build_json_data_for_document": {"queue": "mdn_wiki"},
-    "kuma.api.tasks.publish": {"queue": "mdn_api"},
-    "kuma.api.tasks.unpublish": {"queue": "mdn_api"},
-    "kuma.api.tasks.request_cdn_cache_invalidation": {"queue": "mdn_api"},
 }
 
 # Do not change this without also deleting all wiki documents:
 WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
 
-TIDINGS_FROM_ADDRESS = "notifications@developer.mozilla.org"
-TIDINGS_CONFIRM_ANONYMOUS_WATCHES = True
-
-CONSTANCE_BACKEND = (
-    "kuma.core.backends.ReadOnlyConstanceDatabaseBackend"
-    if MAINTENANCE_MODE
-    else "constance.backends.database.DatabaseBackend"
-)
-# must be an entry in the CACHES setting!
-CONSTANCE_DATABASE_CACHE_BACKEND = "default"
-
-# Settings and defaults controllable by Constance in admin
-CONSTANCE_CONFIG = dict(
-    KUMA_DOCUMENT_RENDER_TIMEOUT=(
-        180.0,
-        "Maximum seconds to wait before considering a rendering in progress or "
-        "scheduled as failed and allowing another attempt.",
-    ),
-    KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT=(
-        10.0,
-        "Maximum seconds to allow a document to spend rendering during the "
-        "response cycle before flagging it to be sent to the deferred rendering "
-        "queue for future renders.",
-    ),
-    KUMASCRIPT_TIMEOUT=(
-        0.0,
-        "Maximum seconds to wait for a response from the kumascript service. "
-        "On timeout, the document gets served up as-is and without macro "
-        "evaluation as an attempt at graceful failure. NOTE: a value of 0 "
-        "disables kumascript altogether.",
-    ),
-    KUMASCRIPT_MAX_AGE=(
-        600,
-        "Maximum acceptable age (in seconds) of a cached response from "
-        "kumascript. Passed along in a Cache-Control: max-age={value} header, "
-        "which tells kumascript whether or not to serve up a cached response.",
-    ),
-    DIFF_CONTEXT_LINES=(
-        0,
-        "Number of lines of context to show in diff display.",
-    ),
-    FEED_DIFF_CONTEXT_LINES=(
-        3,
-        "Number of lines of context to show in feed diff display.",
-    ),
-    WIKI_ATTACHMENT_ALLOWED_TYPES=(
-        "image/gif image/jpeg image/png image/svg+xml text/html image/vnd.adobe.photoshop",
-        "Allowed file types for wiki file attachments",
-    ),
-    WIKI_ATTACHMENTS_DISABLE_UPLOAD=(
-        False,
-        "Disable uploading of new or revised attachments via the Wiki. "
-        "Attachments may still be modified via the Django Admin.",
-    ),
-    KUMA_WIKI_IFRAME_ALLOWED_HOSTS=(
-        (
-            r"^https?\:\/\/"
-            r"(stage-files.mdn.moz.works"  # Staging demos
-            r"|mdn.mozillademos.org"  # Production demos
-            r"|testserver"  # Unit test demos
-            r"|localhost\:8000"  # Docker development demos
-            r"|localhost\:8080"  # Embedded samples server
-            r"|rpm.newrelic.com\/public\/charts\/.*"  # MDN/Kuma/Server_charts
-            r"|(www.)?youtube.com\/embed\/(\.*)"  # Embedded videos
-            r"|jsfiddle.net\/.*embedded.*"  # Embedded samples
-            r"|mdn.github.io"  # Embedded samples
-            r"|interactive-examples.mdn.mozilla.net"  # Embedded samples
-            r")"
-        ),
-        "Regex comprised of domain names that are allowed for IFRAME SRCs",
-    ),
-    GOOGLE_ANALYTICS_CREDENTIALS=(
-        "{}",
-        "Google Analytics (read-only) API credentials",
-    ),
-    AKISMET_KEY=("", "API key for Akismet spam checks, leave empty to disable"),
-)
-
 # Number of days to keep the trashed attachments files before they are removed from
 # the file storage.
 WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS = config(
     "WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS", default=14, cast=int
-)
-
-# JSON array listing tag suggestions for documents
-WIKI_DOCUMENT_TAG_SUGGESTIONS = config(
-    "WIKI_DOCUMENT_TAG_SUGGESTIONS",
-    default=json.dumps(
-        [
-            "Accessibility",
-            "Advanced",
-            "AJAX",
-            "API",
-            "Apps",
-            "Attribute",
-            "Audio",
-            "Beginner",
-            "Canvas",
-            "CodingScripting",
-            "Collaborating",
-            "Community",
-            "Composing",
-            "Credibility",
-            "CSS",
-            "Deprecated",
-            "Design",
-            "Device",
-            "DOM",
-            "ECMAScript6",
-            "Events",
-            "Event Handler",
-            "Example",
-            "Experimental",
-            "Extensions",
-            "Featured",
-            "Firefox",
-            "Games",
-            "Gecko",
-            "Glossary",
-            "Graphics",
-            "Guide",
-            "History",
-            "HTML",
-            "HTTP",
-            "Infrastructure",
-            "Interface",
-            "Intermediate",
-            "Internationalization",
-            "Intro",
-            "JavaScript",
-            "JSAPI Reference",
-            "l10n:exclude",
-            "l10n:priority",
-            "Landing",
-            "Layout",
-            "Learn",
-            "Localization",
-            "MDN",
-            "Media",
-            "Method",
-            "Mobile",
-            "Mozilla",
-            "Navigation",
-            "NeedsBrowserCompatibility",
-            "NeedsCompatTable",
-            "NeedsContent",
-            "NeedsExample",
-            "NeedsLiveSample",
-            "NeedsMarkupWork",
-            "NeedsMobileBrowserCompatibility",
-            "NeedsUpdate",
-            "Networking",
-            "Non-standard",
-            "Obsolete",
-            "OpenPractices",
-            "Privacy",
-            "Property",
-            "Protocols",
-            "Pseudo-class",
-            "Pseudo-element",
-            "Reference",
-            "Remixing",
-            "Search",
-            "Security",
-            "Sharing",
-            "SpiderMonkey",
-            "SVG",
-            "Tutorial",
-            "Video",
-            "WebGL",
-            "WebRTC",
-            "WebMechanics",
-        ]
-    ),
-)
-
-# JSON array listing some common reasons to ban users
-COMMON_REASONS_TO_BAN_USERS = config(
-    "COMMON_REASONS_TO_BAN_USERS",
-    default=json.dumps(
-        [
-            "Spam",
-            "Profile Spam ",
-            "Sandboxing",
-            "Incorrect Translation",
-            "Penetration Testing",
-        ]
-    ),
 )
 
 # Number of expired sessions to cleanup up in one go.
@@ -1546,10 +683,6 @@ GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = config(
     "GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS", cast=bool, default=DEBUG
 )
 
-KUMASCRIPT_URL_TEMPLATE = config(
-    "KUMASCRIPT_URL_TEMPLATE", default="http://localhost:9080/docs/{path}"
-)
-
 # Elasticsearch related settings.
 ES_DEFAULT_NUM_REPLICAS = 1
 ES_DEFAULT_NUM_SHARDS = 5
@@ -1600,10 +733,8 @@ LOGGING = {
             "propagate": False,
         },
         "urllib3": {"handlers": ["console-simple"], "level": "ERROR"},
-        "cacheback": {"handlers": ["console-simple"], "level": "ERROR"},
     },
 }
-
 
 CSRF_COOKIE_DOMAIN = DOMAIN
 CSRF_COOKIE_SECURE = config("CSRF_COOKIE_SECURE", default=True, cast=bool)
@@ -1614,7 +745,7 @@ CSRF_COOKIE_SECURE = config("CSRF_COOKIE_SECURE", default=True, cast=bool)
 # appended as well, and we don't want that behavior (a server port of 8000 is
 # added both in secure local development as well as in K8s stage/production, so
 # that will guarantee a mismatch with the referer).
-CSRF_TRUSTED_ORIGINS = [WIKI_HOST, DOMAIN]
+CSRF_TRUSTED_ORIGINS = [DOMAIN]
 X_FRAME_OPTIONS = "DENY"
 
 
@@ -1655,8 +786,6 @@ SOCIALACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_AUTO_SIGNUP = False  # forces the use of the signup view
 SOCIALACCOUNT_QUERY_EMAIL = True  # used by the custom github provider
 
-HONEYPOT_FIELD_NAME = "website"
-
 BLOCKABLE_USER_AGENTS = [
     "Yahoo! Slurp",
     "Googlebot",
@@ -1670,23 +799,6 @@ BLOCKABLE_USER_AGENTS = [
     "curl",
 ]
 
-SENTRY_DSN = config("SENTRY_DSN", default=None)
-
-if SENTRY_DSN:
-    from raven.transport.requests import RequestsHTTPTransport
-
-    RAVEN_CONFIG = {
-        "dsn": SENTRY_DSN,
-        "transport": RequestsHTTPTransport,  # Sync transport
-        "ignore_exception": ["django.core.exceptions.DisallowedHost"],
-    }
-    if REVISION_HASH and REVISION_HASH != "undefined":
-        RAVEN_CONFIG["release"] = REVISION_HASH
-    # Loaded from environment for CSP reporting endpoint
-    if SENTRY_ENVIRONMENT:
-        RAVEN_CONFIG["environment"] = SENTRY_ENVIRONMENT
-    INSTALLED_APPS = INSTALLED_APPS + ("raven.contrib.django.raven_compat",)
-
 # Tell django-taggit to use case-insensitive search for existing tags
 TAGGIT_CASE_INSENSITIVE = True
 
@@ -1695,24 +807,8 @@ NEWSLETTER = True
 NEWSLETTER_ARTICLE = True
 
 # Auth and permissions related constants
-LOGIN_URL = "socialaccount_signin"
-LOGIN_REDIRECT_URL = "home"
-
-# Content Experiments
-# Must be kept up to date with PIPELINE_JS setting and the JS client-side
-#  configuration. The 'id' should be a key in PIPELINE_JS, that loads
-#  Traffic Cop and a client-side configuration like
-#  kuma/static/js/experiment-wiki-content.js
-# Only one experiment should be active for a given locale and slug.
-#
-ce_path = path("kuma", "settings", "content_experiments.json")
-with open(ce_path, "r") as ce_file:
-    CONTENT_EXPERIMENTS = json.load(ce_file)
-
-# django-ratelimit
-RATELIMIT_ENABLE = config("RATELIMIT_ENABLE", default=True, cast=bool)
-RATELIMIT_USE_CACHE = config("RATELIMIT_USE_CACHE", default="default")
-RATELIMIT_VIEW = "kuma.core.views.rate_limited"
+LOGIN_URL = "/signin"
+LOGIN_REDIRECT_URL = "/"
 
 # Caching constants for the Cache-Control header.
 CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
@@ -1737,11 +833,6 @@ CONTRIBUTION_SUPPORT_EMAIL = config(
 # The reason it's not an environment variable is to simply indicate that it
 # can't be overridden at the moment based on the environment.
 CONTRIBUTION_AMOUNT_USD = 5.0
-
-CSP_CONNECT_SRC.append("https://checkout.stripe.com")
-CSP_FRAME_SRC.append("https://checkout.stripe.com")
-CSP_IMG_SRC.append("https://*.stripe.com")
-CSP_SCRIPT_SRC.append("https://checkout.stripe.com")
 
 # Settings used for communication with the React server side rendering server
 SSR_URL = config("SSR_URL", default="http://localhost:8002/ssr")
@@ -1780,14 +871,6 @@ ATTACHMENTS_AWS_S3_ENDPOINT_URL = config(
 # Silence warnings about defaults that change in django-storages 2.0
 AWS_BUCKET_ACL = None
 AWS_DEFAULT_ACL = None
-
-# We use django-cacheback for a bunch of tasks. By default, when cacheback,
-# has called the `.fetch` of a job class, it calls `cache.set(key, ...)`
-# and then it immediately does `cache.get(key)` just to see that the `.set`
-# worked.
-# See https://bugzilla.mozilla.org/show_bug.cgi?id=1567587 for some more
-# details about why we don't want or need this.
-CACHEBACK_VERIFY_CACHE_WRITE = False
 
 # html_attributes and css_classnames get indexed into Elasticsearch on every
 # document when sent in. These can be very memory consuming since the

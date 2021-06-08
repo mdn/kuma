@@ -1,9 +1,0 @@
-div.bug {
-    font-style: italic;
-    @include prevent-last-child-bottom-spacing();
-    overflow: hidden;
-
-    pre {
-        color: $text-color;
-    }
-}

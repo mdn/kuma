@@ -1,10 +1,12 @@
-import pytest
+from datetime import datetime
 
-from kuma.attachments.models import Attachment
-from kuma.attachments.tests import make_test_file
+import pytest
+from django.core.files.base import ContentFile
+from pyquery import PyQuery as pq
+
+from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.core.urlresolvers import reverse
 
-from . import normalize_html
 from ..models import Revision
 
 
@@ -27,6 +29,25 @@ def code_sample_doc(root_doc, wiki_user):
     return root_doc
 
 
+@pytest.fixture
+def attachment(db, wiki_user):
+    title = "Test text file"
+    result = Attachment(title=title)
+    result.save()
+    revision = AttachmentRevision(
+        title=title,
+        is_approved=True,
+        attachment=result,
+        mime_type="text/plain",
+        description="Initial upload",
+        created=datetime.now(),
+    )
+    revision.creator = wiki_user
+    revision.file.save("test.txt", ContentFile(b"This is only a test."))
+    revision.make_current()
+    return result
+
+
 @pytest.mark.parametrize("domain", ("HOST", "ORIGIN"))
 def test_code_sample(code_sample_doc, client, settings, domain):
     """The raw source for a document can be requested."""
@@ -40,28 +61,23 @@ def test_code_sample(code_sample_doc, client, settings, domain):
     assert "Last-Modified" not in response
     assert "ETag" in response
     assert "public" in response["Cache-Control"]
-    assert "max-age=86400" in response["Cache-Control"]
+    assert "max-age=31536000" in response["Cache-Control"]
     assert response.content.startswith(b"<!DOCTYPE html>")
 
-    normalized = normalize_html(response.content)
-    expected = (
-        '<meta charset="utf-8">'
-        '<link href="%sbuild/styles/samples.css"'
-        ' rel="stylesheet" type="text/css">'
-        '<style type="text/css">.some-css { color: red; }</style>'
-        "<title>Root Document - sample1 - code sample</title>"
-        "Some HTML"
-        '<script>window.alert("HI THERE")</script>' % settings.STATIC_URL
-    )
-    assert normalized == expected
+    doc = pq(response.content)
+    assert len(doc.find("style")) == 2
+    assert ".playable-code" in doc.find("style").eq(0).text()
+    assert doc.find("style").eq(1).text() == ".some-css { color: red; }"
+    assert "Some HTML" in doc.find("body").text()
+    assert doc.find("script").text() == 'window.alert("HI THERE")'
+    assert doc.find("title").text() == "Root Document - sample1 - code sample"
 
 
-def test_code_sample_host_not_allowed(code_sample_doc, settings, client):
+@pytest.mark.parametrize("host", ("dev.moz.org", "x.dev.moz.org", "x.y.dev.moz.org"))
+def test_code_sample_host_not_allowed(code_sample_doc, settings, client, host):
     """Users are not allowed to view samples on a restricted domain."""
     url = reverse("wiki.code_sample", args=[code_sample_doc.slug, "sample1"])
-    host = "testserver"
-    assert settings.ATTACHMENT_HOST != host
-    assert settings.ATTACHMENT_ORIGIN != host
+    settings.DOMAIN = "dev.moz.org"
     response = client.get(url, HTTP_HOST=host)
     assert response.status_code == 403
 
@@ -75,58 +91,27 @@ def test_code_sample_host_allowed(code_sample_doc, settings, client):
     response = client.get(url, HTTP_HOST=host)
     assert response.status_code == 200
     assert "public" in response["Cache-Control"]
-    assert "max-age=86400" in response["Cache-Control"]
+    assert "max-age=31536000" in response["Cache-Control"]
 
 
-def test_code_sample_host_restricted_host(
-    code_sample_doc, constance_config, settings, client
-):
+def test_code_sample_host_restricted_host(code_sample_doc, settings, client):
     """Users are allowed to view samples on the attachment domain."""
     url = reverse("wiki.code_sample", args=[code_sample_doc.slug, "sample1"])
     host = "sampleserver"
     settings.ALLOWED_HOSTS.append(host)
     settings.ATTACHMENT_HOST = host
     settings.ENABLE_RESTRICTIONS_BY_HOST = True
-    # Setting the KUMASCRIPT_TIMEOUT to a non-zero value forces kumascript
-    # rendering so we ensure that path is tested for these requests that use
-    # a restricted urlconf environment.
-    constance_config.KUMASCRIPT_TIMEOUT = 1
     response = client.get(url, HTTP_HOST=host)
     assert response.status_code == 200
     assert "public" in response["Cache-Control"]
-    assert "max-age=86400" in response["Cache-Control"]
+    assert "max-age=31536000" in response["Cache-Control"]
 
 
 def test_raw_code_sample_file(
-    code_sample_doc, constance_config, wiki_user, admin_client, settings
+    attachment, code_sample_doc, wiki_user, admin_client, settings
 ):
-
-    # Upload an attachment
-    upload_url = reverse(
-        "attachments.edit_attachment", kwargs={"document_path": code_sample_doc.slug}
-    )
-    file_for_upload = make_test_file(content="Something something unique")
-    post_data = {
-        "title": "An uploaded file",
-        "description": "A unique experience for your file serving needs.",
-        "comment": "Yadda yadda yadda",
-        "file": file_for_upload,
-    }
-    constance_config.WIKI_ATTACHMENT_ALLOWED_TYPES = "text/plain"
-    response = admin_client.post(
-        upload_url, data=post_data, HTTP_HOST=settings.WIKI_HOST
-    )
-    assert response.status_code == 302
-    edit_url = reverse("wiki.edit", args=(code_sample_doc.slug,))
-    assert response.url == edit_url
-
-    # Add a relative reference to the sample content
-    attachment = Attachment.objects.get(title="An uploaded file")
     filename = attachment.current_revision.filename
-    url_css = 'url("files/%(attachment_id)s/%(filename)s")' % {
-        "attachment_id": attachment.id,
-        "filename": filename,
-    }
+    url_css = f'url("files/{attachment.id}/{filename}")'
     new_content = code_sample_doc.current_revision.content.replace(
         "color: red", url_css
     )
@@ -143,7 +128,7 @@ def test_raw_code_sample_file(
     assert response.status_code == 200
     assert url_css.encode() in response.content
     assert "public" in response["Cache-Control"]
-    assert "max-age=86400" in response["Cache-Control"]
+    assert "max-age=31536000" in response["Cache-Control"]
 
     # Getting the URL redirects to the attachment
     file_url = reverse(
@@ -156,4 +141,4 @@ def test_raw_code_sample_file(
     assert not response.has_header("Vary")
     assert "Cache-Control" in response
     assert "public" in response["Cache-Control"]
-    assert "max-age=432000" in response["Cache-Control"]
+    assert "max-age=31536000" in response["Cache-Control"]

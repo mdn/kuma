@@ -124,7 +124,13 @@ class SocialTestMixin(object):
             "primary": True,
             # Added Feb 2017, bug 1339375
             "visibility": "private",
-        }
+        },
+        {
+            "email": "octocat@example.com",
+            "verified": True,
+            "primary": False,
+            "visibility": "public",
+        },
     ]
 
     google_token_data = {
@@ -222,6 +228,9 @@ class SocialTestMixin(object):
                     json=email_data,
                     status_code=email_status_code,
                 )
+
+            print(f"login_url = {login_url}")
+            print(f"callback_url = {callback_url}")
 
             # Simulate the callback from Github
             data = {"code": "github_code", "state": state}

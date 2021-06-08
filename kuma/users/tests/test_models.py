@@ -1,5 +1,4 @@
 from django.core.exceptions import ValidationError
-from django.utils.translation import deactivate_all
 
 from kuma.wiki.tests import revision
 
@@ -91,32 +90,6 @@ class TestUser(UserTestCase):
         user = self.user_model.objects.get(username="testuser")
         rev = revision(save=True, is_approved=True)
         assert rev.pk in user.wiki_revisions().values_list("pk", flat=True)
-
-    def test_get_recovery_url(self):
-        user = self.user_model.objects.get(username="testuser")
-        user.set_unusable_password()
-        user.save()
-        url = user.get_recovery_url()
-        assert url
-        assert not user.has_usable_password()
-
-        # The same URL is returned on second call
-        user.refresh_from_db()
-        url2 = user.get_recovery_url()
-        assert url == url2
-
-    def test_get_recovery_url_no_active_translation(self):
-        """
-        When no translation is active, the locale is /en-US/.
-
-        This happens in management commands, such as the Django shell.
-
-        See: https://bugzilla.mozilla.org/show_bug.cgi?id=1477016
-        """
-        user = self.user_model.objects.get(username="testuser")
-        deactivate_all()
-        url = user.get_recovery_url()
-        assert url.startswith("/en-US/users/account/recover/")
 
 
 class BanTestCase(UserTestCase):

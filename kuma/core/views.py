@@ -1,7 +1,5 @@
 from django.conf import settings
-from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponse
-from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -9,21 +7,6 @@ from django.views.decorators.http import require_POST
 from kuma.core.decorators import shared_cache_control
 
 from .i18n import get_kuma_languages
-
-
-@never_cache
-def _error_page(request, status):
-    """
-    Render error pages with jinja2.
-
-    Sometimes, an error is raised by a middleware, and the request is not
-    fully populated with a user or language code. Add in good defaults.
-    """
-    if not hasattr(request, "user"):
-        request.user = AnonymousUser()
-    if not hasattr(request, "LANGUAGE_CODE"):
-        request.LANGUAGE_CODE = "en-US"
-    return render(request, "%d.html" % status, status=status)
 
 
 @never_cache
@@ -44,19 +27,6 @@ def set_language(request):
             secure=settings.LANGUAGE_COOKIE_SECURE,
         )
 
-    return response
-
-
-handler403 = lambda request, exception=None: _error_page(request, 403)  # noqa: E731
-handler404 = lambda request, exception=None: _error_page(request, 404)  # noqa: E731
-handler500 = lambda request, exception=None: _error_page(request, 500)  # noqa: E731
-
-
-@never_cache
-def rate_limited(request, exception):
-    """Render a rate-limited exception."""
-    response = render(request, "429.html", status=429)
-    response["Retry-After"] = "60"
     return response
 
 

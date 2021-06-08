@@ -1,5 +1,0 @@
---format=compact
---errors=bulletproof-font-face-face-syntax,import,rules-count,selector-max,selector-max-approaching
---warnings=shorthand,outline-none,star-property-hack,text-indent,fallback-colors,
---ignore=important,adjoining-classes,box-sizing,box-model,overqualified-elements,display-property-grouping,,regex-selectors,errors,duplicate-background-images,empty-rules,,gradients,font-sizes,font-faces,floats,import,ids,underscore-property-hack,qualified-headings,unique-headings,universal-selector,unqualified-attributes,zero-units,compatible-vendor-prefixes,vendor-prefix,empty-rules,display-property-grouping,duplicate-properties,known-properties
---exclude-list=/media/css

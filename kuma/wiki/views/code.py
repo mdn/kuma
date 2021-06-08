@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.cache import cache_control
 from django.views.decorators.clickjacking import xframe_options_exempt
@@ -8,11 +8,10 @@ from django.views.decorators.http import require_GET
 from kuma.attachments.utils import full_attachment_url
 
 from ..decorators import allow_CORS_GET, process_document_path
-from ..jobs import DocumentCodeSampleJob
 from ..models import Document
 
 
-@cache_control(public=True, max_age=60 * 60 * 24)
+@cache_control(public=True, max_age=31536000)
 @require_GET
 @allow_CORS_GET
 @xframe_options_exempt
@@ -22,19 +21,18 @@ def code_sample(request, document_slug, document_locale, sample_name):
     Extract a code sample from a document and render it as a standalone
     HTML document
     """
-    # Restrict rendering of live code samples to specified hosts
-    if request.get_host() not in (settings.ATTACHMENT_HOST, settings.ATTACHMENT_ORIGIN):
-        raise PermissionDenied
+    # Restrict rendering of live code samples to domains outside the site domain.
+    if settings.DOMAIN in request.get_host():
+        return HttpResponseForbidden()
 
     document = get_object_or_404(Document, slug=document_slug, locale=document_locale)
-    job = DocumentCodeSampleJob(generation_args=[document.pk])
-    data = job.get(document.pk, sample_name)
+    data = document.extract.code_sample(sample_name)
     data["document"] = document
     data["sample_name"] = sample_name
     return render(request, "wiki/code_sample.html", data)
 
 
-@cache_control(public=True, max_age=60 * 60 * 24 * 5)
+@cache_control(public=True, max_age=31536000)
 @require_GET
 @allow_CORS_GET
 @xframe_options_exempt

@@ -11,10 +11,6 @@ DEBUG_TOOLBAR = config("DEBUG_TOOLBAR", default=False, cast=bool)
 DEBUG_PROPAGATE_EXCEPTIONS = config(
     "DEBUG_PROPAGATE_EXCEPTIONS", default=DEBUG, cast=bool
 )
-PIPELINE["PIPELINE_ENABLED"] = config("PIPELINE_ENABLED", not DEBUG, cast=bool)
-PIPELINE["PIPELINE_COLLECTOR_ENABLED"] = config(
-    "PIPELINE_COLLECTOR_ENABLED", not DEBUG, cast=bool
-)
 TEMPLATES[1]["OPTIONS"]["debug"] = DEBUG
 
 PROTOCOL = config("PROTOCOL", default="https://")

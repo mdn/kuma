@@ -14,8 +14,6 @@ services:
       - SITE_URL=https://developer.127.0.0.1.nip.io
       - STATIC_URL=https://developer.127.0.0.1.nip.io/static/
       - WAFFLE_COOKIE_SECURE=True
-  api:
-    <<: *worker
   web:
     <<: *worker
     command: /bin/bash -c "/etc/nginx/ssl/generate_dev_cert.sh && gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=meinheld.gmeinheld.MeinheldWorker kuma.wsgi:application"
@@ -32,6 +30,3 @@ services:
       - "443:443"
     depends_on:
       - web
-  kumascript:
-    environment:
-      - LIVE_SAMPLES_URL=https://demos.developer.127.0.0.1.nip.io

@@ -1,71 +1,20 @@
-from urllib.parse import urlsplit
-
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
-from django.core.exceptions import MiddlewareNotUsed
-from django.http import (
-    HttpResponseForbidden,
-    HttpResponsePermanentRedirect,
-    HttpResponseRedirect,
-)
-from django.urls import get_script_prefix, resolve, Resolver404
-from django.utils.encoding import smart_str
+from django.http import HttpResponseRedirect
+from django.urls import get_script_prefix, is_valid_path
 from waffle.middleware import WaffleMiddleware
-
-from kuma.wiki.views.legacy import mindtouch_to_kuma_redirect, mindtouch_to_kuma_url
 
 from .decorators import add_shared_cache_control
 from .i18n import (
     activate_language_from_request,
-    get_kuma_languages,
     get_language,
     get_language_from_path,
-    get_language_from_request,
 )
-from .utils import is_untrusted, urlparams
-from .views import handler403
 
 
 class MiddlewareBase(object):
     def __init__(self, get_response):
         self.get_response = get_response
-
-
-class LangSelectorMiddleware(MiddlewareBase):
-    """
-    Redirect requests with a ?lang= parameter.
-
-    This should appear higher than LocaleMiddleware in the middleware list.
-    """
-
-    def __call__(self, request):
-        """Redirect if ?lang query parameter is valid."""
-        query_lang = request.GET.get("lang")
-        if not (query_lang and query_lang in get_kuma_languages()):
-            # Invalid or no language requested, so don't redirect.
-            return self.get_response(request)
-
-        # Check if the requested language is already embedded in URL
-        language = get_language_from_request(request)
-        script_prefix = get_script_prefix()
-        lang_prefix = f"{script_prefix}{language}/"
-        full_path = request.get_full_path()  # Includes querystring
-        old_path = urlsplit(full_path).path
-        new_prefix = f"{script_prefix}{query_lang}/"
-        if full_path.startswith(lang_prefix):
-            new_path = old_path.replace(lang_prefix, new_prefix, 1)
-        else:
-            new_path = old_path.replace(script_prefix, new_prefix, 1)
-
-        # Redirect to same path with requested language and without ?lang
-        new_query = dict(
-            (smart_str(k), v) for k, v in request.GET.items() if k != "lang"
-        )
-        if new_query:
-            new_path = urlparams(new_path, **new_query)
-        response = HttpResponseRedirect(new_path)
-        add_shared_cache_control(response)
-        return response
 
 
 class LocaleStandardizerMiddleware(MiddlewareBase):
@@ -172,11 +121,14 @@ class LocaleMiddleware(MiddlewareBase):
             # Maybe the language code is missing in the URL? Try adding the
             # language prefix and redirecting to that URL.
             language_path = f"/{language}{request.path_info}"
-            path_valid = is_valid_path(language_path, language, urlconf)
+            path_valid = is_valid_path(language_path, urlconf)
+            print(
+                f"path_valid = {path_valid}, language = {language}, language_from_path = {language_from_path}, language_path = {language_path}"
+            )
             path_needs_slash = not path_valid and (
                 settings.APPEND_SLASH
                 and not language_path.endswith("/")
-                and is_valid_path("%s/" % language_path, language, urlconf)
+                and is_valid_path("%s/" % language_path, urlconf)
             )
 
             if path_valid or path_needs_slash:
@@ -187,11 +139,7 @@ class LocaleMiddleware(MiddlewareBase):
                     force_append_slash=path_needs_slash
                 ).replace(script_prefix, f"{script_prefix}{language}/", 1)
                 # Kuma: Add caching headers to redirect
-                if request.path_info == "/":
-                    # Only the homepage should be redirected permanently.
-                    redirect = HttpResponsePermanentRedirect(language_url)
-                else:
-                    redirect = HttpResponseRedirect(language_url)
+                redirect = HttpResponseRedirect(language_url)
                 add_shared_cache_control(redirect)
                 return redirect
 
@@ -207,78 +155,6 @@ class LocaleMiddleware(MiddlewareBase):
         if "Content-Language" not in response:  # pragma: no cover
             response["Content-Language"] = language
 
-        return response
-
-
-class Forbidden403Middleware(MiddlewareBase):
-    """
-    Renders a 403.html page if response.status_code == 403.
-    """
-
-    def __call__(self, request):
-        response = self.get_response(request)
-        if isinstance(response, HttpResponseForbidden):
-            return handler403(request)
-        # If not 403, return response unmodified
-        return response
-
-
-def is_valid_path(path, language_code, urlconf=None):
-    """
-    Return True if the given path resolves against the default URL resolver,
-    False otherwise. This is a convenience method to make working with "is
-    this a match?" cases easier, avoiding try...except blocks.
-
-    Based on Django 1.11.16's is_valid_path from django.urls.is_valid_path,
-    with changes:
-    * If the catch-all mindtouch_to_kuma_redirect was the match, check if it
-      would return a 404.
-    * Adds a required language_code parameter, for mindtouch_to_kuma_url
-    """
-    try:
-        match = resolve(path, urlconf)
-        if match.func == mindtouch_to_kuma_redirect:
-            # mindtouch_to_kuma_redirect matches everything.
-            # Check if it would return a redirect or 404.
-            url = mindtouch_to_kuma_url(language_code, match.kwargs["path"])
-            return bool(url)
-        else:
-            return True
-    except Resolver404:
-        return False
-
-
-class SlashMiddleware(MiddlewareBase):
-    """
-    Middleware that adds or removes a trailing slash if there was a 404.
-
-    If the response is a 404 because URL resolution failed, we'll look for a
-    better URL with or without a trailing slash.
-
-    The LocaleMiddleware turns 404s to redirects if a locale prefix is needed.
-    It will also add a trailing slash to make a valid URL.
-
-    The CommonMiddleware is supposed to handle adding slashes to 404s, but
-    doesn't work because the catch-all mindtouch_to_kuma_redirect function
-    makes it so that Django's is_valid_url returns True for all URLs.
-    """
-
-    def __call__(self, request):
-        response = self.get_response(request)
-        path = request.path_info
-        language = getattr(request, "LANGUAGE_CODE") or settings.LANGUAGE_CODE
-        if response.status_code == 404 and not is_valid_path(path, language):
-            new_path = None
-            if path.endswith("/") and is_valid_path(path[:-1], language):
-                # Remove the trailing slash for a valid URL
-                new_path = path[:-1]
-            elif not path.endswith("/") and is_valid_path(path + "/", language):
-                # Add a trailing slash for a valid URL
-                new_path = path + "/"
-            if new_path:
-                if request.GET:
-                    new_path += "?" + request.META["QUERY_STRING"]
-                return HttpResponsePermanentRedirect(new_path)
         return response
 
 
@@ -315,20 +191,6 @@ class ForceAnonymousSessionMiddleware(SessionMiddleware):
         Override the base-class method to ensure we do nothing.
         """
         return response
-
-
-class RestrictedEndpointsMiddleware(MiddlewareBase):
-    """Restricts the accessible endpoints based on the host."""
-
-    def __init__(self, get_response):
-        if not settings.ENABLE_RESTRICTIONS_BY_HOST:
-            raise MiddlewareNotUsed
-        super(RestrictedEndpointsMiddleware, self).__init__(get_response)
-
-    def __call__(self, request):
-        if is_untrusted(request):
-            request.urlconf = "kuma.urls_untrusted"
-        return self.get_response(request)
 
 
 class WaffleWithCookieDomainMiddleware(WaffleMiddleware):

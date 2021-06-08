@@ -3,25 +3,18 @@ ifeq ($(shell which git),)
 VERSION ?= undefined
 KS_VERSION ?= undefined
 export KUMA_REVISION_HASH ?= undefined
-export KUMASCRIPT_REVISION_HASH ?= undefined
 else
 # git is available
 VERSION ?= $(shell git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
-KS_VERSION ?= $(shell cd kumascript && git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
 export KUMA_REVISION_HASH ?= $(shell git rev-parse HEAD)
-export KUMASCRIPT_REVISION_HASH ?= $(shell cd kumascript && git rev-parse HEAD)
 endif
 BASE_IMAGE_NAME ?= kuma_base
 KUMA_IMAGE_NAME ?= kuma
-KUMASCRIPT_IMAGE_NAME ?= kumascript
 IMAGE_PREFIX ?= mdnwebdocs
 BASE_IMAGE ?= ${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:${VERSION}
 BASE_IMAGE_LATEST ?= ${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:latest
-IMAGE ?= $(BASE_IMAGE_LATEST)
 KUMA_IMAGE ?= ${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:${VERSION}
 KUMA_IMAGE_LATEST ?= ${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:latest
-KUMASCRIPT_IMAGE ?= ${IMAGE_PREFIX}/${KUMASCRIPT_IMAGE_NAME}\:${KS_VERSION}
-KUMASCRIPT_IMAGE_LATEST ?= ${IMAGE_PREFIX}/${KUMASCRIPT_IMAGE_NAME}\:latest
 
 target = kuma
 requirements = -r requirements/local.txt
@@ -38,26 +31,6 @@ coveragetest: clean
 
 coveragetesthtml: coveragetest
 	coverage html
-
-webpack:
-	@ echo "## Running webpack ##"
-	@ yarn run webpack:prod
-
-compilejsi18n:
-	@ echo "## Generating JavaScript translation catalogs ##"
-	@ mkdir -p build/locale
-	@ python manage.py compilejsi18n
-
-compile-react-i18n:
-	@ echo "## Generating React translation catalogs ##"
-	@ mkdir -p build/locale
-	@ python manage.py compilejsi18n -d react -f json
-
-collectstatic:
-	@ echo "## Compiling (Sass), collecting, and building static files ##"
-	@ python manage.py collectstatic --noinput
-
-build-static: webpack compilejsi18n compile-react-i18n collectstatic
 
 clean:
 	rm -rf .coverage build/ tmp/emails/*.log
@@ -82,16 +55,24 @@ localeextract:
 localecompile:
 	cd locale; ../scripts/compile-mo.sh .
 
-localerefresh: localeextract localetest localecompile build-static
+localerefresh: localeextract localetest localecompile
+
+compilejsi18n:
+	@ echo "## Generating JavaScript translation catalogs ##"
+	@ mkdir -p build/locale
+	@ python manage.py compilejsi18n
+
+collectstatic:
+	@ echo "## Collecting static files ##"
+	@ python manage.py collectstatic --noinput
+
+build-static: compilejsi18n collectstatic
 
 pull-base:
 	docker pull ${BASE_IMAGE}
 
 pull-kuma:
 	docker pull ${KUMA_IMAGE}
-
-pull-kumascript:
-	docker pull ${KUMASCRIPT_IMAGE}
 
 pull-base-latest:
 	docker pull ${BASE_IMAGE_LATEST}
@@ -108,27 +89,13 @@ build-kuma:
 	docker build --build-arg REVISION_HASH=${KUMA_REVISION_HASH} \
 	-f docker/images/kuma/Dockerfile -t ${KUMA_IMAGE} .
 
-build-kumascript:
-	docker build --no-cache \
-	--build-arg REVISION_HASH=${KUMASCRIPT_REVISION_HASH} \
-	-f kumascript/docker/Dockerfile -t ${KUMASCRIPT_IMAGE} .
-
-build-kumascript-with-all-tags:
-	docker build --no-cache \
-	--build-arg REVISION_HASH=${KUMASCRIPT_REVISION_HASH} \
-	-f kumascript/docker/Dockerfile -t ${KUMASCRIPT_IMAGE} \
-	-t ${KUMASCRIPT_IMAGE_LATEST} .
-
-build: build-base build-kuma build-kumascript
+build: build-base build-kuma
 
 push-base:
 	docker push ${BASE_IMAGE}
 
 push-kuma:
 	docker push ${KUMA_IMAGE}
-
-push-kumascript:
-	docker push ${KUMASCRIPT_IMAGE}
 
 push: push-base push-kuma
 
@@ -152,12 +119,7 @@ shell_plus: up
 pythonlint:
 	flake8 kuma docs tests
 
-jslint:
-	yarn run eslint
-	yarn run stylelint
-	yarn run pretty
-
-lint: pythonlint jslint
+lint: pythonlint
 
 # Those tasks don't have file targets
-.PHONY: test coveragetest clean locale compilejsi18n collectstatic localetest localeextract localecompile localerefresh webpack compile-react-i18n
+.PHONY: test coveragetest clean locale localetest localeextract localecompile localerefresh

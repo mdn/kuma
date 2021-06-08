@@ -12,7 +12,6 @@ services:
     depends_on:
       - mysql
       - redis
-      - kumascript
       - minio
     environment:
       # Django settings overrides:
@@ -37,7 +36,6 @@ services:
       - DOMAIN=${DOMAIN:-localhost}
       - ENABLE_RESTRICTIONS_BY_HOST=${ENABLE_RESTRICTIONS_BY_HOST:-False}
       - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
-      - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
       - REDIS_CACHE_SERVER=redis://redis:6379/3
       - PROTOCOL=http://
       - SESSION_COOKIE_SECURE=False
@@ -50,10 +48,6 @@ services:
       - PYTHONWARNINGS=${PYTHONWARNINGS:-}
       - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
       - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
-      # For the server side rendering server and the code that connects to it.
-      - SSR_PORT=8000
-      - SSR_URL=http://ssr:8000/ssr
-      - SSR_TIMEOUT=1
       - GOOGLE_ANALYTICS_TRACKING_URL=http://mockga:7777/collect
 
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
@@ -63,7 +57,6 @@ services:
     depends_on:
       - mysql
       - redis
-      - ssr
       - minio
       - mockga
     ports:
@@ -76,21 +69,10 @@ services:
     depends_on:
       - mysql
       - redis
-      - ssr
-      - kumascript
       - minio
       - minio_setup
     volumes:
       - ./:/app
-
-
-  # ssr is a Node server that performs server-side rendering of our React UI
-  ssr:
-    <<: *worker
-    command: node kuma/javascript/ssr-server.js
-    depends_on: []
-    ports:
-      - "8002:8000"
 
   mysql:
     image: mysql:5.6
@@ -116,23 +98,6 @@ services:
     # should match the "redis_engine_version" variable in the following Terraform file:
     # https://github.com/mdn/infra/blob/master/apps/mdn/mdn-aws/infra/modules/multi_region/redis/variables.tf
     image: redis:5.0.6
-
-  kumascript:
-    image: mdnwebdocs/kumascript
-    command: node run.js
-    depends_on:
-      - web
-      - redis
-    environment:
-      - DOCUMENT_URL_TEMPLATE=http://web:8000/en-US/docs/{path}?raw=1&redirect=no
-      - DOCUMENT_URL=http://web:8000
-      - INTERACTIVE_EXAMPLES_URL=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
-      - LIVE_SAMPLES_URL=http://${ATTACHMENT_HOST:-localhost:8000}
-      - REDIS_URL=redis://redis:6379/2
-    ports:
-      - "9080:9080"
-    volumes:
-      - ./kumascript:/app
 
   # MinIO: S3-compatible object storage (https://min.io)
   minio:

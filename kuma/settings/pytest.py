@@ -15,9 +15,6 @@ ES_RETRY_SLEEPTIME = 0
 ES_RETRY_ATTEMPTS = 1
 ES_RETRY_JITTER = 0
 
-# Disable the Constance database cache
-CONSTANCE_DATABASE_CACHE_BACKEND = False
-
 # SHA1 because it is fast, and hard-coded in the test fixture JSON.
 PASSWORD_HASHERS = ("django.contrib.auth.hashers.SHA1PasswordHasher",)
 
@@ -40,32 +37,6 @@ for cache_settings in CACHES.values():
     current_prefix = cache_settings.get("KEY_PREFIX", "")
     cache_settings["KEY_PREFIX"] = "test." + current_prefix
 
-# Use un-versioned file names, like main.css, instead of versioned
-# filenames requiring hashing, like mdn.1cb62215bf0c.css
-STATICFILES_STORAGE = "pipeline.storage.PipelineStorage"
-
-# Switch Pipeline to DEBUG=False / Production values
-
-# The documents claim True means assets should be compressed, which seems like
-# more work, but it is 4x slower when False, maybe because it detects the
-# existence of the file and skips generating a new one.
-PIPELINE["PIPELINE_ENABLED"] = True
-
-# The documents suggest this does nothing when PIPELINE_ENABLED=True. But,
-# testing shows that tests run faster when set to True.
-PIPELINE["PIPELINE_COLLECTOR_ENABLED"] = True
-
-# We need the real Sass compiler here instead of the pass-through used for
-# local dev.
-PIPELINE["COMPILERS"] = ("pipeline.compilers.sass.SASSCompiler",)
-
-# Testing with django-pipeline 1.6.8, PipelineStorage
-# Enabled=T, Collector=T -   482s
-# Enabled=T, Collector=F -   535s
-# Enabled=F, Collector=T - 18262s
-# Enabled=F, Collector=F -  2043s
-
-# Defer to django-pipeline's finders for testing
 # This avoids reading the static folder for each test client request, for
 # a 10x speedup on Docker on MacOS.
 WHITENOISE_AUTOREFRESH = True
@@ -80,9 +51,6 @@ AWS_DEFAULT_ACL = None
 
 # Use a dedicated minio bucket for tests
 ATTACHMENTS_AWS_STORAGE_BUCKET_NAME = "test"
-
-# Never enabled in tests.
-SENTRY_DSN = None
 
 # To make absolutely sure we never accidentally trigger the GA tracking
 # within tests to the actual (and default) www.google-analytics.com this is

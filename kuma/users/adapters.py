@@ -22,7 +22,6 @@ from kuma.core.ga_tracking import (
     CATEGORY_SIGNUP_FLOW,
     track_event,
 )
-from kuma.core.urlresolvers import reverse
 
 from .constants import USERNAME_CHARACTERS, USERNAME_REGEX
 from .models import UserBan
@@ -103,27 +102,10 @@ class KumaAccountAdapter(DefaultAccountAdapter):
         Adds an extra "account" tag to the success and error messages.
         """
         # let's ignore some messages
-        if message_template.endswith(self.message_templates("logged_in", "logged_out")):
+        if message_template.endswith(
+            self.message_templates("logged_in", "logged_out", "account_connected")
+        ):
             return
-
-        # promote the "account_connected" message to success
-        if message_template.endswith(self.message_templates("account_connected")):
-            level = messages.SUCCESS
-
-            # when a next URL is set because of a multi step sign-in
-            # (e.g. sign-in with github, verified mail is found in other
-            # social accounts, agree to first log in with other to connect
-            # instead) and the next URL is not the edit profile page (which
-            # would indicate the start of the sign-in process from the edit
-            # profile page) we ignore the message "account connected" message
-            # as it would be misleading
-            # Bug 1229906#c2 - need from "create new account" page
-            user_url = reverse(
-                "users.user_edit", kwargs={"username": request.user.username}
-            )
-            next_url = request.session.get("sociallogin_next_url", None)
-            if next_url != user_url:
-                return
 
         # and add an extra tag to the account messages
         extra_tag = "account"
@@ -240,10 +222,8 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         connecting a social account.
         """
         assert request.user.is_authenticated
-        user_url = reverse(
-            "users.user_edit", kwargs={"username": request.user.username}
-        )
-        return user_url
+        locale = getattr(request, "LANGUAGE_CODE", None)
+        return (f"/{locale}/" if locale else "/") + "settings"
 
     def save_user(self, request, sociallogin, form=None):
         """

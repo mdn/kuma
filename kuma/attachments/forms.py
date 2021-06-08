@@ -1,5 +1,4 @@
 import magic
-from constance import config
 from django import forms
 from django.core.validators import EMPTY_VALUES
 from django.utils.translation import gettext_lazy as _
@@ -51,10 +50,6 @@ class AttachmentRevisionForm(forms.ModelForm):
                 # So correct that.
                 if self.mime_type == "image/svg":
                     self.mime_type = "image/svg+xml"
-            else:
-                allowed_mime_types = config.WIKI_ATTACHMENT_ALLOWED_TYPES.split()
-                if self.mime_type not in allowed_mime_types:
-                    raise forms.ValidationError(MIME_TYPE_INVALID, code="invalid")
 
         return cleaned_data
 
