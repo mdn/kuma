@@ -607,7 +607,6 @@ CELERY_WORKER_MAX_TASKS_PER_CHILD = (
     config("CELERY_WORKER_MAX_TASKS_PER_CHILD", default=0, cast=int) or None
 )
 
-
 # Sadly, kuma depends on pickle being the default serializer.
 # In Celery 4, the default is now JSON.
 # It's probably too late to switch all tasks to work with either.
@@ -833,10 +832,6 @@ CONTRIBUTION_SUPPORT_EMAIL = config(
 # The reason it's not an environment variable is to simply indicate that it
 # can't be overridden at the moment based on the environment.
 CONTRIBUTION_AMOUNT_USD = 5.0
-
-# Settings used for communication with the React server side rendering server
-SSR_URL = config("SSR_URL", default="http://localhost:8002/ssr")
-SSR_TIMEOUT = float(config("SSR_TIMEOUT", default="1"))
 
 # Setting for configuring the AWS S3 bucket name used for the document API.
 MDN_API_S3_BUCKET_NAME = config("MDN_API_S3_BUCKET_NAME", default=None)
