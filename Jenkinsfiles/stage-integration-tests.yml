@@ -1,5 +1,0 @@
-pipeline:
-  enabled: true
-  script: "integration-tests"
-job:
-  base_url: 'https://developer.allizom.org'

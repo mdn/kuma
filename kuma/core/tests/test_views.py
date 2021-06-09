@@ -49,7 +49,7 @@ class EventsRedirectTest(KumaTestCase):
         url = "/en-US/events"
         response = self.client.get(url)
         assert 302 == response.status_code
-        assert "https://mozilla.org/contribute/events" == response["Location"]
+        assert "https://community.mozilla.org/events/" == response["Location"]
 
 
 @pytest.mark.parametrize("http_method", ["get", "put", "delete", "options", "head"])

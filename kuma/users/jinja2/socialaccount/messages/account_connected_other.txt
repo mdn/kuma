@@ -1,1 +1,0 @@
-{% trans %}This account is already connected to a different profile.{% endtrans %}

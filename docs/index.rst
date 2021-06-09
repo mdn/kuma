@@ -21,12 +21,8 @@ Contents:
    celery
    elasticsearch
    localization
-   ckeditor
    data
    documentation
 
    docker
    deploy
-
-   rendering
-   assets

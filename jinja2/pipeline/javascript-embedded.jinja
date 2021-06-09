@@ -1,6 +1,0 @@
-{#
-  Same as https://github.com/jazzband/django-pipeline/blob/master/pipeline/jinja2/pipeline/js.jinja
-  but with the `</script>` escaped so this whole string can be put into a 'string'
-  in inline JavaScript.
-  Also, 'type' and 'charset' removed because they're never needed.
-#}<script{% if async %} async{% endif %}{% if defer %} defer{% endif %} src="{{ url }}"><\/script>

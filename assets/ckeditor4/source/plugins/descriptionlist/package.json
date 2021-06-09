@@ -1,7 +1,0 @@
-{
-	"name": "ckeditor-descriptionlist",
-	"devDependencies": {
-		"chai": "*",
-		"mocha": "*"
-	}
-}

@@ -20,11 +20,7 @@ from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.users.models import User, UserBan, UserSubscription
 from kuma.users.tests import create_user
-from kuma.wiki.models import (
-    DocumentDeletionLog,
-    DocumentSpamAttempt,
-    RevisionAkismetSubmission,
-)
+from kuma.wiki.models import DocumentDeletionLog
 
 
 @pytest.mark.parametrize("http_method", ["put", "post", "delete", "options", "head"])
@@ -37,7 +33,7 @@ def test_whoami_disallowed_methods(client, http_method):
 
 
 @pytest.mark.django_db
-def test_whoami_anonymous(client, settings):
+def test_whoami_anonymous(client):
     """Test response for anonymous users."""
     # Create some fake waffle objects
     Flag.objects.create(name="vip_only", authenticated=True)
@@ -50,17 +46,12 @@ def test_whoami_anonymous(client, settings):
     response = client.get(url)
     assert response.status_code == 200
     assert response["content-type"] == "application/json"
-    assert response.json() == {
-        "waffle": {
-            "flags": {"flag_all": True},
-            "switches": {"switch_on": True},
-        },
-    }
+    assert response.json() == {}
     assert_no_cache_header(response)
 
 
 @pytest.mark.django_db
-def test_whoami_anonymous_cloudfront_geo(client, settings):
+def test_whoami_anonymous_cloudfront_geo(client):
     """Test response for anonymous users."""
     url = reverse("api.v1.whoami")
     response = client.get(url, HTTP_CLOUDFRONT_VIEWER_COUNTRY_NAME="US of A")
@@ -110,10 +101,6 @@ def test_whoami(
         "is_authenticated": True,
         "avatar_url": wiki_user_github_account.get_avatar_url(),
         "subscriber_number": None,
-        "waffle": {
-            "flags": {"vip_only": True, "flag_all": True},
-            "switches": {"switch_on": True},
-        },
         "email": "wiki_user@example.com",
     }
     if is_staff:
@@ -520,184 +507,6 @@ def test_stripe_subscription_canceled_sends_ga_tracking(
 
 
 @pytest.mark.django_db
-def test_user_details_logged_in(client):
-    response = client.get(reverse("api.v1.user_details"))
-    assert response.status_code == 403
-    assert_no_cache_header(response)
-
-
-@pytest.mark.django_db
-def test_user_details_happy_path(user_client, wiki_user):
-    # There are dedicated tests to toggling your 'is_newsletter_subscribed'
-    # but don't want to trigger that in this test. So set it to False.
-    wiki_user.is_newsletter_subscribed = False
-    wiki_user.save()
-
-    response = user_client.get(reverse("api.v1.user_details"))
-    assert response.status_code == 200
-    assert_no_cache_header(response)
-    assert response.json()["username"] == wiki_user.username
-    assert response.json()["fullname"] == wiki_user.fullname
-    assert (
-        response.json()["is_newsletter_subscribed"]
-        == wiki_user.is_newsletter_subscribed
-    )
-    assert response.json()["locale"] == wiki_user.locale
-
-    response = user_client.put(
-        reverse("api.v1.user_details"),
-        content_type="application/json",
-        data={
-            "fullname": "Art Vandelay",
-            "username": "art",
-            "is_newsletter_subscribed": False,
-            "locale": "ja",
-        },
-    )
-    assert response.status_code == 200
-    assert response.json()["username"] == "art"
-    assert response.json()["fullname"] == "Art Vandelay"
-    assert response.json()["is_newsletter_subscribed"] is False
-    assert response.json()["locale"] == "ja"
-
-    wiki_user.refresh_from_db()
-    assert wiki_user.username == "art"
-    assert wiki_user.fullname == "Art Vandelay"
-    assert wiki_user.is_newsletter_subscribed is False
-    assert wiki_user.locale == "ja"
-
-
-@pytest.mark.django_db
-def test_user_details_invalid_username(user_client, wiki_user, django_user_model):
-    def put():
-        return user_client.put(
-            reverse("api.v1.user_details"),
-            content_type="application/json",
-            data=data,
-        )
-
-    # Empty username
-    data = {
-        "fullname": wiki_user.fullname,
-        "username": "   ",
-        "is_newsletter_subscribed": False,
-        "locale": "sv-SE",
-    }
-    response = put()
-    assert response.status_code == 400
-    assert response.json()["username"]
-
-    # Username present but when stripped an empty string
-    data["username"] = "  \t  "
-    response = put()
-    assert response.status_code == 400
-    assert response.json()["username"]
-
-    django_user_model.objects.create(
-        username="washerefirst",
-        email="washerefirst@example.com",
-    )
-    # Username taken by someone else
-    data["username"] = "washerefirst"
-    response = put()
-    assert response.status_code == 400
-    assert response.json()["username"]
-
-
-@pytest.mark.django_db
-def test_user_details_invalid_locale(user_client, wiki_user):
-    data = {
-        "fullname": wiki_user.fullname,
-        "username": wiki_user.username,
-        "is_newsletter_subscribed": False,
-        # Note! It's not a valid locale
-        "locale": "xxx",
-    }
-    response = user_client.put(
-        reverse("api.v1.user_details"),
-        content_type="application/json",
-        data=data,
-    )
-    assert response.status_code == 400
-    assert response.json()["locale"]
-
-
-@mock.patch("kuma.users.newsletter.tasks.create_or_update_contact.delay")
-@pytest.mark.django_db
-def test_user_details_toggle_is_newsletter_subscribed_on(
-    mock_create_or_update_newsletter_contact_delay, user_client, wiki_user
-):
-    wiki_user.is_newsletter_subscribed = False
-    wiki_user.save()
-    data = {
-        "fullname": wiki_user.fullname,
-        "username": wiki_user.username,
-        "is_newsletter_subscribed": True,  # Note!
-        "locale": wiki_user.locale,
-    }
-    response = user_client.put(
-        reverse("api.v1.user_details"),
-        content_type="application/json",
-        data=data,
-    )
-    assert response.status_code == 200
-    wiki_user.refresh_from_db()
-    assert wiki_user.is_newsletter_subscribed
-    mock_create_or_update_newsletter_contact_delay.assert_called_once_with(wiki_user.pk)
-
-
-@mock.patch("kuma.users.newsletter.tasks.delete_contact.delay")
-@pytest.mark.django_db
-def test_user_details_toggle_is_newsletter_subscribed_off(
-    mock_create_or_update_newsletter_contact_delay, user_client, wiki_user
-):
-    wiki_user.is_newsletter_subscribed = True
-    wiki_user.save()
-    data = {
-        "fullname": wiki_user.fullname,
-        "username": wiki_user.username,
-        "is_newsletter_subscribed": False,  # Note!
-        "locale": wiki_user.locale,
-    }
-    response = user_client.put(
-        reverse("api.v1.user_details"),
-        content_type="application/json",
-        data=data,
-    )
-    assert response.status_code == 200
-    wiki_user.refresh_from_db()
-    assert not wiki_user.is_newsletter_subscribed
-    mock_create_or_update_newsletter_contact_delay.assert_called_once_with(
-        wiki_user.email
-    )
-
-
-@mock.patch("kuma.users.newsletter.utils.check_is_in_sendinblue_list")
-@pytest.mark.django_db
-def test_sendinblue_unsubscribe(mock_check_sendinblue, client):
-    mock_check_sendinblue.return_value = False
-
-    email = "testuser@example.com"
-
-    user = create_user(
-        save=True,
-        username="testuser",
-        email=email,
-        is_newsletter_subscribed=True,
-    )
-
-    response = client.post(
-        reverse("api.v1.sendinblue_hooks"),
-        content_type="application/json",
-        data={"event": "unsubscribe", "email": email},
-    )
-    assert response.status_code == 200
-
-    user.refresh_from_db()
-    assert not user.is_newsletter_subscribed
-
-
-@pytest.mark.django_db
 def test_account_settings_auth(client):
     url = reverse("api.v1.settings")
     response = client.get(url)
@@ -722,20 +531,10 @@ def test_account_settings_delete_legacy(user_client, wiki_user, root_doc):
     revision = root_doc.revisions.first()
     assert revision.creator == wiki_user
 
-    revision_akismet_submission = RevisionAkismetSubmission.objects.create(
-        sender=wiki_user, type="spam"
-    )
     document_deletion_log = DocumentDeletionLog.objects.create(
         locale="any", slug="Any/Thing", user=wiki_user, reason="..."
     )
-    document_spam_attempt_user = DocumentSpamAttempt.objects.create(
-        user=wiki_user,
-    )
     throwaway_user = User.objects.create(username="throwaway")
-    document_spam_attempt_reviewer = DocumentSpamAttempt.objects.create(
-        user=throwaway_user,
-        reviewer=wiki_user,
-    )
     user_ban_by = UserBan.objects.create(user=throwaway_user, by=wiki_user)
     user_ban_user = UserBan.objects.create(
         user=wiki_user,
@@ -758,14 +557,8 @@ def test_account_settings_delete_legacy(user_client, wiki_user, root_doc):
     assert not User.objects.filter(username=username).exists()
 
     # Moved to anonymous user
-    revision_akismet_submission.refresh_from_db()
-    assert revision_akismet_submission.sender.username == "Anonymous"
     document_deletion_log.refresh_from_db()
     assert document_deletion_log.user.username == "Anonymous"
-    document_spam_attempt_user.refresh_from_db()
-    assert document_spam_attempt_user.user.username == "Anonymous"
-    document_spam_attempt_reviewer.refresh_from_db()
-    assert document_spam_attempt_reviewer.reviewer.username == "Anonymous"
     user_ban_by.refresh_from_db()
     assert user_ban_by.by.username == "Anonymous"
     user_ban_user.refresh_from_db()
@@ -803,7 +596,7 @@ def test_account_settings_delete_with_subscription(
     assert not UserSubscription.objects.filter(stripe_subscription_id="sub_1234")
 
 
-def test_get_and_set_settings_happy_path(user_client, wiki_user):
+def test_get_and_set_settings_happy_path(user_client):
     url = reverse("api.v1.settings")
     response = user_client.get(url)
     assert response.status_code == 200
@@ -825,7 +618,7 @@ def test_get_and_set_settings_happy_path(user_client, wiki_user):
     assert response.json()["locale"] == "zh-CN"
 
 
-def test_set_settings_validation_errors(user_client, wiki_user):
+def test_set_settings_validation_errors(user_client):
     url = reverse("api.v1.settings")
     response = user_client.post(url, {"locale": "never heard of"})
     assert response.status_code == 400

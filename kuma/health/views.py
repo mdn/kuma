@@ -1,22 +1,14 @@
-import json
-import logging
-
 from django.conf import settings
 from django.db import DatabaseError
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST, require_safe
+from django.views.decorators.http import require_safe
 from elasticsearch.exceptions import ConnectionError as ES_ConnectionError
 from elasticsearch.exceptions import NotFoundError, TransportError
 from elasticsearch_dsl import Search
 from elasticsearch_dsl.connections import connections as es_connections
-from raven.contrib.django.models import client
-from requests.exceptions import ConnectionError as Requests_ConnectionError
-from requests.exceptions import ReadTimeout
 
 from kuma.users.models import User
-from kuma.wiki.kumascript import request_revision_hash
 from kuma.wiki.models import Document
 
 
@@ -74,7 +66,6 @@ def status(request):
         },
         "services": {
             "database": {},
-            "kumascript": {},
             "search": {},
             "test_accounts": {},
         },
@@ -90,7 +81,6 @@ def status(request):
             "REVISION_HASH": settings.REVISION_HASH,
             "SITE_URL": settings.SITE_URL,
             "STATIC_URL": settings.STATIC_URL,
-            "WIKI_SITE_URL": settings.WIKI_SITE_URL,
         },
     }
 
@@ -105,21 +95,6 @@ def status(request):
             doc_data["populated"] = True
             doc_data["document_count"] = doc_count
     data["services"]["database"] = doc_data
-
-    # Check that KumaScript is reachable
-    ks_data = {
-        "available": True,
-        "revision": None,
-    }
-    try:
-        ks_response = request_revision_hash()
-    except (Requests_ConnectionError, ReadTimeout):
-        ks_response = None
-    if not ks_response or ks_response.status_code != 200:
-        ks_data["available"] = False
-    else:
-        ks_data["revision"] = ks_response.text
-    data["services"]["kumascript"] = ks_data
 
     # Check that Elasticsearch is reachable and somewhat healthy
     search_data = {"available": None, "populated": None, "health": None, "count": None}
@@ -167,35 +142,3 @@ def status(request):
     data["services"]["test_accounts"] = test_account_data
 
     return JsonResponse(data)
-
-
-@csrf_exempt
-@require_POST
-def csp_violation_capture(request):
-    """
-    Capture CSP violation reports, forward to Sentry.
-
-    HT @glogiotatidis https://github.com/mozmeao/lumbergh/pull/180
-    HT @pmac, @jgmize https://github.com/mozilla/bedrock/pull/4335
-    """
-    if not settings.CSP_REPORT_ENABLE:
-        # mitigation option for a flood of violation reports
-        return HttpResponse()
-
-    data = client.get_data_from_request(request)
-    data.update({"level": logging.INFO, "logger": "CSP"})
-    try:
-        csp_data = json.loads(request.body)
-    except ValueError:
-        # Cannot decode CSP violation data, ignore
-        return HttpResponseBadRequest("Invalid CSP Report")
-
-    try:
-        blocked_uri = csp_data["csp-report"]["blocked-uri"]
-    except KeyError:
-        # Incomplete CSP report
-        return HttpResponseBadRequest("Incomplete CSP Report")
-
-    client.captureMessage(message="CSP Violation: {}".format(blocked_uri), data=data)
-
-    return HttpResponse("Captured CSP violation, thanks for reporting.")

@@ -1,7 +1,6 @@
 from django.test import RequestFactory
 
 from kuma.core.context_processors import next_url
-from kuma.core.urlresolvers import reverse
 
 
 def test_next_url_basic():
@@ -29,6 +28,5 @@ def test_next_url_with_next_querystring_but_remote():
 
 
 def test_next_url_already_on_login_url(settings):
-    path = reverse(settings.LOGIN_URL)
-    request = RequestFactory().get(path)
+    request = RequestFactory().get(f"/en-US{settings.LOGIN_URL}")
     assert next_url(request)["next_url"]() is None

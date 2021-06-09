@@ -5,14 +5,12 @@ from allauth.account.models import EmailAddress
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.helpers import complete_social_login
 from allauth.socialaccount.models import SocialAccount, SocialLogin
-from django.contrib import messages as django_messages
 from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory
 
 from kuma.core.ga_tracking import ACTION_SOCIAL_AUTH_ADD, CATEGORY_SIGNUP_FLOW
-from kuma.core.urlresolvers import reverse
-from kuma.users.adapters import KumaAccountAdapter, KumaSocialAccountAdapter
-from kuma.users.models import User, UserBan
+from kuma.users.adapters import KumaSocialAccountAdapter
+from kuma.users.models import User
 
 from . import UserTestCase
 
@@ -63,7 +61,6 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         session["socialaccount_sociallogin"] = github_login.serialize()
         session.save()
         request.session = session
-        messages = self.get_messages(request)
 
         # Set up an un-matching alternate SocialLogin for request
         other_account = SocialAccount(
@@ -74,9 +71,6 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         self.assertRaises(
             ImmediateHttpResponse, self.adapter.pre_social_login, request, other_login
         )
-        queued_messages = list(messages)
-        assert len(queued_messages) == 1
-        assert queued_messages[0].level == django_messages.ERROR
 
     def test_pre_social_login_matched_github_login(self):
         """
@@ -173,91 +167,6 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
 
         self.adapter.pre_social_login(request, github2_login)
         assert "github" == request.session["sociallogin_provider"]
-
-    def test_pre_social_login_banned_user(self):
-        """A banned user is not allowed to login."""
-        # Set up a GitHub SocialLogin in the session
-        github_account = SocialAccount.objects.get(user__username="testuser2")
-        github_login = SocialLogin(account=github_account, user=github_account.user)
-
-        request = self.rf.get("/")
-        session = self.client.session
-        session["sociallogin_provider"] = "github"
-        session["socialaccount_sociallogin"] = github_login.serialize()
-        session.save()
-        request.session = session
-        request.user = AnonymousUser()
-        request.LANGUAGE_CODE = "en-US"
-
-        # Ban the user
-        banned_by = User.objects.get(username="testuser")
-        UserBan.objects.create(
-            user=github_account.user, by=banned_by, reason="Banned by unit test."
-        )
-
-        with pytest.raises(ImmediateHttpResponse) as e_info:
-            self.adapter.pre_social_login(request, github_login)
-        resp = e_info.value.response
-        assert b"Banned by unit test." in resp.content
-        assert not resp.has_header("Vary")
-
-        never_cache = ["no-cache", "no-store", "must-revalidate", "max-age=0"]
-        assert set(resp["Cache-Control"].split(", ")) == set(never_cache)
-
-
-class KumaAccountAdapterTestCase(UserTestCase):
-    rf = RequestFactory()
-    message_template = "socialaccount/messages/account_connected.txt"
-
-    def setUp(self):
-        """ extra setUp to make a working session """
-        super(KumaAccountAdapterTestCase, self).setUp()
-        self.adapter = KumaAccountAdapter()
-        self.user = self.user_model.objects.get(username="testuser")
-
-    def test_account_connected_message(
-        self, next_url="/", has_message=False, extra_tags=""
-    ):
-        """
-        Test that the account connection message depends on the next URL.
-
-        https://bugzil.la/1054461
-        """
-        request = self.rf.get("/")
-        request.user = self.user
-        session = self.client.session
-        session["sociallogin_next_url"] = next_url
-        session.save()
-        request.session = session
-        request.LANGUAGE_CODE = "en-US"
-        messages = self.get_messages(request)
-        self.adapter.add_message(
-            request, django_messages.INFO, self.message_template, extra_tags=extra_tags
-        )
-
-        queued_messages = list(messages)
-        if has_message:
-            assert len(queued_messages) == 1
-            message_data = queued_messages[0]
-            assert message_data.level == django_messages.SUCCESS
-            assert "connected" in message_data.message
-        else:
-            assert not queued_messages
-        return queued_messages
-
-    def test_account_connected_message_user_edit(self):
-        """Connection message appears if the profile edit is the next page."""
-        next_url = reverse("users.user_edit", kwargs={"username": self.user.username})
-        messages = self.test_account_connected_message(next_url, True)
-        assert messages[0].tags == "account success"
-
-    def test_extra_tags(self):
-        """Extra tags can be added to the message."""
-        next_url = reverse("users.user_edit", kwargs={"username": self.user.username})
-        messages = self.test_account_connected_message(
-            next_url, True, extra_tags="congrats"
-        )
-        assert messages[0].tags == "congrats account success"
 
 
 @pytest.mark.parametrize("provider", ("github", "google"))
@@ -377,9 +286,7 @@ def test_user_reuse_on_social_login(wiki_user, client, rf, case, provider):
     # If we found a matching user, we should have been logged-in without
     # any further steps, and redirected to the home page. Otherwise we should
     # have been redirected to the account-signup page to continue the process.
-    assert response.url == (
-        "/en-US/" if case == "match" else "/en-US/users/account/signup"
-    )
+    assert response.url == ("/" if case == "match" else "/en-US/users/account/signup")
     # The wiki_user's password should have been made unusable but only if we
     # found a match.
     wiki_user.refresh_from_db()
@@ -483,7 +390,7 @@ def test_ga_tracking_reuse_social_login(
 
     response = complete_social_login(request, social_login)
     assert response.status_code == 302
-    assert response.url == "/en-US/"
+    assert response.url == "/"
 
     mock_track_event.assert_called_with(
         CATEGORY_SIGNUP_FLOW, ACTION_SOCIAL_AUTH_ADD, "github-added"

@@ -1,8 +1,0 @@
-<script>
-  window.fetch || document.write('{% javascript "fetch-polyfill" %}');
-</script>
-<script>
-  // Only include the fat polyfill for browsers that seem to not have
-  // certain JS features. E.g. Firefox 38.
-  Array.prototype.includes || document.write('{% javascript "js-polyfill" %}');
-</script>

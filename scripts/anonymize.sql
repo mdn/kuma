@@ -60,13 +60,11 @@ SET FOREIGN_KEY_CHECKS=0;
 -- wiki_reviewtag
 -- wiki_reviewtaggedrevision
 -- wiki_revision
--- wiki_revisionakismetsubmission
 -- wiki_taggeddocument
 
 TRUNCATE account_emailconfirmation;
 TRUNCATE celery_taskmeta;
 TRUNCATE celery_tasksetmeta;
-TRUNCATE constance_config;
 TRUNCATE core_ipban;
 TRUNCATE django_admin_log;
 TRUNCATE django_session;
@@ -150,8 +148,6 @@ UPDATE wiki_revisionip SET
     referrer = CONCAT("https://example.com/", MD5(CONCAT(referrer, @common_hash_secret)))
     WHERE referrer != "";
 UPDATE wiki_revisionip SET data = null;
-
-UPDATE wiki_documentspamattempt SET data = null;
 
 UPDATE users_userban SET
     reason = MD5(reason)

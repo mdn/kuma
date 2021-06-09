@@ -12,21 +12,28 @@ from requests.auth import HTTPBasicAuth
 
 # API keys and IDs are set with environment variables rather than on the
 # command line, to avoid displaying the key in logs
-NR_API_KEY_NAME = 'NEW_RELIC_API_KEY'
-NR_APP_IDS_NAME = 'NEW_RELIC_APP_IDS'
-SC_API_KEY_NAME = 'SPEEDCURVE_API_KEY'
-SC_SIDE_ID_NAME = 'SPEEDCURVE_SITE_ID'
+NR_API_KEY_NAME = "NEW_RELIC_API_KEY"
+NR_APP_IDS_NAME = "NEW_RELIC_APP_IDS"
+SC_API_KEY_NAME = "SPEEDCURVE_API_KEY"
+SC_SIDE_ID_NAME = "SPEEDCURVE_SITE_ID"
 
 # URL patterns to compare two commits
 app_compare = {
-    'kuma': 'https://github.com/mdn/kuma/compare/%s...%s',
-    'kumascript': 'https://github.com/mdn/kumascript/compare/%s...%s'
+    "kuma": "https://github.com/mdn/kuma/compare/%s...%s",
+    "kumascript": "https://github.com/mdn/kumascript/compare/%s...%s",
 }
 
 
-def deploy_all(app, nr_api_key=None, nr_app_ids=None, sc_api_key=None,
-               sc_site_id=None, from_tag=None, to_tag=None,
-               verbose=False):
+def deploy_all(
+    app,
+    nr_api_key=None,
+    nr_app_ids=None,
+    sc_api_key=None,
+    sc_site_id=None,
+    from_tag=None,
+    to_tag=None,
+    verbose=False,
+):
     """
     Send deployments to New Relic and SpeedCurve as specified.
 
@@ -64,37 +71,40 @@ def deploy_all(app, nr_api_key=None, nr_app_ids=None, sc_api_key=None,
     for app_num, app_id in enumerate(nr_app_ids):
         response = deploy_newrelic(app_id, nr_api_key, revision, description)
         if response.status_code == 201:
-            success = 'SUCCESS'
+            success = "SUCCESS"
             count += 1
         else:
-            success = 'FAILURE'
+            success = "FAILURE"
             passed = False
         if verbose:
-            safer_id = '%s_APP_ID_%d' % (app.upper(), app_num)
+            safer_id = "%s_APP_ID_%d" % (app.upper(), app_num)
             content = response.text.replace(app_id, safer_id)
-            print("%s (%s): Deployment to New Relic application %s %d: %s"
-                  % (success, response.status_code, app, app_num, content))
+            print(
+                "%s (%s): Deployment to New Relic application %s %d: %s"
+                % (success, response.status_code, app, app_num, content)
+            )
 
     # Send SpeedCurve deployments
-    if sc_api_key and sc_site_id and app == 'kuma':
-        response = deploy_speedcurve(sc_site_id, sc_api_key, revision,
-                                     description)
-        in_progress = 'Deploy already in progress'
+    if sc_api_key and sc_site_id and app == "kuma":
+        response = deploy_speedcurve(sc_site_id, sc_api_key, revision, description)
+        in_progress = "Deploy already in progress"
         if response.status_code == 200:
-            success = 'SUCCESS'
+            success = "SUCCESS"
             count += 1
         elif response.status_code == 403 and in_progress in response.text:
             # Ignore this error
-            success = 'IN PROGRESS'
+            success = "IN PROGRESS"
             count += 1
         else:
-            success = 'FAILURE'
+            success = "FAILURE"
             passed = False
         if verbose:
-            safer_id = 'SITE_ID_0'
+            safer_id = "SITE_ID_0"
             content = response.text.replace(sc_site_id, safer_id)
-            print("%s (%s): Deployment to SpeedCurve site ID %s: %s"
-                  % (success, response.status_code, sc_site_id, content))
+            print(
+                "%s (%s): Deployment to SpeedCurve site ID %s: %s"
+                % (success, response.status_code, sc_site_id, content)
+            )
 
     return bool(count and passed)
 
@@ -113,19 +123,13 @@ def deploy_newrelic(app_id, api_key, revision, description=None):
     """
     assert app_id, "New Relic Application ID is empty."
     assert api_key, "New Relic API Key is empty."
-    url = ('https://api.newrelic.com/v2/applications/%s/deployments.json'
-           % app_id)
-    deployment = {
-        'revision': revision
-    }
+    url = "https://api.newrelic.com/v2/applications/%s/deployments.json" % app_id
+    deployment = {"revision": revision}
     if description:
-        deployment['description'] = description
+        deployment["description"] = description
 
-    headers = {
-        'X-Api-Key': api_key,
-        'Content-Type': 'application/json'
-    }
-    payload = {'deployment': deployment}
+    headers = {"X-Api-Key": api_key, "Content-Type": "application/json"}
+    payload = {"deployment": deployment}
     response = requests.post(url, json=payload, headers=headers)
     return response
 
@@ -144,15 +148,12 @@ def deploy_speedcurve(site_id, api_key, note, detail=None):
     """
     assert site_id, "SpeedCurve Site ID is empty."
     assert api_key, "SpeedCurve API Key is empty."
-    url = 'https://api.speedcurve.com/v1/deploys'
-    payload = {
-        'site_id': site_id,
-        'note': note
-    }
+    url = "https://api.speedcurve.com/v1/deploys"
+    payload = {"site_id": site_id, "note": note}
     if detail:
-        payload['detail'] = detail
+        payload["detail"] = detail
 
-    auth = HTTPBasicAuth(api_key, 'x')
+    auth = HTTPBasicAuth(api_key, "x")
     response = requests.post(url, data=payload, auth=auth)
     return response
 
@@ -168,21 +169,24 @@ def get_parser():
         "%s: SpeedCurve Site ID (5-digit number)\n"
     ) % (NR_API_KEY_NAME, NR_APP_IDS_NAME, SC_API_KEY_NAME, SC_SIDE_ID_NAME)
     parser = ArgumentParser(
-        description='Record a deployment in New Relic',
+        description="Record a deployment in New Relic",
         formatter_class=RawDescriptionHelpFormatter,
-        epilog=epilog)
-    parser.add_argument('-a', '--app',
-                        help="Which application is being deployed",
-                        choices=['kuma', 'kumascript'],
-                        default='kuma')
-    parser.add_argument('-f', '--from',
-                        dest='from_tag',
-                        help="Existing commit at start of deployment")
-    parser.add_argument('-t', '--to',
-                        help="Commit at the end of deployment")
-    parser.add_argument('-v', '--verbose',
-                        action='store_true',
-                        help="Print responses (obfuscating IDs)")
+        epilog=epilog,
+    )
+    parser.add_argument(
+        "-a",
+        "--app",
+        help="Which application is being deployed",
+        choices=["kuma", "kumascript"],
+        default="kuma",
+    )
+    parser.add_argument(
+        "-f", "--from", dest="from_tag", help="Existing commit at start of deployment"
+    )
+    parser.add_argument("-t", "--to", help="Commit at the end of deployment")
+    parser.add_argument(
+        "-v", "--verbose", action="store_true", help="Print responses (obfuscating IDs)"
+    )
     return parser
 
 
@@ -193,33 +197,41 @@ if __name__ == "__main__":
     to_tag = args.to
     app = args.app
     nr_api_key = os.environ.get(NR_API_KEY_NAME)
-    raw_nr_app_ids = os.environ.get(NR_APP_IDS_NAME, '')
+    raw_nr_app_ids = os.environ.get(NR_APP_IDS_NAME, "")
     sc_api_key = os.environ.get(SC_API_KEY_NAME)
     sc_site_id = os.environ.get(SC_SIDE_ID_NAME)
 
     # Split by commas or whitespace
-    nr_app_ids = raw_nr_app_ids.replace(',', ' ').split()
+    nr_app_ids = raw_nr_app_ids.replace(",", " ").split()
 
     show_help = False
     if nr_app_ids and not nr_api_key:
         show_help = True
-        print("*** The environment variable %s is not set. ***"
-              % NR_API_KEY_NAME)
+        print("*** The environment variable %s is not set. ***" % NR_API_KEY_NAME)
     if sc_site_id and not sc_api_key:
         show_help = True
-        print("*** The environment variable %s is not set. ***"
-              % SC_API_KEY_NAME)
+        print("*** The environment variable %s is not set. ***" % SC_API_KEY_NAME)
 
     if not (nr_app_ids or sc_site_id):
         show_help = True
-        print("*** Neither New Relic application IDs %s or a SpeedCuve"
-              "site ID %s is set. ***" % (NR_APP_IDS_NAME, SC_SIDE_ID_NAME))
+        print(
+            "*** Neither New Relic application IDs %s or a SpeedCuve"
+            "site ID %s is set. ***" % (NR_APP_IDS_NAME, SC_SIDE_ID_NAME)
+        )
     if show_help:
         print("")
         parser.print_help()
         sys.exit(1)
 
-    success = deploy_all(app, nr_api_key, nr_app_ids, sc_api_key, sc_site_id,
-                         from_tag, to_tag, verbose=True)
+    success = deploy_all(
+        app,
+        nr_api_key,
+        nr_app_ids,
+        sc_api_key,
+        sc_site_id,
+        from_tag,
+        to_tag,
+        verbose=True,
+    )
     if not success:
         sys.exit(1)

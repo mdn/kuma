@@ -3,8 +3,6 @@ from urllib.parse import urlparse
 from django.conf import settings
 from django.utils import translation
 
-from kuma.core.urlresolvers import reverse
-
 from .i18n import get_language_mapping
 
 
@@ -76,7 +74,7 @@ def next_url(request):
                     return request.GET["next"]
                 if "://" not in request.GET["next"]:
                     return request.GET["next"]
-            elif reverse(settings.LOGIN_URL) != request.get_full_path():
+            elif not request.get_full_path().endswith(settings.LOGIN_URL):
                 # The only exception is the sign-in landing page which you get to
                 # if you can't use the auth modal.
                 return request.get_full_path()

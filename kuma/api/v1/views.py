@@ -20,16 +20,11 @@ from django.views.decorators.http import require_GET, require_POST
 from raven.contrib.django.models import client as raven_client
 from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from waffle import flag_is_active
 from waffle.decorators import waffle_flag
-from waffle.models import Flag, Switch
 
 from kuma.api.v1.forms import AccountSettingsForm
-from kuma.api.v1.serializers import UserDetailsSerializer
 from kuma.core.email_utils import render_email
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_CANCELED,
@@ -40,12 +35,6 @@ from kuma.core.ga_tracking import (
 )
 from kuma.core.utils import requests_retry_session, send_mail_retrying
 from kuma.users.models import User, UserSubscription
-from kuma.users.newsletter.utils import refresh_is_user_newsletter_subscribed
-from kuma.users.signals import (
-    newsletter_subscribed,
-    newsletter_unsubscribed,
-    username_changed,
-)
 from kuma.users.stripe_utils import (
     cancel_stripe_customer_subscriptions,
     create_stripe_customer_and_subscription_for_user,
@@ -90,34 +79,6 @@ def whoami(request):
     if geo:
         data["geo"] = geo
 
-    data["waffle"] = {
-        "flags": {},
-        "switches": {s.name: True for s in Switch.get_all() if s.is_active()},
-    }
-    # Specifically and more smartly loop over the waffle Flag objects
-    # to avoid unnecessary `cache.get(...)` calls within the `flag.is_active(request)`.
-    for flag in Flag.get_all():
-        if not request.user.is_authenticated:
-            # Majority of users are anonymous, so let's focus on that.
-            # Let's see if there's a quick reason to bail the
-            # expensive `flag.is_active(request)` call.
-            if (
-                flag.authenticated or flag.staff or flag.superusers
-            ) and not flag.everyone:
-                continue
-            if not (flag.languages or flag.percent or flag.everyone):
-                continue
-            if flag.languages:
-                languages = [ln.strip() for ln in flag.languages.split(",")]
-                if (
-                    not hasattr(request, "LANGUAGE_CODE")
-                    or request.LANGUAGE_CODE not in languages
-                ):
-                    continue
-
-        if flag.is_active(request):
-            data["waffle"]["flags"][flag.name] = True
-
     return JsonResponse(data)
 
 
@@ -129,10 +90,7 @@ def account_settings(request):
     if request.method == "DELETE":
         # This should cease to be necessary once we get rid of the Wiki models.
         anon, _ = User.objects.get_or_create(username="Anonymous")
-        user.revisionakismetsubmission_set.update(sender=anon)
         user.documentdeletionlog_set.update(user=anon)
-        user.documentspamattempt_set.update(user=anon)
-        user.documentspam_reviewed.update(reviewer=anon)
         user.created_revisions.update(creator=anon)
         user.created_attachment_revisions.update(creator=anon)
         user.bans.update(user=anon)
@@ -297,63 +255,3 @@ def _download_from_url(url):
     pdf_download = requests_retry_session().get(url)
     pdf_download.raise_for_status()
     return pdf_download.content
-
-
-class APIUserDetailsView(APIView):
-    http_method_names = ["get", "put"]
-    serializer_class = UserDetailsSerializer
-    renderer_classes = [JSONRenderer]
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, format=None):
-        assert request.user.is_authenticated
-        serializer = UserDetailsSerializer(request.user, many=False)
-        return Response(serializer.data)
-
-    def put(self, request, format=None):
-        user = request.user
-        serializer = UserDetailsSerializer(instance=user, data=request.data)
-        if serializer.is_valid():
-            was_subscribed = user.is_newsletter_subscribed
-            old_username = user.username
-            serializer.save(user=user)
-
-            if not was_subscribed and user.is_newsletter_subscribed:
-                newsletter_subscribed.send(None, user=user)
-            if was_subscribed and not user.is_newsletter_subscribed:
-                newsletter_unsubscribed.send(None, user=user)
-
-            if old_username != user.username:
-                username_changed.send(None, user=user)
-
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-user_details = never_cache(APIUserDetailsView.as_view())
-
-
-@csrf_exempt
-@require_POST
-@never_cache
-def sendinblue_hooks(request):
-    # Sendinblue does not sign its webhook requests, hence the event handlers following
-    # are different from the Stripe ones, in that they treat the event as a notification
-    # of a _potential_ change, while still needing to contact sendinblue to verify that
-    # it actually happened.
-    try:
-        payload = json.loads(request.body)
-        event = payload["event"]
-        email = payload["email"]
-    except (json.decoder.JSONDecodeError, KeyError) as exception:
-        return HttpResponseBadRequest(
-            f"{exception.__class__.__name__} on {request.body}"
-        )
-
-    if event == "unsubscribe":
-        refresh_is_user_newsletter_subscribed(email)
-        return HttpResponse()
-    else:
-        return HttpResponseBadRequest(
-            f"We did not expect a Sendinblue webhook of type {event['event']!r}"
-        )

@@ -27,15 +27,6 @@
     ["user", "jwhitlock", {"social": true, "email": "jwhitlock@mozilla.com"}]
   ],
   "fixtures": {
-    "database.constance": [
-      {
-        "key": "KUMASCRIPT_TIMEOUT",
-        "value": 30
-      }, {
-        "key": "KUMASCRIPT_MAX_AGE",
-        "value": 30
-      }
-    ],
     "auth.group": [
       {
         "name": "Attachment Moderators",
@@ -75,10 +66,7 @@
       }, {
         "name": "Spam Admins",
         "permissions": [
-          ["add_revisionakismetsubmission"],
           ["add_userban"],
-          ["change_documentspamattempt"],
-          ["change_revisionakismetsubmission"],
           ["change_revisionip"],
           ["change_userban"]
         ]
@@ -90,16 +78,6 @@
           ["change_attachment"],
           ["change_documentattachment"],
           ["move_tree"]
-        ]
-      }, {
-        "name": "Trusted writers",
-        "permissions": [
-          ["add_documentspamattempt"],
-          ["add_revisionakismetsubmission"],
-          ["change_documentspamattempt"],
-          ["change_revisionakismetsubmission"],
-          ["delete_documentspamattempt"],
-          ["delete_revisionakismetsubmission"]
         ]
       }, {
         "name": "Uploaders",
@@ -138,17 +116,9 @@
         "name": "Can add document deletion log",
         "content_type": ["wiki", "documentdeletionlog"]
       }, {
-        "codename": "add_documentspamattempt",
-        "name": "Can add document spam attempt",
-        "content_type": ["wiki", "documentspamattempt"]
-      }, {
         "codename": "add_logentry",
         "name": "Can add log entry",
         "content_type": ["admin", "logentry"]
-      }, {
-        "codename": "add_revisionakismetsubmission",
-        "name": "Can add Akismet submission",
-        "content_type": ["wiki", "revisionakismetsubmission"]
       }, {
         "codename": "add_trashedattachment",
         "name": "Can add Trashed attachment",
@@ -174,14 +144,6 @@
         "name": "Can change document deletion log",
         "content_type": ["wiki", "documentdeletionlog"]
       }, {
-        "codename": "change_documentspamattempt",
-        "name": "Can change document spam attempt",
-        "content_type": ["wiki", "documentspamattempt"]
-      }, {
-        "codename": "change_revisionakismetsubmission",
-        "name": "Can change Akismet submission",
-        "content_type": ["wiki", "revisionakismetsubmission"]
-      }, {
         "codename": "change_revisionip",
         "name": "Can change revision ip",
         "content_type": ["wiki", "revisionip"]
@@ -205,14 +167,6 @@
         "codename": "delete_documentattachment",
         "name": "Can delete document attachment",
         "content_type": ["wiki", "documentattachment"]
-      }, {
-        "codename": "delete_documentspamattempt",
-        "name": "Can delete document spam attempt",
-        "content_type": ["wiki", "documentspamattempt"]
-      }, {
-        "codename": "delete_revisionakismetsubmission",
-        "name": "Can delete Akismet submission",
-        "content_type": ["wiki", "revisionakismetsubmission"]
       }, {
         "codename": "delete_trashedattachment",
         "name": "Can delete Trashed attachment",
@@ -252,12 +206,6 @@
       }, {
         "app_label": "wiki",
         "model": "documentdeletionlog"
-      }, {
-        "app_label": "wiki",
-        "model": "documentspamattempt"
-      }, {
-        "app_label": "wiki",
-        "model": "revisionakismetsubmission"
       }, {
         "app_label": "wiki",
         "model": "revisionip"

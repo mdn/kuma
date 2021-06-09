@@ -33,5 +33,5 @@ class Command(BaseCommand):
         template_path = jinja_path + "/includes/translate_locales.html"
 
         outfile = open(template_path, "w")
-        outfile.write(template_string.encode("utf8"))
+        outfile.write(template_string)
         outfile.close()

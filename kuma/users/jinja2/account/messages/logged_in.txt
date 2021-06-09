@@ -1,1 +1,0 @@
-{% trans name=user_display(user) %}Successfully signed in as {{ name }}.{% endtrans %}
