@@ -24,9 +24,19 @@ urlpatterns = [
         name="api.v1.plus.landing_page.survey",
     ),
     path(
+        "plus/notes/",
+        notes.all,
+        name="api.v1.plus.notes.all",
+    ),
+    path(
         "plus/notes/document/",
         notes.document,
         name="api.v1.plus.notes.document",
+    ),
+    path(
+        "plus/notes/note/<int:id>/",
+        notes.note,
+        name="api.v1.plus.notes.note",
     ),
     path("subscriptions/", views.subscriptions, name="api.v1.subscriptions"),
     path("stripe_hooks/", views.stripe_hooks, name="api.v1.stripe_hooks"),
