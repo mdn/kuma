@@ -117,7 +117,7 @@ shell_plus: up
 	docker-compose exec web ./manage.py shell_plus
 
 pythonlint:
-	flake8 kuma docs tests
+	flake8 kuma docs
 
 lint: pythonlint
 
