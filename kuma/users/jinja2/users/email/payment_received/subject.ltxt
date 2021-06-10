@@ -1,3 +1,0 @@
-{% trans payment_date=payment_date|date('DATE_FORMAT') %}
-Your MDN Monthly Subscription Receipt from {{ payment_date }}
-{% endtrans %}

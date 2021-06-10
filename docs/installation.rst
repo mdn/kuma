@@ -299,12 +299,8 @@ Django shell::
 Enable Stripe payments (optional)
 =================================
 #. Go to https://dashboard.stripe.com and create a Stripe account (if you don't have one already).
-#. Go to https://dashboard.stripe.com/apikeys and copy both the publishable and secret key
-   into your ``.env`` file. The respective config keys are ``STRIPE_PUBLIC_KEY`` and
-   ``STRIPE_SECRET_KEY``.
-#. Go to https://dashboard.stripe.com/test/subscriptions/products and create a new product and plan.
-#. Once created copy the plan ID and also put it into ``.env`` as ``STRIPE_PLAN_ID``. Unless you
-   set a custom ID it should start with ``plan_``.
+#. Go to https://dashboard.stripe.com/apikeys and copy the secret key into your ``.env`` file.
+   The config key should be called ``STRIPE_SECRET_KEY``.
 
 If you're using Stripe in testing mode you can also get test numbers from this site:
 https://stripe.com/docs/testing#cards

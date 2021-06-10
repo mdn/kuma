@@ -6,8 +6,6 @@ from kuma.users.models import User
 from kuma.users.signals import (
     newsletter_subscribed,
     newsletter_unsubscribed,
-    subscription_cancelled,
-    subscription_created,
     username_changed,
 )
 
@@ -50,12 +48,3 @@ def on_email_changed(user, from_email_address, to_email_address, **kwargs):
         delete_contact.delay(from_email_address.email)
         create_or_update_contact.delay(user.pk)
 
-
-@receiver(subscription_created, dispatch_uid="sendinblue.subscription_created")
-def on_subscription_created(user, **kwargs):
-    create_or_update_contact.delay(user.pk)
-
-
-@receiver(subscription_cancelled, dispatch_uid="sendinblue.subscription_cancelled")
-def on_subscription_cancelled(user, **kwargs):
-    create_or_update_contact.delay(user.pk)

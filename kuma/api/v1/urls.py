@@ -22,6 +22,11 @@ urlpatterns = [
         plus.landing_page_survey,
         name="api.v1.plus.landing_page_survey",
     ),
-    path("subscriptions/", views.subscriptions, name="api.v1.subscriptions"),
+    path("subscriptions/checkout", views.subscription_checkout, name="api.v1.subscriptions.checkout"),
+    path(
+        "subscriptions/customer_portal",
+        views.subscription_customer_portal,
+        name="api.v1.subscriptions.customer_portal",
+    ),
     path("stripe_hooks/", views.stripe_hooks, name="api.v1.stripe_hooks"),
 ]

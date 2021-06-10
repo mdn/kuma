@@ -1,11 +1,7 @@
 import json
-import os
-from datetime import datetime
-from urllib.parse import urlparse
 
 import stripe
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
@@ -13,19 +9,16 @@ from django.http import (
     JsonResponse,
 )
 from django.middleware.csrf import get_token
-from django.utils import translation
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 from raven.contrib.django.models import client as raven_client
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from waffle import flag_is_active
 from waffle.decorators import waffle_flag
 
 from kuma.api.v1.forms import AccountSettingsForm
-from kuma.core.email_utils import render_email
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_CANCELED,
     ACTION_SUBSCRIPTION_CREATED,
@@ -33,13 +26,9 @@ from kuma.core.ga_tracking import (
     CATEGORY_MONTHLY_PAYMENTS,
     track_event,
 )
-from kuma.core.utils import requests_retry_session, send_mail_retrying
+from kuma.core.utils import requests_retry_session
 from kuma.users.models import User, UserSubscription
-from kuma.users.stripe_utils import (
-    cancel_stripe_customer_subscriptions,
-    create_stripe_customer_and_subscription_for_user,
-    retrieve_and_synchronize_subscription_info,
-)
+from kuma.users.stripe_utils import retrieve_and_synchronize_stripe_subscription
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 
 
@@ -124,6 +113,7 @@ def account_settings(request):
     context = {
         "csrfmiddlewaretoken": get_token(request),
         "locale": user.locale,
+        "subscription": retrieve_and_synchronize_stripe_subscription(user),
     }
     return JsonResponse(context)
 
@@ -149,30 +139,54 @@ def send_subscriptions_feedback(request):
     return HttpResponse(status=204)
 
 
-@api_view(["POST", "GET", "DELETE"])
+@require_POST
 @never_cache
-def subscriptions(request):
-    if not request.user.is_authenticated or not flag_is_active(request, "subscription"):
+def subscription_checkout(request):
+    user = request.user
+    if not user.is_authenticated or not flag_is_active(request, "subscription"):
         return Response(None, status=status.HTTP_403_FORBIDDEN)
 
-    if request.method == "POST":
-        create_stripe_customer_and_subscription_for_user(
-            request.user, request.user.email, request.data["stripe_token"]
-        )
-        return Response(None, status=status.HTTP_201_CREATED)
-    elif request.method == "DELETE":
-        cancelled = cancel_stripe_customer_subscriptions(request.user)
-        if cancelled:
-            return Response(None, status=status.HTTP_204_NO_CONTENT)
-        else:
-            return Response("nothing to cancel", status=status.HTTP_410_GONE)
+    data = request.POST
 
-    all_subscriptions = []
-    subscription_info = retrieve_and_synchronize_subscription_info(request.user)
-    if subscription_info:
-        all_subscriptions.append(subscription_info)
+    if not user.stripe_customer_id:
+        user.stripe_customer_id = stripe.Customer.create()["id"]
+        user.save()
 
-    return Response({"subscriptions": all_subscriptions})
+    callback_url = request.headers.get("Referer")
+    checkout_session = stripe.checkout.Session.create(
+        customer=user.stripe_customer_id,
+        success_url=callback_url,
+        cancel_url=callback_url,
+        mode="subscription",
+        payment_method_types=["card"],
+        line_items=[
+            {
+                "price": data.get("priceId"),
+                "quantity": 1,
+            }
+        ],
+    )
+    return JsonResponse(
+        {"sessionId": checkout_session.id}, status=status.HTTP_200_OK
+    )
+
+@require_POST
+@never_cache
+def subscription_customer_portal(request):
+    user = request.user
+    if not user.is_authenticated or not flag_is_active(request, "subscription"):
+        return Response(None, status=status.HTTP_403_FORBIDDEN)
+
+    assert user.stripe_customer_id
+
+    session = stripe.billing_portal.Session.create(
+        customer=user.stripe_customer_id,
+        return_url=request.headers.get("Referer")
+    )
+
+    return JsonResponse(
+        {"url": session.url}, status=status.HTTP_200_OK
+    )
 
 
 @csrf_exempt
@@ -195,15 +209,11 @@ def stripe_hooks(request):
     # The list of events there ought to at least minimally match what we're prepared
     # to deal with here.
 
-    if event.type == "invoice.payment_succeeded":
-        invoice = event.data.object
-        _send_payment_received_email(invoice, request.LANGUAGE_CODE)
-        track_event(
-            CATEGORY_MONTHLY_PAYMENTS,
-            ACTION_SUBSCRIPTION_CREATED,
-            f"{settings.CONTRIBUTION_AMOUNT_USD:.2f}",
-        )
-
+    if event.type == "customer.subscription.created":
+        obj = event.data.object
+        for user in User.objects.filter(stripe_customer_id=obj.customer):
+            UserSubscription.set_active(user, obj.id)
+        track_event(CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_CREATED, "webhook")
     elif event.type == "customer.subscription.deleted":
         obj = event.data.object
         for user in User.objects.filter(stripe_customer_id=obj.customer):
@@ -216,39 +226,6 @@ def stripe_hooks(request):
         )
 
     return HttpResponse()
-
-
-def _send_payment_received_email(invoice, locale):
-    user = get_user_model().objects.get(stripe_customer_id=invoice.customer)
-    subscription_info = retrieve_and_synchronize_subscription_info(user)
-    locale = locale or settings.WIKI_DEFAULT_LANGUAGE
-    context = {
-        "payment_date": datetime.fromtimestamp(invoice.created),
-        "next_payment_date": subscription_info["next_payment_at"],
-        "invoice_number": invoice.number,
-        "cost": invoice.total / 100,
-        "credit_card_brand": subscription_info["brand"],
-        "manage_subscription_url": "TBD",
-        "faq_url": "TBD",
-        "contact_email": settings.CONTRIBUTION_SUPPORT_EMAIL,
-    }
-    with translation.override(locale):
-        subject = render_email("users/email/payment_received/subject.ltxt", context)
-        # Email subject *must not* contain newlines
-        subject = "".join(subject.splitlines())
-        plain = render_email("users/email/payment_received/plain.ltxt", context)
-
-        send_mail_retrying(
-            subject,
-            plain,
-            settings.DEFAULT_FROM_EMAIL,
-            [user.email],
-            attachment={
-                "name": os.path.basename(urlparse(invoice.invoice_pdf).path),
-                "bytes": _download_from_url(invoice.invoice_pdf),
-                "mime": "application/pdf",
-            },
-        )
 
 
 def _download_from_url(url):
