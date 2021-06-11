@@ -79,6 +79,21 @@ def whoami(request):
     if geo:
         data["geo"] = geo
 
+    # June 11, 2021
+    # This here is an entirely temporary hack. It just needs to be like this
+    # until all the archived content has been entirely removed.
+    # Archived content has only been built 2 times in 2021 and apparently
+    # at some point, the JS bundle that processes the `/api/v1/whoami` assumes
+    # and depends on the JSON containing a key called `waffle` which contains
+    # a key called `flags`. Without that, a hard JS error is thrown on every page.
+    # The plan is for all archived content to be removed later this month
+    # but that's not today. So, as a hacky solution to make the existing archived
+    # pages not entirely break, we put this in.
+    data["waffle"] = {
+        "flags": {},
+        "switches": {},
+    }
+
     return JsonResponse(data)
 
 
