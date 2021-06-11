@@ -10,22 +10,22 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN set -x \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
-        curl \
-        gpg \
-        dirmngr \
-        libsasl2-modules \
-        gettext \
-        mime-support \
-        build-essential \
-        libtidy-dev \
-        libxml2-dev \
-        libxslt1-dev \
-        libffi-dev \
-        libjpeg-dev \
-        libmagic-dev \
-        default-libmysqlclient-dev \
-        default-mysql-client \
-        python2 \
+    curl \
+    gpg \
+    dirmngr \
+    libsasl2-modules \
+    gettext \
+    mime-support \
+    build-essential \
+    libtidy-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    libffi-dev \
+    libjpeg-dev \
+    libmagic-dev \
+    default-libmysqlclient-dev \
+    default-mysql-client \
+    python2 \
     && rm -rf /var/lib/apt/lists/*
 
 # add non-privileged user
@@ -37,7 +37,7 @@ RUN useradd --uid 1000 --shell /bin/bash --create-home kuma \
 # install Python libraries
 WORKDIR /app
 COPY --chown=kuma:kuma ./pyproject.toml ./poetry.lock /app/
-RUN pip install poetry~=1.1.4 \
+RUN pip install poetry~=1.1.6 \
     && POETRY_VIRTUALENVS_CREATE=false poetry install --no-root \
     && rm -rf ~/.cache/pip ~/.cache/pypoetry/cache
 
