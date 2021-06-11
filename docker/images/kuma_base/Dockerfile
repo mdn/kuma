@@ -11,7 +11,6 @@ RUN set -x \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
     curl \
-    gpg \
     dirmngr \
     libsasl2-modules \
     gettext \
