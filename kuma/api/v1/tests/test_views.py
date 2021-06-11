@@ -46,7 +46,7 @@ def test_whoami_anonymous(client):
     response = client.get(url)
     assert response.status_code == 200
     assert response["content-type"] == "application/json"
-    assert response.json() == {}
+    assert response.json() == {"waffle": {"flags": {}, "switches": {}}}
     assert_no_cache_header(response)
 
 
@@ -102,6 +102,7 @@ def test_whoami(
         "avatar_url": wiki_user_github_account.get_avatar_url(),
         "subscriber_number": None,
         "email": "wiki_user@example.com",
+        "waffle": {"flags": {}, "switches": {}},
     }
     if is_staff:
         expect["is_staff"] = True
