@@ -110,15 +110,29 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
             "body_suggestions", params["query"], term={"field": "body"}
         )
 
+    # The business logic here that we search for things different ways,
+    # and each different way as a different boost which dictates its importance.
+    # The importance order is as follows:
+    #
+    #  1. Title match-phrase
+    #  2. Title match
+    #  3. Body match-phrase
+    #  4. Body match
+    #
+    # The order is determined by the `boost` number in the code below.
+    # Remember that sort order is a combination of "match" and popularity, but
+    # ideally the popularity should complement. Try to get a pretty good
+    # sort by pure relevance first, and let popularity just make it better.
+    #
     sub_queries = []
-    sub_queries.append(Q("match", title={"query": params["query"], "boost": 2.0}))
+    sub_queries.append(Q("match", title={"query": params["query"], "boost": 5.0}))
     sub_queries.append(Q("match", body={"query": params["query"], "boost": 1.0}))
     if " " in params["query"]:
         sub_queries.append(
             Q("match_phrase", title={"query": params["query"], "boost": 10.0})
         )
         sub_queries.append(
-            Q("match_phrase", body={"query": params["query"], "boost": 5.0})
+            Q("match_phrase", body={"query": params["query"], "boost": 2.0})
         )
 
     sub_query = query.Bool(should=sub_queries)
