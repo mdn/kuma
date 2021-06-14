@@ -175,37 +175,6 @@ def test_send_subscriptions_feedback_failure(client, settings):
 
 @pytest.mark.django_db
 @override_flag("subscription", True)
-@mock.patch("kuma.users.newsletter.tasks.create_or_update_contact.delay")
-@mock.patch("kuma.users.stripe_utils.stripe")
-def test_create_subscription_success(
-    mocked_stripe,
-    mock_create_or_update_newsletter_contact_delay,
-    wiki_user,
-    user_client,
-):
-
-    mock_customer = mock.MagicMock()
-    mock_customer.id = "cus_1234"
-    mock_customer.subscriptions.list().auto_paging_iter().__iter__.return_value = []
-    mocked_stripe.Customer.create.return_value = mock_customer
-
-    mock_subscription = mock.MagicMock()
-    subscription_id = "sub_1234"
-    mock_subscription.id = subscription_id
-    mocked_stripe.Subscription.create.return_value = mock_subscription
-
-    response = user_client.post(
-        reverse("api.v1.subscriptions"),
-        content_type="application/json",
-        data={"stripe_token": "tok_visa"},
-    )
-    assert response.status_code == 201
-    assert UserSubscription.objects.filter(stripe_subscription_id=subscription_id)
-    mock_create_or_update_newsletter_contact_delay.assert_called_once_with(wiki_user.pk)
-
-
-@pytest.mark.django_db
-@override_flag("subscription", True)
 def test_subscriptions_without_login(client):
     response = client.post(reverse("api.v1.subscriptions"))
     assert response.status_code == 403
@@ -288,30 +257,6 @@ def test_list_subscriptions_with_active_subscription(
     assert response.status_code == 200
     assert response.json()["subscriptions"][0]["amount"] == 500
     assert response.json()["subscriptions"][0]["id"] == "sub_1234"
-
-
-@mock.patch("kuma.users.newsletter.tasks.create_or_update_contact.delay")
-@mock.patch("kuma.users.stripe_utils.stripe")
-@pytest.mark.django_db
-@override_flag("subscription", True)
-def test_cancel_subscriptions_with_active_subscription(
-    mocked_stripe,
-    mock_create_or_update_newsletter_contact_delay,
-    stripe_user_client,
-    wiki_user,
-):
-    subscription_id = "sub_1234"
-    mock_subscription = mock.MagicMock()
-    mock_subscription.id = subscription_id
-    mocked_stripe.Customer.retrieve().subscriptions.data.__iter__.return_value = [
-        mock_subscription
-    ]
-    mocked_stripe.Subscription.retrieve.return_value = mock_subscription
-    response = stripe_user_client.delete(reverse("api.v1.subscriptions"))
-    assert response.status_code == 204
-    assert UserSubscription.objects.get(stripe_subscription_id=subscription_id).canceled
-
-    mock_create_or_update_newsletter_contact_delay.assert_called_once_with(wiki_user.pk)
 
 
 @mock.patch("kuma.users.stripe_utils.stripe")
@@ -563,37 +508,6 @@ def test_account_settings_delete_legacy(user_client, wiki_user, root_doc):
     assert user_ban_by.by.username == "Anonymous"
     user_ban_user.refresh_from_db()
     assert user_ban_user.user.username == "Anonymous"
-
-
-@mock.patch("kuma.users.newsletter.tasks.create_or_update_contact.delay")
-@mock.patch("kuma.users.stripe_utils.stripe")
-def test_account_settings_delete_with_subscription(
-    mocked_stripe,
-    mock_create_or_update_newsletter_contact_delay,
-    user_client,
-    wiki_user,
-):
-    subscription_id = "sub_1234"
-    mock_subscription = mock.MagicMock()
-    mock_subscription.id = subscription_id
-    mock_customer = mock.MagicMock()
-    mock_customer.subscriptions.data.__iter__.return_value = [mock_subscription]
-    mocked_stripe.Customer.retrieve.return_value = mock_customer
-    mocked_stripe.Subscription.retrieve.return_value = mock_subscription
-
-    # Also, pretend that the user has a rich profile
-    wiki_user.stripe_customer_id = "cus_12345"
-    wiki_user.save()
-    UserSubscription.set_active(wiki_user, subscription_id)
-
-    wiki_user.is_newsletter_subscribed = False
-    wiki_user.save()
-
-    username = wiki_user.username
-    response = user_client.delete(reverse("api.v1.settings"))
-    assert response.status_code == 200
-    assert not User.objects.filter(username=username).exists()
-    assert not UserSubscription.objects.filter(stripe_subscription_id="sub_1234")
 
 
 def test_get_and_set_settings_happy_path(user_client):
