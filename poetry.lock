@@ -329,7 +329,7 @@ sqlparse = ">=0.2.0"
 
 [[package]]
 name = "django-decorator-include"
-version = "2.1"
+version = "3.0"
 description = "Include Django URL patterns with decorators"
 category = "main"
 optional = false
@@ -1388,7 +1388,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "14841a9b1f4ac6349c5f63df4f7d5bf840b17fe69c8fa82dbf0a08cafa77e9d9"
+content-hash = "3c11e59d2ca2a4549456285c9604867c92c1d49caccad358909c7e41c2ccb81d"
 
 [metadata.files]
 amqp = [
@@ -1574,8 +1574,8 @@ django-debug-toolbar = [
     {file = "django_debug_toolbar-2.2.1-py3-none-any.whl", hash = "sha256:7feaee934608f5cdd95432154be832fe30fda6c1249018191e2c27bc0b6a965e"},
 ]
 django-decorator-include = [
-    {file = "django-decorator-include-2.1.tar.gz", hash = "sha256:41df70c2b9bd5fe0143d01d6469c522c5e301d3e34f2df5c22a25cae798d8971"},
-    {file = "django_decorator_include-2.1-py3-none-any.whl", hash = "sha256:fd2d6735a6225c3836908b3cca6366e0f5b556a44a47ac92cc1f08c86fa5a3dc"},
+    {file = "django-decorator-include-3.0.tar.gz", hash = "sha256:18db98e0e48dbb3977ab79b5520dbf5ecbb35f0bced8e15ed62dc66762345856"},
+    {file = "django_decorator_include-3.0-py3-none-any.whl", hash = "sha256:fe7a96afb23f66dcbc6227d3c48430e53cc5704eab30841ddb8bd940e5ea8a5a"},
 ]
 django-extensions = [
     {file = "django-extensions-2.2.8.tar.gz", hash = "sha256:2699cc1d6fb4bd393c0b5832fea4bc685f2ace5800b3c9ff222b2080f161ac04"},
