@@ -888,11 +888,6 @@ INDEX_CSS_CLASSNAMES = config("INDEX_CSS_CLASSNAMES", cast=bool, default=not DEB
 # you by a tunneling service such as ngrok.
 CUSTOM_WEBHOOK_HOSTNAME = config("CUSTOM_WEBHOOK_HOSTNAME", default=None)
 
-# We use sendinblue.com to send marketing emails and are subdividing users
-# into lists of paying and not paying users
-SENDINBLUE_API_KEY = config("SENDINBLUE_API_KEY", default=None)
-SENDINBLUE_LIST_ID = config("SENDINBLUE_LIST_ID", default=None)
-
 # When doing local development with Yari, if you want to have `?next=...` redirects
 # work when you sign in on Yari, this needs to be set to `localhost.org:3000` in your
 # .env file. That tells, Kuma that if the `?next` URL is an absolute URL, that

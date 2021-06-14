@@ -313,13 +313,6 @@ https://dashboard.stripe.com/test/webhooks
 Note that with the free tier a restart of ngrok gives you a new hostname, so you'll have to change the config
 again and restart the server (or manually change the webhook in Stripe's dashboard).
 
-Enable Sendinblue email integration
-===================================
-#. Create a Sendinblue account over at https://www.sendinblue.com (you can skip a lot of the profile set-up,
-   look for skip in the upper right).
-#. Get your v3 API key at https://account.sendinblue.com/advanced/api
-#. Create a list at https://my.sendinblue.com/lists/new/parent_id/1
-#. Add the sendinblue config keys to your .env, the keynames are ``SENDINBLUE_API_KEY`` and ``SENDINBLUE_LIST_ID``
 
 Interact with the Docker containers
 ===================================
