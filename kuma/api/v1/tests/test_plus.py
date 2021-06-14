@@ -9,12 +9,12 @@ from kuma.plus.models import LandingPageSurvey
 @pytest.mark.django_db
 def test_ping_landing_page_survey_happy_path(client, settings):
     # This sets the needed session cookie
-    variant_url = reverse("api.v1.plus.landing_page_variant")
+    variant_url = reverse("api.v1.plus.landing_page.variant")
     response = client.get(variant_url)
     assert response.status_code == 200
     variant = response.json()["variant"]
 
-    url = reverse("api.v1.plus.landing_page_survey")
+    url = reverse("api.v1.plus.landing_page.survey")
     response = client.get(url, HTTP_CLOUDFRONT_VIEWER_COUNTRY_NAME="Antartica")
     assert response.status_code == 200
     (result,) = LandingPageSurvey.objects.all()
@@ -51,14 +51,14 @@ def test_ping_landing_page_survey_happy_path(client, settings):
 
 @pytest.mark.django_db
 def test_ping_landing_page_survey_bad_request(client):
-    url = reverse("api.v1.plus.landing_page_survey")
+    url = reverse("api.v1.plus.landing_page.survey")
 
     # No ?variant=...
     response = client.get(url)
     assert response.status_code == 400
 
     # This sets the needed session cookie
-    variant_url = reverse("api.v1.plus.landing_page_variant")
+    variant_url = reverse("api.v1.plus.landing_page.variant")
     response = client.get(variant_url)
     assert response.status_code == 200
 
@@ -74,11 +74,11 @@ def test_ping_landing_page_survey_bad_request(client):
 @pytest.mark.django_db
 def test_ping_landing_page_survey_reuse_uuid(client):
     # This sets the needed session cookie
-    variant_url = reverse("api.v1.plus.landing_page_variant")
+    variant_url = reverse("api.v1.plus.landing_page.variant")
     response = client.get(variant_url)
     assert response.status_code == 200
 
-    url = reverse("api.v1.plus.landing_page_survey")
+    url = reverse("api.v1.plus.landing_page.survey")
     response1 = client.get(url, HTTP_CLOUDFRONT_VIEWER_COUNTRY_NAME="Sweden")
     assert response1.status_code == 200
     assert LandingPageSurvey.objects.all().count() == 1
@@ -94,11 +94,11 @@ def test_ping_landing_page_survey_reuse_uuid(client):
 @pytest.mark.django_db
 def test_ping_landing_page_survey_authenticated(user_client, wiki_user):
     # This sets the needed session cookie
-    variant_url = reverse("api.v1.plus.landing_page_variant")
+    variant_url = reverse("api.v1.plus.landing_page.variant")
     response = user_client.get(variant_url)
     assert response.status_code == 200
 
-    url = reverse("api.v1.plus.landing_page_survey")
+    url = reverse("api.v1.plus.landing_page.survey")
     response = user_client.get(url)
     assert response.status_code == 200
     (result,) = LandingPageSurvey.objects.all()
@@ -108,7 +108,7 @@ def test_ping_landing_page_survey_authenticated(user_client, wiki_user):
 @pytest.mark.django_db
 def test_landing_page_variant_happy_path(client, settings):
     # Note `settings.PLUS_VARIANTS` is set in `kuma.settings.pytest`
-    url = reverse("api.v1.plus.landing_page_variant")
+    url = reverse("api.v1.plus.landing_page.variant")
     response = client.get(url)
     assert response.status_code == 200
     first_time = response.json()
