@@ -16,7 +16,6 @@ RUN set -x \
     gettext \
     mime-support \
     build-essential \
-    libtidy-dev \
     libxml2-dev \
     libxslt1-dev \
     libffi-dev \
