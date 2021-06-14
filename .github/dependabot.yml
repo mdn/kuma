@@ -10,3 +10,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+
+  - package-ecosystem: "docker"
+    directory: "/docker/images/kuma_base"
+    schedule:
+      interval: "weekly"
