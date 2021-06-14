@@ -19,7 +19,6 @@ RUN set -x \
     libxml2-dev \
     libxslt1-dev \
     libffi-dev \
-    libjpeg-dev \
     libmagic-dev \
     default-libmysqlclient-dev \
     default-mysql-client
