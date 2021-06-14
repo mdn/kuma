@@ -125,7 +125,7 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
     # sort by pure relevance first, and let popularity just make it better.
     #
     sub_queries = []
-    sub_queries.append(Q("match", title={"query": params["query"], "boost": 3.0}))
+    sub_queries.append(Q("match", title={"query": params["query"], "boost": 5.0}))
     sub_queries.append(Q("match", body={"query": params["query"], "boost": 1.0}))
     if " " in params["query"]:
         sub_queries.append(
