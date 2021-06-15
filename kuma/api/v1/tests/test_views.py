@@ -1,10 +1,7 @@
-import time
 from types import SimpleNamespace
 from unittest import mock
 
 import pytest
-from django.core import mail
-from django.test import Client
 from stripe.error import APIError
 from waffle.models import Flag, Switch
 from waffle.testutils import override_flag
@@ -12,7 +9,6 @@ from waffle.testutils import override_flag
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_CANCELED,
-    ACTION_SUBSCRIPTION_CREATED,
     ACTION_SUBSCRIPTION_FEEDBACK,
     CATEGORY_MONTHLY_PAYMENTS,
 )
