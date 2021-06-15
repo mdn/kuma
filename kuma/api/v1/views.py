@@ -26,7 +26,6 @@ from kuma.core.ga_tracking import (
     CATEGORY_MONTHLY_PAYMENTS,
     track_event,
 )
-from kuma.core.utils import requests_retry_session
 from kuma.users.models import User, UserSubscription
 from kuma.users.stripe_utils import retrieve_and_synchronize_stripe_subscription
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
@@ -169,6 +168,7 @@ def subscription_checkout(request):
     return JsonResponse(
         {"sessionId": checkout_session.id}, status=status.HTTP_200_OK
     )
+
 
 @require_POST
 @never_cache
