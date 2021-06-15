@@ -17,9 +17,7 @@ def stripe_check(app_configs, **kwargs):
         create_missing_stripe_webhook()
     except stripe.error.StripeError as error:
         errors.append(
-            Error(
-                f"unable get or create Stripe webhooks: {error}", id=STRIPE_ERROR
-            )
+            Error(f"unable get or create Stripe webhooks: {error}", id=STRIPE_ERROR)
         )
 
     return errors

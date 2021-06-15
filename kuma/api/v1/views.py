@@ -165,9 +165,7 @@ def subscription_checkout(request):
             }
         ],
     )
-    return JsonResponse(
-        {"sessionId": checkout_session.id}, status=status.HTTP_200_OK
-    )
+    return JsonResponse({"sessionId": checkout_session.id}, status=status.HTTP_200_OK)
 
 
 @require_POST
@@ -180,13 +178,10 @@ def subscription_customer_portal(request):
     assert user.stripe_customer_id
 
     session = stripe.billing_portal.Session.create(
-        customer=user.stripe_customer_id,
-        return_url=request.headers.get("Referer")
+        customer=user.stripe_customer_id, return_url=request.headers.get("Referer")
     )
 
-    return JsonResponse(
-        {"url": session.url}, status=status.HTTP_200_OK
-    )
+    return JsonResponse({"url": session.url}, status=status.HTTP_200_OK)
 
 
 @csrf_exempt
