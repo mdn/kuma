@@ -8,6 +8,10 @@ from kuma.wiki.templatetags.jinja_helpers import absolutify
 from .models import UserSubscription
 
 
+def retrieve_stripe_prices():
+    return [stripe.Price.retrieve(id) for id in settings.STRIPE_PRICE_IDS]
+
+
 def retrieve_and_synchronize_stripe_subscription(user):
     if not user.stripe_customer_id:
         return None

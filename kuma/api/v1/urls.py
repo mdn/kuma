@@ -8,11 +8,6 @@ urlpatterns = [
     path("search/<locale>", search.search, name="api.v1.search_legacy"),
     path("search", search.search, name="api.v1.search"),
     path(
-        "subscriptions/feedback/",
-        views.send_subscriptions_feedback,
-        name="api.v1.send_subscriptions_feedback",
-    ),
-    path(
         "plus/landing-page/variant/",
         plus.landing_page_variant,
         name="api.v1.plus.landing_page_variant",
@@ -23,12 +18,17 @@ urlpatterns = [
         name="api.v1.plus.landing_page_survey",
     ),
     path(
-        "subscriptions/checkout",
+        "subscriptions/config/",
+        views.subscription_config,
+        name="api.v1.subscriptions.config",
+    ),
+    path(
+        "subscriptions/checkout/",
         views.subscription_checkout,
         name="api.v1.subscriptions.checkout",
     ),
     path(
-        "subscriptions/customer_portal",
+        "subscriptions/customer_portal/",
         views.subscription_customer_portal,
         name="api.v1.subscriptions.customer_portal",
     ),

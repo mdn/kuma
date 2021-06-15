@@ -817,7 +817,8 @@ CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
 # Stripe API KEY settings
 STRIPE_PUBLIC_KEY = config("STRIPE_PUBLIC_KEY", default="")
 STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY", default="")
-STRIPE_PLAN_ID = config("STRIPE_PLAN_ID", default="")
+STRIPE_PRICE_IDS = config("STRIPE_PRICE_IDS", default="", cast=Csv())
+
 # Misc Stripe settings
 STRIPE_MAX_NETWORK_RETRIES = config("STRIPE_MAX_NETWORK_RETRIES", default=5, cast=int)
 

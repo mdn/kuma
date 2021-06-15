@@ -2,6 +2,7 @@ import json
 
 import stripe
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
@@ -27,7 +28,7 @@ from kuma.core.ga_tracking import (
     track_event,
 )
 from kuma.users.models import User, UserSubscription
-from kuma.users.stripe_utils import retrieve_and_synchronize_stripe_subscription
+from kuma.users.stripe_utils import retrieve_and_synchronize_stripe_subscription, retrieve_stripe_prices
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 
 
@@ -117,25 +118,23 @@ def account_settings(request):
     return JsonResponse(context)
 
 
-@waffle_flag("subscription")
+@require_GET
 @never_cache
-@require_POST
-def send_subscriptions_feedback(request):
-    """
-    Sends feedback to Google Analytics. This is done on the
-    backend to ensure that all feedback is collected, even
-    from users with DNT or where GA is disabled.
-    """
-    data = json.loads(request.body)
-    feedback = (data.get("feedback") or "").strip()
+def subscription_config(request):
+    prices = []
 
-    if not feedback:
-        return HttpResponseBadRequest("no feedback")
+    for price in retrieve_stripe_prices():
+        prices.append(
+            {
+                "id": price.id,
+                "currency": price.currency,
+                "unit_amount": price.unit_amount,
+            }
+        )
 
-    track_event(
-        CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_FEEDBACK, data["feedback"]
+    return JsonResponse(
+        {"public_key": settings.STRIPE_PUBLIC_KEY, "prices": prices},
     )
-    return HttpResponse(status=204)
 
 
 @require_POST
@@ -143,7 +142,7 @@ def send_subscriptions_feedback(request):
 def subscription_checkout(request):
     user = request.user
     if not user.is_authenticated or not flag_is_active(request, "subscription"):
-        return Response(None, status=status.HTTP_403_FORBIDDEN)
+        return HttpResponseForbidden("subscription is not enabled")
 
     data = request.POST
 
@@ -165,7 +164,7 @@ def subscription_checkout(request):
             }
         ],
     )
-    return JsonResponse({"sessionId": checkout_session.id}, status=status.HTTP_200_OK)
+    return JsonResponse({"sessionId": checkout_session.id})
 
 
 @require_POST
@@ -173,7 +172,7 @@ def subscription_checkout(request):
 def subscription_customer_portal(request):
     user = request.user
     if not user.is_authenticated or not flag_is_active(request, "subscription"):
-        return Response(None, status=status.HTTP_403_FORBIDDEN)
+        return HttpResponseForbidden("subscription is not enabled")
 
     assert user.stripe_customer_id
 
@@ -181,7 +180,7 @@ def subscription_customer_portal(request):
         customer=user.stripe_customer_id, return_url=request.headers.get("Referer")
     )
 
-    return JsonResponse({"url": session.url}, status=status.HTTP_200_OK)
+    return JsonResponse({"url": session.url})
 
 
 @csrf_exempt
