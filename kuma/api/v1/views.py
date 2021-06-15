@@ -149,7 +149,7 @@ def subscription_checkout(request):
     data = request.POST
 
     if not user.stripe_customer_id:
-        user.stripe_customer_id = stripe.Customer.create()["id"]
+        user.stripe_customer_id = stripe.Customer.create(email=user.email)["id"]
         user.save()
 
     callback_url = request.headers.get("Referer")
@@ -208,7 +208,6 @@ def stripe_hooks(request):
     # function.
     # The list of events there ought to at least minimally match what we're prepared
     # to deal with here.
-
     if event.type == "customer.subscription.created":
         obj = event.data.object
         for user in User.objects.filter(stripe_customer_id=obj.customer):
@@ -226,9 +225,3 @@ def stripe_hooks(request):
         )
 
     return HttpResponse()
-
-
-def _download_from_url(url):
-    pdf_download = requests_retry_session().get(url)
-    pdf_download.raise_for_status()
-    return pdf_download.content
