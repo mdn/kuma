@@ -2,7 +2,6 @@ import json
 
 import stripe
 from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
 from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
@@ -14,21 +13,20 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 from raven.contrib.django.models import client as raven_client
-from rest_framework import status
-from rest_framework.response import Response
 from waffle import flag_is_active
-from waffle.decorators import waffle_flag
 
 from kuma.api.v1.forms import AccountSettingsForm
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_CANCELED,
     ACTION_SUBSCRIPTION_CREATED,
-    ACTION_SUBSCRIPTION_FEEDBACK,
     CATEGORY_MONTHLY_PAYMENTS,
     track_event,
 )
 from kuma.users.models import User, UserSubscription
-from kuma.users.stripe_utils import retrieve_and_synchronize_stripe_subscription, retrieve_stripe_prices
+from kuma.users.stripe_utils import (
+    retrieve_and_synchronize_stripe_subscription,
+    retrieve_stripe_prices,
+)
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 
 

@@ -9,7 +9,6 @@ from waffle.testutils import override_flag
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_CANCELED,
-    ACTION_SUBSCRIPTION_FEEDBACK,
     CATEGORY_MONTHLY_PAYMENTS,
 )
 from kuma.core.tests import assert_no_cache_header
@@ -135,27 +134,6 @@ def test_whoami_subscriber(
     assert response.json()["subscriber_number"] == 1
 
 
-@mock.patch("kuma.api.v1.views.track_event")
-@pytest.mark.django_db
-@override_flag("subscription", True)
-def test_send_subscriptions_feedback(track_event_mock_signals, client, settings):
-    settings.GOOGLE_ANALYTICS_ACCOUNT = "UA-XXXX-1"
-    settings.GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = True
-
-    response = client.post(
-        reverse("api.v1.send_subscriptions_feedback"),
-        content_type="application/json",
-        data={"feedback": "my feedback"},
-    )
-    assert response.status_code == 204
-
-    track_event_mock_signals.assert_called_with(
-        CATEGORY_MONTHLY_PAYMENTS,
-        ACTION_SUBSCRIPTION_FEEDBACK,
-        "my feedback",
-    )
-
-
 @pytest.mark.django_db
 @override_flag("subscription", True)
 def test_send_subscriptions_feedback_failure(client, settings):
@@ -167,6 +145,33 @@ def test_send_subscriptions_feedback_failure(client, settings):
 
     assert response.status_code == 400
     assert response.content.decode(response.charset) == "no feedback"
+
+
+@mock.patch("stripe.Event.construct_from")
+@pytest.mark.django_db
+def test_stripe_subscription_created(mock1, client):
+    mock1.return_value = SimpleNamespace(
+        type="customer.subscription.created",
+        data=SimpleNamespace(
+            object=SimpleNamespace(customer="cus_mock_testuser", id="sub_123456789")
+        ),
+    )
+
+    testuser = create_user(
+        save=True,
+        username="testuser",
+        email="testuser@example.com",
+        stripe_customer_id="cus_mock_testuser",
+    )
+    UserSubscription.set_active(testuser, "sub_123456789")
+    response = client.post(
+        reverse("api.v1.stripe_hooks"),
+        content_type="application/json",
+        data={},
+    )
+    assert response.status_code == 200
+    (user_subscription,) = UserSubscription.objects.filter(user=testuser)
+    assert not user_subscription.canceled
 
 
 @mock.patch("stripe.Event.construct_from")
