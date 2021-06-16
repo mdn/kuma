@@ -11,17 +11,13 @@ RUN set -x \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
     curl \
-    gpg \
     dirmngr \
     libsasl2-modules \
     gettext \
-    mime-support \
     build-essential \
-    libtidy-dev \
     libxml2-dev \
     libxslt1-dev \
     libffi-dev \
-    libjpeg-dev \
     libmagic-dev \
     default-libmysqlclient-dev \
     default-mysql-client
