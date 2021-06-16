@@ -4,7 +4,6 @@ from unittest import mock
 import pytest
 from stripe.error import APIError
 from waffle.models import Flag, Switch
-from waffle.testutils import override_flag
 
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.core.ga_tracking import (
@@ -132,19 +131,6 @@ def test_whoami_subscriber(
     assert response.status_code == 200
     assert "is_subscriber" not in response.json()
     assert response.json()["subscriber_number"] == 1
-
-
-@pytest.mark.django_db
-@override_flag("subscription", True)
-def test_send_subscriptions_feedback_failure(client, settings):
-    response = client.post(
-        reverse("api.v1.send_subscriptions_feedback"),
-        content_type="application/json",
-        data={},
-    )
-
-    assert response.status_code == 400
-    assert response.content.decode(response.charset) == "no feedback"
 
 
 @mock.patch("stripe.Event.construct_from")
