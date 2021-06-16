@@ -14,7 +14,6 @@ RUN set -x \
     dirmngr \
     libsasl2-modules \
     gettext \
-    mime-support \
     build-essential \
     libxml2-dev \
     libxslt1-dev \
