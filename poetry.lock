@@ -1140,7 +1140,7 @@ hiredis = ["hiredis (>=0.1.3)"]
 
 [[package]]
 name = "redo"
-version = "2.0.3"
+version = "2.0.4"
 description = "Utilities to retry Python callables."
 category = "main"
 optional = false
@@ -1388,7 +1388,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "5511717faabe55c665ec8a265690f9698ea2cd137b2116f2b4f7620c8f5f0946"
+content-hash = "72003beb384ce16b862644c4014c715eb46e03828e4ade3651349f3581f0bcb4"
 
 [metadata.files]
 amqp = [
@@ -1990,8 +1990,7 @@ redis = [
     {file = "redis-3.4.1.tar.gz", hash = "sha256:0dcfb335921b88a850d461dc255ff4708294943322bd55de6cfd68972490ca1f"},
 ]
 redo = [
-    {file = "redo-2.0.3-py2.py3-none-any.whl", hash = "sha256:36784bf8ae766e14f9db0e377ccfa02835d648321d2007b6ae0bf4fd612c0f94"},
-    {file = "redo-2.0.3.tar.gz", hash = "sha256:71161cb0e928d824092a5f16203939bbc0867ce4c4685db263cf22c3ae7634a8"},
+    {file = "redo-2.0.4.tar.gz", hash = "sha256:81066955041c853b0e6491eb65a0877dce45131c4cfa3d42d923fc2aa8f7a043"},
 ]
 regex = [
     {file = "regex-2020.2.20-cp27-cp27m-win32.whl", hash = "sha256:99272d6b6a68c7ae4391908fc15f6b8c9a6c345a46b632d7fdb7ef6c883a2bbb"},
