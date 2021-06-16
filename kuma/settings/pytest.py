@@ -63,7 +63,7 @@ SITE_ID = 1
 # Stripe API KEY settings
 STRIPE_PUBLIC_KEY = "testing"
 STRIPE_SECRET_KEY = "testing"
-STRIPE_PLAN_ID = "testing"
+STRIPE_PRICE_IDS = ["price_0000001", "price_0000002"]
 
 # For legacy reasons, the tests assume these are always true so don't
 # let local overrides take effect.

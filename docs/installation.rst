@@ -302,7 +302,8 @@ Enable Stripe payments (optional)
 #. Go to https://dashboard.stripe.com/apikeys and copy the public and secret key into your ``.env`` file.
    The config keys should be called ``STRIPE_SECRET_KEY`` and ``STRIPE_PUBLIC_KEY`` respectively.
 #. Go to https://dashboard.stripe.com/test/products and create a product and add a price for it.
-   Copy that price's id into your ``.env`` file as ``STRIPE_PRICE_IDS``
+   Copy that price's id into your ``.env`` file as ``STRIPE_PRICE_IDS``.
+   If you have multiple prices (e.g. one monthly and one annually), add them to this with a comma.
 
 If you're using Stripe in testing mode you can also get test numbers from this site:
 https://stripe.com/docs/testing#cards

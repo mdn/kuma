@@ -111,7 +111,9 @@ def account_settings(request):
     context = {
         "csrfmiddlewaretoken": get_token(request),
         "locale": user.locale,
-        "subscription": retrieve_and_synchronize_stripe_subscription(user),
+        "subscription": user.stripe_customer_id
+        and retrieve_and_synchronize_stripe_subscription(user)
+        or None,
     }
     return JsonResponse(context)
 
@@ -139,7 +141,9 @@ def subscription_config(request):
 @never_cache
 def subscription_checkout(request):
     user = request.user
-    if not user.is_authenticated or not flag_is_active(request, "subscription"):
+    if not user.is_authenticated:
+        return HttpResponseForbidden("user not authenticated")
+    elif not flag_is_active(request, "subscription"):
         return HttpResponseForbidden("subscription is not enabled")
 
     data = request.POST
@@ -169,10 +173,12 @@ def subscription_checkout(request):
 @never_cache
 def subscription_customer_portal(request):
     user = request.user
-    if not user.is_authenticated or not flag_is_active(request, "subscription"):
+    if not user.is_authenticated:
+        return HttpResponseForbidden("user not authenticated")
+    elif not flag_is_active(request, "subscription"):
         return HttpResponseForbidden("subscription is not enabled")
-
-    assert user.stripe_customer_id
+    elif not user.stripe_customer_id:
+        return HttpResponseForbidden("no existing stripe_customer_id")
 
     session = stripe.billing_portal.Session.create(
         customer=user.stripe_customer_id, return_url=request.headers.get("Referer")
