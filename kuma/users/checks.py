@@ -21,7 +21,7 @@ def stripe_check(app_configs, **kwargs):
         if not prices:
             errors.append(
                 Error(
-                    f"STRIPE_PRICE_IDS is empty",
+                    "STRIPE_PRICE_IDS is empty",
                     id=STRIPE_PRICES_MISSING_ERROR,
                 )
             )
