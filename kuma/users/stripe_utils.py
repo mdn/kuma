@@ -49,11 +49,7 @@ def cancel_stripe_customer_subscriptions(user):
 
 def create_missing_stripe_webhook():
     url_path = reverse("api.v1.stripe_hooks")
-    url = (
-        "https://" + settings.CUSTOM_WEBHOOK_HOSTNAME + url_path
-        if settings.CUSTOM_WEBHOOK_HOSTNAME
-        else absolutify(url_path)
-    )
+    url = absolutify(url_path)
 
     # From https://stripe.com/docs/api/webhook_endpoints/create
     events = ("customer.subscription.created", "customer.subscription.deleted")

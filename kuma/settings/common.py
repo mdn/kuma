@@ -885,10 +885,6 @@ AWS_DEFAULT_ACL = None
 INDEX_HTML_ATTRIBUTES = config("INDEX_HTML_ATTRIBUTES", cast=bool, default=not DEBUG)
 INDEX_CSS_CLASSNAMES = config("INDEX_CSS_CLASSNAMES", cast=bool, default=not DEBUG)
 
-# For local development you might want to set this to a hostname provided to
-# you by a tunneling service such as ngrok.
-CUSTOM_WEBHOOK_HOSTNAME = config("CUSTOM_WEBHOOK_HOSTNAME", default=None)
-
 # When doing local development with Yari, if you want to have `?next=...` redirects
 # work when you sign in on Yari, this needs to be set to `localhost.org:3000` in your
 # .env file. That tells, Kuma that if the `?next` URL is an absolute URL, that
