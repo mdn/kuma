@@ -775,7 +775,7 @@ python-versions = "*"
 
 [[package]]
 name = "meinheld"
-version = "1.0.1"
+version = "1.0.2"
 description = "High performance asynchronous Python WSGI Web Server"
 category = "main"
 optional = false
@@ -1388,7 +1388,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "72003beb384ce16b862644c4014c715eb46e03828e4ade3651349f3581f0bcb4"
+content-hash = "b83f1b7c24459ce5597c083a51d107eea53e50ceadbb780c047a288cff3c443b"
 
 [metadata.files]
 amqp = [
@@ -1832,7 +1832,7 @@ mccabe = [
     {file = "mccabe-0.6.1.tar.gz", hash = "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"},
 ]
 meinheld = [
-    {file = "meinheld-1.0.1.tar.gz", hash = "sha256:447de7189e4dc9c1f425aa1b9c8210aab492fda4d86f73a24059264e7d8b0134"},
+    {file = "meinheld-1.0.2.tar.gz", hash = "sha256:008c76937ac2117cc69e032dc69cea9f85fc605de9bac1417f447c41c16a56d6"},
 ]
 mock = [
     {file = "mock-4.0.3-py3-none-any.whl", hash = "sha256:122fcb64ee37cfad5b3f48d7a7d51875d7031aaf3d8be7c42e2bee25044eee62"},
