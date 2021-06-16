@@ -307,7 +307,7 @@ Enable Stripe payments (optional)
 If you're using Stripe in testing mode you can also get test numbers from this site:
 https://stripe.com/docs/testing#cards
 
-Testing Stripe's webhooks locally requires stripe-cli (https://stripe.com/docs/stripe-cli#install).
+Testing Stripe's webhooks locally requires `stripe-cli`_.
 After installing it you have to first login::
 
     stripe login
@@ -316,6 +316,7 @@ After which you can run::
 
     stripe listen --forward-to localhost.org:8000/api/v1/stripe_hooks/
 
+.. _`stripe-cli`: https://stripe.com/docs/stripe-cli#install
 
 Interact with the Docker containers
 ===================================
