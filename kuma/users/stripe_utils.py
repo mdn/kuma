@@ -13,8 +13,7 @@ def retrieve_stripe_prices():
 
 
 def retrieve_and_synchronize_stripe_subscription(user):
-    if not user.stripe_customer_id:
-        return None
+    assert user.stripe_customer_id
 
     subscriptions = stripe.Subscription.list(
         customer=user.stripe_customer_id, status="active", limit=1

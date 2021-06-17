@@ -3,7 +3,7 @@ name: Python Lints
 on:
   pull_request:
     paths:
-      - 'kuma/**/*.py'
+      - "kuma/**/*.py"
       - .github/workflows/python-lints.yml
 
 jobs:
@@ -25,8 +25,8 @@ jobs:
 
       - name: Lint with flake8
         run: |
-          flake8 kuma docs tests
+          flake8 kuma docs
 
       - name: Lint with black
         run: |
-          black --check --diff kuma docs tests
+          black --check --diff kuma docs

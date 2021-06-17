@@ -1,19 +1,10 @@
-from types import SimpleNamespace
-from unittest import mock
-
 import pytest
-from stripe.error import APIError
 from waffle.models import Flag, Switch
 
 from kuma.attachments.models import Attachment, AttachmentRevision
-from kuma.core.ga_tracking import (
-    ACTION_SUBSCRIPTION_CANCELED,
-    CATEGORY_MONTHLY_PAYMENTS,
-)
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.users.models import User, UserBan, UserSubscription
-from kuma.users.tests import create_user
 from kuma.wiki.models import DocumentDeletionLog
 
 
@@ -131,128 +122,6 @@ def test_whoami_subscriber(
     assert response.status_code == 200
     assert "is_subscriber" not in response.json()
     assert response.json()["subscriber_number"] == 1
-
-
-@mock.patch("stripe.Event.construct_from")
-@pytest.mark.django_db
-def test_stripe_subscription_created(mock1, client):
-    mock1.return_value = SimpleNamespace(
-        type="customer.subscription.created",
-        data=SimpleNamespace(
-            object=SimpleNamespace(customer="cus_mock_testuser", id="sub_123456789")
-        ),
-    )
-
-    testuser = create_user(
-        save=True,
-        username="testuser",
-        email="testuser@example.com",
-        stripe_customer_id="cus_mock_testuser",
-    )
-    UserSubscription.set_active(testuser, "sub_123456789")
-    response = client.post(
-        reverse("api.v1.stripe_hooks"),
-        content_type="application/json",
-        data={},
-    )
-    assert response.status_code == 200
-    (user_subscription,) = UserSubscription.objects.filter(user=testuser)
-    assert not user_subscription.canceled
-
-
-@mock.patch("stripe.Event.construct_from")
-@pytest.mark.django_db
-def test_stripe_subscription_canceled(mock1, client):
-    mock1.return_value = SimpleNamespace(
-        type="customer.subscription.deleted",
-        data=SimpleNamespace(
-            object=SimpleNamespace(customer="cus_mock_testuser", id="sub_123456789")
-        ),
-    )
-
-    testuser = create_user(
-        save=True,
-        username="testuser",
-        email="testuser@example.com",
-        stripe_customer_id="cus_mock_testuser",
-    )
-    UserSubscription.set_active(testuser, "sub_123456789")
-    response = client.post(
-        reverse("api.v1.stripe_hooks"),
-        content_type="application/json",
-        data={},
-    )
-    assert response.status_code == 200
-    (user_subscription,) = UserSubscription.objects.filter(user=testuser)
-    assert user_subscription.canceled
-
-
-@pytest.mark.django_db
-def test_stripe_hook_invalid_json(client):
-    response = client.post(
-        reverse("api.v1.stripe_hooks"),
-        content_type="application/json",
-        data="{not valid!",
-    )
-    assert response.status_code == 400
-
-
-@mock.patch("stripe.Event.construct_from")
-@pytest.mark.django_db
-def test_stripe_hook_unexpected_type(mock1, client):
-    mock1.return_value = SimpleNamespace(
-        type="not.expected",
-        data=SimpleNamespace(foo="bar"),
-    )
-    response = client.post(
-        reverse("api.v1.stripe_hooks"),
-        content_type="application/json",
-        data={},
-    )
-    assert response.status_code == 400
-
-
-@mock.patch("stripe.Event.construct_from")
-@pytest.mark.django_db
-def test_stripe_hook_stripe_api_error(mock1, client):
-    mock1.side_effect = APIError("badness")
-    response = client.post(
-        reverse("api.v1.stripe_hooks"),
-        content_type="application/json",
-        data={},
-    )
-    assert response.status_code == 400
-
-
-@mock.patch("kuma.api.v1.views.track_event")
-@mock.patch("stripe.Event.construct_from")
-@pytest.mark.django_db
-def test_stripe_subscription_canceled_sends_ga_tracking(
-    mock1, track_event_mock_signals, client
-):
-    mock1.return_value = SimpleNamespace(
-        type="customer.subscription.deleted",
-        data=SimpleNamespace(
-            object=SimpleNamespace(customer="cus_mock_testuser", id="sub_123456789")
-        ),
-    )
-
-    create_user(
-        save=True,
-        username="testuser",
-        email="testuser@example.com",
-        stripe_customer_id="cus_mock_testuser",
-    )
-    response = client.post(
-        reverse("api.v1.stripe_hooks"),
-        content_type="application/json",
-        data={},
-    )
-    assert response.status_code == 200
-
-    track_event_mock_signals.assert_called_with(
-        CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_CANCELED, "webhook"
-    )
 
 
 @pytest.mark.django_db

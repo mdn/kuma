@@ -1,6 +1,6 @@
 from django.urls import path, re_path
 
-from . import plus, search, views
+from . import plus, search, subscription, views
 
 urlpatterns = [
     re_path(r"^whoami/?$", views.whoami, name="api.v1.whoami"),
@@ -19,18 +19,18 @@ urlpatterns = [
     ),
     path(
         "subscriptions/config/",
-        views.subscription_config,
+        subscription.subscription_config,
         name="api.v1.subscriptions.config",
     ),
     path(
         "subscriptions/checkout/",
-        views.subscription_checkout,
+        subscription.subscription_checkout,
         name="api.v1.subscriptions.checkout",
     ),
     path(
         "subscriptions/customer_portal/",
-        views.subscription_customer_portal,
+        subscription.subscription_customer_portal,
         name="api.v1.subscriptions.customer_portal",
     ),
-    path("stripe_hooks/", views.stripe_hooks, name="api.v1.stripe_hooks"),
+    path("stripe_hooks/", subscription.stripe_hooks, name="api.v1.stripe_hooks"),
 ]
