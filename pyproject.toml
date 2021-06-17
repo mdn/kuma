@@ -40,7 +40,6 @@ html5lib = "1.0.1"
 httplib2 = "^0.17.0"
 jinja2 = "^3.0.1"
 lxml = "^4.6.3"
-meinheld = "1.0.1"
 mysqlclient = "^1.4.6" # (Django database driver)
 newrelic = "^5.14.0.142"
 oauth2client = "^4.1.3"
