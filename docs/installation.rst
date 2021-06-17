@@ -299,31 +299,25 @@ Django shell::
 Enable Stripe payments (optional)
 =================================
 #. Go to https://dashboard.stripe.com and create a Stripe account (if you don't have one already).
-#. Go to https://dashboard.stripe.com/apikeys and copy both the publishable and secret key
-   into your ``.env`` file. The respective config keys are ``STRIPE_PUBLIC_KEY`` and
-   ``STRIPE_SECRET_KEY``.
-#. Go to https://dashboard.stripe.com/test/subscriptions/products and create a new product and plan.
-#. Once created copy the plan ID and also put it into ``.env`` as ``STRIPE_PLAN_ID``. Unless you
-   set a custom ID it should start with ``plan_``.
+#. Go to https://dashboard.stripe.com/apikeys and copy the public and secret key into your ``.env`` file.
+   The config keys should be called ``STRIPE_SECRET_KEY`` and ``STRIPE_PUBLIC_KEY`` respectively.
+#. Go to https://dashboard.stripe.com/test/products and create a product and add a price for it.
+   Copy that price's id into your ``.env`` file as ``STRIPE_PRICE_IDS``.
+   If you have multiple prices (e.g. one monthly and one annually), add them to this with a comma.
 
 If you're using Stripe in testing mode you can also get test numbers from this site:
 https://stripe.com/docs/testing#cards
 
-Testing Stripe's hooks locally requires setting up a tunneling service, like ngrok (https://ngrok.com).
-You should then set ``CUSTOM_WEBHOOK_HOSTNAME`` to the hostname you get from your tunneling service, e.g. for
-ngrok it might be https://203ebfab.ngrok.io
-After kuma has started you will have a webhook configured in stripe. You can view it on Stripe's dashboard:
-https://dashboard.stripe.com/test/webhooks
-Note that with the free tier a restart of ngrok gives you a new hostname, so you'll have to change the config
-again and restart the server (or manually change the webhook in Stripe's dashboard).
+Testing Stripe's webhooks locally requires `stripe-cli`_.
+After installing it you have to first login::
 
-Enable Sendinblue email integration
-===================================
-#. Create a Sendinblue account over at https://www.sendinblue.com (you can skip a lot of the profile set-up,
-   look for skip in the upper right).
-#. Get your v3 API key at https://account.sendinblue.com/advanced/api
-#. Create a list at https://my.sendinblue.com/lists/new/parent_id/1
-#. Add the sendinblue config keys to your .env, the keynames are ``SENDINBLUE_API_KEY`` and ``SENDINBLUE_LIST_ID``
+    stripe login
+
+After which you can run::
+
+    stripe listen --forward-to localhost.org:8000/api/v1/stripe_hooks/
+
+.. _`stripe-cli`: https://stripe.com/docs/stripe-cli#install
 
 Interact with the Docker containers
 ===================================

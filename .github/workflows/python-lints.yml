@@ -3,7 +3,7 @@ name: Python Lints
 on:
   pull_request:
     paths:
-      - 'kuma/**/*.py'
+      - "kuma/**/*.py"
       - .github/workflows/python-lints.yml
 
 jobs:
