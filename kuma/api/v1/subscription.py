@@ -27,6 +27,9 @@ from kuma.users.stripe_utils import retrieve_stripe_prices
 @require_GET
 @never_cache
 def subscription_config(request):
+    if not flag_is_active(request, "subscription"):
+        return HttpResponseForbidden("subscription is not enabled")
+
     prices = []
 
     for price in retrieve_stripe_prices():
