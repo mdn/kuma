@@ -16,7 +16,7 @@ services:
       - WAFFLE_COOKIE_SECURE=True
   web:
     <<: *worker
-    command: /bin/bash -c "/etc/nginx/ssl/generate_dev_cert.sh && gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=meinheld.gmeinheld.MeinheldWorker kuma.wsgi:application"
+    command: /bin/bash -c "/etc/nginx/ssl/generate_dev_cert.sh && gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=gevent kuma.wsgi:application"
     volumes:
       - ./:/app:z
       - ./etc/nginx/ssl:/etc/nginx/ssl
