@@ -81,10 +81,14 @@ if "mysql" in DEFAULT_DATABASE["ENGINE"]:
             "TEST": {"CHARSET": "utf8", "COLLATION": "utf8_general_ci"},
         }
     )
+POSTGRES_DATABASE = config(
+    "POSTGRES_DATABASE_URL",
+    default="postgresql://kuma:kuma@localhost/kuma",
+    cast=dj_database_url.parse,
+)
 
-DATABASES = {
-    "default": DEFAULT_DATABASE,
-}
+
+DATABASES = {"default": DEFAULT_DATABASE, "postgres": POSTGRES_DATABASE}
 
 
 SILENCED_SYSTEM_CHECKS = [
