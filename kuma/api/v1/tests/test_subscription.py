@@ -137,6 +137,7 @@ def test_stripe_subscription_canceled_sends_ga_tracking(
 
 
 @mock.patch("stripe.Price.retrieve")
+@pytest.mark.django_db
 def test_subscription_config(mock_retrieve, client, settings):
     def mocked_get_price(id):
         assert id in settings.STRIPE_PRICE_IDS
