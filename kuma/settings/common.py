@@ -90,6 +90,10 @@ POSTGRES_DATABASE = config(
 
 DATABASES = {"default": DEFAULT_DATABASE, "postgres": POSTGRES_DATABASE}
 
+DATABASE_ROUTERS = [
+    "kuma.core.database_routers.PrimaryRouter",
+    "kuma.core.database_routers.LegacyRouter",
+]
 
 SILENCED_SYSTEM_CHECKS = [
     # https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
@@ -382,6 +386,7 @@ INSTALLED_APPS = (
     "kuma.users.providers.github",
     "kuma.users.providers.google",
     "kuma.plus.apps.PlusConfig",
+    "kuma.documenturls.apps.DocumentURLsConfig",
     # util
     "django_jinja",
     "puente",
