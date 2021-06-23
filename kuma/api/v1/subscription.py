@@ -12,7 +12,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 from raven.contrib.django.models import client as raven_client
-from waffle import flag_is_active
+from waffle import switch_is_active
 
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_CANCELED,
@@ -27,7 +27,7 @@ from kuma.users.stripe_utils import retrieve_stripe_prices
 @require_GET
 @never_cache
 def subscription_config(request):
-    if not flag_is_active(request, "subscription"):
+    if not switch_is_active("subscription"):
         return HttpResponseForbidden("subscription is not enabled")
 
     prices = []
@@ -52,7 +52,7 @@ def subscription_checkout(request):
     user = request.user
     if not user.is_authenticated:
         return HttpResponseForbidden("user not authenticated")
-    elif not flag_is_active(request, "subscription"):
+    elif not switch_is_active("subscription"):
         return HttpResponseForbidden("subscription is not enabled")
 
     data = request.POST
@@ -84,7 +84,7 @@ def subscription_customer_portal(request):
     user = request.user
     if not user.is_authenticated:
         return HttpResponseForbidden("user not authenticated")
-    elif not flag_is_active(request, "subscription"):
+    elif not switch_is_active("subscription"):
         return HttpResponseForbidden("subscription is not enabled")
     elif not user.stripe_customer_id:
         return HttpResponseForbidden("no existing stripe_customer_id")
