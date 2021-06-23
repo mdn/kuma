@@ -137,6 +137,7 @@ def test_stripe_subscription_canceled_sends_ga_tracking(
 
 
 @mock.patch("stripe.Price.retrieve")
+@pytest.mark.django_db
 def test_subscription_config(mock_retrieve, client, settings):
     def mocked_get_price(id):
         assert id in settings.STRIPE_PRICE_IDS
@@ -155,17 +156,18 @@ def test_subscription_config(mock_retrieve, client, settings):
 
     mock_retrieve.side_effect = mocked_get_price
     url = reverse("api.v1.subscriptions.config")
-    response = client.get(url)
-    assert response.status_code == 200
-    assert response.json()["public_key"] == settings.STRIPE_PUBLIC_KEY
-    assert response.json()["prices"] == [
-        {"currency": "sek", "unit_amount": 555, "id": settings.STRIPE_PRICE_IDS[0]},
-        {
-            "currency": "sek",
-            "unit_amount": 555 * 10,
-            "id": settings.STRIPE_PRICE_IDS[1],
-        },
-    ]
+    with override_flag("subscription", active=True):
+        response = client.get(url)
+        assert response.status_code == 200
+        assert response.json()["public_key"] == settings.STRIPE_PUBLIC_KEY
+        assert response.json()["prices"] == [
+            {"currency": "sek", "unit_amount": 555, "id": settings.STRIPE_PRICE_IDS[0]},
+            {
+                "currency": "sek",
+                "unit_amount": 555 * 10,
+                "id": settings.STRIPE_PRICE_IDS[1],
+            },
+        ]
 
 
 @mock.patch("stripe.billing_portal.Session.create")

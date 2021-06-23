@@ -55,7 +55,7 @@ services:
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
     <<: *worker
-    command: gunicorn -w ${GUNICORN_WORKERS:-4} --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=meinheld.gmeinheld.MeinheldWorker kuma.wsgi:application
+    command: gunicorn -w ${GUNICORN_WORKERS:-4} --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=gevent kuma.wsgi:application
     depends_on:
       - mysql
       - postgres
@@ -88,7 +88,7 @@ services:
       - POSTGRES_DB=developer_mozilla_org
 
   mysql:
-    image: mysql:5.7.11
+    image: mysql:5.6
     # This is necessary for platforms using the Apple M1 chip.
     platform: linux/x86_64
     environment:
