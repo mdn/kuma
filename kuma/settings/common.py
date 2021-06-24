@@ -388,6 +388,7 @@ INSTALLED_APPS = (
     "kuma.users.providers.google",
     "kuma.plus.apps.PlusConfig",
     "kuma.documenturls.apps.DocumentURLsConfig",
+    "kuma.bookmarks.apps.BookmarksConfig",
     # util
     "django_jinja",
     "puente",
@@ -917,4 +918,15 @@ PLUS_VARIANTS = config(
         ]
     ),
     cast=json.loads,
+)
+
+# When someone wants to bookmark something we only allow the URI (pathname)
+# to be supplied. We control what the absolute URL becomes based on that.
+# It might be practical to override this in local development to something like:
+#
+#  echo 'BOOKMARKS_BASE_URL=http://localhost:5000' >> .env
+#
+# So it can read from your local Yari instance.
+BOOKMARKS_BASE_URL = config(
+    "BOOKMARKS_BASE_URL", default="https://developer.mozilla.org"
 )

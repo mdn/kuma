@@ -8,6 +8,19 @@ from django.dispatch import receiver
 from redo import retrying
 
 
+def download_url(url, retry_options=None):
+    retry_options = retry_options or {
+        "retry_exceptions": (requests.exceptions.Timeout,),
+        "sleeptime": 2,
+        "attempts": 5,
+    }
+    with retrying(requests.get, **retry_options) as retrying_get:
+        response = retrying_get(url, allow_redirects=False)
+        response.raise_for_status()
+
+        return response
+
+
 class DocumentURL(models.Model):
     """There are documents we look up for things like bookmarks and notes.
     These are not legacy Wiki documents but rather remote URLs.
@@ -35,6 +48,15 @@ class DocumentURL(models.Model):
     @classmethod
     def normalize_uri(cls, uri):
         return uri.lower().strip()
+
+    # @classmethod
+    # def create_by_url(cls, uri, absolute_url, retry_options=None):
+    #     response = download_url(absolute_url, retry_options=retry_options)
+    #     return cls.objects.create(
+    #         uri=cls.normalize_uri(uri),
+    #         absolute_url=absolute_url,
+    #         metadata=
+    #     )
 
 
 @receiver(pre_save, sender=DocumentURL)
@@ -64,13 +86,7 @@ class DocumentURLCheck(models.Model):
     def check_uri(cls, uri, cleanup_old=False, retry_options=None):
         document_url = DocumentURL.objects.get(uri=DocumentURL.normalize_uri(uri))
 
-        retry_options = retry_options or {
-            "retry_exceptions": (requests.exceptions.Timeout,),
-            "sleeptime": 2,
-            "attempts": 5,
-        }
-        with retrying(requests.get, **retry_options) as retrying_get:
-            response = retrying_get(document_url.absolute_url, allow_redirects=False)
+        response = download_url(document_url.absolute_url, retry_options=retry_options)
 
         headers = dict(response.headers)
         checked = cls.objects.create(
@@ -82,3 +98,4 @@ class DocumentURLCheck(models.Model):
             cls.objects.filter(document_url=document_url).exclude(
                 id=checked.id
             ).delete()
+        return checked

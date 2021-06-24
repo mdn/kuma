@@ -26,5 +26,5 @@ class Migration(migrations.Migration):
             name="subscriber_number",
             field=models.PositiveIntegerField(blank=True, null=True),
         ),
-        migrations.RunPython(set_initial_subscriber_number),
+        # migrations.RunPython(set_initial_subscriber_number),
     ]
