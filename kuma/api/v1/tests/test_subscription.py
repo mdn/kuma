@@ -3,7 +3,7 @@ from unittest import mock
 
 import pytest
 from stripe.error import APIError
-from waffle.testutils import override_flag
+from waffle.testutils import override_switch
 
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_CANCELED,
@@ -156,7 +156,7 @@ def test_subscription_config(mock_retrieve, client, settings):
 
     mock_retrieve.side_effect = mocked_get_price
     url = reverse("api.v1.subscriptions.config")
-    with override_flag("subscription", active=True):
+    with override_switch("subscription", active=True):
         response = client.get(url)
         assert response.status_code == 200
         assert response.json()["public_key"] == settings.STRIPE_PUBLIC_KEY
@@ -186,7 +186,7 @@ def test_subscription_customer_portal(mock_create, user_client, wiki_user):
     assert response.status_code == 403
     assert "subscription is not enabled" in response.content.decode()
 
-    with override_flag("subscription", active=True):
+    with override_switch("subscription", active=True):
         response = user_client.post(url)
         assert response.status_code == 403
         assert "no existing stripe_customer_id" in response.content.decode()
@@ -232,7 +232,7 @@ def test_subscription_checkout_auth(
     assert response.status_code == 403
     assert "subscription is not enabled" in response.content.decode()
 
-    with override_flag("subscription", active=True):
+    with override_switch("subscription", active=True):
         response = user_client.post(url)
         assert response.status_code == 200
         assert response.json()["sessionId"] == fake_session_id
