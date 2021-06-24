@@ -413,16 +413,15 @@ redis = ">=3.0.0"
 
 [[package]]
 name = "django-statici18n"
-version = "1.9.0"
+version = "2.0.1"
 description = "A Django app that provides helper for generating Javascript catalog to static files."
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
-Django = ">=1.8"
-django-appconf = ">=0.6"
-six = "*"
+Django = ">=2.2"
+django-appconf = ">=1.0"
 
 [[package]]
 name = "django-storages"
@@ -1418,7 +1417,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "061ce55a040a025b08a24f93f2374cb3bae3265257abb6b5b8333825d5e16c2c"
+content-hash = "070981d7d2f28e4b11c291664cf95a7dfdf0ef519ce8921d5ba0fa1d23d55216"
 
 [metadata.files]
 amqp = [
@@ -1636,8 +1635,8 @@ django-redis = [
     {file = "django_redis-5.0.0-py3-none-any.whl", hash = "sha256:97739ca9de3f964c51412d1d7d8aecdfd86737bb197fce6e1ff12620c63c97ee"},
 ]
 django-statici18n = [
-    {file = "django-statici18n-1.9.0.tar.gz", hash = "sha256:913dd056c1abcbe129b1db806cb4cfb821c4077d7e857d6eb29043ea64f4d1d0"},
-    {file = "django_statici18n-1.9.0-py2.py3-none-any.whl", hash = "sha256:d9524a0af20be789e623bc60e0950b660ae33a0d1d1fecdecbd1c056eda56631"},
+    {file = "django-statici18n-2.0.1.tar.gz", hash = "sha256:57a343aa907cd1f1d284c9697f7f2906318b39a3e9bb3af08a562df973741c33"},
+    {file = "django_statici18n-2.0.1-py2.py3-none-any.whl", hash = "sha256:dfa75d119ada7ab27b0f479a3f029cde476071b733fe9a89d270b7a890a2355d"},
 ]
 django-storages = [
     {file = "django-storages-1.9.1.tar.gz", hash = "sha256:a59e9923cbce7068792f75344ed7727021ee4ac20f227cf17297d0d03d141e91"},
