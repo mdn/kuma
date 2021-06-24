@@ -79,7 +79,7 @@ requests-mock = "^1.9.2"
 ElasticMock = "^1.8.0"
 
 # Linting
-black = "20.8b1"
+black = "21.6b0"
 flake8 = "^3.9.2"
 flake8-import-order = "^0.18.1"
 dennis = "^0.9" # Used by `make localetest` to lint po files
