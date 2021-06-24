@@ -377,7 +377,7 @@ Django = ">=1.11"
 
 [[package]]
 name = "django-pipeline"
-version = "1.7.0"
+version = "2.0.6"
 description = "Pipeline is an asset packaging library for Django."
 category = "main"
 optional = false
@@ -1418,7 +1418,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "061ce55a040a025b08a24f93f2374cb3bae3265257abb6b5b8333825d5e16c2c"
+content-hash = "2bd7b732106b2669ee3989baf8a26f4c369fea9149e57f8ae58d14cb2935ce23"
 
 [metadata.files]
 amqp = [
@@ -1621,8 +1621,8 @@ django-mysql = [
     {file = "django_mysql-3.3.0-py3-none-any.whl", hash = "sha256:ceaf6d93396b7f7b3798ac5f9a819dd70d5f0e1112850f2a34c57f062fa19398"},
 ]
 django-pipeline = [
-    {file = "django-pipeline-1.7.0.tar.gz", hash = "sha256:0ded22b974e3d627c27fc490ef5b23fcdcf0cdb00b704d628b5ca6d0b010d6fe"},
-    {file = "django_pipeline-1.7.0-py2.py3-none-any.whl", hash = "sha256:f7da70f00aa4baea3e0811f88927a116425deee05871fa2bfd2f8247f42d8847"},
+    {file = "django-pipeline-2.0.6.tar.gz", hash = "sha256:443c560000b3202dafa873cf9b9a49018ded4b2090979dec8e8858b8b1f867c0"},
+    {file = "django_pipeline-2.0.6-py3-none-any.whl", hash = "sha256:3ec726e2bf9f61f213f41ee4513f4191a02ab2f5df86c9e3751a9a607c814031"},
 ]
 django-querycount = [
     {file = "django-querycount-0.7.0.tar.gz", hash = "sha256:8f5123d78716ff0704f2373e746a7200b8d8417798ce4a99bf2de87e3768f9ce"},
