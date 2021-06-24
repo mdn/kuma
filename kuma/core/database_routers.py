@@ -21,7 +21,11 @@ class PrimaryRouter:
         # Postgres was introduced to the stack.
         if app_label in self.app_labels.get(db, []):
             return True
-        return False
+        # It's important to *not* do `return False` here because that would
+        # essentially mean "Do not run this migration with any database".
+        # By doing a `return None` you let other database routers get a chance
+        # to say yes to this migration.
+        return None
 
 
 class LegacyRouter:
