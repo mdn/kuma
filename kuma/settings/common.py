@@ -82,11 +82,19 @@ if "mysql" in DEFAULT_DATABASE["ENGINE"]:
             "TEST": {"CHARSET": "utf8", "COLLATION": "utf8_general_ci"},
         }
     )
+POSTGRES_DATABASE = config(
+    "POSTGRES_DATABASE_URL",
+    default="postgresql://kuma:kuma@localhost/kuma",
+    cast=dj_database_url.parse,
+)
 
-DATABASES = {
-    "default": DEFAULT_DATABASE,
-}
 
+DATABASES = {"default": DEFAULT_DATABASE, "postgres": POSTGRES_DATABASE}
+
+DATABASE_ROUTERS = [
+    "kuma.core.database_routers.PrimaryRouter",
+    "kuma.core.database_routers.LegacyRouter",
+]
 
 SILENCED_SYSTEM_CHECKS = [
     # https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
@@ -378,8 +386,8 @@ INSTALLED_APPS = (
     "allauth.socialaccount",
     "kuma.users.providers.github",
     "kuma.users.providers.google",
-    "kuma.users.newsletter.apps.UserNewsletterConfig",
     "kuma.plus.apps.PlusConfig",
+    "kuma.documenturls.apps.DocumentURLsConfig",
     # util
     "django_jinja",
     "puente",
@@ -817,7 +825,8 @@ CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
 # Stripe API KEY settings
 STRIPE_PUBLIC_KEY = config("STRIPE_PUBLIC_KEY", default="")
 STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY", default="")
-STRIPE_PLAN_ID = config("STRIPE_PLAN_ID", default="")
+STRIPE_PRICE_IDS = config("STRIPE_PRICE_IDS", default="", cast=Csv())
+
 # Misc Stripe settings
 STRIPE_MAX_NETWORK_RETRIES = config("STRIPE_MAX_NETWORK_RETRIES", default=5, cast=int)
 
@@ -879,15 +888,6 @@ AWS_DEFAULT_ACL = None
 # Elasticsearch instance will be a LOT smaller.
 INDEX_HTML_ATTRIBUTES = config("INDEX_HTML_ATTRIBUTES", cast=bool, default=not DEBUG)
 INDEX_CSS_CLASSNAMES = config("INDEX_CSS_CLASSNAMES", cast=bool, default=not DEBUG)
-
-# For local development you might want to set this to a hostname provided to
-# you by a tunneling service such as ngrok.
-CUSTOM_WEBHOOK_HOSTNAME = config("CUSTOM_WEBHOOK_HOSTNAME", default=None)
-
-# We use sendinblue.com to send marketing emails and are subdividing users
-# into lists of paying and not paying users
-SENDINBLUE_API_KEY = config("SENDINBLUE_API_KEY", default=None)
-SENDINBLUE_LIST_ID = config("SENDINBLUE_LIST_ID", default=None)
 
 # When doing local development with Yari, if you want to have `?next=...` redirects
 # work when you sign in on Yari, this needs to be set to `localhost.org:3000` in your

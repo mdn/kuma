@@ -63,7 +63,7 @@ SITE_ID = 1
 # Stripe API KEY settings
 STRIPE_PUBLIC_KEY = "testing"
 STRIPE_SECRET_KEY = "testing"
-STRIPE_PLAN_ID = "testing"
+STRIPE_PRICE_IDS = ["price_0000001", "price_0000002"]
 
 # For legacy reasons, the tests assume these are always true so don't
 # let local overrides take effect.
@@ -75,9 +75,6 @@ INDEX_CSS_CLASSNAMES = True
 # our tests to not deviate when the actual number changes since that number
 # change shouldn't affect the tests.
 CONTRIBUTION_AMOUNT_USD = 4.99
-
-SENDINBLUE_API_KEY = "testing"
-SENDINBLUE_LIST_ID = 7327
 
 # This is False by default, to so we don't have to rewrite all the existing
 # tests, it's True in this context.

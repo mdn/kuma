@@ -1,4 +1,4 @@
-version: '2.4'
+version: "2.4"
 services:
   worker: &worker
     build:
@@ -11,6 +11,7 @@ services:
       - ./:/app:z
     depends_on:
       - mysql
+      - postgres
       - redis
       - minio
     environment:
@@ -32,6 +33,7 @@ services:
       - CELERY_RESULT_BACKEND=redis://redis:6379/1
       - CSRF_COOKIE_SECURE=False
       - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
+      - POSTGRES_DATABASE_URL=postgresql://${POSTGRES_DATABASE_USER:-kuma}:${POSTGRES_DATABASE_PASSWORD:-kuma}@postgres:5432/developer_mozilla_org
       - DEBUG=${DEBUG:-True}
       - DOMAIN=${DOMAIN:-localhost}
       - ENABLE_RESTRICTIONS_BY_HOST=${ENABLE_RESTRICTIONS_BY_HOST:-False}
@@ -53,9 +55,10 @@ services:
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
     <<: *worker
-    command: gunicorn -w ${GUNICORN_WORKERS:-4} --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=meinheld.gmeinheld.MeinheldWorker kuma.wsgi:application
+    command: gunicorn -w ${GUNICORN_WORKERS:-4} --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=gevent kuma.wsgi:application
     depends_on:
       - mysql
+      - postgres
       - redis
       - minio
       - mockga
@@ -68,11 +71,21 @@ services:
     command: bash
     depends_on:
       - mysql
+      - postgres
       - redis
       - minio
       - minio_setup
     volumes:
       - ./:/app
+
+  # https://hub.docker.com/_/postgres/
+  postgres:
+    image: postgres:13.3
+    environment:
+      # Create the superuser account
+      - POSTGRES_USER=kuma
+      - POSTGRES_PASSWORD=kuma
+      - POSTGRES_DB=developer_mozilla_org
 
   mysql:
     image: mysql:5.6
@@ -130,7 +143,7 @@ services:
       - "7777:7777"
 
 volumes:
-    miniodata:
-    mysqlvolume:
-    esdata:
-      driver: local
+  miniodata:
+  mysqlvolume:
+  esdata:
+    driver: local
