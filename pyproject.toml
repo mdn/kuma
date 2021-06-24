@@ -17,7 +17,7 @@ botocore = "^1.14.17"
 celery = "^4.3.0"
 dj-database-url = "^0.5.0"
 dj-email-url = "^1"
-django = "^2"
+django = "^3"
 django-allauth = "^0.41.0"
 django-decorator-include = "^3.0"
 django-extensions = "^2.2.6"
@@ -79,7 +79,7 @@ requests-mock = "^1.9.2"
 ElasticMock = "^1.8.0"
 
 # Linting
-black = "20.8b1"
+black = "21.6b0"
 flake8 = "^3.9.2"
 flake8-import-order = "^0.18.1"
 dennis = "^0.9" # Used by `make localetest` to lint po files
