@@ -26,9 +26,9 @@ def code_sample(request, document_slug, document_locale, sample_name):
         return HttpResponseForbidden()
 
     return HttpResponse(
-        "Legacy ($sample) URLs for live samples are now fully "
+        "Legacy ($samples) URLs for live samples are now fully "
         "deprecated and will not work. If you have a document that relies "
-        "on a URL with '$sample' in it, switch to using the EmbedLiveSample() "
+        "on a URL with '$samples' in it, switch to using the EmbedLiveSample() "
         "macro instead.\n",
         content_type="text/plain",
     )
