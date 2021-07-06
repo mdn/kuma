@@ -19,7 +19,7 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
     rf = RequestFactory()
 
     def setUp(self):
-        """ extra setUp to make a working session """
+        """extra setUp to make a working session"""
         super(KumaSocialAccountAdapterTestCase, self).setUp()
         self.adapter = KumaSocialAccountAdapter()
 
