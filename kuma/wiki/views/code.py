@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponseForbidden
-from django.shortcuts import get_object_or_404, redirect, render
+from django.http.response import HttpResponse
+from django.shortcuts import redirect
 from django.views.decorators.cache import cache_control
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.http import require_GET
@@ -8,7 +9,6 @@ from django.views.decorators.http import require_GET
 from kuma.attachments.utils import full_attachment_url
 
 from ..decorators import allow_CORS_GET, process_document_path
-from ..models import Document
 
 
 @cache_control(public=True, max_age=31536000)
@@ -25,11 +25,13 @@ def code_sample(request, document_slug, document_locale, sample_name):
     if settings.DOMAIN in request.get_host():
         return HttpResponseForbidden()
 
-    document = get_object_or_404(Document, slug=document_slug, locale=document_locale)
-    data = document.extract.code_sample(sample_name)
-    data["document"] = document
-    data["sample_name"] = sample_name
-    return render(request, "wiki/code_sample.html", data)
+    return HttpResponse(
+        "Legacy ($sample) URLs for live samples are now fully "
+        "deprecated and will not work. If you have a document that relies "
+        "on a URL with '$sample' in it, switch to using the EmbedLiveSample() "
+        "macro instead.\n",
+        content_type="text/plain",
+    )
 
 
 @cache_control(public=True, max_age=31536000)
