@@ -49,15 +49,6 @@ class DocumentURL(models.Model):
     def normalize_uri(cls, uri):
         return uri.lower().strip()
 
-    # @classmethod
-    # def create_by_url(cls, uri, absolute_url, retry_options=None):
-    #     response = download_url(absolute_url, retry_options=retry_options)
-    #     return cls.objects.create(
-    #         uri=cls.normalize_uri(uri),
-    #         absolute_url=absolute_url,
-    #         metadata=
-    #     )
-
 
 @receiver(pre_save, sender=DocumentURL)
 def assert_lowercase_uri(sender, instance, **kwargs):

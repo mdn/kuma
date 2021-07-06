@@ -11,7 +11,6 @@ from django.middleware.csrf import get_token
 from django.utils import timezone
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_http_methods
-from ratelimit.decorators import ratelimit
 
 from kuma.bookmarks.models import Bookmark
 from kuma.documenturls.models import DocumentURL, download_url
@@ -38,7 +37,6 @@ def is_subscriber(func):
 
 
 @never_cache
-@ratelimit(key="user_or_ip", rate="100/m", block=True)
 @require_http_methods(["GET"])
 @is_subscriber
 def bookmarks(request):
@@ -86,8 +84,8 @@ def bookmarks(request):
 
 
 @never_cache
-@ratelimit(key="user_or_ip", rate="100/m", block=True)
 @require_http_methods(["GET", "POST"])
+@is_subscriber
 def bookmarked(request):
 
     url = (
@@ -98,7 +96,7 @@ def bookmarked(request):
     if not url:
         return HttpResponseBadRequest("missing 'url'")
     if not valid_url(url):
-        return HttpResponseBadRequest("invalid 'url'") and "://" not in url
+        return HttpResponseBadRequest("invalid 'url'")
 
     absolute_url = f"{settings.BOOKMARKS_BASE_URL}{url}/index.json"
 
@@ -117,6 +115,7 @@ def bookmarked(request):
             metadata.pop("sidebarHTML", None)
             metadata.pop("other_translations", None)
             metadata.pop("flaws", None)
+
             documenturl = DocumentURL.objects.create(
                 uri=DocumentURL.normalize_uri(url),
                 absolute_url=absolute_url,

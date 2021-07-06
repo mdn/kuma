@@ -82,3 +82,6 @@ ENABLE_SUBSCRIPTIONS = True
 
 # Hardcode this option
 PLUS_VARIANTS = ["Foo", "Bar", "Buz"]
+
+# So it never accidentally actually uses the real value
+BOOKMARKS_BASE_URL = "https://developer.example.com"

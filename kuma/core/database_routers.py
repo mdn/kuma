@@ -3,7 +3,6 @@ class PrimaryRouter:
     app_labels = {"postgres": set(["documenturls", "bookmarks"])}
 
     legacy_app_labels = set(["wiki", "search", "authtoken", "authkeys", "taggit"])
-    legacy_model_names = set(["userban", "ipban"])
 
     app_labels_reversed = {}
     for db, labels in app_labels.items():
@@ -33,8 +32,8 @@ class PrimaryRouter:
         # Because of how Django migrations work with a multi-db, all apps and models
         # will be created even if you don't read or write from them. But some
         # apps and models we will never want to allow in the primary database.
-        if app_label in self.legacy_app_labels or model_name in self.legacy_model_names:
-            return False
+        # if app_label in self.legacy_app_labels:
+        #     return False
 
         # It's important to *not* do `return False` here because that would
         # essentially mean "Do not run this migration with any database".
