@@ -1,31 +1,13 @@
-import datetime
+import json
+from pathlib import Path
 
 import pytest
-from django.core.files.base import ContentFile
-
-from kuma.attachments.models import Attachment, AttachmentRevision
 
 
 @pytest.fixture
-def file_attachment(db, wiki_user):
-    file_id = 97
-    filename = "test.txt"
-    title = "Test text file"
-
-    attachment = Attachment(title=title, mindtouch_attachment_id=file_id)
-    attachment.save()
-    revision = AttachmentRevision(
-        title=title,
-        is_approved=True,
-        attachment=attachment,
-        mime_type="text/plain",
-        description="Initial upload",
-        created=datetime.datetime.now(),
-    )
-    revision.creator = wiki_user
-    revision.file.save(filename, ContentFile(b"This is only a test."))
-    revision.make_current()
-    return dict(
-        attachment=attachment,
-        file=dict(id=file_id, name=filename),
-    )
+def sample_attachment_redirect():
+    redirects_file = Path(__file__).parent.parent / "redirects.json"
+    with open(redirects_file) as f:
+        redirects = json.load(f)
+    first = list(redirects.keys())[0]
+    return {"id": int(first), "url": redirects[first]}

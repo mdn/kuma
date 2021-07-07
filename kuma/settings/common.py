@@ -849,7 +849,7 @@ ATTACHMENTS_AWS_STORAGE_BUCKET_NAME = config(
 )
 
 ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN = config(
-    "ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN", default=None
+    "ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN", default="media.prod.mdn.mozit.cloud"
 )  # For example, Cloudfront CDN domain
 ATTACHMENTS_AWS_S3_SECURE_URLS = config(
     "ATTACHMENTS_AWS_S3_SECURE_URLS", default=True, cast=bool
