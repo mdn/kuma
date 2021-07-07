@@ -11,6 +11,26 @@ from kuma.core.decorators import shared_cache_control
 
 from .utils import convert_to_http_date, full_attachment_url
 
+# In the olden days of Kuma, we used to have people upload files into the Wiki.
+# These are called Attachments.
+# Later we realized it's bad to host these files on disk so we uploaded them
+# all into S3 and in the Django view, we simply redirected to the public
+# S3 URL. E.g.
+# GET /files/16014/LeagueMonoVariable.ttf
+#  ==> 301 https://media.prod.mdn.mozit.cloud/attachments/2018/06/05/16014/96e6cc293bd18f32a17371500d01301b/LeagueMonoVariable.ttf
+#
+# Now, you can't upload files any more but we have these absolute URLs
+# peppered throughout the translated-content since we moved to Yari. Cleaning
+# all of that up is considered too hard so it's best to just keep serving the
+# redirects.
+# But in an effort to seriously simplify and be able to clean up a much of
+# MySQL data, we decided to scrape all the legacy file attachments mentioned
+# through out all mdn/content and mdn/translated-content. We then looked up
+# each URL's final destination URL. All of these we dumped into the
+# file called 'redirects.json' which is stored here on disk in this folder.
+# Now the view function just needs to reference that mapping. If something's
+# not in the mapping it's either a fumbly typo or it's simple a file attachment
+# URL not used anywhere in the content or translated-content.
 
 REDIRECTS_FILE = Path(__file__).parent / "redirects.json"
 assert REDIRECTS_FILE.exists(), REDIRECTS_FILE
