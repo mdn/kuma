@@ -1,29 +1,24 @@
-# Django settings for kuma project.
 import json
-import os
-import platform
-import re
-from collections import namedtuple
 from email.utils import parseaddr
-from os.path import dirname
-from urllib.parse import urlsplit
+from pathlib import Path
 
 import dj_database_url
 import dj_email_url
 from decouple import config, Csv
 
-_Language = namedtuple("Language", "english native")
+# _Language = namedtuple("Language", "english native")
 
 
-def path(*parts):
-    return os.path.join(BASE_DIR, *parts)
+# def path(*parts):
+#     return os.path.join(BASE_DIR, *parts)
 
 
 DEBUG = config("DEBUG", default=False, cast=bool)
 
 # BASE_DIR used by django-extensions, such as ./manage.py notes
 # ROOT used by some Kuma application code
-BASE_DIR = ROOT = dirname(dirname(dirname(os.path.abspath(__file__))))
+# BASE_DIR = ROOT = dirname(dirname(dirname(os.path.abspath(__file__))))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 ADMIN_EMAILS = config("ADMIN_EMAILS", default="mdn-dev@mozilla.com", cast=Csv())
 ADMINS = zip(config("ADMIN_NAMES", default="MDN devs", cast=Csv()), ADMIN_EMAILS)
@@ -46,51 +41,60 @@ REVISION_HASH = config("REVISION_HASH", default="undefined")
 MANAGERS = ADMINS
 
 
-# CONN_MAX_AGE: 'persistent' to keep open connection, or max seconds before
-# releasing. Default is 0 for a new connection per request.
-def parse_conn_max_age(value):
-    try:
-        return int(value)
-    except ValueError:
-        assert value.lower() == "persistent", 'Must be int or "persistent"'
-        return None
+# # CONN_MAX_AGE: 'persistent' to keep open connection, or max seconds before
+# # releasing. Default is 0 for a new connection per request.
+# def parse_conn_max_age(value):
+#     try:
+#         return int(value)
+#     except ValueError:
+#         assert value.lower() == "persistent", 'Must be int or "persistent"'
+#         return None
 
 
-CONN_MAX_AGE = config("CONN_MAX_AGE", default=60, cast=parse_conn_max_age)
-DEFAULT_DATABASE = config(
-    "DATABASE_URL",
-    default="mysql://kuma:kuma@localhost:3306/kuma",
-    cast=dj_database_url.parse,
-)
+CONN_MAX_AGE = config("CONN_MAX_AGE", default=60)
+# DEFAULT_DATABASE = config(
+#     "DATABASE_URL",
+#     default="mysql://kuma:kuma@localhost:3306/kuma",
+#     cast=dj_database_url.parse,
+# )
 
 
-if "mysql" in DEFAULT_DATABASE["ENGINE"]:
-    # These are the production settings for OPTIONS.
-    DEFAULT_DATABASE.update(
-        {
-            "CONN_MAX_AGE": CONN_MAX_AGE,
-            "OPTIONS": {
-                "charset": "utf8",
-                "use_unicode": True,
-                "init_command": "SET "
-                "innodb_strict_mode=1,"
-                "storage_engine=INNODB,"
-                "sql_mode='STRICT_TRANS_TABLES',"
-                "character_set_connection=utf8,"
-                "collation_connection=utf8_general_ci",
-            },
-            "TEST": {"CHARSET": "utf8", "COLLATION": "utf8_general_ci"},
-        }
-    )
+# if "mysql" in DEFAULT_DATABASE["ENGINE"]:
+#     # These are the production settings for OPTIONS.
+#     DEFAULT_DATABASE.update(
+#         {
+#             "CONN_MAX_AGE": CONN_MAX_AGE,
+#             "OPTIONS": {
+#                 "charset": "utf8",
+#                 "use_unicode": True,
+#                 "init_command": "SET "
+#                 "innodb_strict_mode=1,"
+#                 "storage_engine=INNODB,"
+#                 "sql_mode='STRICT_TRANS_TABLES',"
+#                 "character_set_connection=utf8,"
+#                 "collation_connection=utf8_general_ci",
+#             },
+#             "TEST": {"CHARSET": "utf8", "COLLATION": "utf8_general_ci"},
+#         }
+#     )
+
+# DATABASES = {
+#     "default": DEFAULT_DATABASE,
+# }
 
 DATABASES = {
-    "default": DEFAULT_DATABASE,
+    "default": config(
+        "DATABASE_URL",
+        # default="postgresql://localhost/songsearch",
+        default="postgresql://kuma:kuma@localhost/kuma",
+        cast=dj_database_url.parse,
+    )
 }
 
 
 SILENCED_SYSTEM_CHECKS = [
-    # https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
-    "django_mysql.W003",
+    # # https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
+    # "django_mysql.W003",
 ]
 
 # Cache Settings
@@ -118,18 +122,24 @@ DEFAULT_FROM_EMAIL = config(
 )
 SERVER_EMAIL = config("SERVER_EMAIL", default="server-error@developer.mozilla.org")
 
-PLATFORM_NAME = platform.node()
+# PLATFORM_NAME = platform.node()
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = "US/Pacific"
+TIME_ZONE = "UTC"
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = "en-US"
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
 
 # Accepted locales.
 # The order of some codes is important. For example, 'pt-PT' comes before
@@ -195,28 +205,28 @@ for requested_lang, delivered_lang in LOCALE_ALIASES.items():
         LANGUAGE_URL_MAP[requested_lang.lower()] = delivered_lang
 
 
-def _get_locales():
-    """
-    Load LOCALES data from languages.json
+# def _get_locales():
+#     """
+#     Load LOCALES data from languages.json
 
-    languages.json is from the product-details project:
-    https://product-details.mozilla.org/1.0/languages.json
-    """
-    lang_path = path("kuma", "settings", "languages.json")
-    with open(lang_path, "r") as lang_file:
-        json_locales = json.load(lang_file)
+#     languages.json is from the product-details project:
+#     https://product-details.mozilla.org/1.0/languages.json
+#     """
+#     lang_path = path("kuma", "settings", "languages.json")
+#     with open(lang_path, "r") as lang_file:
+#         json_locales = json.load(lang_file)
 
-    locales = {}
-    for locale, meta in json_locales.items():
-        locales[locale] = _Language(meta["English"], meta["native"])
-    return locales
+#     locales = {}
+#     for locale, meta in json_locales.items():
+#         locales[locale] = _Language(meta["English"], meta["native"])
+#     return locales
 
 
-LOCALES = _get_locales()
-LANGUAGES = [(locale, LOCALES[locale].native) for locale in ENABLED_LOCALES]
+# LOCALES = _get_locales()
+# LANGUAGES = [(locale, LOCALES[locale].native) for locale in ENABLED_LOCALES]
 
 # Language list sorted for forms (English, then alphabetical by locale code)
-SORTED_LANGUAGES = [LANGUAGES[0]] + sorted(LANGUAGES[1:])
+# SORTED_LANGUAGES = [LANGUAGES[0]] + sorted(LANGUAGES[1:])
 
 LANGUAGE_COOKIE_NAME = "preferredlocale"
 # The number of seconds we are keeping the language preference cookie. (3 years)
@@ -227,21 +237,21 @@ SITE_ID = config("SITE_ID", default=1, cast=int)
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = True
-USE_L10N = True
-LOCALE_PATHS = (path("locale"),)
+# USE_I18N = True
+# USE_L10N = True
+# LOCALE_PATHS = (path("locale"),)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = config("MEDIA_ROOT", default=path("media"))
+# MEDIA_ROOT = config("MEDIA_ROOT", default=path("media"))
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = config("MEDIA_URL", default="/media/")
+# MEDIA_URL = config("MEDIA_URL", default="/media/")
 
 STATIC_URL = config("STATIC_URL", default="/static/")
-STATIC_ROOT = path("static")
+# STATIC_ROOT = path("static")
 
 SERVE_MEDIA = False
 
@@ -281,187 +291,231 @@ SECRET_KEY = config(
 )
 
 
-_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.template.context_processors.debug",
-    "django.template.context_processors.media",
-    "django.template.context_processors.static",
-    "django.template.context_processors.request",
-    "django.template.context_processors.csrf",
-    "django.contrib.messages.context_processors.messages",
-    "kuma.core.context_processors.global_settings",
-    "kuma.core.context_processors.i18n",
-    "kuma.core.context_processors.next_url",
-)
+# _CONTEXT_PROCESSORS = (
+#     "django.contrib.auth.context_processors.auth",
+#     "django.template.context_processors.debug",
+#     "django.template.context_processors.media",
+#     "django.template.context_processors.static",
+#     "django.template.context_processors.request",
+#     "django.template.context_processors.csrf",
+#     "django.contrib.messages.context_processors.messages",
+#     "kuma.core.context_processors.global_settings",
+#     "kuma.core.context_processors.i18n",
+#     "kuma.core.context_processors.next_url",
+# )
 
-
-MIDDLEWARE = (
+MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-    "kuma.core.middleware.SetRemoteAddrFromForwardedFor",
-    (
-        "kuma.core.middleware.ForceAnonymousSessionMiddleware"
-        if MAINTENANCE_MODE
-        else "django.contrib.sessions.middleware.SessionMiddleware"
-    ),
-    "kuma.core.middleware.LocaleStandardizerMiddleware",
-    # LocaleMiddleware must be before any middleware that uses
-    # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
-    "kuma.core.middleware.LocaleMiddleware",
-    "django.middleware.http.ConditionalGetMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-)
-
-if not MAINTENANCE_MODE:
-    # We don't want this in maintence mode, as it adds "Cookie"
-    # to the Vary header, which in turn, kills caching.
-    MIDDLEWARE += ("django.middleware.csrf.CsrfViewMiddleware",)
-
-MIDDLEWARE += (
+    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "kuma.core.middleware.WaffleWithCookieDomainMiddleware",
-)
-
-ENABLE_QUERYCOUNT = config("ENABLE_QUERYCOUNT", default=False, cast=bool)
-if ENABLE_QUERYCOUNT:
-    # Prints heavy query counts per request.
-    QUERYCOUNT = {
-        "IGNORE_REQUEST_PATTERNS": [r"^/admin/"],
-        "DISPLAY_DUPLICATES": config(
-            "QUERYCOUNT_DISPLAY_DUPLICATES", cast=int, default=0
-        ),
-    }
-    MIDDLEWARE += ("querycount.middleware.QueryCountMiddleware",)
-
-# Auth
-AUTHENTICATION_BACKENDS = (
-    "kuma.users.auth_backends.KumaAuthBackend",  # Handles User Bans
-    "allauth.account.auth_backends.AuthenticationBackend",  # Legacy
-)
-AUTH_USER_MODEL = "users.User"
-
-if urlsplit(STATIC_URL).hostname in (None, "localhost"):
-    # Avatar needs a publicly available default image
-    DEFAULT_AVATAR = PRODUCTION_URL + "/static/img/avatar.png"
-else:
-    DEFAULT_AVATAR = STATIC_URL + "img/avatar.png"
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
 
 ROOT_URLCONF = "kuma.urls"
 
-STATICFILES_DIRS = [
-    path("build", "locale"),
-]
+# MIDDLEWARE = (
+#     "django.middleware.security.SecurityMiddleware",
+#     "whitenoise.middleware.WhiteNoiseMiddleware",
+#     "kuma.core.middleware.SetRemoteAddrFromForwardedFor",
+#     (
+#         "kuma.core.middleware.ForceAnonymousSessionMiddleware"
+#         if MAINTENANCE_MODE
+#         else "django.contrib.sessions.middleware.SessionMiddleware"
+#     ),
+#     "kuma.core.middleware.LocaleStandardizerMiddleware",
+#     # LocaleMiddleware must be before any middleware that uses
+#     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
+#     "kuma.core.middleware.LocaleMiddleware",
+#     "django.middleware.http.ConditionalGetMiddleware",
+#     "django.middleware.common.CommonMiddleware",
+#     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+# )
 
-# TODO: Figure out why changing the order of apps (for example, moving taggit
-# higher in the list) breaks tests.
-INSTALLED_APPS = (
-    # django
+# if not MAINTENANCE_MODE:
+#     # We don't want this in maintence mode, as it adds "Cookie"
+#     # to the Vary header, which in turn, kills caching.
+#     MIDDLEWARE += ("django.middleware.csrf.CsrfViewMiddleware",)
+
+# MIDDLEWARE += (
+#     "django.contrib.auth.middleware.AuthenticationMiddleware",
+#     "django.contrib.messages.middleware.MessageMiddleware",
+#     "kuma.core.middleware.WaffleWithCookieDomainMiddleware",
+# )
+
+# ENABLE_QUERYCOUNT = config("ENABLE_QUERYCOUNT", default=False, cast=bool)
+# if ENABLE_QUERYCOUNT:
+#     # Prints heavy query counts per request.
+#     QUERYCOUNT = {
+#         "IGNORE_REQUEST_PATTERNS": [r"^/admin/"],
+#         "DISPLAY_DUPLICATES": config(
+#             "QUERYCOUNT_DISPLAY_DUPLICATES", cast=int, default=0
+#         ),
+#     }
+#     MIDDLEWARE += ("querycount.middleware.QueryCountMiddleware",)
+
+# # Auth
+# AUTHENTICATION_BACKENDS = (
+#     "kuma.users.auth_backends.KumaAuthBackend",  # Handles User Bans
+#     # "allauth.account.auth_backends.AuthenticationBackend",  # Legacy
+# )
+# AUTH_USER_MODEL = "users.User"
+
+# if urlsplit(STATIC_URL).hostname in (None, "localhost"):
+#     # Avatar needs a publicly available default image
+#     DEFAULT_AVATAR = PRODUCTION_URL + "/static/img/avatar.png"
+# else:
+#     DEFAULT_AVATAR = STATIC_URL + "img/avatar.png"
+
+# ROOT_URLCONF = "kuma.urls"
+
+# STATICFILES_DIRS = [
+#     path("build", "locale"),
+# ]
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+INSTALLED_APPS = [
+    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
-    "django.contrib.sites",
-    "django.contrib.admin",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # MDN
     "kuma.core.apps.CoreConfig",
     "kuma.landing",
-    "kuma.search.apps.SearchConfig",
-    "kuma.users.apps.UserConfig",
-    "kuma.wiki.apps.WikiConfig",
-    "kuma.api.apps.APIConfig",
+    # "kuma.api.apps.APIConfig",# DO WE NEED THIS?
     "kuma.attachments.apps.AttachmentsConfig",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "kuma.users.providers.github",
-    "kuma.users.providers.google",
     "kuma.plus.apps.PlusConfig",
-    # util
-    "django_jinja",
-    "puente",
-    "waffle",
-    "kuma.authkeys",
-    "taggit",
-    "django_extensions",
-    "statici18n",
-    "rest_framework",
-    "rest_framework.authtoken",
-    "django_mysql",
-)
+]
+
+
+# # TODO: Figure out why changing the order of apps (for example, moving taggit
+# # higher in the list) breaks tests.
+# INSTALLED_APPS = (
+#     # django
+#     "django.contrib.auth",
+#     "django.contrib.contenttypes",
+#     "django.contrib.sessions",
+#     "django.contrib.sites",
+#     "django.contrib.admin",
+#     "django.contrib.messages",
+#     "django.contrib.staticfiles",
+#     # MDN
+#     "kuma.core.apps.CoreConfig",
+#     "kuma.landing",
+#     "kuma.search.apps.SearchConfig",
+#     "kuma.users.apps.UserConfig",
+#     "kuma.wiki.apps.WikiConfig",
+#     "kuma.api.apps.APIConfig",
+#     "kuma.attachments.apps.AttachmentsConfig",
+#     "allauth",
+#     "allauth.account",
+#     "allauth.socialaccount",
+#     "kuma.users.providers.github",
+#     "kuma.users.providers.google",
+#     "kuma.plus.apps.PlusConfig",
+#     # util
+#     "django_jinja",
+#     "puente",
+#     "waffle",
+#     "kuma.authkeys",
+#     "taggit",
+#     "django_extensions",
+#     "statici18n",
+#     "rest_framework",
+#     "rest_framework.authtoken",
+#     "django_mysql",
+# )
+
+# TEMPLATES = [
+#     {
+#         "NAME": "jinja2",
+#         "BACKEND": "django_jinja.backend.Jinja2",
+#         "DIRS": [path("jinja2"), path("static")],
+#         "APP_DIRS": True,
+#         "OPTIONS": {
+#             # Use jinja2/ for jinja templates
+#             "app_dirname": "jinja2",
+#             # Don't figure out which template loader to use based on
+#             # file extension
+#             "match_extension": "",
+#             "newstyle_gettext": True,
+#             "context_processors": _CONTEXT_PROCESSORS,
+#             "undefined": "jinja2.Undefined",
+#             "extensions": [
+#                 "jinja2.ext.do",
+#                 "jinja2.ext.loopcontrols",
+#                 "jinja2.ext.i18n",
+#                 "puente.ext.i18n",
+#                 "django_jinja.builtins.extensions.CsrfExtension",
+#                 "django_jinja.builtins.extensions.CacheExtension",
+#                 "django_jinja.builtins.extensions.TimezoneExtension",
+#                 "django_jinja.builtins.extensions.UrlsExtension",
+#                 "django_jinja.builtins.extensions.StaticFilesExtension",
+#                 "django_jinja.builtins.extensions.DjangoFiltersExtension",
+#                 "waffle.jinja.WaffleExtension",
+#                 "kuma.core.i18n.TranslationExtension",
+#             ],
+#         },
+#     },
+#     {
+#         "NAME": "django",
+#         "BACKEND": "django.template.backends.django.DjangoTemplates",
+#         "DIRS": [path("templates")],
+#         "APP_DIRS": False,
+#         "OPTIONS": {
+#             "debug": DEBUG,
+#             "context_processors": _CONTEXT_PROCESSORS,
+#             "loaders": [
+#                 "django.template.loaders.filesystem.Loader",
+#                 "django.template.loaders.app_directories.Loader",
+#             ],
+#         },
+#     },
+# ]
 
 TEMPLATES = [
     {
-        "NAME": "jinja2",
-        "BACKEND": "django_jinja.backend.Jinja2",
-        "DIRS": [path("jinja2"), path("static")],
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
-            # Use jinja2/ for jinja templates
-            "app_dirname": "jinja2",
-            # Don't figure out which template loader to use based on
-            # file extension
-            "match_extension": "",
-            "newstyle_gettext": True,
-            "context_processors": _CONTEXT_PROCESSORS,
-            "undefined": "jinja2.Undefined",
-            "extensions": [
-                "jinja2.ext.do",
-                "jinja2.ext.loopcontrols",
-                "jinja2.ext.i18n",
-                "puente.ext.i18n",
-                "django_jinja.builtins.extensions.CsrfExtension",
-                "django_jinja.builtins.extensions.CacheExtension",
-                "django_jinja.builtins.extensions.TimezoneExtension",
-                "django_jinja.builtins.extensions.UrlsExtension",
-                "django_jinja.builtins.extensions.StaticFilesExtension",
-                "django_jinja.builtins.extensions.DjangoFiltersExtension",
-                "waffle.jinja.WaffleExtension",
-                "kuma.core.i18n.TranslationExtension",
-            ],
-        },
-    },
-    {
-        "NAME": "django",
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [path("templates")],
-        "APP_DIRS": False,
-        "OPTIONS": {
-            "debug": DEBUG,
-            "context_processors": _CONTEXT_PROCESSORS,
-            "loaders": [
-                "django.template.loaders.filesystem.Loader",
-                "django.template.loaders.app_directories.Loader",
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-PUENTE = {
-    "VERSION": "2020.32",
-    "BASE_DIR": BASE_DIR,
-    "TEXT_DOMAIN": "django",
-    # Tells the extract script what files to look for l10n in and what function
-    # handles the extraction.
-    "DOMAIN_METHODS": {
-        "django": [
-            ("kuma/**.py", "python"),
-            ("**/templates/**.html", "enmerkar.extract.extract_django"),
-            ("**/jinja2/**.html", "jinja2"),
-            ("**/jinja2/**.ltxt", "jinja2"),
-        ],
-    },
-    "PROJECT": "MDN",
-    "MSGID_BUGS_ADDRESS": ADMIN_EMAILS[0],
-}
+# PUENTE = {
+#     "VERSION": "2020.32",
+#     "BASE_DIR": BASE_DIR,
+#     "TEXT_DOMAIN": "django",
+#     # Tells the extract script what files to look for l10n in and what function
+#     # handles the extraction.
+#     "DOMAIN_METHODS": {
+#         "django": [
+#             ("kuma/**.py", "python"),
+#             ("**/templates/**.html", "enmerkar.extract.extract_django"),
+#             ("**/jinja2/**.html", "jinja2"),
+#             ("**/jinja2/**.ltxt", "jinja2"),
+#         ],
+#     },
+#     "PROJECT": "MDN",
+#     "MSGID_BUGS_ADDRESS": ADMIN_EMAILS[0],
+# }
 
-STATICI18N_ROOT = "build/locale"
-STATICI18N_DOMAIN = "javascript"
+# STATICI18N_ROOT = "build/locale"
+# STATICI18N_DOMAIN = "javascript"
 
 # Cache non-versioned static files for one week
-WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
+# WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
 
 # Session cookies
 SESSION_COOKIE_DOMAIN = DOMAIN
@@ -469,18 +523,18 @@ SESSION_COOKIE_SECURE = config("SESSION_COOKIE_SECURE", default=True, cast=bool)
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_AGE = config("SESSION_COOKIE_AGE", default=60 * 60 * 24 * 365, cast=int)
 
-WAFFLE_SECURE = config("WAFFLE_COOKIE_SECURE", default=True, cast=bool)
-# This is a setting unique to Kuma which specifies the domain
-# that will be used for all of the waffle cookies. It is used by
-# kuma.core.middleware.WaffleWithCookieDomainMiddleware.
-WAFFLE_COOKIE_DOMAIN = DOMAIN
+# WAFFLE_SECURE = config("WAFFLE_COOKIE_SECURE", default=True, cast=bool)
+# # This is a setting unique to Kuma which specifies the domain
+# # that will be used for all of the waffle cookies. It is used by
+# # kuma.core.middleware.WaffleWithCookieDomainMiddleware.
+# WAFFLE_COOKIE_DOMAIN = DOMAIN
 
-# bug 856061
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS",
-    default="developer-local.allizom.org, mdn-local.mozillademos.org",
-    cast=Csv(),
-)
+# # bug 856061
+# ALLOWED_HOSTS = config(
+#     "ALLOWED_HOSTS",
+#     default="developer-local.allizom.org, mdn-local.mozillademos.org",
+#     cast=Csv(),
+# )
 
 _PROD_ATTACHMENT_HOST = "mdn.mozillademos.org"
 _PROD_ATTACHMENT_SITE_URL = "https://" + _PROD_ATTACHMENT_HOST
@@ -533,58 +587,58 @@ ALLOW_ROBOTS_DOMAINS = set(
 #  Path: An optional path prefix or matching regex
 
 
-def parse_iframe_url(url):
-    """
-    Parse an iframe URL into an allowed iframe pattern
+# def parse_iframe_url(url):
+#     """
+#     Parse an iframe URL into an allowed iframe pattern
 
-    A URL with a '*' in the path is treated as a regex.
-    """
-    parts = urlsplit(url)
-    assert parts.scheme in ("http", "https")
-    path = ""
-    if parts.path.strip("/") != "":
-        if "*" in parts.path:
-            path = re.compile(parts.path)
-        else:
-            path = parts.path
-    return (parts.scheme, parts.netloc, path)
+#     A URL with a '*' in the path is treated as a regex.
+#     """
+#     parts = urlsplit(url)
+#     assert parts.scheme in ("http", "https")
+#     path = ""
+#     if parts.path.strip("/") != "":
+#         if "*" in parts.path:
+#             path = re.compile(parts.path)
+#         else:
+#             path = parts.path
+#     return (parts.scheme, parts.netloc, path)
 
 
-# Default allowed iframe URL patterns, roughly ordered by expected frequency
-ALLOWED_IFRAME_PATTERNS = [
-    # Live sample host
-    # https://developer.mozilla.org/en-US/docs/Web/CSS/filter
-    parse_iframe_url(_PROD_ATTACHMENT_SITE_URL),
-    # Interactive Examples host
-    # On https://developer.mozilla.org/en-US/docs/Web/CSS/filter
-    parse_iframe_url(_PROD_INTERACTIVE_EXAMPLES),
-    # Samples, https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL
-    parse_iframe_url("https://mdn.github.io/"),
-    # Videos, https://developer.mozilla.org/en-US/docs/Tools/Web_Console
-    parse_iframe_url("https://www.youtube.com/embed/"),
-    # Samples, https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
-    parse_iframe_url("https://jsfiddle.net/.*/embedded/.*"),
-    # Charts, https://developer.mozilla.org/en-US/docs/MDN/Kuma/Server_charts
-    parse_iframe_url("https://rpm.newrelic.com/public/charts/"),
-    # Test262 Report, https://test262.report/
-    parse_iframe_url("https://test262.report/embed/features/"),
-]
+# # Default allowed iframe URL patterns, roughly ordered by expected frequency
+# ALLOWED_IFRAME_PATTERNS = [
+#     # Live sample host
+#     # https://developer.mozilla.org/en-US/docs/Web/CSS/filter
+#     parse_iframe_url(_PROD_ATTACHMENT_SITE_URL),
+#     # Interactive Examples host
+#     # On https://developer.mozilla.org/en-US/docs/Web/CSS/filter
+#     parse_iframe_url(_PROD_INTERACTIVE_EXAMPLES),
+#     # Samples, https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL
+#     parse_iframe_url("https://mdn.github.io/"),
+#     # Videos, https://developer.mozilla.org/en-US/docs/Tools/Web_Console
+#     parse_iframe_url("https://www.youtube.com/embed/"),
+#     # Samples, https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
+#     parse_iframe_url("https://jsfiddle.net/.*/embedded/.*"),
+#     # Charts, https://developer.mozilla.org/en-US/docs/MDN/Kuma/Server_charts
+#     parse_iframe_url("https://rpm.newrelic.com/public/charts/"),
+#     # Test262 Report, https://test262.report/
+#     parse_iframe_url("https://test262.report/embed/features/"),
+# ]
 
-# Add the overridden attachment / live sample host
-if ATTACHMENT_SITE_URL != _PROD_ATTACHMENT_SITE_URL:
-    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(ATTACHMENT_SITE_URL))
+# # Add the overridden attachment / live sample host
+# if ATTACHMENT_SITE_URL != _PROD_ATTACHMENT_SITE_URL:
+#     ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(ATTACHMENT_SITE_URL))
 
-# Add the overridden interactive examples service
-if INTERACTIVE_EXAMPLES_BASE != _PROD_INTERACTIVE_EXAMPLES:
-    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(INTERACTIVE_EXAMPLES_BASE))
+# # Add the overridden interactive examples service
+# if INTERACTIVE_EXAMPLES_BASE != _PROD_INTERACTIVE_EXAMPLES:
+#     ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(INTERACTIVE_EXAMPLES_BASE))
 
-# Add more iframe patterns from the environment
-_ALLOWED_IFRAME_PATTERNS = config("ALLOWED_IFRAME_PATTERNS", default="", cast=Csv())
-for pattern in _ALLOWED_IFRAME_PATTERNS:
-    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(pattern))
+# # Add more iframe patterns from the environment
+# _ALLOWED_IFRAME_PATTERNS = config("ALLOWED_IFRAME_PATTERNS", default="", cast=Csv())
+# for pattern in _ALLOWED_IFRAME_PATTERNS:
+#     ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(pattern))
 
-# Allow all iframe sources (for debugging)
-ALLOW_ALL_IFRAMES = config("ALLOW_ALL_IFRAMES", default=False, cast=bool)
+# # Allow all iframe sources (for debugging)
+# ALLOW_ALL_IFRAMES = config("ALLOW_ALL_IFRAMES", default=False, cast=bool)
 
 
 # Email
@@ -623,13 +677,13 @@ CELERY_TASK_ROUTES = {
 }
 
 # Do not change this without also deleting all wiki documents:
-WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
+# WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
 
 # Number of days to keep the trashed attachments files before they are removed from
 # the file storage.
-WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS = config(
-    "WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS", default=14, cast=int
-)
+# WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS = config(
+#     "WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS", default=14, cast=int
+# )
 
 # Number of expired sessions to cleanup up in one go.
 SESSION_CLEANUP_CHUNK_SIZE = config(
@@ -650,38 +704,39 @@ EMAIL_LIST_MDN_ADMINS = config(
     "EMAIL_LIST_MDN_ADMINS", default="mdn-admins@mozilla.org"
 )
 
-# Name of the django.contrib.auth.models.Group to use as beta testers
-BETA_GROUP_NAME = config("BETA_GROUP_NAME", default="Beta Testers")
+# # Name of the django.contrib.auth.models.Group to use as beta testers
+# BETA_GROUP_NAME = config("BETA_GROUP_NAME", default="Beta Testers")
 
-# Email address to notify of possible spam (first edits, blocked edits)
-EMAIL_LIST_SPAM_WATCH = config(
-    "EMAIL_LIST_SPAM_WATCH", default="mdn-spam-watch@mozilla.com"
-)
+# # Email address to notify of possible spam (first edits, blocked edits)
+# EMAIL_LIST_SPAM_WATCH = config(
+#     "EMAIL_LIST_SPAM_WATCH", default="mdn-spam-watch@mozilla.com"
+# )
 
-# Google Analytics Tracking Account Number (0 to disable)
-GOOGLE_ANALYTICS_ACCOUNT = config("GOOGLE_ANALYTICS_ACCOUNT", default=None)
+# # Google Analytics Tracking Account Number (0 to disable)
+# GOOGLE_ANALYTICS_ACCOUNT = config("GOOGLE_ANALYTICS_ACCOUNT", default=None)
 
-# When HTTP posting event to Google Analytics this is the combined connect
-# and read timeout.
-GOOGLE_ANALYTICS_TRACKING_TIMEOUT = config(
-    "GOOGLE_ANALYTICS_TRACKING_TIMEOUT", cast=float, default=2.0
-)
-# The only reason you'd want to override this is for local development where
-# you might want to substitute the events tracking URL to a local dev server.
-# https://developers.google.com/analytics/devguides/collection/protocol/v1/reference
-GOOGLE_ANALYTICS_TRACKING_URL = config(
-    "GOOGLE_ANALYTICS_TRACKING_URL", default="https://www.google-analytics.com/collect"
-)
-# This setting only really makes sense for the benefit of Django unit tests.
-# All tests are run with `settings.DEBUG === False` so we can't rely on that
-# for *avoid* any errors swallowed. And in tests we don't want to swallow
-# any `requests` errors because most possibly they happen because we
-# incorrectly mocked requests.
-GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = config(
-    "GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS", cast=bool, default=DEBUG
-)
+# # When HTTP posting event to Google Analytics this is the combined connect
+# # and read timeout.
+# GOOGLE_ANALYTICS_TRACKING_TIMEOUT = config(
+#     "GOOGLE_ANALYTICS_TRACKING_TIMEOUT", cast=float, default=2.0
+# )
+# # The only reason you'd want to override this is for local development where
+# # you might want to substitute the events tracking URL to a local dev server.
+# # https://developers.google.com/analytics/devguides/collection/protocol/v1/reference
+# GOOGLE_ANALYTICS_TRACKING_URL = config(
+#     "GOOGLE_ANALYTICS_TRACKING_URL", default="https://www.google-analytics.com/collect"
+# )
+# # This setting only really makes sense for the benefit of Django unit tests.
+# # All tests are run with `settings.DEBUG === False` so we can't rely on that
+# # for *avoid* any errors swallowed. And in tests we don't want to swallow
+# # any `requests` errors because most possibly they happen because we
+# # incorrectly mocked requests.
+# GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = config(
+#     "GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS", cast=bool, default=DEBUG
+# )
 
 # Elasticsearch related settings.
+# XXX Peter: Need to audit which of these we actually use!
 ES_DEFAULT_NUM_REPLICAS = 1
 ES_DEFAULT_NUM_SHARDS = 5
 ES_DEFAULT_REFRESH_INTERVAL = "5s"
@@ -698,41 +753,41 @@ ES_RETRY_SLEEPTIME = config("ES_RETRY_SLEEPTIME", default=1, cast=int)
 ES_RETRY_ATTEMPTS = config("ES_RETRY_ATTEMPTS", default=5, cast=int)
 ES_RETRY_JITTER = config("ES_RETRY_JITTER", default=1, cast=int)
 
-# Logging is merged with the default logging
-# https://github.com/django/django/blob/stable/1.11.x/django/utils/log.py
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "filters": {"require_debug_true": {"()": "django.utils.log.RequireDebugTrue"}},
-    "formatters": {"simple": {"format": "%(name)s:%(levelname)s %(message)s"}},
-    "handlers": {
-        "console": {
-            "level": "DEBUG",
-            "filters": ["require_debug_true"],
-            "class": "logging.StreamHandler",
-        },
-        "console-simple": {
-            "level": "DEBUG",
-            "filters": ["require_debug_true"],
-            "class": "logging.StreamHandler",
-            "formatter": "simple",
-        },
-    },
-    "loggers": {
-        "django": {"handlers": ["console"], "level": "INFO"},  # Drop mail_admins
-        "kuma": {"handlers": ["console-simple"], "propagate": True, "level": "ERROR"},
-        "elasticsearch": {
-            "handlers": ["console-simple"],
-            "level": config("ES_LOG_LEVEL", default="ERROR"),
-        },
-        "elasticsearch.trace": {
-            "handlers": ["console-simple"],
-            "level": config("ES_TRACE_LOG_LEVEL", default="ERROR"),
-            "propagate": False,
-        },
-        "urllib3": {"handlers": ["console-simple"], "level": "ERROR"},
-    },
-}
+# # Logging is merged with the default logging
+# # https://github.com/django/django/blob/stable/1.11.x/django/utils/log.py
+# LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "filters": {"require_debug_true": {"()": "django.utils.log.RequireDebugTrue"}},
+#     "formatters": {"simple": {"format": "%(name)s:%(levelname)s %(message)s"}},
+#     "handlers": {
+#         "console": {
+#             "level": "DEBUG",
+#             "filters": ["require_debug_true"],
+#             "class": "logging.StreamHandler",
+#         },
+#         "console-simple": {
+#             "level": "DEBUG",
+#             "filters": ["require_debug_true"],
+#             "class": "logging.StreamHandler",
+#             "formatter": "simple",
+#         },
+#     },
+#     "loggers": {
+#         "django": {"handlers": ["console"], "level": "INFO"},  # Drop mail_admins
+#         "kuma": {"handlers": ["console-simple"], "propagate": True, "level": "ERROR"},
+#         "elasticsearch": {
+#             "handlers": ["console-simple"],
+#             "level": config("ES_LOG_LEVEL", default="ERROR"),
+#         },
+#         "elasticsearch.trace": {
+#             "handlers": ["console-simple"],
+#             "level": config("ES_TRACE_LOG_LEVEL", default="ERROR"),
+#             "propagate": False,
+#         },
+#         "urllib3": {"handlers": ["console-simple"], "level": "ERROR"},
+#     },
+# }
 
 CSRF_COOKIE_DOMAIN = DOMAIN
 CSRF_COOKIE_SECURE = config("CSRF_COOKIE_SECURE", default=True, cast=bool)
@@ -747,91 +802,91 @@ CSRF_TRUSTED_ORIGINS = [DOMAIN]
 X_FRAME_OPTIONS = "DENY"
 
 
-def get_user_url(user):
-    from kuma.core.urlresolvers import reverse
+# def get_user_url(user):
+#     from kuma.core.urlresolvers import reverse
 
-    return reverse("users.user_detail", args=[user.username])
+#     return reverse("users.user_detail", args=[user.username])
 
 
-ABSOLUTE_URL_OVERRIDES = {"users.user": get_user_url}
+# ABSOLUTE_URL_OVERRIDES = {"users.user": get_user_url}
 
-# Set header X-XSS-Protection: 1; mode=block
-SECURE_BROWSER_XSS_FILTER = True
+# # Set header X-XSS-Protection: 1; mode=block
+# SECURE_BROWSER_XSS_FILTER = True
 
-# Set header X-Content-Type-Options: nosniff
-SECURE_CONTENT_TYPE_NOSNIFF = True
+# # Set header X-Content-Type-Options: nosniff
+# SECURE_CONTENT_TYPE_NOSNIFF = True
 
-# Set header Strict-Transport-Security header
-# 63072000 in production (730 days)
-SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default=0, cast=int)
+# # Set header Strict-Transport-Security header
+# # 63072000 in production (730 days)
+# SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default=0, cast=int)
 
-# Honor the X-Forwarded-Proto header, to assume HTTPS instead of HTTP
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# # Honor the X-Forwarded-Proto header, to assume HTTPS instead of HTTP
+# SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# django-allauth configuration
-ACCOUNT_LOGOUT_REDIRECT_URL = "/"
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = config("ACCOUNT_DEFAULT_HTTP_PROTOCOL", default="https")
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_MIN_LENGTH = 3
-ACCOUNT_ADAPTER = "kuma.users.adapters.KumaAccountAdapter"
-ACCOUNT_SIGNUP_FORM_CLASS = None
-ACCOUNT_UNIQUE_EMAIL = False
+# # django-allauth configuration
+# ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+# ACCOUNT_DEFAULT_HTTP_PROTOCOL = config("ACCOUNT_DEFAULT_HTTP_PROTOCOL", default="https")
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_USERNAME_MIN_LENGTH = 3
+# ACCOUNT_ADAPTER = "kuma.users.adapters.KumaAccountAdapter"
+# ACCOUNT_SIGNUP_FORM_CLASS = None
+# ACCOUNT_UNIQUE_EMAIL = False
 
-SOCIALACCOUNT_ADAPTER = "kuma.users.adapters.KumaSocialAccountAdapter"
-SOCIALACCOUNT_EMAIL_VERIFICATION = "mandatory"
-SOCIALACCOUNT_EMAIL_REQUIRED = True
-SOCIALACCOUNT_AUTO_SIGNUP = False  # forces the use of the signup view
-SOCIALACCOUNT_QUERY_EMAIL = True  # used by the custom github provider
+# SOCIALACCOUNT_ADAPTER = "kuma.users.adapters.KumaSocialAccountAdapter"
+# SOCIALACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# SOCIALACCOUNT_EMAIL_REQUIRED = True
+# SOCIALACCOUNT_AUTO_SIGNUP = False  # forces the use of the signup view
+# SOCIALACCOUNT_QUERY_EMAIL = True  # used by the custom github provider
 
-BLOCKABLE_USER_AGENTS = [
-    "Yahoo! Slurp",
-    "Googlebot",
-    "bingbot",
-    "Applebot",
-    "YandexBot",
-    "Baiduspider",
-    "CCBot",
-    "ScoutJet",
-    "wget",
-    "curl",
-]
+# BLOCKABLE_USER_AGENTS = [
+#     "Yahoo! Slurp",
+#     "Googlebot",
+#     "bingbot",
+#     "Applebot",
+#     "YandexBot",
+#     "Baiduspider",
+#     "CCBot",
+#     "ScoutJet",
+#     "wget",
+#     "curl",
+# ]
 
-# Tell django-taggit to use case-insensitive search for existing tags
-TAGGIT_CASE_INSENSITIVE = True
+# # Tell django-taggit to use case-insensitive search for existing tags
+# TAGGIT_CASE_INSENSITIVE = True
 
-# Ad Banner Settings
-NEWSLETTER = True
-NEWSLETTER_ARTICLE = True
+# # Ad Banner Settings
+# NEWSLETTER = True
+# NEWSLETTER_ARTICLE = True
 
-# Auth and permissions related constants
-LOGIN_URL = "/signin"
-LOGIN_REDIRECT_URL = "/"
+# # Auth and permissions related constants
+# LOGIN_URL = "/signin"
+# LOGIN_REDIRECT_URL = "/"
 
 # Caching constants for the Cache-Control header.
 CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
     "CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE", default=60 * 5, cast=int
 )
 
-# Stripe API KEY settings
-STRIPE_PUBLIC_KEY = config("STRIPE_PUBLIC_KEY", default="")
-STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY", default="")
-STRIPE_PRICE_IDS = config("STRIPE_PRICE_IDS", default="", cast=Csv())
+# # Stripe API KEY settings
+# STRIPE_PUBLIC_KEY = config("STRIPE_PUBLIC_KEY", default="")
+# STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY", default="")
+# STRIPE_PRICE_IDS = config("STRIPE_PRICE_IDS", default="", cast=Csv())
 
-# Misc Stripe settings
-STRIPE_MAX_NETWORK_RETRIES = config("STRIPE_MAX_NETWORK_RETRIES", default=5, cast=int)
+# # Misc Stripe settings
+# STRIPE_MAX_NETWORK_RETRIES = config("STRIPE_MAX_NETWORK_RETRIES", default=5, cast=int)
 
-CONTRIBUTION_SUPPORT_EMAIL = config(
-    "CONTRIBUTION_SUPPORT_EMAIL", default="mdn-support@mozilla.com"
-)
+# CONTRIBUTION_SUPPORT_EMAIL = config(
+#     "CONTRIBUTION_SUPPORT_EMAIL", default="mdn-support@mozilla.com"
+# )
 
-# The default amount suggested for monthly subscription payments.
-# As of March 2020, we only have 1 plan and the number is fixed.
-# In the future, we might have multiple plans and this might a dict of amount
-# per plan.
-# The reason it's not an environment variable is to simply indicate that it
-# can't be overridden at the moment based on the environment.
-CONTRIBUTION_AMOUNT_USD = 5.0
+# # The default amount suggested for monthly subscription payments.
+# # As of March 2020, we only have 1 plan and the number is fixed.
+# # In the future, we might have multiple plans and this might a dict of amount
+# # per plan.
+# # The reason it's not an environment variable is to simply indicate that it
+# # can't be overridden at the moment based on the environment.
+# CONTRIBUTION_AMOUNT_USD = 5.0
 
 # Setting for configuring the AWS S3 bucket name used for the document API.
 MDN_API_S3_BUCKET_NAME = config("MDN_API_S3_BUCKET_NAME", default=None)
@@ -867,33 +922,33 @@ ATTACHMENTS_AWS_S3_ENDPOINT_URL = config(
 AWS_BUCKET_ACL = None
 AWS_DEFAULT_ACL = None
 
-# html_attributes and css_classnames get indexed into Elasticsearch on every
-# document when sent in. These can be very memory consuming since the
-# 'html_attributes' makes up about 60% of the total weight.
-# Refer to this GitHub issue for an estimate of their weight contribution:
-# https://github.com/mdn/kuma/issues/6264#issue-539922604
-# Note that the only way to actually search on these fields is with a manual
-# use of the search v1 API. There is no UI at all for searching on something
-# in the 'html_attributes' or the 'css_classnames'.
-# By disabling indexing of these, in your local dev environment, your local
-# Elasticsearch instance will be a LOT smaller.
-INDEX_HTML_ATTRIBUTES = config("INDEX_HTML_ATTRIBUTES", cast=bool, default=not DEBUG)
-INDEX_CSS_CLASSNAMES = config("INDEX_CSS_CLASSNAMES", cast=bool, default=not DEBUG)
+# # html_attributes and css_classnames get indexed into Elasticsearch on every
+# # document when sent in. These can be very memory consuming since the
+# # 'html_attributes' makes up about 60% of the total weight.
+# # Refer to this GitHub issue for an estimate of their weight contribution:
+# # https://github.com/mdn/kuma/issues/6264#issue-539922604
+# # Note that the only way to actually search on these fields is with a manual
+# # use of the search v1 API. There is no UI at all for searching on something
+# # in the 'html_attributes' or the 'css_classnames'.
+# # By disabling indexing of these, in your local dev environment, your local
+# # Elasticsearch instance will be a LOT smaller.
+# INDEX_HTML_ATTRIBUTES = config("INDEX_HTML_ATTRIBUTES", cast=bool, default=not DEBUG)
+# INDEX_CSS_CLASSNAMES = config("INDEX_CSS_CLASSNAMES", cast=bool, default=not DEBUG)
 
-# When doing local development with Yari, if you want to have `?next=...` redirects
-# work when you sign in on Yari, this needs to be set to `localhost.org:3000` in your
-# .env file. That tells, Kuma that if the `?next` URL is an absolute URL, that
-# it's safe to use and redirect to.
-# This additional host is always, also, dependent on settings.DEBUG==True.
-ADDITIONAL_NEXT_URL_ALLOWED_HOSTS = config(
-    "ADDITIONAL_NEXT_URL_ALLOWED_HOSTS", default=None
-)
+# # When doing local development with Yari, if you want to have `?next=...` redirects
+# # work when you sign in on Yari, this needs to be set to `localhost.org:3000` in your
+# # .env file. That tells, Kuma that if the `?next` URL is an absolute URL, that
+# # it's safe to use and redirect to.
+# # This additional host is always, also, dependent on settings.DEBUG==True.
+# ADDITIONAL_NEXT_URL_ALLOWED_HOSTS = config(
+#     "ADDITIONAL_NEXT_URL_ALLOWED_HOSTS", default=None
+# )
 
-# As of Oct 2020, we might not enable subscriptions at all. There are certain
-# elements of Kuma that exposes subscriptions even if all the Waffle flags and
-# switches says otherwise. For example, the payments pages are skeletons for
-# React apps. This boolean settings disables all of that.
-ENABLE_SUBSCRIPTIONS = config("ENABLE_SUBSCRIPTIONS", cast=bool, default=False)
+# # As of Oct 2020, we might not enable subscriptions at all. There are certain
+# # elements of Kuma that exposes subscriptions even if all the Waffle flags and
+# # switches says otherwise. For example, the payments pages are skeletons for
+# # React apps. This boolean settings disables all of that.
+# ENABLE_SUBSCRIPTIONS = config("ENABLE_SUBSCRIPTIONS", cast=bool, default=False)
 
 # Kuma doesn't index anything, that's done by the Yari Deployer, but we need
 # to know what the index is called for searching.

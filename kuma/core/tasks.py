@@ -1,9 +1,11 @@
 from celery.task import task
-from django.conf import settings
+
+# from django.conf import settings
 from django.contrib.sessions.models import Session
-from django.core.cache import cache
-from django.db import connection
-from django.utils import timezone
+
+# from django.core.cache import cache
+# from django.db import connection
+# from django.utils import timezone
 
 from .decorators import skip_in_maintenance_mode
 
@@ -22,35 +24,42 @@ def clean_sessions():
     """
     Queue deleting expired session items without breaking poor MySQL
     """
-    now = timezone.now()
-    logger = clean_sessions.get_logger()
-    chunk_size = settings.SESSION_CLEANUP_CHUNK_SIZE
+    import warnings
 
-    if cache.add(LOCK_ID, now.strftime("%c"), LOCK_EXPIRE):
-        total_count = get_expired_sessions(now).count()
-        delete_count = 0
-        logger.info(
-            "Deleting the %s of %s oldest expired sessions" % (chunk_size, total_count)
-        )
-        try:
-            cursor = connection.cursor()
-            delete_count = cursor.execute(
-                """
-                DELETE
-                FROM django_session
-                WHERE expire_date < NOW()
-                ORDER BY expire_date ASC
-                LIMIT %s;
-                """,
-                [chunk_size],
-            )
-        finally:
-            logger.info("Deleted %s expired sessions" % delete_count)
-            cache.delete(LOCK_ID)
-            expired_sessions = get_expired_sessions(now)
-            if expired_sessions.exists():
-                clean_sessions.apply_async()
-    else:
-        logger.error(
-            "The clean_sessions task is already running since %s" % cache.get(LOCK_ID)
-        )
+    warnings.warn(
+        "clean_sessions() is disabled at the moment because depends "
+        "doing raw SQL queries which might not make sense if you start "
+        "with a completely empty database."
+    )
+    # now = timezone.now()
+    # logger = clean_sessions.get_logger()
+    # chunk_size = settings.SESSION_CLEANUP_CHUNK_SIZE
+
+    # if cache.add(LOCK_ID, now.strftime("%c"), LOCK_EXPIRE):
+    #     total_count = get_expired_sessions(now).count()
+    #     delete_count = 0
+    #     logger.info(
+    #         "Deleting the %s of %s oldest expired sessions" % (chunk_size, total_count)
+    #     )
+    #     try:
+    #         cursor = connection.cursor()
+    #         delete_count = cursor.execute(
+    #             """
+    #             DELETE
+    #             FROM django_session
+    #             WHERE expire_date < NOW()
+    #             ORDER BY expire_date ASC
+    #             LIMIT %s;
+    #             """,
+    #             [chunk_size],
+    #         )
+    #     finally:
+    #         logger.info("Deleted %s expired sessions" % delete_count)
+    #         cache.delete(LOCK_ID)
+    #         expired_sessions = get_expired_sessions(now)
+    #         if expired_sessions.exists():
+    #             clean_sessions.apply_async()
+    # else:
+    #     logger.error(
+    #         "The clean_sessions task is already running since %s" % cache.get(LOCK_ID)
+    #     )

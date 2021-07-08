@@ -9,8 +9,9 @@ from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
 from kuma.core.decorators import shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
-from kuma.users.urls import lang_urlpatterns as users_lang_urlpatterns
-from kuma.wiki.urls import lang_urlpatterns as wiki_lang_urlpatterns
+
+# from kuma.users.urls import lang_urlpatterns as users_lang_urlpatterns
+# from kuma.wiki.urls import lang_urlpatterns as wiki_lang_urlpatterns
 
 
 DAY = 60 * 60 * 24
@@ -21,21 +22,21 @@ admin.autodiscover()
 urlpatterns = [re_path("", include("kuma.health.urls"))]
 # The non-locale-based landing URL's
 urlpatterns += [re_path("", include("kuma.landing.urls"))]
-urlpatterns += i18n_patterns(
-    re_path(
-        r"^events",
-        # Here the "shared_cache_control" decorator is an optimization. It
-        # informs the CDN to cache the redirect for a month, so once this URL
-        # has been requested by a client, all other client requests will be
-        # redirected by the CDN instead of this Django service.
-        shared_cache_control(s_maxage=MONTH)(
-            RedirectView.as_view(
-                url="https://community.mozilla.org/events/", permanent=False
-            )
-        ),
-        name="events",
-    ),
-)
+# urlpatterns += i18n_patterns(
+#     re_path(
+#         r"^events",
+#         # Here the "shared_cache_control" decorator is an optimization. It
+#         # informs the CDN to cache the redirect for a month, so once this URL
+#         # has been requested by a client, all other client requests will be
+#         # redirected by the CDN instead of this Django service.
+#         shared_cache_control(s_maxage=MONTH)(
+#             RedirectView.as_view(
+#                 url="https://community.mozilla.org/events/", permanent=False
+#             )
+#         ),
+#         name="events",
+#     ),
+# )
 
 if settings.MAINTENANCE_MODE:
     urlpatterns.append(
@@ -53,12 +54,12 @@ else:
         re_path(r"^admin/", admin.site.urls),
     ]
 
-urlpatterns += i18n_patterns(re_path(r"^docs/", include(wiki_lang_urlpatterns)))
+# urlpatterns += i18n_patterns(re_path(r"^docs/", include(wiki_lang_urlpatterns)))
 urlpatterns += [re_path("", include("kuma.attachments.urls"))]
-urlpatterns += [re_path("users/", include("kuma.users.urls"))]
-urlpatterns += i18n_patterns(
-    re_path("", decorator_include(never_cache, users_lang_urlpatterns))
-)
+# urlpatterns += [re_path("users/", include("kuma.users.urls"))]
+# urlpatterns += i18n_patterns(
+#     re_path("", decorator_include(never_cache, users_lang_urlpatterns))
+# )
 urlpatterns += [
     # Services and sundry.
     re_path("^api/", include("kuma.api.urls")),

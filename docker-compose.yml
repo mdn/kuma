@@ -1,4 +1,4 @@
-version: '2.4'
+version: "2.4"
 services:
   worker: &worker
     build:
@@ -10,7 +10,7 @@ services:
     volumes:
       - ./:/app:z
     depends_on:
-      - mysql
+      - postgres
       - redis
       - minio
     environment:
@@ -31,7 +31,8 @@ services:
       - CELERY_TASK_ALWAYS_EAGER=False
       - CELERY_RESULT_BACKEND=redis://redis:6379/1
       - CSRF_COOKIE_SECURE=False
-      - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
+      # - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
+      - DATABASE_URL=postgresql://${POSTGRES_DATABASE_USER:-kuma}:${POSTGRES_DATABASE_PASSWORD:-kuma}@postgres:5432/developer_mozilla_org
       - DEBUG=${DEBUG:-True}
       - DOMAIN=${DOMAIN:-localhost}
       - ENABLE_RESTRICTIONS_BY_HOST=${ENABLE_RESTRICTIONS_BY_HOST:-False}
@@ -41,24 +42,24 @@ services:
       - SESSION_COOKIE_SECURE=False
       - SITE_URL=${SITE_URL:-http://localhost:8000}
       - STATIC_URL=${STATIC_URL:-http://localhost:8000/static/}
-      - WAFFLE_COOKIE_SECURE=False
+      # - WAFFLE_COOKIE_SECURE=False
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=True
       - PYTHONWARNINGS=${PYTHONWARNINGS:-}
       - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
       - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
-      - GOOGLE_ANALYTICS_TRACKING_URL=http://mockga:7777/collect
+      # - GOOGLE_ANALYTICS_TRACKING_URL=http://mockga:7777/collect
 
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
     <<: *worker
     command: gunicorn -w ${GUNICORN_WORKERS:-4} --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=gevent kuma.wsgi:application
     depends_on:
-      - mysql
+      - postgres
       - redis
       - minio
-      - mockga
+      # - mockga
     ports:
       - "8000:8000"
 
@@ -67,31 +68,40 @@ services:
     <<: *worker
     command: bash
     depends_on:
-      - mysql
+      - postgres
       - redis
       - minio
       - minio_setup
     volumes:
       - ./:/app
 
-  mysql:
-    image: mysql:5.6
-    # This is necessary for platforms using the Apple M1 chip.
-    platform: linux/x86_64
+  # https://hub.docker.com/_/postgres/
+  postgres:
+    image: postgres:13.3
     environment:
-      - MYSQL_USER=kuma
-      - MYSQL_PASSWORD=kuma
-      - MYSQL_DATABASE=developer_mozilla_org
-      - MYSQL_ROOT_PASSWORD=kuma
-    command:
-      - mysqld
-      - --character-set-server=utf8
-      - --collation-server=utf8_general_ci
-      - --innodb-flush-log-at-trx-commit=0
-      - --innodb-log-file-size=132M
-      - --max-allowed-packet=100M
-    volumes:
-      - mysqlvolume:/var/lib/mysql
+      # Create the superuser account
+      - POSTGRES_USER=kuma
+      - POSTGRES_PASSWORD=kuma
+      - POSTGRES_DB=developer_mozilla_org
+
+  # mysql:
+  #   image: mysql:5.6
+  #   # This is necessary for platforms using the Apple M1 chip.
+  #   platform: linux/x86_64
+  #   environment:
+  #     - MYSQL_USER=kuma
+  #     - MYSQL_PASSWORD=kuma
+  #     - MYSQL_DATABASE=developer_mozilla_org
+  #     - MYSQL_ROOT_PASSWORD=kuma
+  #   command:
+  #     - mysqld
+  #     - --character-set-server=utf8
+  #     - --collation-server=utf8_general_ci
+  #     - --innodb-flush-log-at-trx-commit=0
+  #     - --innodb-log-file-size=132M
+  #     - --max-allowed-packet=100M
+  #   volumes:
+  #     - mysqlvolume:/var/lib/mysql
 
   redis:
     # The version of this Redis image should be kept synchronized with production. It
@@ -122,15 +132,15 @@ services:
     entrypoint: ""
     command: /bin/sh -c "for BUCKET in 'test' 'media'; do mc mb -p minio/$$BUCKET && mc policy set download minio/$$BUCKET; done"
 
-  mockga:
-    build:
-      context: mockga
-      dockerfile: Dockerfile
-    ports:
-      - "7777:7777"
+  # mockga:
+  #   build:
+  #     context: mockga
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "7777:7777"
 
 volumes:
-    miniodata:
-    mysqlvolume:
-    esdata:
-      driver: local
+  miniodata:
+  # mysqlvolume:
+  # esdata:
+  #   driver: local
