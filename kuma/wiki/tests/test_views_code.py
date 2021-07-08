@@ -1,30 +1,6 @@
-from datetime import datetime
-
 import pytest
 
-from django.core.files.base import ContentFile
-
-from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.core.urlresolvers import reverse
-
-
-@pytest.fixture
-def attachment(db, wiki_user):
-    title = "Test text file"
-    result = Attachment(title=title)
-    result.save()
-    revision = AttachmentRevision(
-        title=title,
-        is_approved=True,
-        attachment=result,
-        mime_type="text/plain",
-        description="Initial upload",
-        created=datetime.now(),
-    )
-    revision.creator = wiki_user
-    revision.file.save("test.txt", ContentFile(b"This is only a test."))
-    revision.make_current()
-    return result
 
 
 @pytest.mark.parametrize("domain", ("HOST", "ORIGIN"))
@@ -81,17 +57,17 @@ def test_code_sample_host_restricted_host(settings, client):
     assert "max-age=31536000" in response["Cache-Control"]
 
 
-def test_raw_code_sample_file(attachment, admin_client, settings):
-    filename = attachment.current_revision.filename
+def test_raw_code_sample_file(admin_client, settings):
     settings.ATTACHMENT_HOST = "testserver"
     # Getting the URL redirects to the attachment
     file_url = reverse(
         "wiki.raw_code_sample_file",
-        args=("Any/Slug", "sample1", attachment.id, filename),
+        args=("Any/Slug", "sample1", "123", "screenshot.png"),
     )
     response = admin_client.get(file_url)
     assert response.status_code == 302
-    assert response.url == attachment.get_file_url()
+    assert response.url == f"http://{settings.ATTACHMENT_HOST}/files/123/screenshot.png"
+
     assert not response.has_header("Vary")
     assert "Cache-Control" in response
     assert "public" in response["Cache-Control"]

@@ -12,5 +12,4 @@ class AttachmentsConfig(AppConfig):
     verbose_name = _("Attachments")
 
     def ready(self):
-        # Register signal handlers
-        from . import signal_handlers  # noqa
+        pass

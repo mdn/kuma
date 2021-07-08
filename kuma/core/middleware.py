@@ -122,9 +122,6 @@ class LocaleMiddleware(MiddlewareBase):
             # language prefix and redirecting to that URL.
             language_path = f"/{language}{request.path_info}"
             path_valid = is_valid_path(language_path, urlconf)
-            print(
-                f"path_valid = {path_valid}, language = {language}, language_from_path = {language_from_path}, language_path = {language_path}"
-            )
             path_needs_slash = not path_valid and (
                 settings.APPEND_SLASH
                 and not language_path.endswith("/")
