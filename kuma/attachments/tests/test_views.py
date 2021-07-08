@@ -1,6 +1,6 @@
 from kuma.core.urlresolvers import reverse
 
-from ..utils import full_attachment_url
+from ..utils import full_attachment_url, full_mindtouch_attachment_url
 
 
 def test_mindtouch_redirect(client, settings, sample_mindtouch_attachment_redirect):
@@ -19,7 +19,7 @@ def test_mindtouch_redirect(client, settings, sample_mindtouch_attachment_redire
             "filename": filename,
         },
     )
-    response = client.get(mindtouch_url)
+    response = client.get(mindtouch_url, HTTP_HOST=settings.ATTACHMENT_HOST)
     assert response.status_code == 302
     # Figure out the external scheme + host for our attachments bucket
     endpoint_url = settings.ATTACHMENTS_AWS_S3_ENDPOINT_URL
@@ -39,6 +39,37 @@ def test_mindtouch_redirect(client, settings, sample_mindtouch_attachment_redire
         f"max-age={settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE}"
         in response["Cache-Control"]
     )
+
+
+def test_mindtouch_redirect_requires_attachment_host(
+    client, settings, sample_mindtouch_attachment_redirect
+):
+
+    settings.DOMAIN = "testserver"
+    settings.ATTACHMENT_HOST = "demos"
+    settings.ALLOWED_HOSTS.append("demos")
+
+    filename = sample_mindtouch_attachment_redirect["url"].split("/")[-1]
+    id = sample_mindtouch_attachment_redirect["id"]
+    mindtouch_url = reverse(
+        "attachments.mindtouch_file_redirect",
+        args=(),
+        kwargs={
+            "file_id": id,
+            "filename": filename,
+        },
+    )
+    # Note! Not using the correct `HTTP_HOST=settings.ATTACHMENT_HOST`
+    response = client.get(mindtouch_url)
+    assert response.status_code == 301
+    url = full_mindtouch_attachment_url(id, filename)
+    assert "public" in response["Cache-Control"]
+    assert (
+        f"max-age={settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE}"
+        in response["Cache-Control"]
+    )
+    assert response["Location"] == url
+    assert "Vary" not in response
 
 
 def test_mindtouch_not_found(client, settings):

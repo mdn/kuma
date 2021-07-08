@@ -7,7 +7,11 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import redirect
 from django.views.decorators.cache import cache_control
 
-from .utils import convert_to_http_date, full_attachment_url
+from .utils import (
+    convert_to_http_date,
+    full_attachment_url,
+    full_mindtouch_attachment_url,
+)
 
 # In the olden days of Kuma, we used to have people upload files into the Wiki.
 # These are called Attachments.
@@ -66,6 +70,10 @@ def mindtouch_file_redirect(request, file_id, filename):
     """Redirect an old MindTouch file URL to a new kuma file URL."""
     if file_id not in _mindtouch_redirects:
         return HttpResponseNotFound(f"{file_id} not a known redirect")
+
+    if settings.DOMAIN in request.get_host():
+        file_url = full_mindtouch_attachment_url(file_id, filename)
+        return redirect(file_url, permanent=True)
 
     return _redirect_final_path(_mindtouch_redirects[file_id])
 
