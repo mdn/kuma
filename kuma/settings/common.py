@@ -234,23 +234,8 @@ LANGUAGE_COOKIE_SECURE = "localhost" not in DOMAIN
 
 SITE_ID = config("SITE_ID", default=1, cast=int)
 
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
-# USE_I18N = True
-# USE_L10N = True
-# LOCALE_PATHS = (path("locale"),)
-
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
-# MEDIA_ROOT = config("MEDIA_ROOT", default=path("media"))
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
-# MEDIA_URL = config("MEDIA_URL", default="/media/")
 
 STATIC_URL = config("STATIC_URL", default="/static/")
-# STATIC_ROOT = path("static")
 
 SERVE_MEDIA = False
 
@@ -290,19 +275,6 @@ SECRET_KEY = config(
 )
 
 
-# _CONTEXT_PROCESSORS = (
-#     "django.contrib.auth.context_processors.auth",
-#     "django.template.context_processors.debug",
-#     "django.template.context_processors.media",
-#     "django.template.context_processors.static",
-#     "django.template.context_processors.request",
-#     "django.template.context_processors.csrf",
-#     "django.contrib.messages.context_processors.messages",
-#     "kuma.core.context_processors.global_settings",
-#     "kuma.core.context_processors.i18n",
-#     "kuma.core.context_processors.next_url",
-# )
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -315,64 +287,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "kuma.urls"
 
-# MIDDLEWARE = (
-#     "django.middleware.security.SecurityMiddleware",
-#     "whitenoise.middleware.WhiteNoiseMiddleware",
-#     "kuma.core.middleware.SetRemoteAddrFromForwardedFor",
-#     (
-#         "kuma.core.middleware.ForceAnonymousSessionMiddleware"
-#         if MAINTENANCE_MODE
-#         else "django.contrib.sessions.middleware.SessionMiddleware"
-#     ),
-#     "kuma.core.middleware.LocaleStandardizerMiddleware",
-#     # LocaleMiddleware must be before any middleware that uses
-#     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
-#     "kuma.core.middleware.LocaleMiddleware",
-#     "django.middleware.http.ConditionalGetMiddleware",
-#     "django.middleware.common.CommonMiddleware",
-#     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-# )
-
-# if not MAINTENANCE_MODE:
-#     # We don't want this in maintence mode, as it adds "Cookie"
-#     # to the Vary header, which in turn, kills caching.
-#     MIDDLEWARE += ("django.middleware.csrf.CsrfViewMiddleware",)
-
-# MIDDLEWARE += (
-#     "django.contrib.auth.middleware.AuthenticationMiddleware",
-#     "django.contrib.messages.middleware.MessageMiddleware",
-#     "kuma.core.middleware.WaffleWithCookieDomainMiddleware",
-# )
-
-# ENABLE_QUERYCOUNT = config("ENABLE_QUERYCOUNT", default=False, cast=bool)
-# if ENABLE_QUERYCOUNT:
-#     # Prints heavy query counts per request.
-#     QUERYCOUNT = {
-#         "IGNORE_REQUEST_PATTERNS": [r"^/admin/"],
-#         "DISPLAY_DUPLICATES": config(
-#             "QUERYCOUNT_DISPLAY_DUPLICATES", cast=int, default=0
-#         ),
-#     }
-#     MIDDLEWARE += ("querycount.middleware.QueryCountMiddleware",)
-
-# # Auth
-# AUTHENTICATION_BACKENDS = (
-#     "kuma.users.auth_backends.KumaAuthBackend",  # Handles User Bans
-#     # "allauth.account.auth_backends.AuthenticationBackend",  # Legacy
-# )
-# AUTH_USER_MODEL = "users.User"
-
-# if urlsplit(STATIC_URL).hostname in (None, "localhost"):
-#     # Avatar needs a publicly available default image
-#     DEFAULT_AVATAR = PRODUCTION_URL + "/static/img/avatar.png"
-# else:
-#     DEFAULT_AVATAR = STATIC_URL + "img/avatar.png"
-
-# ROOT_URLCONF = "kuma.urls"
-
-# STATICFILES_DIRS = [
-#     path("build", "locale"),
-# ]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -494,30 +408,6 @@ TEMPLATES = [
         },
     },
 ]
-
-# PUENTE = {
-#     "VERSION": "2020.32",
-#     "BASE_DIR": BASE_DIR,
-#     "TEXT_DOMAIN": "django",
-#     # Tells the extract script what files to look for l10n in and what function
-#     # handles the extraction.
-#     "DOMAIN_METHODS": {
-#         "django": [
-#             ("kuma/**.py", "python"),
-#             ("**/templates/**.html", "enmerkar.extract.extract_django"),
-#             ("**/jinja2/**.html", "jinja2"),
-#             ("**/jinja2/**.ltxt", "jinja2"),
-#         ],
-#     },
-#     "PROJECT": "MDN",
-#     "MSGID_BUGS_ADDRESS": ADMIN_EMAILS[0],
-# }
-
-# STATICI18N_ROOT = "build/locale"
-# STATICI18N_DOMAIN = "javascript"
-
-# Cache non-versioned static files for one week
-# WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
 
 # Session cookies
 SESSION_COOKIE_DOMAIN = DOMAIN
@@ -705,37 +595,6 @@ EMAIL_LIST_MDN_ADMINS = config(
     "EMAIL_LIST_MDN_ADMINS", default="mdn-admins@mozilla.org"
 )
 
-# # Name of the django.contrib.auth.models.Group to use as beta testers
-# BETA_GROUP_NAME = config("BETA_GROUP_NAME", default="Beta Testers")
-
-# # Email address to notify of possible spam (first edits, blocked edits)
-# EMAIL_LIST_SPAM_WATCH = config(
-#     "EMAIL_LIST_SPAM_WATCH", default="mdn-spam-watch@mozilla.com"
-# )
-
-# # Google Analytics Tracking Account Number (0 to disable)
-# GOOGLE_ANALYTICS_ACCOUNT = config("GOOGLE_ANALYTICS_ACCOUNT", default=None)
-
-# # When HTTP posting event to Google Analytics this is the combined connect
-# # and read timeout.
-# GOOGLE_ANALYTICS_TRACKING_TIMEOUT = config(
-#     "GOOGLE_ANALYTICS_TRACKING_TIMEOUT", cast=float, default=2.0
-# )
-# # The only reason you'd want to override this is for local development where
-# # you might want to substitute the events tracking URL to a local dev server.
-# # https://developers.google.com/analytics/devguides/collection/protocol/v1/reference
-# GOOGLE_ANALYTICS_TRACKING_URL = config(
-#     "GOOGLE_ANALYTICS_TRACKING_URL", default="https://www.google-analytics.com/collect"
-# )
-# # This setting only really makes sense for the benefit of Django unit tests.
-# # All tests are run with `settings.DEBUG === False` so we can't rely on that
-# # for *avoid* any errors swallowed. And in tests we don't want to swallow
-# # any `requests` errors because most possibly they happen because we
-# # incorrectly mocked requests.
-# GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = config(
-#     "GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS", cast=bool, default=DEBUG
-# )
-
 # Elasticsearch related settings.
 # XXX Peter: Need to audit which of these we actually use!
 ES_DEFAULT_NUM_REPLICAS = 1
@@ -803,91 +662,11 @@ CSRF_TRUSTED_ORIGINS = [DOMAIN]
 X_FRAME_OPTIONS = "DENY"
 
 
-# def get_user_url(user):
-#     from kuma.core.urlresolvers import reverse
-
-#     return reverse("users.user_detail", args=[user.username])
-
-
-# ABSOLUTE_URL_OVERRIDES = {"users.user": get_user_url}
-
-# # Set header X-XSS-Protection: 1; mode=block
-# SECURE_BROWSER_XSS_FILTER = True
-
-# # Set header X-Content-Type-Options: nosniff
-# SECURE_CONTENT_TYPE_NOSNIFF = True
-
-# # Set header Strict-Transport-Security header
-# # 63072000 in production (730 days)
-# SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default=0, cast=int)
-
-# # Honor the X-Forwarded-Proto header, to assume HTTPS instead of HTTP
-# SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
-# # django-allauth configuration
-# ACCOUNT_LOGOUT_REDIRECT_URL = "/"
-# ACCOUNT_DEFAULT_HTTP_PROTOCOL = config("ACCOUNT_DEFAULT_HTTP_PROTOCOL", default="https")
-# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_USERNAME_MIN_LENGTH = 3
-# ACCOUNT_ADAPTER = "kuma.users.adapters.KumaAccountAdapter"
-# ACCOUNT_SIGNUP_FORM_CLASS = None
-# ACCOUNT_UNIQUE_EMAIL = False
-
-# SOCIALACCOUNT_ADAPTER = "kuma.users.adapters.KumaSocialAccountAdapter"
-# SOCIALACCOUNT_EMAIL_VERIFICATION = "mandatory"
-# SOCIALACCOUNT_EMAIL_REQUIRED = True
-# SOCIALACCOUNT_AUTO_SIGNUP = False  # forces the use of the signup view
-# SOCIALACCOUNT_QUERY_EMAIL = True  # used by the custom github provider
-
-# BLOCKABLE_USER_AGENTS = [
-#     "Yahoo! Slurp",
-#     "Googlebot",
-#     "bingbot",
-#     "Applebot",
-#     "YandexBot",
-#     "Baiduspider",
-#     "CCBot",
-#     "ScoutJet",
-#     "wget",
-#     "curl",
-# ]
-
-# # Tell django-taggit to use case-insensitive search for existing tags
-# TAGGIT_CASE_INSENSITIVE = True
-
-# # Ad Banner Settings
-# NEWSLETTER = True
-# NEWSLETTER_ARTICLE = True
-
-# # Auth and permissions related constants
-# LOGIN_URL = "/signin"
-# LOGIN_REDIRECT_URL = "/"
-
 # Caching constants for the Cache-Control header.
 CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
     "CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE", default=60 * 5, cast=int
 )
 
-# # Stripe API KEY settings
-# STRIPE_PUBLIC_KEY = config("STRIPE_PUBLIC_KEY", default="")
-# STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY", default="")
-# STRIPE_PRICE_IDS = config("STRIPE_PRICE_IDS", default="", cast=Csv())
-
-# # Misc Stripe settings
-# STRIPE_MAX_NETWORK_RETRIES = config("STRIPE_MAX_NETWORK_RETRIES", default=5, cast=int)
-
-# CONTRIBUTION_SUPPORT_EMAIL = config(
-#     "CONTRIBUTION_SUPPORT_EMAIL", default="mdn-support@mozilla.com"
-# )
-
-# # The default amount suggested for monthly subscription payments.
-# # As of March 2020, we only have 1 plan and the number is fixed.
-# # In the future, we might have multiple plans and this might a dict of amount
-# # per plan.
-# # The reason it's not an environment variable is to simply indicate that it
-# # can't be overridden at the moment based on the environment.
-# CONTRIBUTION_AMOUNT_USD = 5.0
 
 # Setting for configuring the AWS S3 bucket name used for the document API.
 MDN_API_S3_BUCKET_NAME = config("MDN_API_S3_BUCKET_NAME", default=None)
@@ -919,37 +698,6 @@ ATTACHMENTS_AWS_S3_ENDPOINT_URL = config(
     "ATTACHMENTS_AWS_S3_ENDPOINT_URL", default=None
 )
 
-# Silence warnings about defaults that change in django-storages 2.0
-AWS_BUCKET_ACL = None
-AWS_DEFAULT_ACL = None
-
-# # html_attributes and css_classnames get indexed into Elasticsearch on every
-# # document when sent in. These can be very memory consuming since the
-# # 'html_attributes' makes up about 60% of the total weight.
-# # Refer to this GitHub issue for an estimate of their weight contribution:
-# # https://github.com/mdn/kuma/issues/6264#issue-539922604
-# # Note that the only way to actually search on these fields is with a manual
-# # use of the search v1 API. There is no UI at all for searching on something
-# # in the 'html_attributes' or the 'css_classnames'.
-# # By disabling indexing of these, in your local dev environment, your local
-# # Elasticsearch instance will be a LOT smaller.
-# INDEX_HTML_ATTRIBUTES = config("INDEX_HTML_ATTRIBUTES", cast=bool, default=not DEBUG)
-# INDEX_CSS_CLASSNAMES = config("INDEX_CSS_CLASSNAMES", cast=bool, default=not DEBUG)
-
-# # When doing local development with Yari, if you want to have `?next=...` redirects
-# # work when you sign in on Yari, this needs to be set to `localhost.org:3000` in your
-# # .env file. That tells, Kuma that if the `?next` URL is an absolute URL, that
-# # it's safe to use and redirect to.
-# # This additional host is always, also, dependent on settings.DEBUG==True.
-# ADDITIONAL_NEXT_URL_ALLOWED_HOSTS = config(
-#     "ADDITIONAL_NEXT_URL_ALLOWED_HOSTS", default=None
-# )
-
-# # As of Oct 2020, we might not enable subscriptions at all. There are certain
-# # elements of Kuma that exposes subscriptions even if all the Waffle flags and
-# # switches says otherwise. For example, the payments pages are skeletons for
-# # React apps. This boolean settings disables all of that.
-# ENABLE_SUBSCRIPTIONS = config("ENABLE_SUBSCRIPTIONS", cast=bool, default=False)
 
 # Kuma doesn't index anything, that's done by the Yari Deployer, but we need
 # to know what the index is called for searching.

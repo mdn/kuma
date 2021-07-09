@@ -1,14 +1,12 @@
 import pytest
 from django.core import mail
 from django.core.mail.backends.locmem import EmailBackend
-from django.utils.encoding import force_bytes
 from requests.exceptions import ConnectionError
 
 from kuma.core.utils import (
     EmailMultiAlternativesRetrying,
     order_params,
     requests_retry_session,
-    safer_pyquery,
     send_mail_retrying,
 )
 
@@ -23,44 +21,6 @@ from kuma.core.utils import (
 )
 def test_order_params(original, expected):
     assert order_params(original) == expected
-
-
-def test_safer_pyquery(mock_requests):
-    # Note! the `mock_requests` fixture is just there to make absolutely
-    # sure the whole test doesn't ever use requests.get().
-    # My not setting up expectations, and if it got used,
-    # these tests would raise a `NoMockAddress` exception.
-
-    parsed = safer_pyquery("https://www.peterbe.com")
-    assert parsed.outer_html() == "<p>https://www.peterbe.com</p>"
-
-    # Byte strings in should continue to work.
-    parsed = safer_pyquery(force_bytes("https://www.peterbe.com"))
-    assert parsed.outer_html() == "<p>https://www.peterbe.com</p>"
-
-    # Non-ascii as Unicode
-    parsed = safer_pyquery("https://www.peterbe.com/ë")
-
-    parsed = safer_pyquery(
-        """<!doctype html>
-    <html>
-        <body>
-            <b>Bold!</b>
-        </body>
-    </html>
-    """
-    )
-    assert parsed("b").text() == "Bold!"
-    parsed = safer_pyquery(
-        """
-    <html>
-        <body>
-            <a href="https://www.peterbe.com">URL</a>
-        </body>
-    </html>
-    """
-    )
-    assert parsed("a[href]").text() == "URL"
 
 
 def test_requests_retry_session(mock_requests):
