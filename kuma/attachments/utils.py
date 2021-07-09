@@ -17,6 +17,14 @@ def full_attachment_url(attachment_id, filename):
     return f"{settings.PROTOCOL}{settings.ATTACHMENT_HOST}{path}"
 
 
+def full_mindtouch_attachment_url(file_id, filename):
+    path = reverse(
+        "attachments.mindtouch_file_redirect",
+        kwargs={"file_id": file_id, "filename": filename},
+    )
+    return f"{settings.PROTOCOL}{settings.ATTACHMENT_HOST}{path}"
+
+
 def convert_to_utc(dt):
     """
     Given a timezone naive or aware datetime return it converted to UTC.
