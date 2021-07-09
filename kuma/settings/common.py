@@ -4,7 +4,9 @@ from email.utils import parseaddr
 from pathlib import Path
 
 import dj_database_url
+import sentry_sdk
 from decouple import config, Csv
+from sentry_sdk.integrations.django import DjangoIntegration
 
 
 DEBUG = config("DEBUG", default=False, cast=bool)
@@ -677,3 +679,11 @@ PLUS_VARIANTS = config(
     ),
     cast=json.loads,
 )
+
+
+SENTRY_DSN = config("SENTRY_DSN", default="")
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[DjangoIntegration()],
+    )
