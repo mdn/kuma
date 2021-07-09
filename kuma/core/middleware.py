@@ -1,15 +1,6 @@
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
-from django.http import HttpResponseRedirect
-from django.urls import get_script_prefix, is_valid_path
 from waffle.middleware import WaffleMiddleware
-
-from .decorators import add_shared_cache_control
-from .i18n import (
-    activate_language_from_request,
-    get_language,
-    get_language_from_path,
-)
 
 
 class MiddlewareBase(object):
