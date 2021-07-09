@@ -15,8 +15,6 @@ RUN set -x \
     libsasl2-modules \
     gettext \
     build-essential \
-    libxml2-dev \
-    libxslt1-dev \
     libffi-dev
 
 # add non-privileged user
