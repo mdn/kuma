@@ -58,6 +58,7 @@ dennis = "^0.9" # Used by `make localetest` to lint po files
 # Pinned Dependencies
 coverage = {extras = ["toml"], version = "^5"} # Use optional toml support
 pytest-watch = "^4.2.0"
+honcho = "^1.0.1"
 
 [tool.black]
 target-version = ["py38"]
