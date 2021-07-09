@@ -12,10 +12,10 @@ RUN set -x \
     && apt-get install -y --no-install-recommends \
     curl \
     dirmngr \
+    # Needed for pytz to be able to install
     libsasl2-modules \
     gettext \
-    build-essential \
-    libffi-dev
+    build-essential
 
 # add non-privileged user
 RUN useradd --uid 1000 --shell /bin/bash --create-home kuma \
