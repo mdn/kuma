@@ -14,7 +14,6 @@ def test_code_sample(client, settings, domain):
     assert response.status_code == 200
     assert response["Access-Control-Allow-Origin"] == "*"
     assert "Last-Modified" not in response
-    assert "ETag" in response
     assert "public" in response["Cache-Control"]
     assert "max-age=31536000" in response["Cache-Control"]
     assert "text/plain" in response["Content-Type"]
@@ -27,6 +26,9 @@ def test_code_sample(client, settings, domain):
 def test_code_sample_host_not_allowed(settings, client, host):
     """Users are not allowed to view samples on a restricted domain."""
     url = reverse("wiki.code_sample", args=["Any/Slug", "sample1"])
+    # print(ALLOWED_HOSTS
+    # default="developer-local.allizom.org, mdn-local.mozillademos.org",)
+    print(settings.ALLOWED_HOSTS)
     settings.DOMAIN = "dev.moz.org"
     response = client.get(url, HTTP_HOST=host)
     assert response.status_code == 403

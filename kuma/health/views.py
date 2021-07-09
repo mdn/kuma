@@ -1,6 +1,7 @@
 from django.conf import settings
-
-# from django.db import DatabaseError
+from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+from django.db import DatabaseError
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_safe
@@ -86,18 +87,16 @@ def status(request):
         },
     }
 
-    # # Check that database is reachable, populated
-    # doc_data = {"available": True, "populated": False, "document_count": 0}
-    # try:
-    #     doc_count = Document.objects.count()
-    # except DatabaseError:
-    #     doc_data["available"] = False
-    # else:
-    #     if doc_count:
-    #         doc_data["populated"] = True
-    #         doc_data["document_count"] = doc_count
-    # data["services"]["database"] = doc_data
-    data["services"]["database"] = "What should Peter put here???"
+    # Check that database is reachable, populated
+    doc_data = {"available": True, "populated": False}
+    try:
+        doc_count = ContentType.objects.count()
+    except DatabaseError:
+        doc_data["available"] = False
+    else:
+        if doc_count:
+            doc_data["populated"] = True
+    data["services"]["database"] = doc_data
 
     # Check that Elasticsearch is reachable and somewhat healthy
     search_data = {"available": None, "populated": None, "health": None, "count": None}
@@ -118,30 +117,30 @@ def status(request):
         search_data["populated"] = False
     data["services"]["search"] = search_data
 
-    # # Check if the testing accounts are available
-    # test_account_data = {"available": False}
-    # test_account_names = [
-    #     "test-super",
-    #     "test-moderator",
-    #     "test-new",
-    #     "test-banned",
-    #     "viagra-test-123",
-    # ]
-    # try:
-    #     users = list(
-    #         User.objects.only("id", "username", "password").filter(
-    #             username__in=test_account_names
-    #         )
-    #     )
-    # except DatabaseError:
-    #     users = []
-    # if len(users) == len(test_account_names):
-    #     for user in users:
-    #         if not user.check_password("test-password"):
-    #             break
-    #     else:
-    #         # All users have the testing password
-    #         test_account_data["available"] = True
-    # data["services"]["test_accounts"] = test_account_data
+    # Check if the testing accounts are available
+    test_account_data = {"available": False}
+    test_account_names = [
+        "test-super",
+        "test-moderator",
+        "test-new",
+        "test-banned",
+        "viagra-test-123",
+    ]
+    try:
+        users = list(
+            User.objects.only("id", "username", "password").filter(
+                username__in=test_account_names
+            )
+        )
+    except DatabaseError:
+        users = []
+    if len(users) == len(test_account_names):
+        for user in users:
+            if not user.check_password("test-password"):
+                break
+        else:
+            # All users have the testing password
+            test_account_data["available"] = True
+    data["services"]["test_accounts"] = test_account_data
 
     return JsonResponse(data)

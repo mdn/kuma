@@ -1,38 +1,48 @@
 [[package]]
-category = "main"
-description = "Low-level AMQP client for Python (fork of amqplib)."
 name = "amqp"
+version = "2.6.0"
+description = "Low-level AMQP client for Python (fork of amqplib)."
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "2.6.0"
 
 [package.dependencies]
 vine = ">=1.1.3,<5.0.0a1"
 
 [[package]]
-category = "dev"
-description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
 name = "appdirs"
+version = "1.4.3"
+description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
+category = "dev"
 optional = false
 python-versions = "*"
-version = "1.4.3"
 
 [[package]]
-category = "dev"
-description = "Atomic file writes."
-marker = "sys_platform == \"win32\""
+name = "asgiref"
+version = "3.4.1"
+description = "ASGI specs, helper code, and adapters"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+tests = ["pytest", "pytest-asyncio", "mypy (>=0.800)"]
+
+[[package]]
 name = "atomicwrites"
+version = "1.3.0"
+description = "Atomic file writes."
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.3.0"
 
 [[package]]
-category = "dev"
-description = "Classes Without Boilerplate"
 name = "attrs"
+version = "19.3.0"
+description = "Classes Without Boilerplate"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "19.3.0"
 
 [package.extras]
 azure-pipelines = ["coverage", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface", "pytest-azurepipelines"]
@@ -41,31 +51,20 @@ docs = ["sphinx", "zope.interface"]
 tests = ["coverage", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface"]
 
 [[package]]
-category = "main"
-description = "Internationalization utilities"
-name = "babel"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.8.0"
-
-[package.dependencies]
-pytz = ">=2015.7"
-
-[[package]]
-category = "main"
-description = "Python multiprocessing fork with improvements and bugfixes"
 name = "billiard"
+version = "3.6.3.0"
+description = "Python multiprocessing fork with improvements and bugfixes"
+category = "main"
 optional = false
 python-versions = "*"
-version = "3.6.3.0"
 
 [[package]]
-category = "dev"
-description = "The uncompromising code formatter."
 name = "black"
+version = "21.6b0"
+description = "The uncompromising code formatter."
+category = "dev"
 optional = false
 python-versions = ">=3.6.2"
-version = "21.6b0"
 
 [package.dependencies]
 appdirs = "*"
@@ -82,12 +81,12 @@ python2 = ["typed-ast (>=1.4.2)"]
 uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
-category = "main"
-description = "The AWS SDK for Python"
 name = "boto3"
+version = "1.12.13"
+description = "The AWS SDK for Python"
+category = "main"
 optional = false
 python-versions = "*"
-version = "1.12.13"
 
 [package.dependencies]
 botocore = ">=1.15.13,<1.16.0"
@@ -95,45 +94,34 @@ jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.3.0,<0.4.0"
 
 [[package]]
-category = "main"
-description = "Low-level, data-driven core of boto 3."
 name = "botocore"
+version = "1.15.13"
+description = "Low-level, data-driven core of boto 3."
+category = "main"
 optional = false
 python-versions = "*"
-version = "1.15.13"
 
 [package.dependencies]
 docutils = ">=0.10,<0.16"
 jmespath = ">=0.7.1,<1.0.0"
 python-dateutil = ">=2.1,<3.0.0"
-
-[package.dependencies.urllib3]
-python = "<3.4.0 || >=3.5.0"
-version = ">=1.20,<1.26"
+urllib3 = {version = ">=1.20,<1.26", markers = "python_version != \"3.4\""}
 
 [[package]]
-category = "dev"
-description = "Bash-style brace expansion for Python"
 name = "braceexpand"
+version = "0.1.6"
+description = "Bash-style brace expansion for Python"
+category = "dev"
 optional = false
 python-versions = "*"
-version = "0.1.6"
 
 [[package]]
-category = "main"
-description = "Extensible memoizing collections and decorators"
-name = "cachetools"
-optional = false
-python-versions = "~=3.5"
-version = "4.0.0"
-
-[[package]]
-category = "main"
-description = "Distributed Task Queue."
 name = "celery"
+version = "4.4.5"
+description = "Distributed Task Queue."
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "4.4.5"
 
 [package.dependencies]
 billiard = ">=3.6.3.0,<4.0"
@@ -145,11 +133,11 @@ vine = "1.3.0"
 [package.extras]
 arangodb = ["pyArango (>=1.3.2)"]
 auth = ["cryptography"]
-azureblockblob = ["azure-storage (0.36.0)", "azure-common (1.1.5)", "azure-storage-common (1.1.0)"]
+azureblockblob = ["azure-storage (==0.36.0)", "azure-common (==1.1.5)", "azure-storage-common (==1.1.0)"]
 brotli = ["brotli (>=1.0.0)", "brotlipy (>=0.7.0)"]
 cassandra = ["cassandra-driver (<3.21.0)"]
 consul = ["python-consul"]
-cosmosdbsql = ["pydocumentdb (2.3.2)"]
+cosmosdbsql = ["pydocumentdb (==2.3.2)"]
 couchbase = ["couchbase-cffi (<3.0.0)", "couchbase (<3.0.0)"]
 couchdb = ["pycouchdb"]
 django = ["Django (>=1.11)"]
@@ -160,7 +148,7 @@ gevent = ["gevent"]
 librabbitmq = ["librabbitmq (>=1.5.0)"]
 lzma = ["backports.lzma"]
 memcache = ["pylibmc"]
-mongodb = ["pymongo (>=3.3.0)"]
+mongodb = ["pymongo[srv] (>=3.3.0)"]
 msgpack = ["msgpack"]
 pymemcache = ["python-memcached"]
 pyro = ["pyro4"]
@@ -170,178 +158,129 @@ s3 = ["boto3 (>=1.9.125)"]
 slmq = ["softlayer-messaging (>=1.0.3)"]
 solar = ["ephem"]
 sqlalchemy = ["sqlalchemy"]
-sqs = ["boto3 (>=1.9.125)", "pycurl (7.43.0.5)"]
+sqs = ["boto3 (>=1.9.125)", "pycurl (==7.43.0.5)"]
 tblib = ["tblib (>=1.3.0)", "tblib (>=1.5.0)"]
 yaml = ["PyYAML (>=3.10)"]
 zookeeper = ["kazoo (>=1.3.1)"]
 zstd = ["zstandard"]
 
 [[package]]
-category = "main"
-description = "Python package for providing Mozilla's CA Bundle."
 name = "certifi"
+version = "2019.11.28"
+description = "Python package for providing Mozilla's CA Bundle."
+category = "main"
 optional = false
 python-versions = "*"
-version = "2019.11.28"
 
 [[package]]
-category = "main"
-description = "Foreign Function Interface for Python calling C code."
-marker = "platform_python_implementation == \"CPython\" and sys_platform == \"win32\""
 name = "cffi"
+version = "1.14.0"
+description = "Foreign Function Interface for Python calling C code."
+category = "main"
 optional = false
 python-versions = "*"
-version = "1.14.0"
 
 [package.dependencies]
 pycparser = "*"
 
 [[package]]
-category = "main"
-description = "Universal encoding detector for Python 2 and 3"
 name = "chardet"
+version = "3.0.4"
+description = "Universal encoding detector for Python 2 and 3"
+category = "main"
 optional = false
 python-versions = "*"
-version = "3.0.4"
 
 [[package]]
-category = "dev"
-description = "Composable command line interface toolkit"
 name = "click"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "7.1.2"
-
-[[package]]
+description = "Composable command line interface toolkit"
 category = "dev"
-description = "Cross-platform colored terminal text."
-marker = "sys_platform == \"win32\""
-name = "colorama"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "0.4.3"
 
 [[package]]
+name = "colorama"
+version = "0.4.3"
+description = "Cross-platform colored terminal text."
 category = "dev"
-description = "Code coverage measurement for Python"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[[package]]
 name = "coverage"
+version = "5.5"
+description = "Code coverage measurement for Python"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
-version = "5.5"
 
 [package.dependencies]
-[package.dependencies.toml]
-optional = true
-version = "*"
+toml = {version = "*", optional = true, markers = "extra == \"toml\""}
 
 [package.extras]
 toml = ["toml"]
 
 [[package]]
-category = "main"
-description = "cssselect parses CSS3 Selectors and translates them to XPath 1.0"
 name = "cssselect"
+version = "1.1.0"
+description = "cssselect parses CSS3 Selectors and translates them to XPath 1.0"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.1.0"
 
 [[package]]
-category = "main"
-description = "XML bomb protection for Python stdlib modules"
-name = "defusedxml"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "0.6.0"
-
-[[package]]
-category = "dev"
-description = "Utilities for working with PO and POT files to ease development and improve localization quality"
 name = "dennis"
+version = "0.9"
+description = "Utilities for working with PO and POT files to ease development and improve localization quality"
+category = "dev"
 optional = false
 python-versions = "*"
-version = "0.9"
 
 [package.dependencies]
 click = ">=6"
 polib = ">=1.0.8"
 
 [[package]]
-category = "main"
-description = "Use Database URLs in your Django Application."
 name = "dj-database-url"
-optional = false
-python-versions = "*"
 version = "0.5.0"
-
-[[package]]
+description = "Use Database URLs in your Django Application."
 category = "main"
-description = "Use an URL to configure email backend settings in your Django Application."
-name = "dj-email-url"
 optional = false
 python-versions = "*"
-version = "1.0.2"
 
 [[package]]
+name = "dj-email-url"
+version = "1.0.2"
+description = "Use an URL to configure email backend settings in your Django Application."
 category = "main"
-description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
-name = "django"
 optional = false
-python-versions = ">=3.5"
-version = "2.2.21"
+python-versions = "*"
+
+[[package]]
+name = "django"
+version = "3.2.5"
+description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
+category = "main"
+optional = false
+python-versions = ">=3.6"
 
 [package.dependencies]
+asgiref = ">=3.3.2,<4"
 pytz = "*"
 sqlparse = ">=0.2.2"
 
 [package.extras]
-argon2 = ["argon2-cffi (>=16.1.0)"]
+argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
-category = "main"
-description = "Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication."
-name = "django-allauth"
-optional = false
-python-versions = "*"
-version = "0.41.0"
-
-[package.dependencies]
-Django = ">=2.0"
-python3-openid = ">=3.0.8"
-requests = "*"
-requests-oauthlib = ">=0.3.0"
-
-[[package]]
-category = "main"
-description = "A helper class for handling configuration defaults of packaged apps gracefully."
-name = "django-appconf"
-optional = false
-python-versions = "*"
-version = "1.0.3"
-
-[package.dependencies]
-django = "*"
-six = "*"
-
-[[package]]
-category = "dev"
-description = "A configurable set of panels that display various debug information about the current request/response."
-name = "django-debug-toolbar"
-optional = false
-python-versions = ">=3.5"
-version = "2.2.1"
-
-[package.dependencies]
-Django = ">=1.11"
-sqlparse = ">=0.2.0"
-
-[[package]]
-category = "main"
-description = "Include Django URL patterns with decorators"
 name = "django-decorator-include"
+version = "3.0"
+description = "Include Django URL patterns with decorators"
+category = "main"
 optional = false
 python-versions = ">=3.4"
-version = "3.0"
 
 [package.dependencies]
 Django = ">=2.0"
@@ -350,155 +289,70 @@ Django = ">=2.0"
 dev = ["flake8", "isort"]
 
 [[package]]
-category = "main"
-description = "Extensions for Django"
 name = "django-extensions"
+version = "2.2.8"
+description = "Extensions for Django"
+category = "main"
 optional = false
 python-versions = "*"
-version = "2.2.8"
 
 [package.dependencies]
 six = ">=1.2"
 
 [[package]]
-category = "main"
-description = "Jinja2 templating language integrated in Django."
-name = "django-jinja"
-optional = false
-python-versions = "*"
-version = "2.7.0"
-
-[package.dependencies]
-django = ">=2.2"
-jinja2 = ">=2.10"
-
-[[package]]
-category = "main"
-description = "Django-MySQL extends Django's built-in MySQL and MariaDB support their specific features not available on other databases."
-name = "django-mysql"
-optional = false
-python-versions = ">=3.5"
-version = "3.3.0"
-
-[package.dependencies]
-Django = ">=1.11"
-
-[[package]]
-category = "main"
-description = "Pipeline is an asset packaging library for Django."
-name = "django-pipeline"
-optional = false
-python-versions = "*"
-version = "1.7.0"
-
-[[package]]
-category = "dev"
-description = "Middleware that Prints the number of DB queries to the runserver console."
-name = "django-querycount"
-optional = false
-python-versions = "*"
-version = "0.7.0"
-
-[[package]]
-category = "main"
-description = "Cache-based rate-limiting for Django."
 name = "django-ratelimit"
+version = "2.0.0"
+description = "Cache-based rate-limiting for Django."
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.0.0"
 
 [[package]]
-category = "main"
-description = "Full featured redis cache backend for Django."
 name = "django-redis"
+version = "5.0.0"
+description = "Full featured redis cache backend for Django."
+category = "main"
 optional = false
 python-versions = ">=3.6"
-version = "5.0.0"
 
 [package.dependencies]
 Django = ">=2.2"
 redis = ">=3.0.0"
 
 [[package]]
-category = "main"
-description = "A Django app that provides helper for generating Javascript catalog to static files."
-name = "django-statici18n"
-optional = false
-python-versions = "*"
-version = "1.9.0"
-
-[package.dependencies]
-Django = ">=1.8"
-django-appconf = ">=0.6"
-six = "*"
-
-[[package]]
-category = "main"
-description = "Support for many storage backends in Django"
-name = "django-storages"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.9.1"
-
-[package.dependencies]
-Django = ">=1.11"
-
-[package.extras]
-azure = ["azure-storage-blob (>=1.3.1,<12.0.0)"]
-boto3 = ["boto3 (>=1.4.4)"]
-dropbox = ["dropbox (>=7.2.1)"]
-google = ["google-cloud-storage (>=1.15.0)"]
-libcloud = ["apache-libcloud"]
-sftp = ["paramiko"]
-
-[[package]]
-category = "main"
-description = "django-taggit is a reusable Django application for simple tagging."
-name = "django-taggit"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "0.24.0"
-
-[package.dependencies]
-Django = ">=1.11"
-
-[[package]]
-category = "main"
-description = "A feature flipper for Django."
 name = "django-waffle"
+version = "0.20.0"
+description = "A feature flipper for Django."
+category = "main"
 optional = false
 python-versions = "*"
-version = "0.20.0"
 
 [package.dependencies]
 six = ">=1.13.0"
 
 [[package]]
-category = "main"
-description = "Web APIs for Django, made easy."
-name = "djangorestframework"
-optional = false
-python-versions = ">=3.5"
-version = "3.11.2"
-
-[package.dependencies]
-django = ">=1.11"
-
-[[package]]
-category = "main"
-description = "Docutils -- Python Documentation Utilities"
-name = "docutils"
-optional = false
-python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
-version = "0.15.2"
-
-[[package]]
+name = "docopt"
+version = "0.6.2"
+description = "Pythonic argument parser, that will make you smile"
 category = "dev"
-description = "Python Elasticsearch Mock for test purposes"
-name = "elasticmock"
 optional = false
 python-versions = "*"
+
+[[package]]
+name = "docutils"
+version = "0.15.2"
+description = "Docutils -- Python Documentation Utilities"
+category = "main"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+
+[[package]]
+name = "elasticmock"
 version = "1.8.0"
+description = "Python Elasticsearch Mock for test purposes"
+category = "dev"
+optional = false
+python-versions = "*"
 
 [package.dependencies]
 elasticsearch = "*"
@@ -506,12 +360,12 @@ mock = "*"
 python-dateutil = "*"
 
 [[package]]
-category = "main"
-description = "Python client for Elasticsearch"
 name = "elasticsearch"
+version = "7.13.1"
+description = "Python client for Elasticsearch"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, <4"
-version = "7.13.1"
 
 [package.dependencies]
 certifi = "*"
@@ -524,12 +378,12 @@ docs = ["sphinx (<1.7)", "sphinx-rtd-theme"]
 requests = ["requests (>=2.4.0,<3.0.0)"]
 
 [[package]]
-category = "main"
-description = "Python client for Elasticsearch"
 name = "elasticsearch-dsl"
+version = "7.3.0"
+description = "Python client for Elasticsearch"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "7.3.0"
 
 [package.dependencies]
 elasticsearch = ">=7.0.0,<8.0.0"
@@ -540,24 +394,12 @@ six = "*"
 develop = ["mock", "pytest (>=3.0.0)", "pytest-cov", "pytest-mock (<3.0.0)", "pytz", "coverage (<5.0.0)", "sphinx", "sphinx-rtd-theme"]
 
 [[package]]
-category = "main"
-description = "Utilities for using Babel in Django"
-name = "enmerkar"
-optional = false
-python-versions = "*"
-version = "0.7.1"
-
-[package.dependencies]
-babel = ">=1.3"
-django = ">=2.2"
-
-[[package]]
-category = "dev"
-description = "the modular source code checker: pep8 pyflakes and co"
 name = "flake8"
+version = "3.9.2"
+description = "the modular source code checker: pep8 pyflakes and co"
+category = "dev"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
-version = "3.9.2"
 
 [package.dependencies]
 mccabe = ">=0.6.0,<0.7.0"
@@ -565,37 +407,35 @@ pycodestyle = ">=2.7.0,<2.8.0"
 pyflakes = ">=2.3.0,<2.4.0"
 
 [[package]]
-category = "dev"
-description = "Flake8 and pylama plugin that checks the ordering of import statements."
 name = "flake8-import-order"
+version = "0.18.1"
+description = "Flake8 and pylama plugin that checks the ordering of import statements."
+category = "dev"
 optional = false
 python-versions = "*"
-version = "0.18.1"
 
 [package.dependencies]
 pycodestyle = "*"
-setuptools = "*"
 
 [[package]]
-category = "main"
-description = "Clean single-source support for Python 3 and 2"
 name = "future"
+version = "0.18.2"
+description = "Clean single-source support for Python 3 and 2"
+category = "main"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
-version = "0.18.2"
 
 [[package]]
-category = "main"
-description = "Coroutine-based network library"
 name = "gevent"
+version = "20.12.1"
+description = "Coroutine-based network library"
+category = "main"
 optional = false
 python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*"
-version = "20.12.1"
 
 [package.dependencies]
-cffi = ">=1.12.2"
-greenlet = ">=0.4.17,<2.0"
-setuptools = "*"
+cffi = {version = ">=1.12.2", markers = "platform_python_implementation == \"CPython\" and sys_platform == \"win32\""}
+greenlet = {version = ">=0.4.17,<2.0", markers = "platform_python_implementation == \"CPython\""}
 "zope.event" = "*"
 "zope.interface" = "*"
 
@@ -604,119 +444,26 @@ dnspython = ["dnspython (>=1.16.0,<2.0)", "idna"]
 docs = ["repoze.sphinx.autointerface", "sphinxcontrib-programoutput"]
 monitor = ["psutil (>=5.7.0)"]
 recommended = ["dnspython (>=1.16.0,<2.0)", "idna", "cffi (>=1.12.2)", "selectors2", "backports.socketpair", "psutil (>=5.7.0)"]
-test = ["dnspython (>=1.16.0,<2.0)", "idna", "requests", "objgraph", "cffi (>=1.12.2)", "selectors2", "futures", "mock", "backports.socketpair", "contextvars (2.4)", "coverage (>=5.0)", "coveralls (>=1.7.0)", "psutil (>=5.7.0)"]
+test = ["dnspython (>=1.16.0,<2.0)", "idna", "requests", "objgraph", "cffi (>=1.12.2)", "selectors2", "futures", "mock", "backports.socketpair", "contextvars (==2.4)", "coverage (>=5.0)", "coveralls (>=1.7.0)", "psutil (>=5.7.0)"]
 
 [[package]]
-category = "main"
-description = "Google API client core library"
-name = "google-api-core"
-optional = false
-python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*"
-version = "1.30.0"
-
-[package.dependencies]
-google-auth = ">=1.25.0,<2.0dev"
-googleapis-common-protos = ">=1.6.0,<2.0dev"
-packaging = ">=14.3"
-protobuf = ">=3.12.0"
-pytz = "*"
-requests = ">=2.18.0,<3.0.0dev"
-setuptools = ">=40.3.0"
-six = ">=1.13.0"
-
-[package.extras]
-grpc = ["grpcio (>=1.29.0,<2.0dev)"]
-grpcgcp = ["grpcio-gcp (>=0.2.2)"]
-grpcio-gcp = ["grpcio-gcp (>=0.2.2)"]
-
-[[package]]
-category = "main"
-description = "Google API Client Library for Python"
-name = "google-api-python-client"
-optional = false
-python-versions = ">=3.6"
-version = "2.10.0"
-
-[package.dependencies]
-google-api-core = ">=1.21.0,<2dev"
-google-auth = ">=1.16.0,<2dev"
-google-auth-httplib2 = ">=0.1.0"
-httplib2 = ">=0.15.0,<1dev"
-six = ">=1.13.0,<2dev"
-uritemplate = ">=3.0.0,<4dev"
-
-[[package]]
-category = "main"
-description = "Google Authentication Library"
-name = "google-auth"
-optional = false
-python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*"
-version = "1.32.0"
-
-[package.dependencies]
-cachetools = ">=2.0.0,<5.0"
-pyasn1-modules = ">=0.2.1"
-setuptools = ">=40.3.0"
-six = ">=1.9.0"
-
-[package.dependencies.rsa]
-python = ">=3.6"
-version = ">=3.1.4,<5"
-
-[package.extras]
-aiohttp = ["requests (>=2.20.0,<3.0.0dev)", "aiohttp (>=3.6.2,<4.0.0dev)"]
-pyopenssl = ["pyopenssl (>=20.0.0)"]
-reauth = ["pyu2f (>=0.1.5)"]
-
-[[package]]
-category = "main"
-description = "Google Authentication Library: httplib2 transport"
-name = "google-auth-httplib2"
-optional = false
-python-versions = "*"
-version = "0.1.0"
-
-[package.dependencies]
-google-auth = "*"
-httplib2 = ">=0.15.0"
-six = "*"
-
-[[package]]
-category = "main"
-description = "Common protobufs used in Google APIs"
-name = "googleapis-common-protos"
-optional = false
-python-versions = ">=3.6"
-version = "1.53.0"
-
-[package.dependencies]
-protobuf = ">=3.12.0"
-
-[package.extras]
-grpc = ["grpcio (>=1.0.0)"]
-
-[[package]]
-category = "main"
-description = "Lightweight in-process concurrent programming"
-marker = "platform_python_implementation == \"CPython\""
 name = "greenlet"
+version = "1.1.0"
+description = "Lightweight in-process concurrent programming"
+category = "main"
 optional = false
 python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*"
-version = "1.1.0"
 
 [package.extras]
 docs = ["sphinx"]
 
 [[package]]
-category = "main"
-description = "WSGI HTTP Server for UNIX"
 name = "gunicorn"
+version = "20.1.0"
+description = "WSGI HTTP Server for UNIX"
+category = "main"
 optional = false
 python-versions = ">=3.5"
-version = "20.1.0"
-
-[package.dependencies]
-setuptools = ">=3.0"
 
 [package.extras]
 eventlet = ["eventlet (>=0.24.1)"]
@@ -725,69 +472,36 @@ setproctitle = ["setproctitle"]
 tornado = ["tornado (>=0.2)"]
 
 [[package]]
-category = "main"
-description = "HTML parser based on the WHATWG HTML specification"
-name = "html5lib"
-optional = false
-python-versions = "*"
-version = "1.0.1"
-
-[package.dependencies]
-six = ">=1.9"
-webencodings = "*"
-
-[package.extras]
-all = ["genshi", "chardet (>=2.2)", "datrie", "lxml"]
-chardet = ["chardet (>=2.2)"]
-datrie = ["datrie"]
-genshi = ["genshi"]
-lxml = ["lxml"]
-
-[[package]]
-category = "main"
-description = "A comprehensive HTTP client library."
 name = "httplib2"
+version = "0.17.0"
+description = "A comprehensive HTTP client library."
+category = "main"
 optional = false
 python-versions = "*"
-version = "0.17.0"
 
 [[package]]
-category = "main"
-description = "Internationalized Domain Names in Applications (IDNA)"
 name = "idna"
+version = "2.9"
+description = "Internationalized Domain Names in Applications (IDNA)"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.9"
 
 [[package]]
-category = "main"
-description = "A very fast and expressive template engine."
-name = "jinja2"
-optional = false
-python-versions = ">=3.6"
-version = "3.0.1"
-
-[package.dependencies]
-MarkupSafe = ">=2.0"
-
-[package.extras]
-i18n = ["Babel (>=2.7)"]
-
-[[package]]
-category = "main"
-description = "JSON Matching Expressions"
 name = "jmespath"
+version = "0.9.5"
+description = "JSON Matching Expressions"
+category = "main"
 optional = false
 python-versions = "*"
-version = "0.9.5"
 
 [[package]]
-category = "main"
-description = "Messaging library for Python."
 name = "kombu"
+version = "4.6.10"
+description = "Messaging library for Python."
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "4.6.10"
 
 [package.dependencies]
 amqp = ">=2.6.0,<2.7"
@@ -804,17 +518,17 @@ qpid = ["qpid-python (>=0.26)", "qpid-tools (>=0.26)"]
 redis = ["redis (>=3.3.11)"]
 slmq = ["softlayer-messaging (>=1.0.3)"]
 sqlalchemy = ["sqlalchemy"]
-sqs = ["boto3 (>=1.4.4)", "pycurl (7.43.0.2)"]
+sqs = ["boto3 (>=1.4.4)", "pycurl (==7.43.0.2)"]
 yaml = ["PyYAML (>=3.10)"]
 zookeeper = ["kazoo (>=1.3.1)"]
 
 [[package]]
-category = "main"
-description = "Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API."
 name = "lxml"
+version = "4.6.3"
+description = "Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API."
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, != 3.4.*"
-version = "4.6.3"
 
 [package.extras]
 cssselect = ["cssselect (>=0.7)"]
@@ -823,28 +537,20 @@ htmlsoup = ["beautifulsoup4"]
 source = ["Cython (>=0.29.7)"]
 
 [[package]]
-category = "main"
-description = "Safely add untrusted strings to HTML/XML markup."
-name = "markupsafe"
-optional = false
-python-versions = ">=3.6"
-version = "2.0.1"
-
-[[package]]
-category = "dev"
-description = "McCabe checker, plugin for flake8"
 name = "mccabe"
+version = "0.6.1"
+description = "McCabe checker, plugin for flake8"
+category = "dev"
 optional = false
 python-versions = "*"
-version = "0.6.1"
 
 [[package]]
-category = "dev"
-description = "Rolling backport of unittest.mock for all Pythons"
 name = "mock"
+version = "4.0.3"
+description = "Rolling backport of unittest.mock for all Pythons"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
-version = "4.0.3"
 
 [package.extras]
 build = ["twine", "wheel", "blurb"]
@@ -852,223 +558,143 @@ docs = ["sphinx"]
 test = ["pytest (<5.4)", "pytest-cov"]
 
 [[package]]
-category = "dev"
-description = "More routines for operating on iterables, beyond itertools"
 name = "more-itertools"
+version = "8.2.0"
+description = "More routines for operating on iterables, beyond itertools"
+category = "dev"
 optional = false
 python-versions = ">=3.5"
-version = "8.2.0"
 
 [[package]]
-category = "dev"
-description = "Experimental type system extensions for programs checked with the mypy typechecker."
 name = "mypy-extensions"
-optional = false
-python-versions = "*"
 version = "0.4.3"
-
-[[package]]
-category = "main"
-description = "Python interface to MySQL"
-name = "mysqlclient"
+description = "Experimental type system extensions for programs checked with the mypy typechecker."
+category = "dev"
 optional = false
 python-versions = "*"
-version = "1.4.6"
 
 [[package]]
-category = "main"
-description = "New Relic Python Agent"
 name = "newrelic"
+version = "5.14.0.142"
+description = "New Relic Python Agent"
+category = "main"
 optional = false
 python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*"
-version = "5.14.0.142"
 
 [package.extras]
 infinite-tracing = ["grpcio (<2)", "protobuf (<4)"]
 
 [[package]]
-category = "main"
-description = "OAuth 2.0 client library"
-name = "oauth2client"
-optional = false
-python-versions = "*"
-version = "4.1.3"
-
-[package.dependencies]
-httplib2 = ">=0.9.1"
-pyasn1 = ">=0.1.7"
-pyasn1-modules = ">=0.0.5"
-rsa = ">=3.1.4"
-six = ">=1.6.1"
-
-[[package]]
-category = "main"
-description = "A generic, spec-compliant, thorough implementation of the OAuth request-signing logic"
-name = "oauthlib"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "3.1.0"
-
-[package.extras]
-rsa = ["cryptography"]
-signals = ["blinker"]
-signedtoken = ["cryptography", "pyjwt (>=1.0.0)"]
-
-[[package]]
-category = "main"
-description = "Core utilities for Python packages"
 name = "packaging"
+version = "20.1"
+description = "Core utilities for Python packages"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "20.1"
 
 [package.dependencies]
 pyparsing = ">=2.0.2"
 six = "*"
 
 [[package]]
-category = "dev"
-description = "Utility library for gitignore style pattern matching of file paths."
 name = "pathspec"
+version = "0.8.1"
+description = "Utility library for gitignore style pattern matching of file paths."
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "0.8.1"
 
 [[package]]
-category = "dev"
-description = "plugin and hook calling mechanisms for python"
 name = "pluggy"
+version = "0.13.1"
+description = "plugin and hook calling mechanisms for python"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "0.13.1"
 
 [package.extras]
 dev = ["pre-commit", "tox"]
 
 [[package]]
-category = "main"
-description = "A library to manipulate gettext files (po and mo files)."
 name = "polib"
+version = "1.1.1"
+description = "A library to manipulate gettext files (po and mo files)."
+category = "dev"
 optional = false
 python-versions = "*"
-version = "1.1.0"
 
 [[package]]
-category = "main"
-description = "Protocol Buffers"
-name = "protobuf"
-optional = false
-python-versions = "*"
-version = "3.17.3"
-
-[package.dependencies]
-six = ">=1.9"
-
-[[package]]
-category = "main"
-description = "psycopg2 - Python-PostgreSQL Database Adapter"
 name = "psycopg2-binary"
+version = "2.9.1"
+description = "psycopg2 - Python-PostgreSQL Database Adapter"
+category = "main"
 optional = false
 python-versions = ">=3.6"
-version = "2.9.1"
 
 [[package]]
-category = "main"
-description = "Strings extraction and other tools"
-name = "puente"
-optional = false
-python-versions = "*"
-version = "0.5.0"
-
-[package.dependencies]
-babel = ">=2.1.1"
-django = ">=1.8"
-jinja2 = ">=2.7"
-
-[[package]]
-category = "dev"
-description = "library with cross-python path, ini-parsing, io, code, log facilities"
 name = "py"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "1.8.1"
-
-[[package]]
-category = "main"
-description = "ASN.1 types and codecs"
-name = "pyasn1"
-optional = false
-python-versions = "*"
-version = "0.4.8"
-
-[[package]]
-category = "main"
-description = "A collection of ASN.1-based protocols modules."
-name = "pyasn1-modules"
-optional = false
-python-versions = "*"
-version = "0.2.8"
-
-[package.dependencies]
-pyasn1 = ">=0.4.6,<0.5.0"
-
-[[package]]
+description = "library with cross-python path, ini-parsing, io, code, log facilities"
 category = "dev"
-description = "Python style guide checker"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+
+[[package]]
 name = "pycodestyle"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "2.7.0"
-
-[[package]]
-category = "main"
-description = "C parser in Python"
-marker = "platform_python_implementation == \"CPython\" and sys_platform == \"win32\""
-name = "pycparser"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.20"
-
-[[package]]
+description = "Python style guide checker"
 category = "dev"
-description = "passive checker of Python programs"
-name = "pyflakes"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.3.1"
 
 [[package]]
+name = "pycparser"
+version = "2.20"
+description = "C parser in Python"
 category = "main"
-description = "Python parsing module"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+
+[[package]]
+name = "pyflakes"
+version = "2.3.1"
+description = "passive checker of Python programs"
+category = "dev"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+
+[[package]]
 name = "pyparsing"
+version = "2.4.6"
+description = "Python parsing module"
+category = "dev"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
-version = "2.4.6"
 
 [[package]]
-category = "main"
-description = "A jquery-like library for python"
 name = "pyquery"
+version = "1.4.3"
+description = "A jquery-like library for python"
+category = "main"
 optional = false
 python-versions = "*"
-version = "1.4.3"
 
 [package.dependencies]
 cssselect = ">0.7.9"
 lxml = ">=2.1"
 
 [[package]]
-category = "dev"
-description = "pytest: simple powerful testing with Python"
 name = "pytest"
+version = "5.3.5"
+description = "pytest: simple powerful testing with Python"
+category = "dev"
 optional = false
 python-versions = ">=3.5"
-version = "5.3.5"
 
 [package.dependencies]
-atomicwrites = ">=1.0"
+atomicwrites = {version = ">=1.0", markers = "sys_platform == \"win32\""}
 attrs = ">=17.4.0"
-colorama = "*"
+colorama = {version = "*", markers = "sys_platform == \"win32\""}
 more-itertools = ">=4.0.0"
 packaging = "*"
 pluggy = ">=0.12,<1.0"
@@ -1076,43 +702,43 @@ py = ">=1.5.0"
 wcwidth = "*"
 
 [package.extras]
-checkqa-mypy = ["mypy (v0.761)"]
+checkqa-mypy = ["mypy (==v0.761)"]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
-category = "dev"
-description = "pytest plugin for URL based testing"
 name = "pytest-base-url"
+version = "1.4.1"
+description = "pytest plugin for URL based testing"
+category = "dev"
 optional = false
 python-versions = "*"
-version = "1.4.1"
 
 [package.dependencies]
 pytest = ">=2.7.3"
 requests = ">=2.9"
 
 [[package]]
-category = "dev"
-description = "Pytest plugin for measuring coverage."
 name = "pytest-cov"
+version = "2.8.1"
+description = "Pytest plugin for measuring coverage."
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.8.1"
 
 [package.dependencies]
 coverage = ">=4.4"
 pytest = ">=3.6"
 
 [package.extras]
-testing = ["fields", "hunter", "process-tests (2.0.2)", "six", "virtualenv"]
+testing = ["fields", "hunter", "process-tests (==2.0.2)", "six", "virtualenv"]
 
 [[package]]
-category = "dev"
-description = "A Django plugin for pytest."
 name = "pytest-django"
+version = "3.8.0"
+description = "A Django plugin for pytest."
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "3.8.0"
 
 [package.dependencies]
 pytest = ">=3.6"
@@ -1122,120 +748,122 @@ docs = ["sphinx", "sphinx-rtd-theme"]
 testing = ["django", "django-configurations (>=2.0)", "six"]
 
 [[package]]
-category = "dev"
-description = "pytest plugin for test session metadata"
 name = "pytest-metadata"
+version = "1.11.0"
+description = "pytest plugin for test session metadata"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
-version = "1.11.0"
 
 [package.dependencies]
 pytest = ">=2.9.0"
 
 [[package]]
-category = "dev"
-description = "pytest plugin to re-run tests to eliminate flaky failures"
 name = "pytest-rerunfailures"
+version = "8.0"
+description = "pytest plugin to re-run tests to eliminate flaky failures"
+category = "dev"
 optional = false
 python-versions = "*"
-version = "8.0"
 
 [package.dependencies]
 pytest = ">=4.4"
-setuptools = ">=40.0"
 
 [[package]]
-category = "main"
-description = "Extensions to the standard Python datetime module"
+name = "pytest-watch"
+version = "4.2.0"
+description = "Local continuous test runner with pytest and watchdog."
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+colorama = ">=0.3.3"
+docopt = ">=0.4.0"
+pytest = ">=2.6.4"
+watchdog = ">=0.6.0"
+
+[[package]]
 name = "python-dateutil"
+version = "2.8.1"
+description = "Extensions to the standard Python datetime module"
+category = "main"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
-version = "2.8.1"
 
 [package.dependencies]
 six = ">=1.5"
 
 [[package]]
-category = "main"
-description = "Strict separation of settings from code."
 name = "python-decouple"
-optional = false
-python-versions = "*"
 version = "3.4"
+description = "Strict separation of settings from code."
+category = "main"
+optional = false
+python-versions = "*"
 
 [[package]]
-category = "main"
-description = "File type identification using libmagic"
 name = "python-magic"
-optional = false
-python-versions = "*"
 version = "0.4.15"
-
-[[package]]
+description = "File type identification using libmagic"
 category = "main"
-description = "OpenID support for modern servers and consumers."
-name = "python3-openid"
 optional = false
 python-versions = "*"
-version = "3.1.0"
-
-[package.dependencies]
-defusedxml = "*"
 
 [[package]]
-category = "main"
-description = "World timezone definitions, modern and historical"
 name = "pytz"
+version = "2019.3"
+description = "World timezone definitions, modern and historical"
+category = "main"
 optional = false
 python-versions = "*"
-version = "2019.3"
 
 [[package]]
-category = "main"
-description = "Raven is a client for Sentry (https://getsentry.com)"
 name = "raven"
+version = "6.10.0"
+description = "Raven is a client for Sentry (https://getsentry.com)"
+category = "main"
 optional = false
 python-versions = "*"
-version = "6.10.0"
 
 [package.extras]
 flask = ["Flask (>=0.8)", "blinker (>=1.1)"]
-tests = ["bottle", "celery (>=2.5)", "coverage (<4)", "exam (>=0.5.2)", "flake8 (3.5.0)", "logbook", "mock", "nose", "pytz", "pytest (>=3.2.0,<3.3.0)", "pytest-timeout (1.2.1)", "pytest-xdist (1.18.2)", "pytest-pythonpath (0.7.2)", "pytest-cov (2.5.1)", "pytest-flake8 (1.0.0)", "requests", "tornado (>=4.1,<5.0)", "tox", "webob", "webtest", "wheel", "anyjson", "zconfig", "Flask (>=0.8)", "blinker (>=1.1)", "Flask-Login (>=0.2.0)", "blinker (>=1.1)", "sanic (>=0.7.0)", "aiohttp"]
+tests = ["bottle", "celery (>=2.5)", "coverage (<4)", "exam (>=0.5.2)", "flake8 (==3.5.0)", "logbook", "mock", "nose", "pytz", "pytest (>=3.2.0,<3.3.0)", "pytest-timeout (==1.2.1)", "pytest-xdist (==1.18.2)", "pytest-pythonpath (==0.7.2)", "pytest-cov (==2.5.1)", "pytest-flake8 (==1.0.0)", "requests", "tornado (>=4.1,<5.0)", "tox", "webob", "webtest", "wheel", "anyjson", "zconfig", "Flask (>=0.8)", "blinker (>=1.1)", "Flask-Login (>=0.2.0)", "blinker (>=1.1)", "sanic (>=0.7.0)", "aiohttp"]
 
 [[package]]
-category = "main"
-description = "Python client for Redis key-value store"
 name = "redis"
+version = "3.4.1"
+description = "Python client for Redis key-value store"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "3.4.1"
 
 [package.extras]
 hiredis = ["hiredis (>=0.1.3)"]
 
 [[package]]
-category = "main"
-description = "Utilities to retry Python callables."
 name = "redo"
-optional = false
-python-versions = "*"
 version = "2.0.4"
-
-[[package]]
-category = "dev"
-description = "Alternative regular expression module, to replace re."
-name = "regex"
+description = "Utilities to retry Python callables."
+category = "main"
 optional = false
 python-versions = "*"
-version = "2020.2.20"
 
 [[package]]
-category = "main"
-description = "Python HTTP for Humans."
+name = "regex"
+version = "2020.2.20"
+description = "Alternative regular expression module, to replace re."
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "requests"
+version = "2.25.1"
+description = "Python HTTP for Humans."
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "2.25.1"
 
 [package.dependencies]
 certifi = ">=2017.4.17"
@@ -1245,15 +873,15 @@ urllib3 = ">=1.21.1,<1.27"
 
 [package.extras]
 security = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)"]
-socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7)", "win-inet-pton"]
+socks = ["PySocks (>=1.5.6,!=1.5.7)", "win-inet-pton"]
 
 [[package]]
-category = "dev"
-description = "Mock out responses from the requests package"
 name = "requests-mock"
+version = "1.9.2"
+description = "Mock out responses from the requests package"
+category = "dev"
 optional = false
 python-versions = "*"
-version = "1.9.2"
 
 [package.dependencies]
 requests = ">=2.3,<3"
@@ -1264,188 +892,119 @@ fixture = ["fixtures"]
 test = ["fixtures", "mock", "purl", "pytest", "sphinx", "testrepository (>=0.0.18)", "testtools"]
 
 [[package]]
-category = "main"
-description = "OAuthlib authentication support for Requests."
-name = "requests-oauthlib"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.3.0"
-
-[package.dependencies]
-oauthlib = ">=3.0.0"
-requests = ">=2.0.0"
-
-[package.extras]
-rsa = ["oauthlib (>=3.0.0)"]
-
-[[package]]
-category = "main"
-description = "Pure-Python RSA implementation"
-name = "rsa"
-optional = false
-python-versions = "*"
-version = "4.0"
-
-[package.dependencies]
-pyasn1 = ">=0.1.3"
-
-[[package]]
-category = "main"
-description = "An Amazon S3 Transfer Manager"
 name = "s3transfer"
+version = "0.3.3"
+description = "An Amazon S3 Transfer Manager"
+category = "main"
 optional = false
 python-versions = "*"
-version = "0.3.3"
 
 [package.dependencies]
 botocore = ">=1.12.36,<2.0a.0"
 
 [[package]]
-category = "main"
-description = "Python 2 and 3 compatibility utilities"
 name = "six"
+version = "1.14.0"
+description = "Python 2 and 3 compatibility utilities"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
-version = "1.14.0"
 
 [[package]]
-category = "main"
-description = "Non-validating SQL parser"
 name = "sqlparse"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "0.3.1"
-
-[[package]]
+description = "Non-validating SQL parser"
 category = "main"
-description = "Python bindings for the Stripe API"
-name = "stripe"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.58.0"
-
-[package.dependencies]
-[package.dependencies.requests]
-python = ">=3.0"
-version = ">=2.20"
 
 [[package]]
-category = "dev"
-description = "Python Library for Tom's Obvious, Minimal Language"
 name = "toml"
+version = "0.10.1"
+description = "Python Library for Tom's Obvious, Minimal Language"
+category = "dev"
 optional = false
 python-versions = "*"
-version = "0.10.1"
 
 [[package]]
-category = "main"
-description = "URI templates"
-name = "uritemplate"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "3.0.1"
-
-[[package]]
-category = "main"
-description = "HTTP library with thread-safe connection pooling, file post, and more."
 name = "urllib3"
+version = "1.25.11"
+description = "HTTP library with thread-safe connection pooling, file post, and more."
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
-version = "1.25.11"
 
 [package.extras]
 brotli = ["brotlipy (>=0.6.0)"]
 secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
-socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
+socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
-category = "main"
-description = "A utility class for manipulating URLs."
-name = "urlobject"
-optional = false
-python-versions = "*"
-version = "2.4.3"
-
-[[package]]
-category = "main"
-description = "A CLI utility for blocking until a service is listening"
 name = "urlwait"
+version = "1.0"
+description = "A CLI utility for blocking until a service is listening"
+category = "main"
 optional = false
 python-versions = "*"
-version = "1.0"
 
 [[package]]
-category = "main"
-description = "Promises, promises, promises."
 name = "vine"
+version = "1.3.0"
+description = "Promises, promises, promises."
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.3.0"
 
 [[package]]
+name = "watchdog"
+version = "2.1.3"
+description = "Filesystem events monitoring"
 category = "dev"
-description = "Measures number of Terminal column cells of wide-character codes"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+watchmedo = ["PyYAML (>=3.10)", "argh (>=0.24.1)"]
+
+[[package]]
 name = "wcwidth"
-optional = false
-python-versions = "*"
 version = "0.1.8"
-
-[[package]]
-category = "main"
-description = "Character encoding aliases for legacy web content"
-name = "webencodings"
+description = "Measures number of Terminal column cells of wide-character codes"
+category = "dev"
 optional = false
 python-versions = "*"
-version = "0.5.1"
 
 [[package]]
-category = "dev"
-description = "The comprehensive WSGI web application library."
 name = "werkzeug"
+version = "1.0.1"
+description = "The comprehensive WSGI web application library."
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "1.0.1"
 
 [package.extras]
 dev = ["pytest", "pytest-timeout", "coverage", "tox", "sphinx", "pallets-sphinx-themes", "sphinx-issues"]
 watchdog = ["watchdog"]
 
 [[package]]
-category = "main"
-description = "Radically simplified static file serving for WSGI applications"
-name = "whitenoise"
-optional = false
-python-versions = ">=3.5, <4"
-version = "5.2.0"
-
-[package.extras]
-brotli = ["brotli"]
-
-[[package]]
-category = "main"
-description = "Very basic event publishing system"
 name = "zope.event"
+version = "4.4"
+description = "Very basic event publishing system"
+category = "main"
 optional = false
 python-versions = "*"
-version = "4.4"
-
-[package.dependencies]
-setuptools = "*"
 
 [package.extras]
 docs = ["sphinx"]
 test = ["zope.testrunner"]
 
 [[package]]
-category = "main"
-description = "Interfaces for Python"
 name = "zope.interface"
+version = "5.1.0"
+description = "Interfaces for Python"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "5.1.0"
-
-[package.dependencies]
-setuptools = "*"
 
 [package.extras]
 docs = ["sphinx", "repoze.sphinx.autointerface"]
@@ -1453,8 +1012,9 @@ test = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 
 [metadata]
-content-hash = "e1a2459de32519b4e3e177d2815f17365d9a126a13b27cdc4b464c691a12f12a"
+lock-version = "1.1"
 python-versions = "^3.8"
+content-hash = "ed6926e2b92714526b958f9de6e8aa2d9e97a215fd48be380608d4cc76aa05f1"
 
 [metadata.files]
 amqp = [
@@ -1465,6 +1025,10 @@ appdirs = [
     {file = "appdirs-1.4.3-py2.py3-none-any.whl", hash = "sha256:d8b24664561d0d34ddfaec54636d502d7cea6e29c3eaf68f3df6180863e2166e"},
     {file = "appdirs-1.4.3.tar.gz", hash = "sha256:9e5896d1372858f8dd3344faf4e5014d21849c756c8d5701f78f8a103b372d92"},
 ]
+asgiref = [
+    {file = "asgiref-3.4.1-py3-none-any.whl", hash = "sha256:ffc141aa908e6f175673e7b1b3b7af4fdb0ecb738fc5c8b88f69f055c2415214"},
+    {file = "asgiref-3.4.1.tar.gz", hash = "sha256:4ef1ab46b484e3c706329cedeff284a5d40824200638503f5768edb6de7d58e9"},
+]
 atomicwrites = [
     {file = "atomicwrites-1.3.0-py2.py3-none-any.whl", hash = "sha256:03472c30eb2c5d1ba9227e4c2ca66ab8287fbfbbda3888aa93dc2e28fc6811b4"},
     {file = "atomicwrites-1.3.0.tar.gz", hash = "sha256:75a9445bac02d8d058d5e1fe689654ba5a6556a1dfd8ce6ec55a0ed79866cfa6"},
@@ -1472,10 +1036,6 @@ atomicwrites = [
 attrs = [
     {file = "attrs-19.3.0-py2.py3-none-any.whl", hash = "sha256:08a96c641c3a74e44eb59afb61a24f2cb9f4d7188748e76ba4bb5edfa3cb7d1c"},
     {file = "attrs-19.3.0.tar.gz", hash = "sha256:f7b7ce16570fe9965acd6d30101a28f62fb4a7f9e926b3bbc9b61f8b04247e72"},
-]
-babel = [
-    {file = "Babel-2.8.0-py2.py3-none-any.whl", hash = "sha256:d670ea0b10f8b723672d3a6abeb87b565b244da220d76b4dba1b66269ec152d4"},
-    {file = "Babel-2.8.0.tar.gz", hash = "sha256:1aac2ae2d0d8ea368fa90906567f5c08463d98ade155c0c4bfedd6a0f7160e38"},
 ]
 billiard = [
     {file = "billiard-3.6.3.0-py3-none-any.whl", hash = "sha256:bff575450859a6e0fbc2f9877d9b715b0bbc07c3565bb7ed2280526a0cdf5ede"},
@@ -1496,10 +1056,6 @@ botocore = [
 braceexpand = [
     {file = "braceexpand-0.1.6-py2.py3-none-any.whl", hash = "sha256:c37571ad130213247fac9921f3fd1032c81057490b9ca29be6884fd6d9dc1013"},
     {file = "braceexpand-0.1.6.tar.gz", hash = "sha256:c1bf4fdc1713e46feacac0f1acbbb12239bdda7c7c4183fc8fb22bf6f285f854"},
-]
-cachetools = [
-    {file = "cachetools-4.0.0-py3-none-any.whl", hash = "sha256:b304586d357c43221856be51d73387f93e2a961598a9b6b6670664746f3b6c6c"},
-    {file = "cachetools-4.0.0.tar.gz", hash = "sha256:9a52dd97a85f257f4e4127f15818e71a0c7899f121b34591fcc1173ea79a0198"},
 ]
 celery = [
     {file = "celery-4.4.5-py2.py3-none-any.whl", hash = "sha256:d1762d6065522879f341c3d67c2b9fe4615eb79756d59acb1434601d4aca474b"},
@@ -1609,10 +1165,6 @@ cssselect = [
     {file = "cssselect-1.1.0-py2.py3-none-any.whl", hash = "sha256:f612ee47b749c877ebae5bb77035d8f4202c6ad0f0fc1271b3c18ad6c4468ecf"},
     {file = "cssselect-1.1.0.tar.gz", hash = "sha256:f95f8dedd925fd8f54edb3d2dfb44c190d9d18512377d3c1e2388d16126879bc"},
 ]
-defusedxml = [
-    {file = "defusedxml-0.6.0-py2.py3-none-any.whl", hash = "sha256:6687150770438374ab581bb7a1b327a847dd9c5749e396102de3fad4e8a3ef93"},
-    {file = "defusedxml-0.6.0.tar.gz", hash = "sha256:f684034d135af4c6cbb949b8a4d2ed61634515257a67299e5f940fbaa34377f5"},
-]
 dennis = [
     {file = "dennis-0.9-py2.py3-none-any.whl", hash = "sha256:f6487392ac91800c5f0684a99b404b7fd0f72ceb48faeb5a0ce4e2c24fb62d3f"},
     {file = "dennis-0.9.tar.gz", hash = "sha256:8c942dd5da7d03c65daebc069c5ee5c7f1374ac9b0c8c89c627caa66fe822604"},
@@ -1626,19 +1178,8 @@ dj-email-url = [
     {file = "dj_email_url-1.0.2-py2.py3-none-any.whl", hash = "sha256:15148141c6ef123636e4ca3663e95231ed94ca5ed267e91977e5a4397be8b34c"},
 ]
 django = [
-    {file = "Django-2.2.21-py3-none-any.whl", hash = "sha256:7d8b61b6e7031a3c1a4aef29e2701849af0837f4f2062bc203077a0b46d51c2c"},
-    {file = "Django-2.2.21.tar.gz", hash = "sha256:7460cfe3781d36d1625230267dad255deb33e9229e41f21e32b33b9d536d20cd"},
-]
-django-allauth = [
-    {file = "django-allauth-0.41.0.tar.gz", hash = "sha256:7ab91485b80d231da191d5c7999ba93170ef1bf14ab6487d886598a1ad03e1d8"},
-]
-django-appconf = [
-    {file = "django-appconf-1.0.3.tar.gz", hash = "sha256:35f13ca4d567f132b960e2cd4c832c2d03cb6543452d34e29b7ba10371ba80e3"},
-    {file = "django_appconf-1.0.3-py2.py3-none-any.whl", hash = "sha256:c98a7af40062e996b921f5962a1c4f3f0c979fa7885f7be4710cceb90ebe13a6"},
-]
-django-debug-toolbar = [
-    {file = "django-debug-toolbar-2.2.1.tar.gz", hash = "sha256:7aadab5240796ffe8e93cc7dfbe2f87a204054746ff7ff93cd6d4a0c3747c853"},
-    {file = "django_debug_toolbar-2.2.1-py3-none-any.whl", hash = "sha256:7feaee934608f5cdd95432154be832fe30fda6c1249018191e2c27bc0b6a965e"},
+    {file = "Django-3.2.5-py3-none-any.whl", hash = "sha256:c58b5f19c5ae0afe6d75cbdd7df561e6eb929339985dbbda2565e1cabb19a62e"},
+    {file = "Django-3.2.5.tar.gz", hash = "sha256:3da05fea54fdec2315b54a563d5b59f3b4e2b1e69c3a5841dda35019c01855cd"},
 ]
 django-decorator-include = [
     {file = "django-decorator-include-3.0.tar.gz", hash = "sha256:18db98e0e48dbb3977ab79b5520dbf5ecbb35f0bced8e15ed62dc66762345856"},
@@ -1648,21 +1189,6 @@ django-extensions = [
     {file = "django-extensions-2.2.8.tar.gz", hash = "sha256:2699cc1d6fb4bd393c0b5832fea4bc685f2ace5800b3c9ff222b2080f161ac04"},
     {file = "django_extensions-2.2.8-py2.py3-none-any.whl", hash = "sha256:1a03c4e8bade575f8c2be6c76456f8a2be3f9b02ab9f47d3535afa9562dc0493"},
 ]
-django-jinja = [
-    {file = "django-jinja-2.7.0.tar.gz", hash = "sha256:d56ecddaa6d3caf508509aae5a979ebd8a3427477c34fcbcac14bf8389a21a12"},
-    {file = "django_jinja-2.7.0-py3-none-any.whl", hash = "sha256:ce4640e4bc329d9e938c3a7673dafc66dfcc921e4667cfd1002f0089e2599103"},
-]
-django-mysql = [
-    {file = "django-mysql-3.3.0.tar.gz", hash = "sha256:b984dfe75bedeb01bfcb974fe8400c224a6b55677b98a799f1c96274d96c5a72"},
-    {file = "django_mysql-3.3.0-py3-none-any.whl", hash = "sha256:ceaf6d93396b7f7b3798ac5f9a819dd70d5f0e1112850f2a34c57f062fa19398"},
-]
-django-pipeline = [
-    {file = "django-pipeline-1.7.0.tar.gz", hash = "sha256:0ded22b974e3d627c27fc490ef5b23fcdcf0cdb00b704d628b5ca6d0b010d6fe"},
-    {file = "django_pipeline-1.7.0-py2.py3-none-any.whl", hash = "sha256:f7da70f00aa4baea3e0811f88927a116425deee05871fa2bfd2f8247f42d8847"},
-]
-django-querycount = [
-    {file = "django-querycount-0.7.0.tar.gz", hash = "sha256:8f5123d78716ff0704f2373e746a7200b8d8417798ce4a99bf2de87e3768f9ce"},
-]
 django-ratelimit = [
     {file = "django-ratelimit-2.0.0.tar.gz", hash = "sha256:ddb6bd68a7a25fab335a0441671681ce9993167e640a2301a2e0e07ce9dd46fb"},
     {file = "django_ratelimit-2.0.0-py2.py3-none-any.whl", hash = "sha256:40dd23dcdda413d2199bb88b4d9151bf66ea19586b2047ada313ddcf77e2959c"},
@@ -1671,25 +1197,12 @@ django-redis = [
     {file = "django-redis-5.0.0.tar.gz", hash = "sha256:048f665bbe27f8ff2edebae6aa9c534ab137f1e8fa7234147ef470df3f3aa9b8"},
     {file = "django_redis-5.0.0-py3-none-any.whl", hash = "sha256:97739ca9de3f964c51412d1d7d8aecdfd86737bb197fce6e1ff12620c63c97ee"},
 ]
-django-statici18n = [
-    {file = "django-statici18n-1.9.0.tar.gz", hash = "sha256:913dd056c1abcbe129b1db806cb4cfb821c4077d7e857d6eb29043ea64f4d1d0"},
-    {file = "django_statici18n-1.9.0-py2.py3-none-any.whl", hash = "sha256:d9524a0af20be789e623bc60e0950b660ae33a0d1d1fecdecbd1c056eda56631"},
-]
-django-storages = [
-    {file = "django-storages-1.9.1.tar.gz", hash = "sha256:a59e9923cbce7068792f75344ed7727021ee4ac20f227cf17297d0d03d141e91"},
-    {file = "django_storages-1.9.1-py2.py3-none-any.whl", hash = "sha256:3103991c2ee8cef8a2ff096709973ffe7106183d211a79f22cf855f33533d924"},
-]
-django-taggit = [
-    {file = "django-taggit-0.24.0.tar.gz", hash = "sha256:bb8f27684814cd1414b2af75b857b5e26a40912631904038a7ecacd2bfafc3ac"},
-    {file = "django_taggit-0.24.0-py2.py3-none-any.whl", hash = "sha256:710b4d15ec1996550cc68a0abbc41903ca7d832540e52b1336e6858737e410d8"},
-]
 django-waffle = [
     {file = "django-waffle-0.20.0.tar.gz", hash = "sha256:744c3fe6cedbd175d2247cb93904e931f056b503f6e4a4836a0b9b66b43be625"},
     {file = "django_waffle-0.20.0-py2.py3-none-any.whl", hash = "sha256:73ec03d28c60af0a6fd6327933e615e92dd936137d25b25d3ebaf64e9963c463"},
 ]
-djangorestframework = [
-    {file = "djangorestframework-3.11.2-py3-none-any.whl", hash = "sha256:5cc724dc4b076463497837269107e1995b1fbc917468d1b92d188fd1af9ea789"},
-    {file = "djangorestframework-3.11.2.tar.gz", hash = "sha256:a5967b68a04e0d97d10f4df228e30f5a2d82ba63b9d03e1759f84993b7bf1b53"},
+docopt = [
+    {file = "docopt-0.6.2.tar.gz", hash = "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"},
 ]
 docutils = [
     {file = "docutils-0.15.2-py2-none-any.whl", hash = "sha256:9e4d7ecfc600058e07ba661411a2b7de2fd0fafa17d1a7f7361cd47b1175c827"},
@@ -1706,10 +1219,6 @@ elasticsearch = [
 elasticsearch-dsl = [
     {file = "elasticsearch-dsl-7.3.0.tar.gz", hash = "sha256:0ed75f6ff037e36b2397a8e92cae0ddde79b83adc70a154b8946064cb62f7301"},
     {file = "elasticsearch_dsl-7.3.0-py2.py3-none-any.whl", hash = "sha256:9390d8e5cf82ebad3505e7f656e407259cf703f5a4035f211cef454127672572"},
-]
-enmerkar = [
-    {file = "enmerkar-0.7.1-py3-none-any.whl", hash = "sha256:ba5a79e022963580c994ce8f4fe8477d574159adbe86e5271b1a3d4127b8794d"},
-    {file = "enmerkar-0.7.1.tar.gz", hash = "sha256:a4a6c859b4ed293deee40ff61d6695b3ff7bc153770a1799f2be872181282e00"},
 ]
 flake8 = [
     {file = "flake8-3.9.2-py2.py3-none-any.whl", hash = "sha256:bf8fd333346d844f616e8d47905ef3a3384edae6b4e9beb0c5101e25e3110907"},
@@ -1747,26 +1256,6 @@ gevent = [
     {file = "gevent-20.12.1-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:60799fd7dcbb622f8435eb12436d48a8d27f8e7b3d23631e32ccc04ddd2097c2"},
     {file = "gevent-20.12.1-pp27-pypy_73-win32.whl", hash = "sha256:7a808c63f065a303bbbe87c5c0754e06abb1e23e18752f418dce1eb3189cb43d"},
     {file = "gevent-20.12.1.tar.gz", hash = "sha256:99b68765767bb3e2244a66b012883899a6f17c23b6dc1cd80b793df341e15f08"},
-]
-google-api-core = [
-    {file = "google-api-core-1.30.0.tar.gz", hash = "sha256:0724d354d394b3d763bc10dfee05807813c5210f0bd9b8e2ddf6b6925603411c"},
-    {file = "google_api_core-1.30.0-py2.py3-none-any.whl", hash = "sha256:92cd9e9f366e84bfcf2524e34d2dc244906c645e731962617ba620da1620a1e0"},
-]
-google-api-python-client = [
-    {file = "google-api-python-client-2.10.0.tar.gz", hash = "sha256:58424d263344625dcf4dc08e7639a6714737102ab4ae83e5f043e3db08d9965f"},
-    {file = "google_api_python_client-2.10.0-py2.py3-none-any.whl", hash = "sha256:6da20ca5f56be8c104c31de49153c5c97af57470a4ab19322534d7483dcfa727"},
-]
-google-auth = [
-    {file = "google-auth-1.32.0.tar.gz", hash = "sha256:e34e5f5de5610b202f9b40ebd9f8b27571d5c5537db9afed3a72b2db5a345039"},
-    {file = "google_auth-1.32.0-py2.py3-none-any.whl", hash = "sha256:b3a67fa9ba5b768861dacf374c2135eb09fa14a0e40c851c3b8ea7abe6fc8fef"},
-]
-google-auth-httplib2 = [
-    {file = "google-auth-httplib2-0.1.0.tar.gz", hash = "sha256:a07c39fd632becacd3f07718dfd6021bf396978f03ad3ce4321d060015cc30ac"},
-    {file = "google_auth_httplib2-0.1.0-py2.py3-none-any.whl", hash = "sha256:31e49c36c6b5643b57e82617cb3e021e3e1d2df9da63af67252c02fa9c1f4a10"},
-]
-googleapis-common-protos = [
-    {file = "googleapis-common-protos-1.53.0.tar.gz", hash = "sha256:a88ee8903aa0a81f6c3cec2d5cf62d3c8aa67c06439b0496b49048fb1854ebf4"},
-    {file = "googleapis_common_protos-1.53.0-py2.py3-none-any.whl", hash = "sha256:f6d561ab8fb16b30020b940e2dd01cd80082f4762fa9f3ee670f4419b4b8dbd0"},
 ]
 greenlet = [
     {file = "greenlet-1.1.0-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:60848099b76467ef09b62b0f4512e7e6f0a2c977357a036de602b653667f5f4c"},
@@ -1823,10 +1312,6 @@ gunicorn = [
     {file = "gunicorn-20.1.0-py3-none-any.whl", hash = "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e"},
     {file = "gunicorn-20.1.0.tar.gz", hash = "sha256:e0a968b5ba15f8a328fdfd7ab1fcb5af4470c28aaf7e55df02a99bc13138e6e8"},
 ]
-html5lib = [
-    {file = "html5lib-1.0.1-py2.py3-none-any.whl", hash = "sha256:20b159aa3badc9d5ee8f5c647e5efd02ed2a66ab8d354930bd9ff139fc1dc0a3"},
-    {file = "html5lib-1.0.1.tar.gz", hash = "sha256:66cb0dcfdbbc4f9c3ba1a63fdb511ffdbd4f513b2b6d81b80cd26ce6b3fb3736"},
-]
 httplib2 = [
     {file = "httplib2-0.17.0-py3-none-any.whl", hash = "sha256:79751cc040229ec896aa01dced54de0cd0bf042f928e84d5761294422dde4454"},
     {file = "httplib2-0.17.0.tar.gz", hash = "sha256:de96d0a49f46d0ee7e0aae80141d37b8fcd6a68fb05d02e0b82c128592dd8261"},
@@ -1834,10 +1319,6 @@ httplib2 = [
 idna = [
     {file = "idna-2.9-py2.py3-none-any.whl", hash = "sha256:a068a21ceac8a4d63dbfd964670474107f541babbd2250d61922f029858365fa"},
     {file = "idna-2.9.tar.gz", hash = "sha256:7588d1c14ae4c77d74036e8c22ff447b26d0fde8f007354fd48a7814db15b7cb"},
-]
-jinja2 = [
-    {file = "Jinja2-3.0.1-py3-none-any.whl", hash = "sha256:1f06f2da51e7b56b8f238affdd6b4e2c61e39598a378cc49345bc1bd42a978a4"},
-    {file = "Jinja2-3.0.1.tar.gz", hash = "sha256:703f484b47a6af502e743c9122595cc812b0271f661722403114f71a79d0f5a4"},
 ]
 jmespath = [
     {file = "jmespath-0.9.5-py2.py3-none-any.whl", hash = "sha256:695cb76fa78a10663425d5b73ddc5714eb711157e52704d69be03b1a02ba4fec"},
@@ -1895,42 +1376,6 @@ lxml = [
     {file = "lxml-4.6.3-cp39-cp39-win_amd64.whl", hash = "sha256:542d454665a3e277f76954418124d67516c5f88e51a900365ed54a9806122b83"},
     {file = "lxml-4.6.3.tar.gz", hash = "sha256:39b78571b3b30645ac77b95f7c69d1bffc4cf8c3b157c435a34da72e78c82468"},
 ]
-markupsafe = [
-    {file = "MarkupSafe-2.0.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:f9081981fe268bd86831e5c75f7de206ef275defcb82bc70740ae6dc507aee51"},
-    {file = "MarkupSafe-2.0.1-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:0955295dd5eec6cb6cc2fe1698f4c6d84af2e92de33fbcac4111913cd100a6ff"},
-    {file = "MarkupSafe-2.0.1-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:0446679737af14f45767963a1a9ef7620189912317d095f2d9ffa183a4d25d2b"},
-    {file = "MarkupSafe-2.0.1-cp36-cp36m-manylinux2010_i686.whl", hash = "sha256:f826e31d18b516f653fe296d967d700fddad5901ae07c622bb3705955e1faa94"},
-    {file = "MarkupSafe-2.0.1-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:fa130dd50c57d53368c9d59395cb5526eda596d3ffe36666cd81a44d56e48872"},
-    {file = "MarkupSafe-2.0.1-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:905fec760bd2fa1388bb5b489ee8ee5f7291d692638ea5f67982d968366bef9f"},
-    {file = "MarkupSafe-2.0.1-cp36-cp36m-win32.whl", hash = "sha256:6c4ca60fa24e85fe25b912b01e62cb969d69a23a5d5867682dd3e80b5b02581d"},
-    {file = "MarkupSafe-2.0.1-cp36-cp36m-win_amd64.whl", hash = "sha256:b2f4bf27480f5e5e8ce285a8c8fd176c0b03e93dcc6646477d4630e83440c6a9"},
-    {file = "MarkupSafe-2.0.1-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:0717a7390a68be14b8c793ba258e075c6f4ca819f15edfc2a3a027c823718567"},
-    {file = "MarkupSafe-2.0.1-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:6557b31b5e2c9ddf0de32a691f2312a32f77cd7681d8af66c2692efdbef84c18"},
-    {file = "MarkupSafe-2.0.1-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:49e3ceeabbfb9d66c3aef5af3a60cc43b85c33df25ce03d0031a608b0a8b2e3f"},
-    {file = "MarkupSafe-2.0.1-cp37-cp37m-manylinux2010_i686.whl", hash = "sha256:d7f9850398e85aba693bb640262d3611788b1f29a79f0c93c565694658f4071f"},
-    {file = "MarkupSafe-2.0.1-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:6a7fae0dd14cf60ad5ff42baa2e95727c3d81ded453457771d02b7d2b3f9c0c2"},
-    {file = "MarkupSafe-2.0.1-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:b7f2d075102dc8c794cbde1947378051c4e5180d52d276987b8d28a3bd58c17d"},
-    {file = "MarkupSafe-2.0.1-cp37-cp37m-win32.whl", hash = "sha256:a30e67a65b53ea0a5e62fe23682cfe22712e01f453b95233b25502f7c61cb415"},
-    {file = "MarkupSafe-2.0.1-cp37-cp37m-win_amd64.whl", hash = "sha256:611d1ad9a4288cf3e3c16014564df047fe08410e628f89805e475368bd304914"},
-    {file = "MarkupSafe-2.0.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:be98f628055368795d818ebf93da628541e10b75b41c559fdf36d104c5787066"},
-    {file = "MarkupSafe-2.0.1-cp38-cp38-manylinux1_i686.whl", hash = "sha256:1d609f577dc6e1aa17d746f8bd3c31aa4d258f4070d61b2aa5c4166c1539de35"},
-    {file = "MarkupSafe-2.0.1-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:7d91275b0245b1da4d4cfa07e0faedd5b0812efc15b702576d103293e252af1b"},
-    {file = "MarkupSafe-2.0.1-cp38-cp38-manylinux2010_i686.whl", hash = "sha256:01a9b8ea66f1658938f65b93a85ebe8bc016e6769611be228d797c9d998dd298"},
-    {file = "MarkupSafe-2.0.1-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:47ab1e7b91c098ab893b828deafa1203de86d0bc6ab587b160f78fe6c4011f75"},
-    {file = "MarkupSafe-2.0.1-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:97383d78eb34da7e1fa37dd273c20ad4320929af65d156e35a5e2d89566d9dfb"},
-    {file = "MarkupSafe-2.0.1-cp38-cp38-win32.whl", hash = "sha256:023cb26ec21ece8dc3907c0e8320058b2e0cb3c55cf9564da612bc325bed5e64"},
-    {file = "MarkupSafe-2.0.1-cp38-cp38-win_amd64.whl", hash = "sha256:984d76483eb32f1bcb536dc27e4ad56bba4baa70be32fa87152832cdd9db0833"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:2ef54abee730b502252bcdf31b10dacb0a416229b72c18b19e24a4509f273d26"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:3c112550557578c26af18a1ccc9e090bfe03832ae994343cfdacd287db6a6ae7"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-manylinux1_i686.whl", hash = "sha256:53edb4da6925ad13c07b6d26c2a852bd81e364f95301c66e930ab2aef5b5ddd8"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:f5653a225f31e113b152e56f154ccbe59eeb1c7487b39b9d9f9cdb58e6c79dc5"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-manylinux2010_i686.whl", hash = "sha256:4efca8f86c54b22348a5467704e3fec767b2db12fc39c6d963168ab1d3fc9135"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-manylinux2010_x86_64.whl", hash = "sha256:ab3ef638ace319fa26553db0624c4699e31a28bb2a835c5faca8f8acf6a5a902"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:f8ba0e8349a38d3001fae7eadded3f6606f0da5d748ee53cc1dab1d6527b9509"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-win32.whl", hash = "sha256:10f82115e21dc0dfec9ab5c0223652f7197feb168c940f3ef61563fc2d6beb74"},
-    {file = "MarkupSafe-2.0.1-cp39-cp39-win_amd64.whl", hash = "sha256:693ce3f9e70a6cf7d2fb9e6c9d8b204b6b39897a2c4a1aa65728d5ac97dcc1d8"},
-    {file = "MarkupSafe-2.0.1.tar.gz", hash = "sha256:594c67807fb16238b30c44bdf74f36c02cdf22d1c8cda91ef8a0ed8dabf5620a"},
-]
 mccabe = [
     {file = "mccabe-0.6.1-py2.py3-none-any.whl", hash = "sha256:ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42"},
     {file = "mccabe-0.6.1.tar.gz", hash = "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"},
@@ -1947,22 +1392,8 @@ mypy-extensions = [
     {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
 ]
-mysqlclient = [
-    {file = "mysqlclient-1.4.6-cp36-cp36m-win_amd64.whl", hash = "sha256:4c82187dd6ab3607150fbb1fa5ef4643118f3da122b8ba31c3149ddd9cf0cb39"},
-    {file = "mysqlclient-1.4.6-cp37-cp37m-win_amd64.whl", hash = "sha256:9e6080a7aee4cc6a06b58b59239f20f1d259c1d2fddf68ddeed242d2311c7087"},
-    {file = "mysqlclient-1.4.6-cp38-cp38-win_amd64.whl", hash = "sha256:f646f8d17d02be0872291f258cce3813497bc7888cd4712a577fd1e719b2f213"},
-    {file = "mysqlclient-1.4.6.tar.gz", hash = "sha256:f3fdaa9a38752a3b214a6fe79d7cae3653731a53e577821f9187e67cbecb2e16"},
-]
 newrelic = [
     {file = "newrelic-5.14.0.142.tar.gz", hash = "sha256:428b451151660b1b611420256e7ae86fba58b436bc78079a47d8b7dabcdcaa33"},
-]
-oauth2client = [
-    {file = "oauth2client-4.1.3-py2.py3-none-any.whl", hash = "sha256:b8a81cc5d60e2d364f0b1b98f958dbd472887acaf1a5b05e21c28c31a2d6d3ac"},
-    {file = "oauth2client-4.1.3.tar.gz", hash = "sha256:d486741e451287f69568a4d26d70d9acd73a2bbfa275746c535b4209891cccc6"},
-]
-oauthlib = [
-    {file = "oauthlib-3.1.0-py2.py3-none-any.whl", hash = "sha256:df884cd6cbe20e32633f1db1072e9356f53638e4361bef4e8b03c9127c9328ea"},
-    {file = "oauthlib-3.1.0.tar.gz", hash = "sha256:bee41cc35fcca6e988463cacc3bcb8a96224f470ca547e697b604cc697b2f889"},
 ]
 packaging = [
     {file = "packaging-20.1-py2.py3-none-any.whl", hash = "sha256:170748228214b70b672c581a3dd610ee51f733018650740e98c7df862a583f73"},
@@ -1977,37 +1408,8 @@ pluggy = [
     {file = "pluggy-0.13.1.tar.gz", hash = "sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0"},
 ]
 polib = [
-    {file = "polib-1.1.0-py2.py3-none-any.whl", hash = "sha256:93b730477c16380c9a96726c54016822ff81acfa553977fdd131f2b90ba858d7"},
-    {file = "polib-1.1.0.tar.gz", hash = "sha256:fad87d13696127ffb27ea0882d6182f1a9cf8a5e2b37a587751166c51e5a332a"},
-]
-protobuf = [
-    {file = "protobuf-3.17.3-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:ab6bb0e270c6c58e7ff4345b3a803cc59dbee19ddf77a4719c5b635f1d547aa8"},
-    {file = "protobuf-3.17.3-cp27-cp27mu-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:13ee7be3c2d9a5d2b42a1030976f760f28755fcf5863c55b1460fd205e6cd637"},
-    {file = "protobuf-3.17.3-cp35-cp35m-macosx_10_9_intel.whl", hash = "sha256:1556a1049ccec58c7855a78d27e5c6e70e95103b32de9142bae0576e9200a1b0"},
-    {file = "protobuf-3.17.3-cp35-cp35m-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:f0e59430ee953184a703a324b8ec52f571c6c4259d496a19d1cabcdc19dabc62"},
-    {file = "protobuf-3.17.3-cp35-cp35m-win32.whl", hash = "sha256:a981222367fb4210a10a929ad5983ae93bd5a050a0824fc35d6371c07b78caf6"},
-    {file = "protobuf-3.17.3-cp35-cp35m-win_amd64.whl", hash = "sha256:6d847c59963c03fd7a0cd7c488cadfa10cda4fff34d8bc8cba92935a91b7a037"},
-    {file = "protobuf-3.17.3-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:145ce0af55c4259ca74993ddab3479c78af064002ec8227beb3d944405123c71"},
-    {file = "protobuf-3.17.3-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:6ce4d8bf0321e7b2d4395e253f8002a1a5ffbcfd7bcc0a6ba46712c07d47d0b4"},
-    {file = "protobuf-3.17.3-cp36-cp36m-win32.whl", hash = "sha256:7a4c97961e9e5b03a56f9a6c82742ed55375c4a25f2692b625d4087d02ed31b9"},
-    {file = "protobuf-3.17.3-cp36-cp36m-win_amd64.whl", hash = "sha256:a22b3a0dbac6544dacbafd4c5f6a29e389a50e3b193e2c70dae6bbf7930f651d"},
-    {file = "protobuf-3.17.3-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:ffea251f5cd3c0b9b43c7a7a912777e0bc86263436a87c2555242a348817221b"},
-    {file = "protobuf-3.17.3-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:9b7a5c1022e0fa0dbde7fd03682d07d14624ad870ae52054849d8960f04bc764"},
-    {file = "protobuf-3.17.3-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:8727ee027157516e2c311f218ebf2260a18088ffb2d29473e82add217d196b1c"},
-    {file = "protobuf-3.17.3-cp37-cp37m-win32.whl", hash = "sha256:14c1c9377a7ffbeaccd4722ab0aa900091f52b516ad89c4b0c3bb0a4af903ba5"},
-    {file = "protobuf-3.17.3-cp37-cp37m-win_amd64.whl", hash = "sha256:c56c050a947186ba51de4f94ab441d7f04fcd44c56df6e922369cc2e1a92d683"},
-    {file = "protobuf-3.17.3-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:2ae692bb6d1992afb6b74348e7bb648a75bb0d3565a3f5eea5bec8f62bd06d87"},
-    {file = "protobuf-3.17.3-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:99938f2a2d7ca6563c0ade0c5ca8982264c484fdecf418bd68e880a7ab5730b1"},
-    {file = "protobuf-3.17.3-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:6902a1e4b7a319ec611a7345ff81b6b004b36b0d2196ce7a748b3493da3d226d"},
-    {file = "protobuf-3.17.3-cp38-cp38-win32.whl", hash = "sha256:59e5cf6b737c3a376932fbfb869043415f7c16a0cf176ab30a5bbc419cd709c1"},
-    {file = "protobuf-3.17.3-cp38-cp38-win_amd64.whl", hash = "sha256:ebcb546f10069b56dc2e3da35e003a02076aaa377caf8530fe9789570984a8d2"},
-    {file = "protobuf-3.17.3-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:4ffbd23640bb7403574f7aff8368e2aeb2ec9a5c6306580be48ac59a6bac8bde"},
-    {file = "protobuf-3.17.3-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:26010f693b675ff5a1d0e1bdb17689b8b716a18709113288fead438703d45539"},
-    {file = "protobuf-3.17.3-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:e76d9686e088fece2450dbc7ee905f9be904e427341d289acbe9ad00b78ebd47"},
-    {file = "protobuf-3.17.3-cp39-cp39-win32.whl", hash = "sha256:a38bac25f51c93e4be4092c88b2568b9f407c27217d3dd23c7a57fa522a17554"},
-    {file = "protobuf-3.17.3-cp39-cp39-win_amd64.whl", hash = "sha256:85d6303e4adade2827e43c2b54114d9a6ea547b671cb63fafd5011dc47d0e13d"},
-    {file = "protobuf-3.17.3-py2.py3-none-any.whl", hash = "sha256:2bfb815216a9cd9faec52b16fd2bfa68437a44b67c56bee59bc3926522ecb04e"},
-    {file = "protobuf-3.17.3.tar.gz", hash = "sha256:72804ea5eaa9c22a090d2803813e280fb273b62d5ae497aaf3553d141c4fdd7b"},
+    {file = "polib-1.1.1-py2.py3-none-any.whl", hash = "sha256:d3ee85e0c6788f789353416b1612c6c92d75fe6ccfac0029711974d6abd0f86d"},
+    {file = "polib-1.1.1.tar.gz", hash = "sha256:e02c355ae5e054912e3b0d16febc56510eff7e49d60bf22aecb463bd2f2a2dfa"},
 ]
 psycopg2-binary = [
     {file = "psycopg2-binary-2.9.1.tar.gz", hash = "sha256:b0221ca5a9837e040ebf61f48899926b5783668b7807419e4adae8175a31f773"},
@@ -2040,43 +1442,9 @@ psycopg2-binary = [
     {file = "psycopg2_binary-2.9.1-cp39-cp39-win32.whl", hash = "sha256:0b7dae87f0b729922e06f85f667de7bf16455d411971b2043bbd9577af9d1975"},
     {file = "psycopg2_binary-2.9.1-cp39-cp39-win_amd64.whl", hash = "sha256:b4d7679a08fea64573c969f6994a2631908bb2c0e69a7235648642f3d2e39a68"},
 ]
-puente = [
-    {file = "puente-0.5.0-py2.py3-none-any.whl", hash = "sha256:7ba1d07f9cee9657adf874bd94879b343fea81a783fdfa8e53885520477bf1ea"},
-    {file = "puente-0.5.0.tar.gz", hash = "sha256:4a17958f7d6a83cb9ff92593c40f34911abafaec6ad959916b754aaa3869f11f"},
-]
 py = [
     {file = "py-1.8.1-py2.py3-none-any.whl", hash = "sha256:c20fdd83a5dbc0af9efd622bee9a5564e278f6380fffcacc43ba6f43db2813b0"},
     {file = "py-1.8.1.tar.gz", hash = "sha256:5e27081401262157467ad6e7f851b7aa402c5852dbcb3dae06768434de5752aa"},
-]
-pyasn1 = [
-    {file = "pyasn1-0.4.8-py2.4.egg", hash = "sha256:fec3e9d8e36808a28efb59b489e4528c10ad0f480e57dcc32b4de5c9d8c9fdf3"},
-    {file = "pyasn1-0.4.8-py2.5.egg", hash = "sha256:0458773cfe65b153891ac249bcf1b5f8f320b7c2ce462151f8fa74de8934becf"},
-    {file = "pyasn1-0.4.8-py2.6.egg", hash = "sha256:5c9414dcfede6e441f7e8f81b43b34e834731003427e5b09e4e00e3172a10f00"},
-    {file = "pyasn1-0.4.8-py2.7.egg", hash = "sha256:6e7545f1a61025a4e58bb336952c5061697da694db1cae97b116e9c46abcf7c8"},
-    {file = "pyasn1-0.4.8-py2.py3-none-any.whl", hash = "sha256:39c7e2ec30515947ff4e87fb6f456dfc6e84857d34be479c9d4a4ba4bf46aa5d"},
-    {file = "pyasn1-0.4.8-py3.1.egg", hash = "sha256:78fa6da68ed2727915c4767bb386ab32cdba863caa7dbe473eaae45f9959da86"},
-    {file = "pyasn1-0.4.8-py3.2.egg", hash = "sha256:08c3c53b75eaa48d71cf8c710312316392ed40899cb34710d092e96745a358b7"},
-    {file = "pyasn1-0.4.8-py3.3.egg", hash = "sha256:03840c999ba71680a131cfaee6fab142e1ed9bbd9c693e285cc6aca0d555e576"},
-    {file = "pyasn1-0.4.8-py3.4.egg", hash = "sha256:7ab8a544af125fb704feadb008c99a88805126fb525280b2270bb25cc1d78a12"},
-    {file = "pyasn1-0.4.8-py3.5.egg", hash = "sha256:e89bf84b5437b532b0803ba5c9a5e054d21fec423a89952a74f87fa2c9b7bce2"},
-    {file = "pyasn1-0.4.8-py3.6.egg", hash = "sha256:014c0e9976956a08139dc0712ae195324a75e142284d5f87f1a87ee1b068a359"},
-    {file = "pyasn1-0.4.8-py3.7.egg", hash = "sha256:99fcc3c8d804d1bc6d9a099921e39d827026409a58f2a720dcdb89374ea0c776"},
-    {file = "pyasn1-0.4.8.tar.gz", hash = "sha256:aef77c9fb94a3ac588e87841208bdec464471d9871bd5050a287cc9a475cd0ba"},
-]
-pyasn1-modules = [
-    {file = "pyasn1-modules-0.2.8.tar.gz", hash = "sha256:905f84c712230b2c592c19470d3ca8d552de726050d1d1716282a1f6146be65e"},
-    {file = "pyasn1_modules-0.2.8-py2.4.egg", hash = "sha256:0fe1b68d1e486a1ed5473f1302bd991c1611d319bba158e98b106ff86e1d7199"},
-    {file = "pyasn1_modules-0.2.8-py2.5.egg", hash = "sha256:fe0644d9ab041506b62782e92b06b8c68cca799e1a9636ec398675459e031405"},
-    {file = "pyasn1_modules-0.2.8-py2.6.egg", hash = "sha256:a99324196732f53093a84c4369c996713eb8c89d360a496b599fb1a9c47fc3eb"},
-    {file = "pyasn1_modules-0.2.8-py2.7.egg", hash = "sha256:0845a5582f6a02bb3e1bde9ecfc4bfcae6ec3210dd270522fee602365430c3f8"},
-    {file = "pyasn1_modules-0.2.8-py2.py3-none-any.whl", hash = "sha256:a50b808ffeb97cb3601dd25981f6b016cbb3d31fbf57a8b8a87428e6158d0c74"},
-    {file = "pyasn1_modules-0.2.8-py3.1.egg", hash = "sha256:f39edd8c4ecaa4556e989147ebf219227e2cd2e8a43c7e7fcb1f1c18c5fd6a3d"},
-    {file = "pyasn1_modules-0.2.8-py3.2.egg", hash = "sha256:b80486a6c77252ea3a3e9b1e360bc9cf28eaac41263d173c032581ad2f20fe45"},
-    {file = "pyasn1_modules-0.2.8-py3.3.egg", hash = "sha256:65cebbaffc913f4fe9e4808735c95ea22d7a7775646ab690518c056784bc21b4"},
-    {file = "pyasn1_modules-0.2.8-py3.4.egg", hash = "sha256:15b7c67fabc7fc240d87fb9aabf999cf82311a6d6fb2c70d00d3d0604878c811"},
-    {file = "pyasn1_modules-0.2.8-py3.5.egg", hash = "sha256:426edb7a5e8879f1ec54a1864f16b882c2837bfd06eee62f2c982315ee2473ed"},
-    {file = "pyasn1_modules-0.2.8-py3.6.egg", hash = "sha256:cbac4bc38d117f2a49aeedec4407d23e8866ea4ac27ff2cf7fb3e5b570df19e0"},
-    {file = "pyasn1_modules-0.2.8-py3.7.egg", hash = "sha256:c29a5e5cc7a3f05926aff34e097e84f8589cd790ce0ed41b67aed6857b26aafd"},
 ]
 pycodestyle = [
     {file = "pycodestyle-2.7.0-py2.py3-none-any.whl", hash = "sha256:514f76d918fcc0b55c6680472f0a37970994e07bbb80725808c17089be302068"},
@@ -2122,6 +1490,9 @@ pytest-rerunfailures = [
     {file = "pytest-rerunfailures-8.0.tar.gz", hash = "sha256:17c1236b9f8463f74a5df6c807f301c53c2ea1ab81b7509b7e23fab3b7cbe812"},
     {file = "pytest_rerunfailures-8.0-py2.py3-none-any.whl", hash = "sha256:4997cda1b82f74cc0c280f6a5a0470d36deb318e3d8bd6da71efc32a3e0c9ae4"},
 ]
+pytest-watch = [
+    {file = "pytest-watch-4.2.0.tar.gz", hash = "sha256:06136f03d5b361718b8d0d234042f7b2f203910d8568f63df2f866b547b3d4b9"},
+]
 python-dateutil = [
     {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
     {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
@@ -2133,10 +1504,6 @@ python-decouple = [
 python-magic = [
     {file = "python-magic-0.4.15.tar.gz", hash = "sha256:f3765c0f582d2dfc72c15f3b5a82aecfae9498bd29ca840d72f37d7bd38bfcd5"},
     {file = "python_magic-0.4.15-py2.py3-none-any.whl", hash = "sha256:f2674dcfad52ae6c49d4803fa027809540b130db1dec928cfbb9240316831375"},
-]
-python3-openid = [
-    {file = "python3-openid-3.1.0.tar.gz", hash = "sha256:628d365d687e12da12d02c6691170f4451db28d6d68d050007e4a40065868502"},
-    {file = "python3_openid-3.1.0-py3-none-any.whl", hash = "sha256:0086da6b6ef3161cfe50fb1ee5cceaf2cda1700019fda03c2c5c440ca6abe4fa"},
 ]
 pytz = [
     {file = "pytz-2019.3-py2.py3-none-any.whl", hash = "sha256:1c557d7d0e871de1f5ccd5833f60fb2550652da6be2693c1e02300743d21500d"},
@@ -2184,15 +1551,6 @@ requests-mock = [
     {file = "requests-mock-1.9.2.tar.gz", hash = "sha256:33296f228d8c5df11a7988b741325422480baddfdf5dd9318fd0eb40c3ed8595"},
     {file = "requests_mock-1.9.2-py2.py3-none-any.whl", hash = "sha256:5c8ef0254c14a84744be146e9799dc13ebc4f6186058112d9aeed96b131b58e2"},
 ]
-requests-oauthlib = [
-    {file = "requests-oauthlib-1.3.0.tar.gz", hash = "sha256:b4261601a71fd721a8bd6d7aa1cc1d6a8a93b4a9f5e96626f8e4d91e8beeaa6a"},
-    {file = "requests_oauthlib-1.3.0-py2.py3-none-any.whl", hash = "sha256:7f71572defaecd16372f9006f33c2ec8c077c3cfa6f5911a9a90202beb513f3d"},
-    {file = "requests_oauthlib-1.3.0-py3.7.egg", hash = "sha256:fa6c47b933f01060936d87ae9327fead68768b69c6c9ea2109c48be30f2d4dbc"},
-]
-rsa = [
-    {file = "rsa-4.0-py2.py3-none-any.whl", hash = "sha256:14ba45700ff1ec9eeb206a2ce76b32814958a98e372006c8fb76ba820211be66"},
-    {file = "rsa-4.0.tar.gz", hash = "sha256:1a836406405730121ae9823e19c6e806c62bbad73f890574fff50efa4122c487"},
-]
 s3transfer = [
     {file = "s3transfer-0.3.3-py2.py3-none-any.whl", hash = "sha256:2482b4259524933a022d59da830f51bd746db62f047d6eb213f2f8855dcb8a13"},
     {file = "s3transfer-0.3.3.tar.gz", hash = "sha256:921a37e2aefc64145e7b73d50c71bb4f26f46e4c9f414dc648c6245ff92cf7db"},
@@ -2205,24 +1563,13 @@ sqlparse = [
     {file = "sqlparse-0.3.1-py2.py3-none-any.whl", hash = "sha256:022fb9c87b524d1f7862b3037e541f68597a730a8843245c349fc93e1643dc4e"},
     {file = "sqlparse-0.3.1.tar.gz", hash = "sha256:e162203737712307dfe78860cc56c8da8a852ab2ee33750e33aeadf38d12c548"},
 ]
-stripe = [
-    {file = "stripe-2.58.0-py2.py3-none-any.whl", hash = "sha256:15a2068dce84e9cc68a41b006286dc58ebe55a7999cdbd8bb1b1e5d2c4594c7f"},
-    {file = "stripe-2.58.0.tar.gz", hash = "sha256:34829b528e652ffc919d40eff2ba78021149818bab76e33c07801382921cf6d5"},
-]
 toml = [
     {file = "toml-0.10.1-py2.py3-none-any.whl", hash = "sha256:bda89d5935c2eac546d648028b9901107a595863cb36bae0c73ac804a9b4ce88"},
     {file = "toml-0.10.1.tar.gz", hash = "sha256:926b612be1e5ce0634a2ca03470f95169cf16f939018233a670519cb4ac58b0f"},
 ]
-uritemplate = [
-    {file = "uritemplate-3.0.1-py2.py3-none-any.whl", hash = "sha256:07620c3f3f8eed1f12600845892b0e036a2420acf513c53f7de0abd911a5894f"},
-    {file = "uritemplate-3.0.1.tar.gz", hash = "sha256:5af8ad10cec94f215e3f48112de2022e1d5a37ed427fbd88652fa908f2ab7cae"},
-]
 urllib3 = [
     {file = "urllib3-1.25.11-py2.py3-none-any.whl", hash = "sha256:f5321fbe4bf3fefa0efd0bfe7fb14e90909eb62a48ccda331726b4319897dd5e"},
     {file = "urllib3-1.25.11.tar.gz", hash = "sha256:8d7eaa5a82a1cac232164990f04874c594c9453ec55eef02eab885aa02fc17a2"},
-]
-urlobject = [
-    {file = "URLObject-2.4.3.tar.gz", hash = "sha256:47b2e20e6ab9c8366b2f4a3566b6ff4053025dad311c4bb71279bbcfa2430caa"},
 ]
 urlwait = [
     {file = "urlwait-1.0-py2.py3-none-any.whl", hash = "sha256:eae2c20001efc915166cac79c04bac0088ad5787ec64b36f27afd2f359953b2b"},
@@ -2232,21 +1579,36 @@ vine = [
     {file = "vine-1.3.0-py2.py3-none-any.whl", hash = "sha256:ea4947cc56d1fd6f2095c8d543ee25dad966f78692528e68b4fada11ba3f98af"},
     {file = "vine-1.3.0.tar.gz", hash = "sha256:133ee6d7a9016f177ddeaf191c1f58421a1dcc6ee9a42c58b34bed40e1d2cd87"},
 ]
+watchdog = [
+    {file = "watchdog-2.1.3-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:9628f3f85375a17614a2ab5eac7665f7f7be8b6b0a2a228e6f6a2e91dd4bfe26"},
+    {file = "watchdog-2.1.3-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:acc4e2d5be6f140f02ee8590e51c002829e2c33ee199036fcd61311d558d89f4"},
+    {file = "watchdog-2.1.3-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:85b851237cf3533fabbc034ffcd84d0fa52014b3121454e5f8b86974b531560c"},
+    {file = "watchdog-2.1.3-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:a12539ecf2478a94e4ba4d13476bb2c7a2e0a2080af2bb37df84d88b1b01358a"},
+    {file = "watchdog-2.1.3-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:6fe9c8533e955c6589cfea6f3f0a1a95fb16867a211125236c82e1815932b5d7"},
+    {file = "watchdog-2.1.3-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:d9456f0433845e7153b102fffeb767bde2406b76042f2216838af3b21707894e"},
+    {file = "watchdog-2.1.3-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:fd8c595d5a93abd441ee7c5bb3ff0d7170e79031520d113d6f401d0cf49d7c8f"},
+    {file = "watchdog-2.1.3-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:0bcfe904c7d404eb6905f7106c54873503b442e8e918cc226e1828f498bdc0ca"},
+    {file = "watchdog-2.1.3-pp36-pypy36_pp73-macosx_10_9_x86_64.whl", hash = "sha256:bf84bd94cbaad8f6b9cbaeef43080920f4cb0e61ad90af7106b3de402f5fe127"},
+    {file = "watchdog-2.1.3-pp37-pypy37_pp73-macosx_10_9_x86_64.whl", hash = "sha256:b8ddb2c9f92e0c686ea77341dcb58216fa5ff7d5f992c7278ee8a392a06e86bb"},
+    {file = "watchdog-2.1.3-py3-none-manylinux2014_aarch64.whl", hash = "sha256:8805a5f468862daf1e4f4447b0ccf3acaff626eaa57fbb46d7960d1cf09f2e6d"},
+    {file = "watchdog-2.1.3-py3-none-manylinux2014_armv7l.whl", hash = "sha256:3e305ea2757f81d8ebd8559d1a944ed83e3ab1bdf68bcf16ec851b97c08dc035"},
+    {file = "watchdog-2.1.3-py3-none-manylinux2014_i686.whl", hash = "sha256:431a3ea70b20962e6dee65f0eeecd768cd3085ea613ccb9b53c8969de9f6ebd2"},
+    {file = "watchdog-2.1.3-py3-none-manylinux2014_ppc64.whl", hash = "sha256:e4929ac2aaa2e4f1a30a36751160be391911da463a8799460340901517298b13"},
+    {file = "watchdog-2.1.3-py3-none-manylinux2014_ppc64le.whl", hash = "sha256:201cadf0b8c11922f54ec97482f95b2aafca429c4c3a4bb869a14f3c20c32686"},
+    {file = "watchdog-2.1.3-py3-none-manylinux2014_s390x.whl", hash = "sha256:3a7d242a7963174684206093846537220ee37ba9986b824a326a8bb4ef329a33"},
+    {file = "watchdog-2.1.3-py3-none-manylinux2014_x86_64.whl", hash = "sha256:54e057727dd18bd01a3060dbf5104eb5a495ca26316487e0f32a394fd5fe725a"},
+    {file = "watchdog-2.1.3-py3-none-win32.whl", hash = "sha256:b5fc5c127bad6983eecf1ad117ab3418949f18af9c8758bd10158be3647298a9"},
+    {file = "watchdog-2.1.3-py3-none-win_amd64.whl", hash = "sha256:44acad6f642996a2b50bb9ce4fb3730dde08f23e79e20cd3d8e2a2076b730381"},
+    {file = "watchdog-2.1.3-py3-none-win_ia64.whl", hash = "sha256:0bcdf7b99b56a3ae069866c33d247c9994ffde91b620eaf0306b27e099bd1ae0"},
+    {file = "watchdog-2.1.3.tar.gz", hash = "sha256:e5236a8e8602ab6db4b873664c2d356c365ab3cac96fbdec4970ad616415dd45"},
+]
 wcwidth = [
     {file = "wcwidth-0.1.8-py2.py3-none-any.whl", hash = "sha256:8fd29383f539be45b20bd4df0dc29c20ba48654a41e661925e612311e9f3c603"},
     {file = "wcwidth-0.1.8.tar.gz", hash = "sha256:f28b3e8a6483e5d49e7f8949ac1a78314e740333ae305b4ba5defd3e74fb37a8"},
 ]
-webencodings = [
-    {file = "webencodings-0.5.1-py2.py3-none-any.whl", hash = "sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78"},
-    {file = "webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"},
-]
 werkzeug = [
     {file = "Werkzeug-1.0.1-py2.py3-none-any.whl", hash = "sha256:2de2a5db0baeae7b2d2664949077c2ac63fbd16d98da0ff71837f7d1dea3fd43"},
     {file = "Werkzeug-1.0.1.tar.gz", hash = "sha256:6c80b1e5ad3665290ea39320b91e1be1e0d5f60652b964a3070216de83d2e47c"},
-]
-whitenoise = [
-    {file = "whitenoise-5.2.0-py2.py3-none-any.whl", hash = "sha256:05d00198c777028d72d8b0bbd234db605ef6d60e9410125124002518a48e515d"},
-    {file = "whitenoise-5.2.0.tar.gz", hash = "sha256:05ce0be39ad85740a78750c86a93485c40f08ad8c62a6006de0233765996e5c7"},
 ]
 "zope.event" = [
     {file = "zope.event-4.4-py2.py3-none-any.whl", hash = "sha256:d8e97d165fd5a0997b45f5303ae11ea3338becfe68c401dd88ffd2113fe5cae7"},

@@ -1,4 +1,3 @@
-from decorator_include import decorator_include
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, re_path
@@ -7,11 +6,8 @@ from django.views.generic import RedirectView
 
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
-from kuma.core.decorators import shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
-
-# from kuma.users.urls import lang_urlpatterns as users_lang_urlpatterns
-# from kuma.wiki.urls import lang_urlpatterns as wiki_lang_urlpatterns
+from kuma.wiki.urls import lang_urlpatterns as wiki_lang_urlpatterns
 
 
 DAY = 60 * 60 * 24
@@ -20,8 +16,6 @@ MONTH = DAY * 30
 admin.autodiscover()
 
 urlpatterns = [re_path("", include("kuma.health.urls"))]
-# The non-locale-based landing URL's
-urlpatterns += [re_path("", include("kuma.landing.urls"))]
 # urlpatterns += i18n_patterns(
 #     re_path(
 #         r"^events",
@@ -54,7 +48,7 @@ else:
         re_path(r"^admin/", admin.site.urls),
     ]
 
-# urlpatterns += i18n_patterns(re_path(r"^docs/", include(wiki_lang_urlpatterns)))
+urlpatterns += i18n_patterns(re_path(r"^docs/", include(wiki_lang_urlpatterns)))
 urlpatterns += [re_path("", include("kuma.attachments.urls"))]
 # urlpatterns += [re_path("users/", include("kuma.users.urls"))]
 # urlpatterns += i18n_patterns(
@@ -66,15 +60,9 @@ urlpatterns += [
     re_path("", include("kuma.version.urls")),
     re_path(r"^humans.txt$", core_views.humans_txt, name="humans_txt"),
     # We use our own views for setting language in cookies. But to just align with django, set it like this.
-    re_path(r"^i18n/setlang/", core_views.set_language, name="set-language-cookie"),
+    # re_path(r"^i18n/setlang/", core_views.set_language, name="set-language-cookie"),
 ]
 
-if getattr(settings, "DEBUG_TOOLBAR_INSTALLED", False):
-    import debug_toolbar
-
-    urlpatterns.append(
-        re_path(r"^__debug__/", decorator_include(never_cache, debug_toolbar.urls)),
-    )
 
 # Legacy MindTouch redirects. These go last so that they don't mess
 # with local instances' ability to serve media.

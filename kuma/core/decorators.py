@@ -81,67 +81,6 @@ def user_access_decorator(
     return decorator
 
 
-def logout_required(redirect):
-    """Requires that the user *not* be logged in."""
-    redirect_func = lambda u: u.is_authenticated  # noqa: E731
-    if hasattr(redirect, "__call__"):
-        return user_access_decorator(
-            redirect_func,
-            redirect_field=None,
-            redirect_url_func=lambda: "/",
-        )(redirect)
-    else:
-        return user_access_decorator(
-            redirect_func, redirect_field=None, redirect_url_func=lambda: redirect
-        )
-
-
-def login_required(
-    func, login_url=None, redirect=REDIRECT_FIELD_NAME, only_active=True
-):
-    """Requires that the user is logged in."""
-    if only_active:
-        redirect_func = lambda u: not (u.is_authenticated and u.is_active)  # noqa: E731
-    else:
-        redirect_func = lambda u: not u.is_authenticated  # noqa: E731
-    redirect_url_func = lambda: login_url  # noqa: E731
-    return user_access_decorator(
-        redirect_func, redirect_field=redirect, redirect_url_func=redirect_url_func
-    )(func)
-
-
-def permission_required(
-    perm, login_url=None, redirect=REDIRECT_FIELD_NAME, only_active=True
-):
-    """A replacement for django.contrib.auth.decorators.permission_required
-    that doesn't ask authenticated users to log in."""
-    redirect_func = lambda u: not u.is_authenticated  # noqa: E731
-    if only_active:
-        deny_func = lambda u: not (u.is_active and u.has_perm(perm))  # noqa: E731
-    else:
-        deny_func = lambda u: not u.has_perm(perm)  # noqa: E731
-    redirect_url_func = lambda: login_url  # noqa: E731
-
-    return user_access_decorator(
-        redirect_func,
-        redirect_field=redirect,
-        redirect_url_func=redirect_url_func,
-        deny_func=deny_func,
-    )
-
-
-def is_superuser(u):
-    if u.is_authenticated:
-        if u.is_superuser:
-            return True
-        raise PermissionDenied
-    return False
-
-
-superuser_required = user_passes_test(is_superuser)
-#: A decorator to use for requiring a superuser
-
-
 def block_user_agents(view_func):
     blockable_user_agents = getattr(settings, "BLOCKABLE_USER_AGENTS", [])
     blockable_ua_patterns = []

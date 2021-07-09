@@ -1,5 +1,4 @@
 import logging
-import os
 from smtplib import SMTPConnectError, SMTPServerDisconnected
 from urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
 
@@ -10,7 +9,6 @@ from django.http import QueryDict
 from django.utils.cache import patch_cache_control
 from django.utils.encoding import smart_bytes
 from django.utils.http import urlencode
-from polib import pofile
 from pyquery import PyQuery as pq
 from redo import retrying
 from requests.adapters import HTTPAdapter
@@ -20,26 +18,26 @@ from urllib3.util.retry import Retry
 log = logging.getLogger("kuma.core.utils")
 
 
-def strings_are_translated(strings, locale):
-    # http://stackoverflow.com/a/24339946/571420
-    pofile_path = os.path.join(
-        settings.ROOT, "locale", locale, "LC_MESSAGES", "django.po"
-    )
-    try:
-        po = pofile(pofile_path)
-    except IOError:  # in case the file doesn't exist or couldn't be parsed
-        return False
-    all_strings_translated = True
-    for string in strings:
-        if not any(
-            e
-            for e in po
-            if e.msgid == string
-            and (e.translated() and "fuzzy" not in e.flags)
-            and not e.obsolete
-        ):
-            all_strings_translated = False
-    return all_strings_translated
+# def strings_are_translated(strings, locale):
+#     # http://stackoverflow.com/a/24339946/571420
+#     pofile_path = os.path.join(
+#         settings.ROOT, "locale", locale, "LC_MESSAGES", "django.po"
+#     )
+#     try:
+#         po = pofile(pofile_path)
+#     except IOError:  # in case the file doesn't exist or couldn't be parsed
+#         return False
+#     all_strings_translated = True
+#     for string in strings:
+#         if not any(
+#             e
+#             for e in po
+#             if e.msgid == string
+#             and (e.translated() and "fuzzy" not in e.flags)
+#             and not e.obsolete
+#         ):
+#             all_strings_translated = False
+#     return all_strings_translated
 
 
 def urlparams(url_, fragment=None, query_dict=None, **query):

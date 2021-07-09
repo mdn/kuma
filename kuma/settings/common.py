@@ -85,7 +85,6 @@ CONN_MAX_AGE = config("CONN_MAX_AGE", default=60)
 DATABASES = {
     "default": config(
         "DATABASE_URL",
-        # default="postgresql://localhost/songsearch",
         default="postgresql://kuma:kuma@localhost/kuma",
         cast=dj_database_url.parse,
     )
@@ -384,11 +383,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # MDN
     "kuma.core.apps.CoreConfig",
-    "kuma.landing",
-    # "kuma.api.apps.APIConfig",# DO WE NEED THIS?
+    "kuma.wiki.apps.WikiConfig",
+    "kuma.api.apps.APIConfig",
     "kuma.attachments.apps.AttachmentsConfig",
     "kuma.plus.apps.PlusConfig",
+    # 3rd party
+    "django_extensions",
 ]
 
 
@@ -529,12 +531,12 @@ SESSION_COOKIE_AGE = config("SESSION_COOKIE_AGE", default=60 * 60 * 24 * 365, ca
 # # kuma.core.middleware.WaffleWithCookieDomainMiddleware.
 # WAFFLE_COOKIE_DOMAIN = DOMAIN
 
-# # bug 856061
-# ALLOWED_HOSTS = config(
-#     "ALLOWED_HOSTS",
-#     default="developer-local.allizom.org, mdn-local.mozillademos.org",
-#     cast=Csv(),
-# )
+# bug 856061
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS",
+    default="developer-local.allizom.org, mdn-local.mozillademos.org",
+    cast=Csv(),
+)
 
 _PROD_ATTACHMENT_HOST = "mdn.mozillademos.org"
 _PROD_ATTACHMENT_SITE_URL = "https://" + _PROD_ATTACHMENT_HOST
@@ -673,7 +675,6 @@ CELERY_EVENT_SERIALIZER = "pickle"
 
 CELERY_TASK_ROUTES = {
     "kuma.core.tasks.clean_sessions": {"queue": "mdn_purgeable"},
-    "kuma.users.tasks.send_welcome_email": {"queue": "mdn_emails"},
 }
 
 # Do not change this without also deleting all wiki documents:
@@ -753,41 +754,41 @@ ES_RETRY_SLEEPTIME = config("ES_RETRY_SLEEPTIME", default=1, cast=int)
 ES_RETRY_ATTEMPTS = config("ES_RETRY_ATTEMPTS", default=5, cast=int)
 ES_RETRY_JITTER = config("ES_RETRY_JITTER", default=1, cast=int)
 
-# # Logging is merged with the default logging
-# # https://github.com/django/django/blob/stable/1.11.x/django/utils/log.py
-# LOGGING = {
-#     "version": 1,
-#     "disable_existing_loggers": False,
-#     "filters": {"require_debug_true": {"()": "django.utils.log.RequireDebugTrue"}},
-#     "formatters": {"simple": {"format": "%(name)s:%(levelname)s %(message)s"}},
-#     "handlers": {
-#         "console": {
-#             "level": "DEBUG",
-#             "filters": ["require_debug_true"],
-#             "class": "logging.StreamHandler",
-#         },
-#         "console-simple": {
-#             "level": "DEBUG",
-#             "filters": ["require_debug_true"],
-#             "class": "logging.StreamHandler",
-#             "formatter": "simple",
-#         },
-#     },
-#     "loggers": {
-#         "django": {"handlers": ["console"], "level": "INFO"},  # Drop mail_admins
-#         "kuma": {"handlers": ["console-simple"], "propagate": True, "level": "ERROR"},
-#         "elasticsearch": {
-#             "handlers": ["console-simple"],
-#             "level": config("ES_LOG_LEVEL", default="ERROR"),
-#         },
-#         "elasticsearch.trace": {
-#             "handlers": ["console-simple"],
-#             "level": config("ES_TRACE_LOG_LEVEL", default="ERROR"),
-#             "propagate": False,
-#         },
-#         "urllib3": {"handlers": ["console-simple"], "level": "ERROR"},
-#     },
-# }
+# Logging is merged with the default logging
+# https://github.com/django/django/blob/stable/1.11.x/django/utils/log.py
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {"require_debug_true": {"()": "django.utils.log.RequireDebugTrue"}},
+    "formatters": {"simple": {"format": "%(name)s:%(levelname)s %(message)s"}},
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+        },
+        "console-simple": {
+            "level": "DEBUG",
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+    },
+    "loggers": {
+        "django": {"handlers": ["console"], "level": "INFO"},  # Drop mail_admins
+        "kuma": {"handlers": ["console-simple"], "propagate": True, "level": "ERROR"},
+        "elasticsearch": {
+            "handlers": ["console-simple"],
+            "level": config("ES_LOG_LEVEL", default="ERROR"),
+        },
+        "elasticsearch.trace": {
+            "handlers": ["console-simple"],
+            "level": config("ES_TRACE_LOG_LEVEL", default="ERROR"),
+            "propagate": False,
+        },
+        "urllib3": {"handlers": ["console-simple"], "level": "ERROR"},
+    },
+}
 
 CSRF_COOKIE_DOMAIN = DOMAIN
 CSRF_COOKIE_SECURE = config("CSRF_COOKIE_SECURE", default=True, cast=bool)

@@ -47,37 +47,10 @@ REDIRECT_CASES = [
 ] + [(orig, new) for (orig, new) in SIMPLE_ACCEPT_CASES if orig != new]
 
 
-@pytest.mark.parametrize("accept_language,locale", PICKER_CASES)
-def test_locale_middleware_picker(accept_language, locale, client, db):
-    """The LocaleMiddleware picks locale from the Accept-Language header."""
-    response = client.get("/events", HTTP_ACCEPT_LANGUAGE=accept_language)
-    assert response.status_code == 302
-    assert response["Location"] == f"/{locale or 'en-US'}/events"
-    assert_shared_cache_header(response)
-
-
-@pytest.mark.parametrize("original,fixed", REDIRECT_CASES)
-def test_locale_middleware_fixer(original, fixed, client, db):
-    """The LocaleStandardizerMiddleware redirects non-standard locale URLs."""
-    response = client.get((f"/{original}" if original else "") + "/events")
-    assert response.status_code == 302
-    assert response["Location"] == f"/{fixed}/events"
-    assert_shared_cache_header(response)
-
-
 def test_locale_middleware_fixer_confusion(client, db):
     """The LocaleStandardizerMiddleware treats unknown locales as 404s."""
     response = client.get("/xx/events")
     assert response.status_code == 404
-
-
-def test_locale_middleware_language_cookie(client, db):
-    """The LocaleMiddleware uses the language cookie over the header."""
-    client.cookies.load({settings.LANGUAGE_COOKIE_NAME: "ja"})
-    response = client.get("/events", HTTP_ACCEPT_LANGUAGE="fr")
-    assert response.status_code == 302
-    assert response["Location"] == "/ja/events"
-    assert_shared_cache_header(response)
 
 
 # Paths that were once valid, but now should 404, rather than get a second

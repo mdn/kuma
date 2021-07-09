@@ -2,13 +2,11 @@ from datetime import datetime
 
 import pytest
 import requests_mock
-from allauth.socialaccount.models import SocialAccount
+
 from django.contrib.auth.models import Group
 from django.core.cache import caches
 from django.urls import set_urlconf
 from django.utils.translation import activate
-
-from kuma.wiki.models import Document, Revision
 
 
 @pytest.fixture(autouse=True)
@@ -66,21 +64,7 @@ def wiki_user(db, django_user_model):
     return django_user_model.objects.create(
         username="wiki_user",
         email="wiki_user@example.com",
-        is_newsletter_subscribed=True,
         date_joined=datetime(2017, 4, 14, 12, 0),
-    )
-
-
-@pytest.fixture
-def wiki_user_github_account(wiki_user):
-    return SocialAccount.objects.create(
-        user=wiki_user,
-        provider="github",
-        extra_data=dict(
-            email=wiki_user.email,
-            avatar_url="https://avatars0.githubusercontent.com/yada/yada",
-            html_url="https://github.com/{}".format(wiki_user.username),
-        ),
     )
 
 
@@ -107,22 +91,6 @@ def stripe_user_client(client, stripe_user):
     stripe_user.save()
     client.login(username=stripe_user.username, password="password")
     return client
-
-
-@pytest.fixture
-def root_doc(wiki_user):
-    """A newly-created top-level English document."""
-    root_doc = Document.objects.create(
-        locale="en-US", slug="Root", title="Root Document"
-    )
-    Revision.objects.create(
-        document=root_doc,
-        creator=wiki_user,
-        content="<p>Getting started...</p>",
-        title="Root Document",
-        created=datetime(2017, 4, 14, 12, 15),
-    )
-    return root_doc
 
 
 @pytest.fixture

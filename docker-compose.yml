@@ -25,7 +25,6 @@ services:
       - CELERY_TASK_ALWAYS_EAGER=False
       - CELERY_RESULT_BACKEND=redis://redis:6379/1
       - CSRF_COOKIE_SECURE=False
-      # - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
       - DATABASE_URL=postgresql://${POSTGRES_DATABASE_USER:-kuma}:${POSTGRES_DATABASE_PASSWORD:-kuma}@postgres:5432/developer_mozilla_org
       - DEBUG=${DEBUG:-True}
       - DOMAIN=${DOMAIN:-localhost}
@@ -43,7 +42,6 @@ services:
       - PYTHONWARNINGS=${PYTHONWARNINGS:-}
       - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
       - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
-      # - GOOGLE_ANALYTICS_TRACKING_URL=http://mockga:7777/collect
 
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
@@ -52,7 +50,6 @@ services:
     depends_on:
       - postgres
       - redis
-      # - mockga
     ports:
       - "8000:8000"
 
@@ -75,40 +72,8 @@ services:
       - POSTGRES_PASSWORD=kuma
       - POSTGRES_DB=developer_mozilla_org
 
-  # mysql:
-  #   image: mysql:5.6
-  #   # This is necessary for platforms using the Apple M1 chip.
-  #   platform: linux/x86_64
-  #   environment:
-  #     - MYSQL_USER=kuma
-  #     - MYSQL_PASSWORD=kuma
-  #     - MYSQL_DATABASE=developer_mozilla_org
-  #     - MYSQL_ROOT_PASSWORD=kuma
-  #   command:
-  #     - mysqld
-  #     - --character-set-server=utf8
-  #     - --collation-server=utf8_general_ci
-  #     - --innodb-flush-log-at-trx-commit=0
-  #     - --innodb-log-file-size=132M
-  #     - --max-allowed-packet=100M
-  #   volumes:
-  #     - mysqlvolume:/var/lib/mysql
-
   redis:
     # The version of this Redis image should be kept synchronized with production. It
     # should match the "redis_engine_version" variable in the following Terraform file:
     # https://github.com/mdn/infra/blob/master/apps/mdn/mdn-aws/infra/modules/multi_region/redis/variables.tf
     image: redis:5.0.6
-
-  # mockga:
-  #   build:
-  #     context: mockga
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "7777:7777"
-
-volumes:
-  # miniodata:
-  # mysqlvolume:
-  # esdata:
-  #   driver: local

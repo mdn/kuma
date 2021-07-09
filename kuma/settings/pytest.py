@@ -18,8 +18,6 @@ ES_RETRY_JITTER = 0
 # SHA1 because it is fast, and hard-coded in the test fixture JSON.
 PASSWORD_HASHERS = ("django.contrib.auth.hashers.SHA1PasswordHasher",)
 
-INSTALLED_APPS += ("kuma.core.tests.taggit_extras",)
-
 LOGGING["loggers"].update(
     {
         "django.db.backends": {
@@ -37,10 +35,10 @@ for cache_settings in CACHES.values():
     current_prefix = cache_settings.get("KEY_PREFIX", "")
     cache_settings["KEY_PREFIX"] = "test." + current_prefix
 
-# This avoids reading the static folder for each test client request, for
-# a 10x speedup on Docker on MacOS.
-WHITENOISE_AUTOREFRESH = True
-WHITENOISE_USE_FINDERS = True
+# # This avoids reading the static folder for each test client request, for
+# # a 10x speedup on Docker on MacOS.
+# WHITENOISE_AUTOREFRESH = True
+# WHITENOISE_USE_FINDERS = True
 
 # Never rely on the .env
 GOOGLE_ANALYTICS_ACCOUNT = None
