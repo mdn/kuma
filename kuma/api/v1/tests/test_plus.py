@@ -70,6 +70,16 @@ def test_ping_landing_page_survey_bad_request(client):
     response = client.get(url, {"uuid": "88f7a689-454a-4647-99bf-d62fa66da24a"})
     assert response.status_code == 404
 
+    # No UUID in post
+    response = client.post(url)
+    assert response.status_code == 400
+
+    response = client.get(url, {"variant": "1"})
+    assert response.status_code == 200
+    # Invalid JSON
+    response = client.post(url, {"uuid": response.json()["uuid"], "response": "{{{{"})
+    assert response.status_code == 400
+
 
 @pytest.mark.django_db
 def test_ping_landing_page_survey_reuse_uuid(client):

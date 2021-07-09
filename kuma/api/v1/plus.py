@@ -42,10 +42,6 @@ def landing_page_survey(request):
         variant = request.session.get(VARIANTS_SESSION_KEY)
         if not variant:
             return HttpResponseBadRequest("missing 'variant'")
-        try:
-            variant = int(variant)
-        except ValueError:
-            return HttpResponseBadRequest("invalid 'variant'")
         uuid = request.GET.get("uuid")
         if uuid:
             try:
