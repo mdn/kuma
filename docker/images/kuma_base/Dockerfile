@@ -17,8 +17,7 @@ RUN set -x \
     build-essential \
     libxml2-dev \
     libxslt1-dev \
-    libffi-dev \
-    libmagic-dev
+    libffi-dev
 
 # add non-privileged user
 RUN useradd --uid 1000 --shell /bin/bash --create-home kuma \
