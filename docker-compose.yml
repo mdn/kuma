@@ -12,7 +12,6 @@ services:
     depends_on:
       - postgres
       - redis
-      - minio
     environment:
       # Django settings overrides:
       - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
@@ -58,7 +57,6 @@ services:
     depends_on:
       - postgres
       - redis
-      - minio
       # - mockga
     ports:
       - "8000:8000"
@@ -70,8 +68,6 @@ services:
     depends_on:
       - postgres
       - redis
-      - minio
-      - minio_setup
     volumes:
       - ./:/app
 
@@ -109,29 +105,6 @@ services:
     # https://github.com/mdn/infra/blob/master/apps/mdn/mdn-aws/infra/modules/multi_region/redis/variables.tf
     image: redis:5.0.6
 
-  # MinIO: S3-compatible object storage (https://min.io)
-  minio:
-    image: minio/minio
-    command: server /data
-    environment:
-      MINIO_ACCESS_KEY: "minio"
-      MINIO_SECRET_KEY: "minio123"
-    ports:
-      - "9000:9000"
-    volumes:
-      - miniodata:/data
-
-  # One-shot service that ensures Minio is properly configured for Kuma
-  # No need to explicitly wait for minio; mc automatically wailts
-  minio_setup:
-    image: minio/mc
-    depends_on:
-      - minio
-    environment:
-      MC_HOST_minio: "http://${MINIO_ACCESS_KEY:-minio}:${MINIO_SECRET_KEY:-minio123}@minio:9000"
-    entrypoint: ""
-    command: /bin/sh -c "for BUCKET in 'test' 'media'; do mc mb -p minio/$$BUCKET && mc policy set download minio/$$BUCKET; done"
-
   # mockga:
   #   build:
   #     context: mockga
@@ -140,7 +113,7 @@ services:
   #     - "7777:7777"
 
 volumes:
-  miniodata:
+  # miniodata:
   # mysqlvolume:
   # esdata:
   #   driver: local
