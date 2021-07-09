@@ -718,14 +718,6 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "python-magic"
-version = "0.4.15"
-description = "File type identification using libmagic"
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "pytz"
 version = "2019.3"
 description = "World timezone definitions, modern and historical"
@@ -935,7 +927,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "2e2d58b032ab35318c84c4604445b482f182d87ba80e974a5a349842e5437665"
+content-hash = "2ef703b12ce8d03244271aba247e66dc3e898d9b6fc5bf7c291742557b78cc1b"
 
 [metadata.files]
 amqp = [
@@ -1344,10 +1336,6 @@ python-dateutil = [
 python-decouple = [
     {file = "python-decouple-3.4.tar.gz", hash = "sha256:2e5adb0263a4f963b58d7407c4760a2465d464ee212d733e2a2c179e54c08d8f"},
     {file = "python_decouple-3.4-py3-none-any.whl", hash = "sha256:a8268466e6389a639a20deab9d880faee186eb1eb6a05e54375bdf158d691981"},
-]
-python-magic = [
-    {file = "python-magic-0.4.15.tar.gz", hash = "sha256:f3765c0f582d2dfc72c15f3b5a82aecfae9498bd29ca840d72f37d7bd38bfcd5"},
-    {file = "python_magic-0.4.15-py2.py3-none-any.whl", hash = "sha256:f2674dcfad52ae6c49d4803fa027809540b130db1dec928cfbb9240316831375"},
 ]
 pytz = [
     {file = "pytz-2019.3-py2.py3-none-any.whl", hash = "sha256:1c557d7d0e871de1f5ccd5833f60fb2550652da6be2693c1e02300743d21500d"},
