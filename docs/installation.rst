@@ -5,6 +5,7 @@ Kuma uses `Docker`_ for local development and integration testing, and we are
 transitioning to Docker containers for deployment as well.
 
 .. _Docker: https://www.docker.com/
+.. _`Docker for Mac`: https://docs.docker.com/docker-for-mac/
 
 Docker setup
 ============
@@ -64,7 +65,6 @@ Docker setup
 .. _Docker Compose: https://docs.docker.com/compose/install/
 .. _post-install instructions: https://docs.docker.com/engine/installation/linux/linux-postinstall/
 .. _docker as non-root: https://docs.docker.com/engine/installation/linux/linux-postinstall/
-.. _Windows: https://docs.docker.com/docker-for-windows/#advanced
 .. _macOS: https://docs.docker.com/docker-for-mac/#advanced
 
 .. _provision-the-database:

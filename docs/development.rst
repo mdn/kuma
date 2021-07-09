@@ -339,42 +339,6 @@ Now you should be ready for a successful test run::
 Note that the "search" tests are excluded. This is because the tests marked
 "search" are not currently designed to run against the sample database.
 
-Serving over SSL / HTTPS
-========================
-Kuma can be served over HTTPS locally with a self-signed certificate. Browsers
-consider self-signed certificates to be unsafe, and you'll have to confirm
-that you want an exception for this.
-
-
-#. If you want GitHub logins:
-
-   * In the `Django Admin for Sites`_, ensure that site #2's domain is set to
-     ``developer.127.0.0.1.nip.io``.
-
-   * In GitHub, generate a new GitHub OAuth app for the test SSL domain,
-     modifying the procees at :ref:`enable-github-auth`. When creating the
-     GitHub OAuth app, replace ``http://localhost:8000`` with
-     ``https://developer.127.0.0.1.nip.io`` in both URLs. When creating the
-     ``SocialApp`` in Kuma, chose the ``developer.127.0.0.1.nip.io`` site.
-
-#. Include the SSL containers by updating ``.env``::
-
-    COMPOSE_FILE=docker-compose.yml:docker-compose.ssl.yml
-
-#. Run the new containers::
-
-    docker-compose up -d
-
-#. Load https://developer.127.0.0.1.nip.io/en-US/ in your browser, and add an
-   exception for the self-signed certificate.
-
-#. Load https://demos.developer.127.0.0.1.nip.io/en-US/ in your browser, and
-   add an exception for the self-signed certificate again.
-
-Some features of SSL-protected sites may not be available, because the browser
-does not fully trust the self-signed SSL certificate. The HTTP-only website
-will still be available at http://localhost:8000/en-US/, but GitHub logins will
-not work.
 
 .. _`Django Admin for Sites`: http://localhost:8000/admin/sites/site/
 
