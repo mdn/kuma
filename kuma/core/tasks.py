@@ -1,11 +1,5 @@
 from celery.task import task
-
-# from django.conf import settings
 from django.contrib.sessions.models import Session
-
-# from django.core.cache import cache
-# from django.db import connection
-# from django.utils import timezone
 
 from .decorators import skip_in_maintenance_mode
 

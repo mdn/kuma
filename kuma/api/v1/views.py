@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.http import (
     HttpResponseForbidden,
     JsonResponse,
@@ -10,10 +9,6 @@ from django.views.decorators.http import require_GET
 
 
 from kuma.api.v1.forms import AccountSettingsForm
-
-# from kuma.users.models import User, UserSubscription
-# from kuma.users.stripe_utils import retrieve_and_synchronize_stripe_subscription
-# from kuma.users.templatetags.jinja_helpers import get_avatar_url
 
 
 @never_cache
