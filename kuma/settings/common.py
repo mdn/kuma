@@ -3,21 +3,11 @@ from email.utils import parseaddr
 from pathlib import Path
 
 import dj_database_url
-import dj_email_url
 from decouple import config, Csv
-
-# _Language = namedtuple("Language", "english native")
-
-
-# def path(*parts):
-#     return os.path.join(BASE_DIR, *parts)
 
 
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-# BASE_DIR used by django-extensions, such as ./manage.py notes
-# ROOT used by some Kuma application code
-# BASE_DIR = ROOT = dirname(dirname(dirname(os.path.abspath(__file__))))
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 ADMIN_EMAILS = config("ADMIN_EMAILS", default="mdn-dev@mozilla.com", cast=Csv())
@@ -110,7 +100,7 @@ CACHES = {
 }
 
 # Email
-vars().update(config("EMAIL_URL", default="console://", cast=dj_email_url.parse))
+# vars().update(config("EMAIL_URL", default="console://", cast=dj_email_url.parse))
 EMAIL_SUBJECT_PREFIX = config("EMAIL_SUBJECT_PREFIX", default="[mdn]")
 # Ensure EMAIL_SUBJECT_PREFIX has one trailing space
 EMAIL_SUBJECT_PREFIX = EMAIL_SUBJECT_PREFIX.strip() + " "
