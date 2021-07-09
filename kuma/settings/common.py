@@ -312,52 +312,6 @@ INSTALLED_APPS = [
 #     "django_mysql",
 # )
 
-# TEMPLATES = [
-#     {
-#         "NAME": "jinja2",
-#         "BACKEND": "django_jinja.backend.Jinja2",
-#         "DIRS": [path("jinja2"), path("static")],
-#         "APP_DIRS": True,
-#         "OPTIONS": {
-#             # Use jinja2/ for jinja templates
-#             "app_dirname": "jinja2",
-#             # Don't figure out which template loader to use based on
-#             # file extension
-#             "match_extension": "",
-#             "newstyle_gettext": True,
-#             "context_processors": _CONTEXT_PROCESSORS,
-#             "undefined": "jinja2.Undefined",
-#             "extensions": [
-#                 "jinja2.ext.do",
-#                 "jinja2.ext.loopcontrols",
-#                 "jinja2.ext.i18n",
-#                 "puente.ext.i18n",
-#                 "django_jinja.builtins.extensions.CsrfExtension",
-#                 "django_jinja.builtins.extensions.CacheExtension",
-#                 "django_jinja.builtins.extensions.TimezoneExtension",
-#                 "django_jinja.builtins.extensions.UrlsExtension",
-#                 "django_jinja.builtins.extensions.StaticFilesExtension",
-#                 "django_jinja.builtins.extensions.DjangoFiltersExtension",
-#                 "waffle.jinja.WaffleExtension",
-#                 "kuma.core.i18n.TranslationExtension",
-#             ],
-#         },
-#     },
-#     {
-#         "NAME": "django",
-#         "BACKEND": "django.template.backends.django.DjangoTemplates",
-#         "DIRS": [path("templates")],
-#         "APP_DIRS": False,
-#         "OPTIONS": {
-#             "debug": DEBUG,
-#             "context_processors": _CONTEXT_PROCESSORS,
-#             "loaders": [
-#                 "django.template.loaders.filesystem.Loader",
-#                 "django.template.loaders.app_directories.Loader",
-#             ],
-#         },
-#     },
-# ]
 
 TEMPLATES = [
     {
@@ -438,67 +392,6 @@ ALLOW_ROBOTS_DOMAINS = set(
 )
 
 
-# Allowed iframe URL patterns
-# The format is a three-element tuple:
-#  Protocol: Required, must match
-#  Domain: Required, must match
-#  Path: An optional path prefix or matching regex
-
-
-# def parse_iframe_url(url):
-#     """
-#     Parse an iframe URL into an allowed iframe pattern
-
-#     A URL with a '*' in the path is treated as a regex.
-#     """
-#     parts = urlsplit(url)
-#     assert parts.scheme in ("http", "https")
-#     path = ""
-#     if parts.path.strip("/") != "":
-#         if "*" in parts.path:
-#             path = re.compile(parts.path)
-#         else:
-#             path = parts.path
-#     return (parts.scheme, parts.netloc, path)
-
-
-# # Default allowed iframe URL patterns, roughly ordered by expected frequency
-# ALLOWED_IFRAME_PATTERNS = [
-#     # Live sample host
-#     # https://developer.mozilla.org/en-US/docs/Web/CSS/filter
-#     parse_iframe_url(_PROD_ATTACHMENT_SITE_URL),
-#     # Interactive Examples host
-#     # On https://developer.mozilla.org/en-US/docs/Web/CSS/filter
-#     parse_iframe_url(_PROD_INTERACTIVE_EXAMPLES),
-#     # Samples, https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL
-#     parse_iframe_url("https://mdn.github.io/"),
-#     # Videos, https://developer.mozilla.org/en-US/docs/Tools/Web_Console
-#     parse_iframe_url("https://www.youtube.com/embed/"),
-#     # Samples, https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
-#     parse_iframe_url("https://jsfiddle.net/.*/embedded/.*"),
-#     # Charts, https://developer.mozilla.org/en-US/docs/MDN/Kuma/Server_charts
-#     parse_iframe_url("https://rpm.newrelic.com/public/charts/"),
-#     # Test262 Report, https://test262.report/
-#     parse_iframe_url("https://test262.report/embed/features/"),
-# ]
-
-# # Add the overridden attachment / live sample host
-# if ATTACHMENT_SITE_URL != _PROD_ATTACHMENT_SITE_URL:
-#     ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(ATTACHMENT_SITE_URL))
-
-# # Add the overridden interactive examples service
-# if INTERACTIVE_EXAMPLES_BASE != _PROD_INTERACTIVE_EXAMPLES:
-#     ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(INTERACTIVE_EXAMPLES_BASE))
-
-# # Add more iframe patterns from the environment
-# _ALLOWED_IFRAME_PATTERNS = config("ALLOWED_IFRAME_PATTERNS", default="", cast=Csv())
-# for pattern in _ALLOWED_IFRAME_PATTERNS:
-#     ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(pattern))
-
-# # Allow all iframe sources (for debugging)
-# ALLOW_ALL_IFRAMES = config("ALLOW_ALL_IFRAMES", default=False, cast=bool)
-
-
 # Email
 EMAIL_BACKEND = config(
     "EMAIL_BACKEND", default="django.core.mail.backends.filebased.EmailBackend"
@@ -536,11 +429,6 @@ CELERY_TASK_ROUTES = {
 # Do not change this without also deleting all wiki documents:
 # WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
 
-# Number of days to keep the trashed attachments files before they are removed from
-# the file storage.
-# WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS = config(
-#     "WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS", default=14, cast=int
-# )
 
 # Number of expired sessions to cleanup up in one go.
 SESSION_CLEANUP_CHUNK_SIZE = config(

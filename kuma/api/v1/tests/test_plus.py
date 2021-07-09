@@ -46,7 +46,7 @@ def test_ping_landing_page_survey_happy_path(client, settings):
     (result,) = LandingPageSurvey.objects.all()
     assert result.variant == variant
     assert result.email == "peterbe@example.com"
-    assert result.response == json.dumps({"price": "perfect"})
+    assert result.response == {"price": "perfect"}
 
 
 @pytest.mark.django_db

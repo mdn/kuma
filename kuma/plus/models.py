@@ -14,8 +14,7 @@ class LandingPageSurvey(models.Model):
     # all combinations.
     email = models.CharField(max_length=100, blank=True)
     variant = models.PositiveIntegerField()
-    # Wish we had a proper JSON model but this is MySQL and Django 2.
-    response = models.TextField(editable=False, null=True)
+    response = models.JSONField(editable=False, null=True)
     geo_information = models.TextField(editable=False, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

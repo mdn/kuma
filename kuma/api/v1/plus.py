@@ -35,7 +35,7 @@ def landing_page_survey(request):
                 response = json.loads(response_json)
             except ValueError:
                 return HttpResponseBadRequest("invalid response JSON")
-            survey.response = json.dumps(response)
+            survey.response = response
             survey.save()
         context["ok"] = True
     else:
