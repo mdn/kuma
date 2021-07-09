@@ -20,8 +20,6 @@ Contents:
    feature-toggles
    celery
    elasticsearch
-   localization
-   data
    documentation
 
    docker
