@@ -1,10 +1,6 @@
-import re
 from functools import partial, wraps
-from urllib.parse import quote
 
 from django.conf import settings
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import redirect
 
 from .utils import add_shared_cache_control
@@ -37,63 +33,6 @@ def shared_cache_control(func=None, **kwargs):
     if func:
         return _shared_cache_controller(func)
     return _shared_cache_controller
-
-
-def user_access_decorator(
-    redirect_func, redirect_url_func, deny_func=None, redirect_field=REDIRECT_FIELD_NAME
-):
-    """
-    Helper function that returns a decorator.
-
-    * redirect func ----- If truthy, a redirect will occur
-    * deny_func --------- If truthy, HttpResponseForbidden is returned.
-    * redirect_url_func - Evaluated at view time, returns the redirect URL
-                          i.e. where to go if redirect_func is truthy.
-    * redirect_field ---- What field to set in the url, defaults to Django's.
-                          Set this to None to exclude it from the URL.
-
-    """
-
-    def decorator(view_fn):
-        def _wrapped_view(request, *args, **kwargs):
-            if redirect_func(request.user):
-                redirect_url = (
-                    redirect_url_func()
-                    or f"/{getattr(request, 'LANGUAGE_CODE', settings.LANGUAGE_CODE)}{settings.LOGIN_URL}"
-                )
-
-                # Redirect back here afterwards?
-                if redirect_field:
-                    path = quote(request.get_full_path())
-                    redirect_url = f"{redirect_url}?{redirect_field}={path}"
-
-                return HttpResponseRedirect(redirect_url)
-
-            if deny_func and deny_func(request.user):
-                return HttpResponseForbidden()
-
-            return view_fn(request, *args, **kwargs)
-
-        return wraps(view_fn)(_wrapped_view)
-
-    return decorator
-
-
-def block_user_agents(view_func):
-    blockable_user_agents = getattr(settings, "BLOCKABLE_USER_AGENTS", [])
-    blockable_ua_patterns = []
-    for agent in blockable_user_agents:
-        blockable_ua_patterns.append(re.compile(agent))
-
-    def agent_blocked_view(request, *args, **kwargs):
-        http_user_agent = request.META.get("HTTP_USER_AGENT", None)
-        if http_user_agent is not None:
-            for pattern in blockable_ua_patterns:
-                if pattern.search(request.META["HTTP_USER_AGENT"]):
-                    return HttpResponseForbidden()
-        return view_func(request, *args, **kwargs)
-
-    return wraps(view_func)(agent_blocked_view)
 
 
 def skip_in_maintenance_mode(func):

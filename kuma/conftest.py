@@ -1,11 +1,10 @@
-from datetime import datetime
-
 import pytest
 import requests_mock
 
 from django.contrib.auth.models import Group
 from django.core.cache import caches
 from django.urls import set_urlconf
+from django.utils import timezone
 from django.utils.translation import activate
 
 
@@ -64,7 +63,7 @@ def wiki_user(db, django_user_model):
     return django_user_model.objects.create(
         username="wiki_user",
         email="wiki_user@example.com",
-        date_joined=datetime(2017, 4, 14, 12, 0),
+        date_joined=timezone.now(),
     )
 
 
