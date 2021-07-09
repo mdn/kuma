@@ -34,10 +34,6 @@ class JsonResponse(http.JsonResponse):
         super().__init__(data, *args, **kwargs)
 
 
-def legacy(request, locale=None):
-    raise NotImplementedError("work harder")
-
-
 @allow_CORS_GET
 def search(request, locale=None):
     initial = {"size": 10, "page": 1, "archive": SearchForm.ARCHIVE_CHOICES[0]}

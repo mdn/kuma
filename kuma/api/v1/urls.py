@@ -1,6 +1,5 @@
 from django.urls import path
 
-# from . import plus, search, subscription, views
 from . import plus, search, views
 
 urlpatterns = [
@@ -18,20 +17,4 @@ urlpatterns = [
         plus.landing_page_survey,
         name="api.v1.plus.landing_page_survey",
     ),
-    # path(
-    #     "subscriptions/config/",
-    #     subscription.subscription_config,
-    #     name="api.v1.subscriptions.config",
-    # ),
-    # path(
-    #     "subscriptions/checkout/",
-    #     subscription.subscription_checkout,
-    #     name="api.v1.subscriptions.checkout",
-    # ),
-    # path(
-    #     "subscriptions/customer_portal/",
-    #     subscription.subscription_customer_portal,
-    #     name="api.v1.subscriptions.customer_portal",
-    # ),
-    # path("stripe_hooks/", subscription.stripe_hooks, name="api.v1.stripe_hooks"),
 ]

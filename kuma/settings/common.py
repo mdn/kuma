@@ -1,4 +1,5 @@
 import json
+from collections import namedtuple
 from email.utils import parseaddr
 from pathlib import Path
 
@@ -42,35 +43,7 @@ MANAGERS = ADMINS
 
 
 CONN_MAX_AGE = config("CONN_MAX_AGE", default=60)
-# DEFAULT_DATABASE = config(
-#     "DATABASE_URL",
-#     default="mysql://kuma:kuma@localhost:3306/kuma",
-#     cast=dj_database_url.parse,
-# )
 
-
-# if "mysql" in DEFAULT_DATABASE["ENGINE"]:
-#     # These are the production settings for OPTIONS.
-#     DEFAULT_DATABASE.update(
-#         {
-#             "CONN_MAX_AGE": CONN_MAX_AGE,
-#             "OPTIONS": {
-#                 "charset": "utf8",
-#                 "use_unicode": True,
-#                 "init_command": "SET "
-#                 "innodb_strict_mode=1,"
-#                 "storage_engine=INNODB,"
-#                 "sql_mode='STRICT_TRANS_TABLES',"
-#                 "character_set_connection=utf8,"
-#                 "collation_connection=utf8_general_ci",
-#             },
-#             "TEST": {"CHARSET": "utf8", "COLLATION": "utf8_general_ci"},
-#         }
-#     )
-
-# DATABASES = {
-#     "default": DEFAULT_DATABASE,
-# }
 
 DATABASES = {
     "default": config(
@@ -194,28 +167,29 @@ for requested_lang, delivered_lang in LOCALE_ALIASES.items():
         LANGUAGE_URL_MAP[requested_lang.lower()] = delivered_lang
 
 
-# def _get_locales():
-#     """
-#     Load LOCALES data from languages.json
+def _get_locales():
+    """
+    Load LOCALES data from languages.json
 
-#     languages.json is from the product-details project:
-#     https://product-details.mozilla.org/1.0/languages.json
-#     """
-#     lang_path = path("kuma", "settings", "languages.json")
-#     with open(lang_path, "r") as lang_file:
-#         json_locales = json.load(lang_file)
+    languages.json is from the product-details project:
+    https://product-details.mozilla.org/1.0/languages.json
+    """
+    lang_path = BASE_DIR / "settings" / "languages.json"
+    with open(lang_path) as lang_file:
+        json_locales = json.load(lang_file)
 
-#     locales = {}
-#     for locale, meta in json_locales.items():
-#         locales[locale] = _Language(meta["English"], meta["native"])
-#     return locales
+    locales = {}
+    _Language = namedtuple("Language", "english native")
+    for locale, meta in json_locales.items():
+        locales[locale] = _Language(meta["English"], meta["native"])
+    return locales
 
 
-# LOCALES = _get_locales()
-# LANGUAGES = [(locale, LOCALES[locale].native) for locale in ENABLED_LOCALES]
+LOCALES = _get_locales()
+LANGUAGES = [(locale, LOCALES[locale].native) for locale in ENABLED_LOCALES]
 
 # Language list sorted for forms (English, then alphabetical by locale code)
-# SORTED_LANGUAGES = [LANGUAGES[0]] + sorted(LANGUAGES[1:])
+SORTED_LANGUAGES = [LANGUAGES[0]] + sorted(LANGUAGES[1:])
 
 LANGUAGE_COOKIE_NAME = "preferredlocale"
 # The number of seconds we are keeping the language preference cookie. (3 years)
