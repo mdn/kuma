@@ -26,9 +26,7 @@ def test_code_sample(client, settings, domain):
 def test_code_sample_host_not_allowed(settings, client, host):
     """Users are not allowed to view samples on a restricted domain."""
     url = reverse("wiki.code_sample", args=["Any/Slug", "sample1"])
-    # print(ALLOWED_HOSTS
-    # default="developer-local.allizom.org, mdn-local.mozillademos.org",)
-    print(settings.ALLOWED_HOSTS)
+    settings.ALLOWED_HOSTS = "*"
     settings.DOMAIN = "dev.moz.org"
     response = client.get(url, HTTP_HOST=host)
     assert response.status_code == 403
@@ -68,7 +66,10 @@ def test_raw_code_sample_file(admin_client, settings):
     )
     response = admin_client.get(file_url)
     assert response.status_code == 302
-    assert response.url == f"http://{settings.ATTACHMENT_HOST}/files/123/screenshot.png"
+    protocol = "https://" if settings.PROTOCOL else "http://"
+    assert (
+        response.url == f"{protocol}{settings.ATTACHMENT_HOST}/files/123/screenshot.png"
+    )
 
     assert not response.has_header("Vary")
     assert "Cache-Control" in response

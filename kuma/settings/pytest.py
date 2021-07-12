@@ -35,10 +35,9 @@ for cache_settings in CACHES.values():
     current_prefix = cache_settings.get("KEY_PREFIX", "")
     cache_settings["KEY_PREFIX"] = "test." + current_prefix
 
-# # This avoids reading the static folder for each test client request, for
-# # a 10x speedup on Docker on MacOS.
-# WHITENOISE_AUTOREFRESH = True
-# WHITENOISE_USE_FINDERS = True
+
+# Always assume we prefer https.
+PROTOCOL = "https://"
 
 # Never rely on the .env
 GOOGLE_ANALYTICS_ACCOUNT = None

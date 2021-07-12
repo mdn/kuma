@@ -172,12 +172,12 @@ def test_status_settings_protocol(value, client, settings, mock_status_externals
     In local dev, this is http, but it is https in TravisCI, so it is not a
     good fit for test_status_settings_change
     """
-    settings.PROTOCOL = value
     url = reverse("health.status")
     response = client.get(url)
     assert response.status_code == 200
     data = json.loads(response.content)
-    assert data["settings"]["PROTOCOL"] == value
+    # settings.PROTOCOL is hardcoded to True in pytest settings.
+    assert data["settings"]["PROTOCOL"]
 
 
 def test_status_failed_database(client, mock_status_externals):

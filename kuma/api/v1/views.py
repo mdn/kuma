@@ -36,7 +36,6 @@ def whoami(request):
             data["is_superuser"] = True
     else:
         data = {}
-    # data = {}  # EVERYONE IS ANONYMOUS UNTIL WE ADD OIDC!
 
     geo = {}
     # https://aws.amazon.com/about-aws/whats-new/2020/07/cloudfront-geolocation-headers/
