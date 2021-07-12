@@ -49,7 +49,9 @@ def bookmarks(request):
     except (ValueError, AssertionError):
         return HttpResponseBadRequest("invalid 'page'")
     try:
-        per_page = int(request.GET.get("per_page") or "30")
+        per_page = int(
+            request.GET.get("per_page") or settings.API_V1_BOOKMARKS_PAGE_SIZE
+        )
         assert per_page > 0 and per_page <= 100
     except (ValueError, AssertionError):
         return HttpResponseBadRequest("invalid 'per_page'")
@@ -132,6 +134,20 @@ def bookmarked(request):
             # If had a bookmark before, only need to toggle the 'deleted'
             if bookmark.deleted:
                 bookmark.deleted = None
+
+                # If a user deletes a bookmark and then decides to bookmark it again
+                # it's because they used the "undo" functionality in the front-end.
+                # If this is the case, the most recently modified bookmark is going
+                # to be the one they deleted.
+                was_undo = False
+                for most_recently_modified in Bookmark.objects.filter(
+                    user_id=request.user.id,
+                ).order_by("-modified")[:1]:
+                    was_undo = most_recently_modified.id == bookmark.id
+                if not was_undo:
+                    # When you undo, it doesn't change the 'created' date.
+                    # But if you've re-bookmarked it after some time
+                    bookmark.created = timezone.now()
             else:
                 bookmark.deleted = timezone.now()
             bookmark.save()
@@ -143,7 +159,7 @@ def bookmarked(request):
                 documenturl=documenturl,
             )
 
-        return JsonResponse({"OK": True})
+        return JsonResponse({"OK": True}, status=201)
     else:
 
         def serialize_bookmark(bookmark):
