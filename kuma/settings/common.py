@@ -55,13 +55,6 @@ DATABASES = {
     )
 }
 
-DATABASES = {"default": DEFAULT_DATABASE, "postgres": POSTGRES_DATABASE}
-
-DATABASE_ROUTERS = [
-    "kuma.core.database_routers.PrimaryRouter",
-    "kuma.core.database_routers.LegacyRouter",
-]
-
 SILENCED_SYSTEM_CHECKS = [
     # # https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
     # "django_mysql.W003",
