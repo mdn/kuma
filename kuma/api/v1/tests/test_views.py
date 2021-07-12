@@ -1,11 +1,9 @@
 import pytest
-from waffle.models import Flag, Switch
 
-from kuma.attachments.models import Attachment, AttachmentRevision
+from django.contrib.auth.models import User
+
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
-from kuma.users.models import User, UserBan, UserSubscription
-from kuma.wiki.models import DocumentDeletionLog
 
 
 @pytest.mark.parametrize("http_method", ["put", "post", "delete", "options", "head"])
@@ -20,13 +18,6 @@ def test_whoami_disallowed_methods(client, http_method):
 @pytest.mark.django_db
 def test_whoami_anonymous(client):
     """Test response for anonymous users."""
-    # Create some fake waffle objects
-    Flag.objects.create(name="vip_only", authenticated=True)
-    Flag.objects.create(name="flag_all", everyone=True)
-    Flag.objects.create(name="flag_none", percent=0)
-    Switch.objects.create(name="switch_on", active=True)
-    Switch.objects.create(name="switch_off", active=False)
-
     url = reverse("api.v1.whoami")
     response = client.get(url)
     assert response.status_code == 200
@@ -47,35 +38,20 @@ def test_whoami_anonymous_cloudfront_geo(client):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "is_staff,is_superuser,is_beta_tester",
-    [(False, False, False), (True, True, True)],
+    "is_staff,is_superuser",
+    [(False, False), (True, True)],
     ids=("muggle", "wizard"),
 )
 def test_whoami(
     user_client,
     wiki_user,
-    wiki_user_github_account,
-    beta_testers_group,
     is_staff,
     is_superuser,
-    is_beta_tester,
 ):
     """Test responses for logged-in users."""
-    # First delete all flags created from data migrations
-    Flag.objects.all().delete()
-
-    # Create some fake waffle objects
-    Flag.objects.create(name="vip_only", authenticated=True)
-    Flag.objects.create(name="flag_all", everyone=True)
-    Flag.objects.create(name="flag_none", percent=0, superusers=False)
-    Switch.objects.create(name="switch_on", active=True)
-    Switch.objects.create(name="switch_off", active=False)
-
     wiki_user.is_staff = is_staff
     wiki_user.is_superuser = is_superuser
     wiki_user.is_staff = is_staff
-    if is_beta_tester:
-        wiki_user.groups.add(beta_testers_group)
     wiki_user.save()
     url = reverse("api.v1.whoami")
     response = user_client.get(url)
@@ -84,44 +60,42 @@ def test_whoami(
     expect = {
         "username": wiki_user.username,
         "is_authenticated": True,
-        "avatar_url": wiki_user_github_account.get_avatar_url(),
-        "subscriber_number": None,
+        "avatar_url": None,  # temporary
+        # "subscriber_number": None,
         "email": "wiki_user@example.com",
     }
     if is_staff:
         expect["is_staff"] = True
     if is_superuser:
         expect["is_superuser"] = True
-    if is_beta_tester:
-        expect["is_beta_tester"] = True
 
     assert response.json() == expect
     assert_no_cache_header(response)
 
 
-@pytest.mark.django_db
-def test_whoami_subscriber(
-    user_client,
-    wiki_user,
-):
-    """Test responses for logged-in users and whether they have an active
-    subscription."""
-    url = reverse("api.v1.whoami")
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert "is_subscriber" not in response.json()
+# @pytest.mark.django_db
+# def test_whoami_subscriber(
+#     user_client,
+#     wiki_user,
+# ):
+#     """Test responses for logged-in users and whether they have an active
+#     subscription."""
+#     url = reverse("api.v1.whoami")
+#     response = user_client.get(url)
+#     assert response.status_code == 200
+#     assert "is_subscriber" not in response.json()
 
-    UserSubscription.set_active(wiki_user, "abc123")
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert response.json()["is_subscriber"] is True
-    assert response.json()["subscriber_number"] == 1
+#     UserSubscription.set_active(wiki_user, "abc123")
+#     response = user_client.get(url)
+#     assert response.status_code == 200
+#     assert response.json()["is_subscriber"] is True
+#     assert response.json()["subscriber_number"] == 1
 
-    UserSubscription.set_canceled(wiki_user, "abc123")
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert "is_subscriber" not in response.json()
-    assert response.json()["subscriber_number"] == 1
+#     UserSubscription.set_canceled(wiki_user, "abc123")
+#     response = user_client.get(url)
+#     assert response.status_code == 200
+#     assert "is_subscriber" not in response.json()
+#     assert response.json()["subscriber_number"] == 1
 
 
 @pytest.mark.django_db
@@ -142,72 +116,31 @@ def test_account_settings_delete(user_client, wiki_user):
     assert not User.objects.filter(username=username).exists()
 
 
-# DELETE this test once all the Wiki models are deleted.
-def test_account_settings_delete_legacy(user_client, wiki_user, root_doc):
-    # Imagine if the user still has a bunch of Wiki related models to their
-    # name. That should not block the deletion.
-    revision = root_doc.revisions.first()
-    assert revision.creator == wiki_user
+# def test_get_and_set_settings_happy_path(user_client):
+#     url = reverse("api.v1.settings")
+#     response = user_client.get(url)
+#     assert response.status_code == 200
+#     assert_no_cache_header(response)
+#     assert response.json()["locale"] == "en-US"
 
-    document_deletion_log = DocumentDeletionLog.objects.create(
-        locale="any", slug="Any/Thing", user=wiki_user, reason="..."
-    )
-    throwaway_user = User.objects.create(username="throwaway")
-    user_ban_by = UserBan.objects.create(user=throwaway_user, by=wiki_user)
-    user_ban_user = UserBan.objects.create(
-        user=wiki_user,
-        by=throwaway_user,
-        is_active=False,  # otherwise it logs the user out
-    )
+#     response = user_client.post(url, {"locale": "zh-CN"})
+#     assert response.status_code == 200
 
-    attachment_revision = AttachmentRevision(
-        attachment=Attachment.objects.create(title="test attachment"),
-        file="some/path.ext",
-        mime_type="application/kuma",
-        creator=wiki_user,
-        title="test attachment",
-    )
-    attachment_revision.save()
-    assert AttachmentRevision.objects.filter(creator=wiki_user).exists()
-    username = wiki_user.username
-    response = user_client.delete(reverse("api.v1.settings"))
-    assert response.status_code == 200
-    assert not User.objects.filter(username=username).exists()
+#     response = user_client.get(url)
+#     assert response.status_code == 200
+#     assert response.json()["locale"] == "zh-CN"
 
-    # Moved to anonymous user
-    document_deletion_log.refresh_from_db()
-    assert document_deletion_log.user.username == "Anonymous"
-    user_ban_by.refresh_from_db()
-    assert user_ban_by.by.username == "Anonymous"
-    user_ban_user.refresh_from_db()
-    assert user_ban_user.user.username == "Anonymous"
+#     # You can also omit certain things and things won't be set
+#     response = user_client.post(url, {})
+#     assert response.status_code == 200
+#     response = user_client.get(url)
+#     assert response.status_code == 200
+#     assert response.json()["locale"] == "zh-CN"
 
 
-def test_get_and_set_settings_happy_path(user_client):
-    url = reverse("api.v1.settings")
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert_no_cache_header(response)
-    assert response.json()["locale"] == "en-US"
-
-    response = user_client.post(url, {"locale": "zh-CN"})
-    assert response.status_code == 200
-
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert response.json()["locale"] == "zh-CN"
-
-    # You can also omit certain things and things won't be set
-    response = user_client.post(url, {})
-    assert response.status_code == 200
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert response.json()["locale"] == "zh-CN"
-
-
-def test_set_settings_validation_errors(user_client):
-    url = reverse("api.v1.settings")
-    response = user_client.post(url, {"locale": "never heard of"})
-    assert response.status_code == 400
-    assert response.json()["errors"]["locale"][0]["code"] == "invalid_choice"
-    assert response.json()["errors"]["locale"][0]["message"]
+# def test_set_settings_validation_errors(user_client):
+#     url = reverse("api.v1.settings")
+#     response = user_client.post(url, {"locale": "never heard of"})
+#     assert response.status_code == 400
+#     assert response.json()["errors"]["locale"][0]["code"] == "invalid_choice"
+#     assert response.json()["errors"]["locale"][0]["message"]

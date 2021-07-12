@@ -10,10 +10,12 @@ services:
     volumes:
       - ./:/app:z
     depends_on:
+<<<<<<< HEAD
       - mysql
+=======
+>>>>>>> big-butcher-axe
       - postgres
       - redis
-      - minio
     environment:
       # Django settings overrides:
       - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
@@ -21,19 +23,13 @@ services:
       - ALLOWED_HOSTS=*
       - ATTACHMENT_HOST=${ATTACHMENT_HOST:-localhost:8000}
       - ATTACHMENTS_USE_S3=${ATTACHMENTS_USE_S3:-True}
-      - ATTACHMENTS_AWS_ACCESS_KEY_ID=${ATTACHMENTS_AWS_ACCESS_KEY_ID:-minio}
-      - ATTACHMENTS_AWS_SECRET_ACCESS_KEY=${ATTACHMENTS_AWS_SECRET_ACCESS_KEY:-minio123}
-      - ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN=${ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN:-localhost:9000/media}
-      - ATTACHMENTS_AWS_S3_SECURE_URLS=${ATTACHMENTS_AWS_S3_SECURE_URLS:-False}
-      - ATTACHMENTS_AWS_S3_ENDPOINT_URL=${ATTACHMENTS_AWS_S3_ENDPOINT_URL:-http://minio:9000}
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_TASK_ALWAYS_EAGER=False
       - CELERY_RESULT_BACKEND=redis://redis:6379/1
       - CSRF_COOKIE_SECURE=False
-      - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
-      - POSTGRES_DATABASE_URL=postgresql://${POSTGRES_DATABASE_USER:-kuma}:${POSTGRES_DATABASE_PASSWORD:-kuma}@postgres:5432/developer_mozilla_org
+      - DATABASE_URL=postgresql://${POSTGRES_DATABASE_USER:-kuma}:${POSTGRES_DATABASE_PASSWORD:-kuma}@postgres:5432/developer_mozilla_org
       - DEBUG=${DEBUG:-True}
       - DOMAIN=${DOMAIN:-localhost}
       - ENABLE_RESTRICTIONS_BY_HOST=${ENABLE_RESTRICTIONS_BY_HOST:-False}
@@ -43,25 +39,21 @@ services:
       - SESSION_COOKIE_SECURE=False
       - SITE_URL=${SITE_URL:-http://localhost:8000}
       - STATIC_URL=${STATIC_URL:-http://localhost:8000/static/}
-      - WAFFLE_COOKIE_SECURE=False
+      # - WAFFLE_COOKIE_SECURE=False
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=True
       - PYTHONWARNINGS=${PYTHONWARNINGS:-}
       - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
       - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
-      - GOOGLE_ANALYTICS_TRACKING_URL=http://mockga:7777/collect
 
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
     <<: *worker
     command: gunicorn -w ${GUNICORN_WORKERS:-4} --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=gevent kuma.wsgi:application
     depends_on:
-      - mysql
       - postgres
       - redis
-      - minio
-      - mockga
     ports:
       - "8000:8000"
 
@@ -70,11 +62,8 @@ services:
     <<: *worker
     command: bash
     depends_on:
-      - mysql
       - postgres
       - redis
-      - minio
-      - minio_setup
     volumes:
       - ./:/app
 
@@ -87,63 +76,8 @@ services:
       - POSTGRES_PASSWORD=kuma
       - POSTGRES_DB=developer_mozilla_org
 
-  mysql:
-    image: mysql:5.6
-    # This is necessary for platforms using the Apple M1 chip.
-    platform: linux/x86_64
-    environment:
-      - MYSQL_USER=kuma
-      - MYSQL_PASSWORD=kuma
-      - MYSQL_DATABASE=developer_mozilla_org
-      - MYSQL_ROOT_PASSWORD=kuma
-    command:
-      - mysqld
-      - --character-set-server=utf8
-      - --collation-server=utf8_general_ci
-      - --innodb-flush-log-at-trx-commit=0
-      - --innodb-log-file-size=132M
-      - --max-allowed-packet=100M
-    volumes:
-      - mysqlvolume:/var/lib/mysql
-
   redis:
     # The version of this Redis image should be kept synchronized with production. It
     # should match the "redis_engine_version" variable in the following Terraform file:
     # https://github.com/mdn/infra/blob/master/apps/mdn/mdn-aws/infra/modules/multi_region/redis/variables.tf
     image: redis:5.0.6
-
-  # MinIO: S3-compatible object storage (https://min.io)
-  minio:
-    image: minio/minio
-    command: server /data
-    environment:
-      MINIO_ACCESS_KEY: "minio"
-      MINIO_SECRET_KEY: "minio123"
-    ports:
-      - "9000:9000"
-    volumes:
-      - miniodata:/data
-
-  # One-shot service that ensures Minio is properly configured for Kuma
-  # No need to explicitly wait for minio; mc automatically wailts
-  minio_setup:
-    image: minio/mc
-    depends_on:
-      - minio
-    environment:
-      MC_HOST_minio: "http://${MINIO_ACCESS_KEY:-minio}:${MINIO_SECRET_KEY:-minio123}@minio:9000"
-    entrypoint: ""
-    command: /bin/sh -c "for BUCKET in 'test' 'media'; do mc mb -p minio/$$BUCKET && mc policy set download minio/$$BUCKET; done"
-
-  mockga:
-    build:
-      context: mockga
-      dockerfile: Dockerfile
-    ports:
-      - "7777:7777"
-
-volumes:
-  miniodata:
-  mysqlvolume:
-  esdata:
-    driver: local

@@ -16,8 +16,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2.3.4
-        with:
-          submodules: "recursive"
 
       - name: Environment info
         run: |
@@ -26,12 +24,9 @@ jobs:
       - name: Build docker
         run: docker-compose build
 
-      - name: Compile locales
-        run: docker-compose run -T testing make localecompile
-
       - name: DB migrations
         run: |
-          docker-compose run -T testing urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30
+          docker-compose run -T testing urlwait postgresql://kuma:kuma@postgres:5432/developer_mozilla_org 30
           docker-compose run -T testing ./manage.py migrate
           docker-compose run -T testing ./manage.py migrate --database postgres
           # Essentially compares **/models.py with **/migrations/*.py and
@@ -40,25 +35,8 @@ jobs:
 
       - name: Run Python tests
         run: |
-          # TODO: Run the `make coveragetest` only if it's a pull request.
-          # We might be able to use something
-          # like `if [ ${{ github.head_ref}} eq 'master']` but not sure.
-          # Slower...
           docker-compose run -T testing make coveragetest
-          # Faster...
-          #docker-compose run -T testing make test
 
       - name: Submit code coverage
         run: |
           bash <(curl -s --retry 3 --retry-connrefused https://codecov.io/bash)
-
-      - name: Run localerefresh
-        run: |
-          set -e
-          docker-compose run -T testing make localeextract
-          docker-compose run -T testing make localetest
-          docker-compose run -T testing make localecompile
-
-          cd locale
-          export GIT_PAGER=cat
-          git diff -G "^msgid " templates/LC_MESSAGES

@@ -3,16 +3,23 @@ import hashlib
 from datetime import datetime
 
 from django.conf import settings
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.http import http_date
-
-from kuma.core.urlresolvers import reverse
 
 
 def full_attachment_url(attachment_id, filename):
     path = reverse(
         "attachments.raw_file",
         kwargs={"attachment_id": attachment_id, "filename": filename},
+    )
+    return f"{settings.PROTOCOL}{settings.ATTACHMENT_HOST}{path}"
+
+
+def full_mindtouch_attachment_url(file_id, filename):
+    path = reverse(
+        "attachments.mindtouch_file_redirect",
+        kwargs={"file_id": file_id, "filename": filename},
     )
     return f"{settings.PROTOCOL}{settings.ATTACHMENT_HOST}{path}"
 

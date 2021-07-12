@@ -8,12 +8,6 @@ behavior. New code should come with tests.
 
 Commands should be run inside the development environment, after ``make bash``.
 
-Setup
-=====
-
-Before you run the tests, you have to build assets::
-
-    make build-static
 
 Running the test suite
 ======================

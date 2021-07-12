@@ -3,7 +3,7 @@ name: Documentation Build
 on:
   pull_request:
     paths:
-      - 'docs/**'
+      - "docs/**"
       - .github/workflows/documentation-build.yml
 
 jobs:
@@ -13,8 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
 
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2.2.2
+      - uses: actions/setup-python@v2.2.2
         with:
           python-version: "3.8"
 

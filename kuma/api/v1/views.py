@@ -7,10 +7,8 @@ from django.middleware.csrf import get_token
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 
+
 from kuma.api.v1.forms import AccountSettingsForm
-from kuma.users.models import User, UserSubscription
-from kuma.users.stripe_utils import retrieve_and_synchronize_stripe_subscription
-from kuma.users.templatetags.jinja_helpers import get_avatar_url
 
 
 @never_cache
@@ -25,20 +23,20 @@ def whoami(request):
         data = {
             "username": user.username,
             "is_authenticated": True,
-            "avatar_url": get_avatar_url(user),
+            # "avatar_url": get_avatar_url(user),
+            "avatar_url": None,
             "email": user.email,
-            "subscriber_number": user.subscriber_number,
+            # "subscriber_number": user.subscriber_number,
         }
-        if UserSubscription.objects.filter(user=user, canceled__isnull=True).exists():
-            data["is_subscriber"] = True
+        # if UserSubscription.objects.filter(user=user, canceled__isnull=True).exists():
+        #     data["is_subscriber"] = True
         if user.is_staff:
             data["is_staff"] = True
         if user.is_superuser:
             data["is_superuser"] = True
-        if user.is_beta_tester:
-            data["is_beta_tester"] = True
     else:
         data = {}
+    # data = {}  # EVERYONE IS ANONYMOUS UNTIL WE ADD OIDC!
 
     geo = {}
     # https://aws.amazon.com/about-aws/whats-new/2020/07/cloudfront-geolocation-headers/
@@ -58,14 +56,6 @@ def account_settings(request):
     if not user.is_authenticated:
         return HttpResponseForbidden("not signed in")
     if request.method == "DELETE":
-        # This should cease to be necessary once we get rid of the Wiki models.
-        anon, _ = User.objects.get_or_create(username="Anonymous")
-        user.documentdeletionlog_set.update(user=anon)
-        user.created_revisions.update(creator=anon)
-        user.created_attachment_revisions.update(creator=anon)
-        user.bans.update(user=anon)
-        user.bans_issued.update(by=anon)
-
         user.delete()
         return JsonResponse({"deleted": True})
     elif request.method == "POST":
@@ -93,9 +83,9 @@ def account_settings(request):
 
     context = {
         "csrfmiddlewaretoken": get_token(request),
-        "locale": user.locale,
-        "subscription": user.stripe_customer_id
-        and retrieve_and_synchronize_stripe_subscription(user)
-        or None,
+        # "locale": user.locale,
+        # "subscription": user.stripe_customer_id
+        # and retrieve_and_synchronize_stripe_subscription(user)
+        # or None,
     }
     return JsonResponse(context)

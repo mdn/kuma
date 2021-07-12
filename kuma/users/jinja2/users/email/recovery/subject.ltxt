@@ -1,1 +1,0 @@
-{{ _('Profile Recovery for %(username)s at %(domain)s', username=username, domain=settings.DOMAIN) }}

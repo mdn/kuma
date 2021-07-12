@@ -1,5 +1,4 @@
 import logging
-import os
 from smtplib import SMTPConnectError, SMTPServerDisconnected
 from urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
 
@@ -10,36 +9,12 @@ from django.http import QueryDict
 from django.utils.cache import patch_cache_control
 from django.utils.encoding import smart_bytes
 from django.utils.http import urlencode
-from polib import pofile
-from pyquery import PyQuery as pq
 from redo import retrying
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 
 log = logging.getLogger("kuma.core.utils")
-
-
-def strings_are_translated(strings, locale):
-    # http://stackoverflow.com/a/24339946/571420
-    pofile_path = os.path.join(
-        settings.ROOT, "locale", locale, "LC_MESSAGES", "django.po"
-    )
-    try:
-        po = pofile(pofile_path)
-    except IOError:  # in case the file doesn't exist or couldn't be parsed
-        return False
-    all_strings_translated = True
-    for string in strings:
-        if not any(
-            e
-            for e in po
-            if e.msgid == string
-            and (e.translated() and "fuzzy" not in e.flags)
-            and not e.obsolete
-        ):
-            all_strings_translated = False
-    return all_strings_translated
 
 
 def urlparams(url_, fragment=None, query_dict=None, **query):
@@ -153,48 +128,6 @@ def requests_retry_session(
     session.mount("http://", adapter)
     session.mount("https://", adapter)
     return session
-
-
-def safer_pyquery(*args, **kwargs):
-    """
-    PyQuery is magically clumsy in how it handles its arguments. A more
-    ideal and explicit constructor would be:
-
-        >>> from pyquery import PyQuery as pq
-        >>> parsed = pq(html=my_html_string)
-        >>> parsed = pq(url=definitely_a_url_string)
-
-    But instead, you're expected to use it like this:
-
-        >>> from pyquery import PyQuery as pq
-        >>> parsed = pq(my_html_string)
-        >>> parsed = pq(definitely_a_url_string)
-
-    ...and PyQuery attempts to be smart and look at that first argument
-    and if it looks like a URL, it first calls `requests.get()` on it.
-
-    This function is a thin wrapper on that constructor that prevents
-    that dangerous code to ever get a chance.
-
-    NOTE! As of May 10 2019, this risk exists the the latest release of
-    PyQuery. Hopefully it will be fixed but it would a massively disruptive
-    change and thus unlikely to happen any time soon.
-
-    NOTE 2! Unlikely to be fixed by core pyquery team any time soon
-    https://github.com/gawel/pyquery/issues/203
-    """
-
-    # This "if" statement is exactly what PyQuery's constructor does.
-    # We'll run it ourselves once and if it matches, "ruin" it by
-    # injecting that extra space.
-    if (
-        len(args) >= 1
-        and isinstance(args[0], str)
-        and args[0].split("://", 1)[0] in ("http", "https")
-    ):
-        args = (f" {args[0]}",) + args[1:]
-
-    return pq(*args, **kwargs)
 
 
 def send_mail_retrying(
