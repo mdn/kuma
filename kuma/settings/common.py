@@ -70,7 +70,7 @@ CACHES = {
         "BACKEND": "django_redis.cache.RedisCache",
         "TIMEOUT": CACHE_COUNT_TIMEOUT * 60,
         "KEY_PREFIX": CACHE_PREFIX,
-        "LOCATION": config("REDIS_CACHE_SERVER", default="127.0.0.1:6379"),
+        "LOCATION": config("REDIS_CACHE_SERVER", default="redis://127.0.0.1:6379"),
     }
 }
 
