@@ -26,6 +26,9 @@ def is_subscriber(func):
         user = request.user
         if not user.is_authenticated:
             return HttpResponseForbidden("not signed in")
+        # TEMPORARY until all things auth + subscription come together.
+        if not settings.FAKE_USER_SUBSCRIBER_NUMBER:
+            return HttpResponseForbidden("not a subscriber")
         # Note: Deliberately commented out until we have figured out OIDC!
         # if not UserSubscription.objects.filter(
         #     user=user, canceled__isnull=True
@@ -40,7 +43,6 @@ def is_subscriber(func):
 @require_http_methods(["GET"])
 @is_subscriber
 def bookmarks(request):
-
     try:
         page = int(request.GET.get("page") or "1")
         assert page > 0 and page < 100

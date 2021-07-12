@@ -35,6 +35,9 @@ for cache_settings in CACHES.values():
     current_prefix = cache_settings.get("KEY_PREFIX", "")
     cache_settings["KEY_PREFIX"] = "test." + current_prefix
 
+# Always assume we prefer https.
+PROTOCOL = "https://"
+
 # # This avoids reading the static folder for each test client request, for
 # # a 10x speedup on Docker on MacOS.
 # WHITENOISE_AUTOREFRESH = True
@@ -83,3 +86,9 @@ PLUS_VARIANTS = ["Foo", "Bar", "Buz"]
 
 # So it never accidentally actually uses the real value
 BOOKMARKS_BASE_URL = "https://developer.example.com"
+
+# These are temporary while we wait for the new authentication and
+# subscription works. Having this off-by-default option makes it possible
+# to testing things out, locally, such as bookmarking.
+FAKE_USER_AVATAR_URL = None
+FAKE_USER_SUBSCRIBER_NUMBER = 0

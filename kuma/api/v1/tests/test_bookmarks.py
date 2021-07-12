@@ -4,7 +4,6 @@ from urllib.parse import urlencode
 import pytest
 
 from kuma.core.urlresolvers import reverse
-from kuma.users.models import UserSubscription
 
 
 @pytest.mark.django_db
@@ -17,13 +16,15 @@ def test_bookmarked_anonymous(client):
 
 
 @pytest.mark.django_db
-def test_is_bookmarked_signed_in(user_client, wiki_user):
+def test_is_bookmarked_signed_in(user_client, wiki_user, settings):
     url = reverse("api.v1.plus.bookmarks.bookmarked")
     response = user_client.get(url)
+    print(response.content)
     assert response.status_code == 403
     assert "not a subscriber" in response.content.decode("utf-8")
 
-    UserSubscription.set_active(wiki_user, "sub_123456789")
+    # TEMPORARY until all things auth + subscription come together.
+    settings.FAKE_USER_SUBSCRIBER_NUMBER = 1234
     response = user_client.get(url)
     assert response.status_code == 400
     assert "missing 'url'" in response.content.decode("utf-8")
@@ -49,7 +50,8 @@ def test_is_bookmarked_signed_in(user_client, wiki_user):
 
 @pytest.mark.django_db
 def test_toggle_bookmarked(user_client, wiki_user, mock_requests, settings):
-    UserSubscription.set_active(wiki_user, "sub_123456789")
+    # TEMPORARY until all things auth + subscription come together.
+    settings.FAKE_USER_SUBSCRIBER_NUMBER = 1234
 
     doc_data = {
         "doc": {
@@ -109,13 +111,14 @@ def test_bookmarks_anonymous(client):
 
 
 @pytest.mark.django_db
-def test_bookmarks_signed_in(user_client, wiki_user):
+def test_bookmarks_signed_in(user_client, wiki_user, settings):
     url = reverse("api.v1.plus.bookmarks.all")
     response = user_client.get(url)
     assert response.status_code == 403
     assert "not a subscriber" in response.content.decode("utf-8")
 
-    UserSubscription.set_active(wiki_user, "sub_123456789")
+    # TEMPORARY until all things auth + subscription come together.
+    settings.FAKE_USER_SUBSCRIBER_NUMBER = 1234
     response = user_client.get(url)
     assert response.status_code == 200
     assert len(response.json()["items"]) == 0
@@ -140,7 +143,8 @@ def test_bookmarks_signed_in(user_client, wiki_user):
 
 @pytest.mark.django_db
 def test_bookmarks_pagination(user_client, wiki_user, mock_requests, settings):
-    UserSubscription.set_active(wiki_user, "sub_123456789")
+    # TEMPORARY until all things auth + subscription come together.
+    settings.FAKE_USER_SUBSCRIBER_NUMBER = 1234
 
     base_doc_data = {
         "doc": {
