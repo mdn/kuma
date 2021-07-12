@@ -10,10 +10,6 @@ services:
     volumes:
       - ./:/app:z
     depends_on:
-<<<<<<< HEAD
-      - mysql
-=======
->>>>>>> big-butcher-axe
       - postgres
       - redis
     environment:

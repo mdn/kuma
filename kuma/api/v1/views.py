@@ -23,20 +23,22 @@ def whoami(request):
         data = {
             "username": user.username,
             "is_authenticated": True,
-            # "avatar_url": get_avatar_url(user),
-            "avatar_url": None,
+            # TEMPORARY until all things auth + subscription come together.
+            "avatar_url": settings.FAKE_USER_AVATAR_URL,
             "email": user.email,
-            # "subscriber_number": user.subscriber_number,
+            # TEMPORARY until all things auth + subscription come together.
+            "subscriber_number": settings.FAKE_USER_SUBSCRIBER_NUMBER,
         }
         # if UserSubscription.objects.filter(user=user, canceled__isnull=True).exists():
-        #     data["is_subscriber"] = True
+        # TEMPORARY until all things auth + subscription come together.
+        if data["subscriber_number"]:
+            data["is_subscriber"] = True
         if user.is_staff:
             data["is_staff"] = True
         if user.is_superuser:
             data["is_superuser"] = True
     else:
         data = {}
-    # data = {}  # EVERYONE IS ANONYMOUS UNTIL WE ADD OIDC!
 
     geo = {}
     # https://aws.amazon.com/about-aws/whats-new/2020/07/cloudfront-geolocation-headers/

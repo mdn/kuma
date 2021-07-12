@@ -14,7 +14,6 @@ from django.views.decorators.http import require_http_methods
 
 from kuma.bookmarks.models import Bookmark
 from kuma.documenturls.models import DocumentURL, download_url
-from kuma.users.models import UserSubscription
 
 
 class NotOKDocumentURLError(Exception):
@@ -27,10 +26,11 @@ def is_subscriber(func):
         user = request.user
         if not user.is_authenticated:
             return HttpResponseForbidden("not signed in")
-        if not UserSubscription.objects.filter(
-            user=user, canceled__isnull=True
-        ).exists():
-            return HttpResponseForbidden("not a subscriber")
+        # Note: Deliberately commented out until we have figured out OIDC!
+        # if not UserSubscription.objects.filter(
+        #     user=user, canceled__isnull=True
+        # ).exists():
+        #     return HttpResponseForbidden("not a subscriber")
         return func(request, *args, **kwargs)
 
     return inner

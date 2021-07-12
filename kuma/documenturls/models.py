@@ -1,7 +1,5 @@
 import requests
 
-# When we upgrade to Django 3, we can use `django.db.models.JSONField` instead.
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
@@ -32,7 +30,7 @@ class DocumentURL(models.Model):
     # E.g. https://developer.allizom.org/en-US/docs/Web/JavaScript
     absolute_url = models.URLField(verbose_name="Absolute URL")
     # If it's applicable, it's a download of the `index.json` for that URL.
-    metadata = JSONField(null=True)
+    metadata = models.JSONField(null=True)
     # If the URI for some reason becomes invalid, rather than deleting it
     # or storing a boolean, note *when* it became invalid.
     invalid = models.DateTimeField(null=True)
@@ -64,7 +62,7 @@ class DocumentURLCheck(models.Model):
         DocumentURL, on_delete=models.CASCADE, verbose_name="Document URL"
     )
     http_error = models.IntegerField(verbose_name="HTTP error")
-    headers = JSONField(default=dict)
+    headers = models.JSONField(default=dict)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
