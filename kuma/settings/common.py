@@ -33,17 +33,6 @@ MAINTENANCE_MODE = config("MAINTENANCE_MODE", default=False, cast=bool)
 REVISION_HASH = config("REVISION_HASH", default="undefined")
 MANAGERS = ADMINS
 
-
-# # CONN_MAX_AGE: 'persistent' to keep open connection, or max seconds before
-# # releasing. Default is 0 for a new connection per request.
-# def parse_conn_max_age(value):
-#     try:
-#         return int(value)
-#     except ValueError:
-#         assert value.lower() == "persistent", 'Must be int or "persistent"'
-#         return None
-
-
 CONN_MAX_AGE = config("CONN_MAX_AGE", default=60)
 
 
@@ -525,9 +514,6 @@ CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
 
 # Setting for configuring the AWS S3 bucket name used for the document API.
 MDN_API_S3_BUCKET_NAME = config("MDN_API_S3_BUCKET_NAME", default=None)
-
-# Serve and upload attachments via S3, instead of the local filesystem
-ATTACHMENTS_USE_S3 = config("ATTACHMENTS_USE_S3", default=False, cast=bool)
 
 # AWS S3 credentials and settings for uploading attachments
 ATTACHMENTS_AWS_ACCESS_KEY_ID = config("ATTACHMENTS_AWS_ACCESS_KEY_ID", default=None)
