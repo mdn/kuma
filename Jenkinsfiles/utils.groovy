@@ -218,12 +218,12 @@ def compose_test() {
     def dc = 'docker-compose'
     def dc_exec = "${dc} exec -T web"
     def dc_down = "${dc} down --volumes --remove-orphans"
-    def mysql_url = 'mysql://root:kuma@mysql:3306/developer_mozilla_org'
+    def db_url = 'postgres://kuma:kuma@postgres:5432/developer_mozilla_org'
     def junit_results = '--junit-xml=/app/test_results/django.xml'
     sh_with_notify("${dc} --version", 'Check the version')
     sh_with_notify(dc_down, 'Pre-test tear-down')
     sh_with_notify("${dc} up -d", 'Start the services detached')
-    sh_with_notify("${dc_exec} urlwait ${mysql_url} 30", 'Wait for MySQL')
+    sh_with_notify("${dc_exec} urlwait ${db_url} 30", 'Wait for DB')
     sh_with_notify("${dc_exec} make clean", 'Start with fresh directories')
     sh_with_notify("${dc_exec} make localecompile", 'Compile locales')
     sh_with_notify("${dc_exec} ./manage.py migrate", 'Run migrations')
