@@ -29,7 +29,6 @@ def whoami(request):
             # TEMPORARY until all things auth + subscription come together.
             "subscriber_number": settings.FAKE_USER_SUBSCRIBER_NUMBER,
         }
-        # if UserSubscription.objects.filter(user=user, canceled__isnull=True).exists():
         # TEMPORARY until all things auth + subscription come together.
         if data["subscriber_number"]:
             data["is_subscriber"] = True

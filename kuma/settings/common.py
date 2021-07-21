@@ -44,10 +44,6 @@ DATABASES = {
     )
 }
 
-SILENCED_SYSTEM_CHECKS = [
-    # # https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
-    # "django_mysql.W003",
-]
 
 # Cache Settings
 CACHE_PREFIX = "kuma"
@@ -188,8 +184,10 @@ LANGUAGE_COOKIE_SECURE = "localhost" not in DOMAIN
 
 SITE_ID = config("SITE_ID", default=1, cast=int)
 
-
+# The reason we need this set up is so the Django Admin static assets
+# work in production.
 STATIC_URL = config("STATIC_URL", default="/static/")
+STATIC_ROOT = BASE_DIR / "static"
 
 SERVE_MEDIA = False
 
@@ -231,6 +229,8 @@ SECRET_KEY = config(
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    # Whitenoise is used to serve the static files for Django Admin.
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -253,7 +253,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # MDN
     "kuma.core.apps.CoreConfig",
-    "kuma.wiki.apps.WikiConfig",
     "kuma.api.apps.APIConfig",
     "kuma.attachments.apps.AttachmentsConfig",
     "kuma.plus.apps.PlusConfig",

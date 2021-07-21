@@ -17,7 +17,6 @@ KUMA_IMAGE ?= ${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:${VERSION}
 KUMA_IMAGE_LATEST ?= ${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:latest
 
 target = kuma
-requirements = -r requirements/local.txt
 
 # Note: these targets should be run from the kuma vm
 test:
@@ -35,38 +34,12 @@ coveragetesthtml: coveragetest
 clean:
 	rm -rf .coverage build/ tmp/emails/*.log
 	find . \( -name \*.pyc -o -name \*.pyo -o -name __pycache__ \) -delete
-	mkdir -p build/locale
-
-locale:
-	# For generating a new file to let locales name localizable
-	python manage.py translate_locales_name
-	@mkdir -p locale/$(LOCALE)/LC_MESSAGES && \
-		for pot in locale/templates/LC_MESSAGES/* ; do \
-			msginit --no-translator -l $(LOCALE) -i $$pot -o locale/$(LOCALE)/LC_MESSAGES/`basename -s .pot $$pot`.po ; \
-		done
-
-localetest:
-	dennis-cmd lint --errorsonly locale/
-
-localeextract:
-	python manage.py extract
-	python manage.py merge
-
-localecompile:
-	cd locale; ../scripts/compile-mo.sh .
-
-localerefresh: localeextract localetest localecompile
-
-compilejsi18n:
-	@ echo "## Generating JavaScript translation catalogs ##"
-	@ mkdir -p build/locale
-	@ python manage.py compilejsi18n
 
 collectstatic:
 	@ echo "## Collecting static files ##"
 	@ python manage.py collectstatic --noinput
 
-build-static: compilejsi18n collectstatic
+build-static: collectstatic
 
 pull-base:
 	docker pull ${BASE_IMAGE}

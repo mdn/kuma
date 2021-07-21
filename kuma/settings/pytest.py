@@ -39,6 +39,9 @@ for cache_settings in CACHES.values():
 # Always assume we prefer https.
 PROTOCOL = "https://"
 
+# Always assume we prefer https.
+PROTOCOL = "https://"
+
 # Never rely on the .env
 GOOGLE_ANALYTICS_ACCOUNT = None
 
