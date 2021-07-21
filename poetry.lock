@@ -286,14 +286,11 @@ redis = ">=3.0.0"
 
 [[package]]
 name = "django-waffle"
-version = "0.20.0"
+version = "2.2.1"
 description = "A feature flipper for Django."
 category = "main"
 optional = false
 python-versions = "*"
-
-[package.dependencies]
-six = ">=1.13.0"
 
 [[package]]
 name = "docopt"
@@ -952,7 +949,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "604e8292785f922bac58748c9c44dd5f9c2079842a5141815df728e34be3dfb4"
+content-hash = "639a4b1b063bc527fed762b3e17e8fa3df51ebcb38a603c7adc0351deae8ffec"
 
 [metadata.files]
 amqp = [
@@ -1124,8 +1121,8 @@ django-redis = [
     {file = "django_redis-5.0.0-py3-none-any.whl", hash = "sha256:97739ca9de3f964c51412d1d7d8aecdfd86737bb197fce6e1ff12620c63c97ee"},
 ]
 django-waffle = [
-    {file = "django-waffle-0.20.0.tar.gz", hash = "sha256:744c3fe6cedbd175d2247cb93904e931f056b503f6e4a4836a0b9b66b43be625"},
-    {file = "django_waffle-0.20.0-py2.py3-none-any.whl", hash = "sha256:73ec03d28c60af0a6fd6327933e615e92dd936137d25b25d3ebaf64e9963c463"},
+    {file = "django-waffle-2.2.1.tar.gz", hash = "sha256:ded418a3404e22a77342293b61e7e04d92de500ce724a8c26a6782f2fbcff01c"},
+    {file = "django_waffle-2.2.1-py2.py3-none-any.whl", hash = "sha256:c078c212b58899d3a1b87ffeec86ea058fe4dd94e8155d8547622899954862e0"},
 ]
 docopt = [
     {file = "docopt-0.6.2.tar.gz", hash = "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"},
