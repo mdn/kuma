@@ -28,7 +28,6 @@ jobs:
         run: |
           docker-compose run -T testing urlwait postgresql://kuma:kuma@postgres:5432/developer_mozilla_org 30
           docker-compose run -T testing ./manage.py migrate
-          docker-compose run -T testing ./manage.py migrate --database postgres
           # Essentially compares **/models.py with **/migrations/*.py and
           # makes sure the developer didn't forget to create a new migration.
           docker-compose run -T testing ./manage.py makemigrations --check --dry-run
