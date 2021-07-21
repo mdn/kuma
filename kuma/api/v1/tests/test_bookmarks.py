@@ -66,7 +66,7 @@ def test_toggle_bookmarked(user_client, wiki_user, mock_requests, settings):
     url = reverse("api.v1.plus.bookmarks.bookmarked")
     get_url = f'{url}?{urlencode({"url": "/en-US/docs/Web"})}'
     response = user_client.post(get_url)
-    assert response.status_code == 200
+    assert response.status_code == 201
 
     response = user_client.get(get_url)
     assert response.status_code == 200
@@ -77,7 +77,7 @@ def test_toggle_bookmarked(user_client, wiki_user, mock_requests, settings):
 
     # Now toggle it off
     response = user_client.post(get_url)
-    assert response.status_code == 200
+    assert response.status_code == 201
 
     # Soft deleted
     response = user_client.get(get_url)
@@ -86,7 +86,7 @@ def test_toggle_bookmarked(user_client, wiki_user, mock_requests, settings):
 
     # And undo the soft-delete
     response = user_client.post(get_url)
-    assert response.status_code == 200
+    assert response.status_code == 201
 
     # Should return with the same ID as before
     response = user_client.get(get_url)
@@ -181,7 +181,7 @@ def test_bookmarks_pagination(user_client, wiki_user, mock_requests, settings):
         )
         get_url = f'{url}?{urlencode({"url": mdn_url})}'
         response = user_client.post(get_url)
-        assert response.status_code == 200
+        assert response.status_code == 201
 
     # Add one extra but this one toggle twice so it becomes soft-deleted
     i += 1
@@ -192,9 +192,9 @@ def test_bookmarks_pagination(user_client, wiki_user, mock_requests, settings):
     )
     get_url = f'{url}?{urlencode({"url": mdn_url})}'
     response = user_client.post(get_url)
-    assert response.status_code == 200
+    assert response.status_code == 201
     response = user_client.post(get_url)
-    assert response.status_code == 200
+    assert response.status_code == 201
 
     url = reverse("api.v1.plus.bookmarks.all")
     response = user_client.get(url, {"per_page": "5"})
