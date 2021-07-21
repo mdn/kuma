@@ -18,8 +18,6 @@ ES_RETRY_JITTER = 0
 # SHA1 because it is fast, and hard-coded in the test fixture JSON.
 PASSWORD_HASHERS = ("django.contrib.auth.hashers.SHA1PasswordHasher",)
 
-INSTALLED_APPS += ("kuma.core.tests.taggit_extras",)
-
 LOGGING["loggers"].update(
     {
         "django.db.backends": {
@@ -41,6 +39,9 @@ for cache_settings in CACHES.values():
 # a 10x speedup on Docker on MacOS.
 WHITENOISE_AUTOREFRESH = True
 WHITENOISE_USE_FINDERS = True
+
+# Always assume we prefer https.
+PROTOCOL = "https://"
 
 # Never rely on the .env
 GOOGLE_ANALYTICS_ACCOUNT = None

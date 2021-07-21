@@ -87,7 +87,7 @@ def test_search_basic_match(user_client, settings, mock_elasticsearch):
         id="/en-us/docs/Foo",
     )
     url = reverse("api.v1.search")
-    response = user_client.get(url, {"q": "x"})
+    response = user_client.get(url, {"q": "foo bar"})
     assert response.status_code == 200
     assert "public" in response["Cache-Control"]
     assert "max-age=" in response["Cache-Control"]

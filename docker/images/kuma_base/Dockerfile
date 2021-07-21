@@ -12,15 +12,10 @@ RUN set -x \
     && apt-get install -y --no-install-recommends \
     curl \
     dirmngr \
+    # Needed for pytz to be able to install
     libsasl2-modules \
     gettext \
-    build-essential \
-    libxml2-dev \
-    libxslt1-dev \
-    libffi-dev \
-    libmagic-dev \
-    default-libmysqlclient-dev \
-    default-mysql-client
+    build-essential
 
 # add non-privileged user
 RUN useradd --uid 1000 --shell /bin/bash --create-home kuma \
@@ -31,7 +26,7 @@ RUN useradd --uid 1000 --shell /bin/bash --create-home kuma \
 # install Python libraries
 WORKDIR /app
 COPY --chown=kuma:kuma ./pyproject.toml ./poetry.lock /app/
-RUN pip install poetry~=1.1.6 \
+RUN pip install poetry~=1.1.7 \
     && POETRY_VIRTUALENVS_CREATE=false poetry install --no-root \
     && rm -rf ~/.cache/pip ~/.cache/pypoetry/cache
 

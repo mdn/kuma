@@ -1,4 +1,6 @@
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.db import DatabaseError
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.cache import never_cache
@@ -7,9 +9,6 @@ from elasticsearch.exceptions import ConnectionError as ES_ConnectionError
 from elasticsearch.exceptions import NotFoundError, TransportError
 from elasticsearch_dsl import Search
 from elasticsearch_dsl.connections import connections as es_connections
-
-from kuma.users.models import User
-from kuma.wiki.models import Document
 
 
 @never_cache
@@ -27,24 +26,25 @@ def liveness(request):
 @never_cache
 @require_safe
 def readiness(request):
-    """
-    A successful response from this endpoint goes a step further
-    and means not only that Django is up and running, but also that
-    the database can be successfully used from within this service.
-    The other supporting services are not checked, but we may find
-    that we want/need to add them later.
-    """
-    try:
-        # Confirm that we can use the database by making a fast query
-        # against the Document table. It's not important that the document
-        # with the requested primary key exists or not, just that the query
-        # completes without error.
-        Document.objects.filter(pk=1).exists()
-    except DatabaseError as e:
-        reason_tmpl = "service unavailable due to database issue ({!s})"
-        status, reason = 503, reason_tmpl.format(e)
-    else:
-        status, reason = 204, None
+    # """
+    # A successful response from this endpoint goes a step further
+    # and means not only that Django is up and running, but also that
+    # the database can be successfully used from within this service.
+    # The other supporting services are not checked, but we may find
+    # that we want/need to add them later.
+    # """
+    # try:
+    #     # Confirm that we can use the database by making a fast query
+    #     # against the Document table. It's not important that the document
+    #     # with the requested primary key exists or not, just that the query
+    #     # completes without error.
+    #     Document.objects.filter(pk=1).exists()
+    # except DatabaseError as e:
+    #     reason_tmpl = "service unavailable due to database issue ({!s})"
+    #     status, reason = 503, reason_tmpl.format(e)
+    # else:
+    #     status, reason = 204, None
+    status, reason = 204, None
     return HttpResponse(status=status, reason=reason)
 
 
@@ -85,15 +85,14 @@ def status(request):
     }
 
     # Check that database is reachable, populated
-    doc_data = {"available": True, "populated": False, "document_count": 0}
+    doc_data = {"available": True, "populated": False}
     try:
-        doc_count = Document.objects.count()
+        doc_count = ContentType.objects.count()
     except DatabaseError:
         doc_data["available"] = False
     else:
         if doc_count:
             doc_data["populated"] = True
-            doc_data["document_count"] = doc_count
     data["services"]["database"] = doc_data
 
     # Check that Elasticsearch is reachable and somewhat healthy

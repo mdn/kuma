@@ -80,7 +80,7 @@ mdn_sample_db.sql.gz
 /media/revision.txt
 /media/kumascript-revision.txt
 node_modules/
-/static/
+/kuma/static/
 kuma/javascript/dist/
 /tmp/emails/*.log
 npm-debug.log

@@ -2,11 +2,11 @@ import json
 from unittest import mock
 
 import pytest
+from django.contrib.auth.models import User
 from django.db import DatabaseError
 from django.urls import reverse
 
 from kuma.core.tests import assert_no_cache_header
-from kuma.users.models import User
 
 
 @pytest.fixture
@@ -37,18 +37,9 @@ def test_liveness_and_readiness(db, client, http_method, endpoint):
     assert_no_cache_header(response)
 
 
-@mock.patch("kuma.wiki.models.Document.objects")
-def test_readiness_with_db_error(mock_manager, db, client):
-    mock_manager.filter.side_effect = DatabaseError("fubar")
-    response = client.get(reverse("health.readiness"))
-    assert response.status_code == 503
-    assert "fubar" in response.reason_phrase
-    assert_no_cache_header(response)
-
-
 @pytest.fixture
 def mock_document_objects_count():
-    with mock.patch("kuma.health.views.Document") as model:
+    with mock.patch("kuma.health.views.ContentType") as model:
         model.objects = mock.Mock(spec_set=["count"])
         model.objects.count.return_value = 100
         yield model.objects.count
@@ -130,7 +121,6 @@ def test_status(client, settings, mock_status_externals):
     assert data["services"]["database"] == {
         "available": True,
         "populated": True,
-        "document_count": 100,
     }
     assert data["services"]["search"] == {
         "available": True,
@@ -182,12 +172,12 @@ def test_status_settings_protocol(value, client, settings, mock_status_externals
     In local dev, this is http, but it is https in TravisCI, so it is not a
     good fit for test_status_settings_change
     """
-    settings.PROTOCOL = value
     url = reverse("health.status")
     response = client.get(url)
     assert response.status_code == 200
     data = json.loads(response.content)
-    assert data["settings"]["PROTOCOL"] == value
+    # settings.PROTOCOL is hardcoded to True in pytest settings.
+    assert data["settings"]["PROTOCOL"]
 
 
 def test_status_failed_database(client, mock_status_externals):
@@ -199,7 +189,6 @@ def test_status_failed_database(client, mock_status_externals):
     assert data["services"]["database"] == {
         "available": False,
         "populated": False,
-        "document_count": 0,
     }
 
 
@@ -212,7 +201,6 @@ def test_status_empty_database(client, mock_status_externals):
     assert data["services"]["database"] == {
         "available": True,
         "populated": False,
-        "document_count": 0,
     }
 
 

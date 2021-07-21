@@ -79,7 +79,6 @@ def mindtouch_file_redirect(request, file_id, filename):
 
 
 def _redirect_final_path(final_path):
-    assert settings.ATTACHMENTS_USE_S3
     assert settings.ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN
     redirect_url = "https://" if settings.ATTACHMENTS_AWS_S3_SECURE_URLS else "http://"
     redirect_url += settings.ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN

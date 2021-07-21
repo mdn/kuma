@@ -1,7 +1,8 @@
-from django.contrib import admin
-from rest_framework.authtoken.admin import TokenAdmin
+# from django.contrib import admin
 
-from kuma.core.models import IPBan
+# from rest_framework.authtoken.admin import TokenAdmin
+
+# from kuma.core.models import IPBan
 
 
 class DisabledDeleteActionMixin(object):
@@ -26,12 +27,12 @@ class DisabledDeletionMixin(DisabledDeleteActionMixin):
         return False
 
 
-@admin.register(IPBan)
-class IPBanAdmin(admin.ModelAdmin):
-    # Remove list delete action to enforce model soft delete in admin site
-    actions = None
-    readonly_fields = ("deleted",)
-    list_display = ("ip", "created", "deleted")
+# @admin.register(IPBan)
+# class IPBanAdmin(admin.ModelAdmin):
+#     # Remove list delete action to enforce model soft delete in admin site
+#     actions = None
+#     readonly_fields = ("deleted",)
+#     list_display = ("ip", "created", "deleted")
 
 
-TokenAdmin.raw_id_fields = ["user"]
+# TokenAdmin.raw_id_fields = ["user"]

@@ -18,8 +18,6 @@ from django.utils.translation.trans_real import (
     language_code_re,
     parse_accept_lang_header,
 )
-from jinja2 import nodes
-from jinja2.ext import Extension
 
 
 def django_language_code_to_kuma(lang_code):
@@ -231,46 +229,3 @@ def activate_language_from_request(request):
     language = get_language_from_request(request)
     translation.activate(language)
     request.LANGUAGE_CODE = get_language()
-
-
-class TranslationExtension(Extension):
-    """
-    Provide a Jinja2 tag like Django's {% translation %} block
-
-    Usage:
-
-    {% translation 'en-US' %}
-      <p>_('This string is translatable, but displayed in English.')</p>
-    {% endtranslation %}
-
-    See Django documentation for details:
-    https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#switching-language-in-templates
-
-    Jinja2 has a parsing phase and then a rendering phase. This parses the {%
-    translation %} block as a CallBlock node that will override the translation
-    at render time. It is very similar to the example in the docs:
-
-    http://jinja.pocoo.org/docs/2.10/extensions/#module-jinja2.ext
-    """
-
-    tags = {"translation"}
-
-    def parse(self, parser):
-        """Parse a stream starting with {% translation %}."""
-        # Get the line number and desired language
-        lineno = next(parser.stream).lineno
-        block_language = parser.parse_expression()
-
-        # Parse the block body until {% endtranslation %}
-        body = parser.parse_statements(["name:endtranslation"], drop_needle=True)
-
-        # Return a node that will render body in the desired translation
-        return nodes.CallBlock(
-            self.call_method("_override", [block_language]), [], [], body
-        ).set_lineno(lineno)
-
-    def _override(self, block_language, caller):
-        """Render a {% translation %} block with the requested language."""
-        with translation.override(block_language):
-            value = caller()
-        return value

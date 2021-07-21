@@ -3,10 +3,9 @@ import hashlib
 from datetime import datetime
 
 from django.conf import settings
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.http import http_date
-
-from kuma.core.urlresolvers import reverse
 
 
 def full_attachment_url(attachment_id, filename):

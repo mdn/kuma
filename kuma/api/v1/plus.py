@@ -35,17 +35,13 @@ def landing_page_survey(request):
                 response = json.loads(response_json)
             except ValueError:
                 return HttpResponseBadRequest("invalid response JSON")
-            survey.response = json.dumps(response)
+            survey.response = response
             survey.save()
         context["ok"] = True
     else:
         variant = request.session.get(VARIANTS_SESSION_KEY)
         if not variant:
             return HttpResponseBadRequest("missing 'variant'")
-        try:
-            variant = int(variant)
-        except ValueError:
-            return HttpResponseBadRequest("invalid 'variant'")
         uuid = request.GET.get("uuid")
         if uuid:
             try:
