@@ -253,7 +253,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # MDN
     "kuma.core.apps.CoreConfig",
-    "kuma.wiki.apps.WikiConfig",
     "kuma.api.apps.APIConfig",
     "kuma.attachments.apps.AttachmentsConfig",
     "kuma.plus.apps.PlusConfig",

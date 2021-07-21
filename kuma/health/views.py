@@ -10,9 +10,6 @@ from elasticsearch.exceptions import NotFoundError, TransportError
 from elasticsearch_dsl import Search
 from elasticsearch_dsl.connections import connections as es_connections
 
-# from kuma.users.models import User
-# from kuma.wiki.models import Document
-
 
 @never_cache
 @require_safe
