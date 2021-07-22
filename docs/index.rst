@@ -17,7 +17,6 @@ Contents:
    tests
    tests-functional
 
-   feature-toggles
    celery
    elasticsearch
    documentation
