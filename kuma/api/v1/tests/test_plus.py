@@ -116,19 +116,10 @@ def test_ping_landing_page_survey_authenticated(user_client, wiki_user):
 
 
 @pytest.mark.django_db
-def test_landing_page_variant_happy_path(client, settings):
-    # Note `settings.PLUS_VARIANTS` is set in `kuma.settings.pytest`
+def test_landing_page_variant_happy_path(client):
     url = reverse("api.v1.plus.landing_page_variant")
     response = client.get(url)
     assert response.status_code == 200
     first_time = response.json()
-    assert first_time["variant"] > 0
-    assert first_time["variant"] <= len(settings.PLUS_VARIANTS)
-    assert first_time["price"] in settings.PLUS_VARIANTS
-
-    # It should stick no matter how many times you run it
-    for _ in range(10):
-        response = client.get(url)
-        assert response.status_code == 200
-        assert response.json()["variant"] == first_time["variant"]
-        assert response.json()["price"] == first_time["price"]
+    # As of July 23 2021, this is now hardcoded. See comment in the view function.
+    assert first_time["variant"] == 3

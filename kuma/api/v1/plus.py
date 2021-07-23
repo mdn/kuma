@@ -68,12 +68,12 @@ def landing_page_survey(request):
 @ratelimit(key="user_or_ip", rate="100/m", block=True)
 @require_GET
 def landing_page_variant(request):
-    variants = settings.PLUS_VARIANTS
-    assert isinstance(variants, list)
     variant = request.session.get(VARIANTS_SESSION_KEY)
     if not variant:
-        variant = random.randint(1, len(variants))
+        # As of July 23, 2021 we only have 1 variant in this version of the
+        # experiment. There's no split A/B. But the number still needs to be
+        # *something* so that it can tie back to a survey result.
+        variant = 3
         request.session[VARIANTS_SESSION_KEY] = variant
-    assert variant <= len(variants), variant
-    context = {"variant": variant, "price": variants[variant - 1]}
+    context = {"variant": variant}
     return JsonResponse(context)
