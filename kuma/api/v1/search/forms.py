@@ -37,11 +37,6 @@ class SearchForm(forms.Form):
     SORT_CHOICES = ("best", "relevance", "popularity")
     sort = forms.ChoiceField(required=False, choices=[(x, x) for x in SORT_CHOICES])
 
-    ARCHIVE_CHOICES = ("exclude", "include", "only")
-    archive = forms.ChoiceField(
-        required=False, choices=[(x, x) for x in ARCHIVE_CHOICES]
-    )
-
     size = forms.IntegerField(required=True, min_value=1, max_value=100)
     page = forms.IntegerField(required=True, min_value=1, max_value=10)
 

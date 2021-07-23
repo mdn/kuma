@@ -80,7 +80,6 @@ def test_search_basic_match(user_client, settings, mock_elasticsearch):
             "title": "Foo Title",
             "summary": "Foo summary",
             "locale": "en-us",
-            "archived": False,
             "slug": "Foo",
             "popularity": 0,
         },
@@ -104,7 +103,6 @@ def test_search_basic_match(user_client, settings, mock_elasticsearch):
     assert data["suggestions"] == []
     assert data["documents"] == [
         {
-            "archived": False,
             "highlight": {"body": [], "title": []},
             "locale": "en-us",
             "mdn_url": "/en-us/docs/Foo",

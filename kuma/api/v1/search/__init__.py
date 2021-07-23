@@ -36,7 +36,7 @@ class JsonResponse(http.JsonResponse):
 
 @allow_CORS_GET
 def search(request, locale=None):
-    initial = {"size": 10, "page": 1, "archive": SearchForm.ARCHIVE_CHOICES[0]}
+    initial = {"size": 10, "page": 1}
     if locale:
         initial["locale"] = locale
     form = SearchForm(request.GET, initial=initial)
@@ -48,7 +48,6 @@ def search(request, locale=None):
 
     params = {
         "locales": [x.lower() for x in locales],
-        "archive": form.cleaned_data["archive"],
         "query": form.cleaned_data["q"],
         "size": form.cleaned_data["size"],
         "page": form.cleaned_data["page"],
@@ -135,10 +134,6 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
 
     if params["locales"]:
         search_query = search_query.filter("terms", locale=params["locales"])
-    if params["archive"] == "exclude":
-        search_query = search_query.filter("term", archived=False)
-    elif params["archive"] == "only":
-        search_query = search_query.filter("term", archived=True)
 
     if params["slug_prefixes"]:
         sub_queries = [Q("prefix", slug=x) for x in params["slug_prefixes"]]
@@ -234,7 +229,6 @@ def _find(params, total_only=False, make_suggestions=False, min_suggestion_score
             "locale": hit.locale,
             "slug": hit.slug,
             "popularity": hit.popularity,
-            "archived": hit.archived,
             "summary": hit.summary,
             "highlight": {
                 "body": body_highlight,
