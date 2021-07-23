@@ -8,11 +8,6 @@ urlpatterns = [
     path("search/<locale>", search.search, name="api.v1.search_legacy"),
     path("search", search.search, name="api.v1.search"),
     path(
-        "plus/landing-page/variant/",
-        plus.landing_page_variant,
-        name="api.v1.plus.landing_page_variant",
-    ),
-    path(
         "plus/landing-page/survey/",
         plus.landing_page_survey,
         name="api.v1.plus.landing_page_survey",

@@ -496,17 +496,6 @@ ATTACHMENTS_AWS_S3_ENDPOINT_URL = config(
 # to know what the index is called for searching.
 SEARCH_INDEX_NAME = config("SEARCH_INDEX_NAME", default="mdn_docs")
 
-PLUS_VARIANTS = config(
-    "PLUS_VARIANTS_JSON",
-    default=json.dumps(
-        [
-            "$X a month or $XX a year",
-            "$Y a month or $YY a year",
-        ]
-    ),
-    cast=json.loads,
-)
-
 
 SENTRY_DSN = config("SENTRY_DSN", default="")
 if SENTRY_DSN:
