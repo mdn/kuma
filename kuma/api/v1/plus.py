@@ -1,8 +1,6 @@
 import json
-import random
 from uuid import UUID
 
-from django.conf import settings
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.middleware.csrf import get_token
 from django.shortcuts import get_object_or_404
