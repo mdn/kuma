@@ -38,7 +38,7 @@ whitenoise = "^5.3.0"
 werkzeug = "^1.0" # Enables runserver_plus from django-extensions
 
 # Testing
-braceexpand = "^0.1.6"
+braceexpand = "^0.1.7"
 pytest = "~5.3"
 pytest-base-url = "^1.4.1"
 pytest-cov = "~2.8.1"
