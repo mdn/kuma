@@ -26,7 +26,7 @@ newrelic = "6.4.4.161"
 python-decouple = "^3.4"
 pytz = "^2019.3"
 redo = "^2.0.4"
-requests = "^2.25.1"
+requests = "^2.26.0"
 urlwait = "^1.0"
 gevent = {extras = ["gevent"], version = "^20.5.2"}
 psycopg2-binary = "^2.9.1"
