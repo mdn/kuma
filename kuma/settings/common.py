@@ -263,45 +263,6 @@ INSTALLED_APPS = [
 ]
 
 
-# # TODO: Figure out why changing the order of apps (for example, moving taggit
-# # higher in the list) breaks tests.
-# INSTALLED_APPS = (
-#     # django
-#     "django.contrib.auth",
-#     "django.contrib.contenttypes",
-#     "django.contrib.sessions",
-#     "django.contrib.sites",
-#     "django.contrib.admin",
-#     "django.contrib.messages",
-#     "django.contrib.staticfiles",
-#     # MDN
-#     "kuma.core.apps.CoreConfig",
-#     "kuma.landing",
-#     "kuma.search.apps.SearchConfig",
-#     "kuma.users.apps.UserConfig",
-#     "kuma.wiki.apps.WikiConfig",
-#     "kuma.api.apps.APIConfig",
-#     "kuma.attachments.apps.AttachmentsConfig",
-#     "allauth",
-#     "allauth.account",
-#     "allauth.socialaccount",
-#     "kuma.users.providers.github",
-#     "kuma.users.providers.google",
-#     "kuma.plus.apps.PlusConfig",
-#     # util
-#     "django_jinja",
-#     "puente",
-#     "waffle",
-#     "kuma.authkeys",
-#     "taggit",
-#     "django_extensions",
-#     "statici18n",
-#     "rest_framework",
-#     "rest_framework.authtoken",
-#     "django_mysql",
-# )
-
-
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -323,12 +284,6 @@ SESSION_COOKIE_DOMAIN = DOMAIN
 SESSION_COOKIE_SECURE = config("SESSION_COOKIE_SECURE", default=True, cast=bool)
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_AGE = config("SESSION_COOKIE_AGE", default=60 * 60 * 24 * 365, cast=int)
-
-# WAFFLE_SECURE = config("WAFFLE_COOKIE_SECURE", default=True, cast=bool)
-# # This is a setting unique to Kuma which specifies the domain
-# # that will be used for all of the waffle cookies. It is used by
-# # kuma.core.middleware.WaffleWithCookieDomainMiddleware.
-# WAFFLE_COOKIE_DOMAIN = DOMAIN
 
 # bug 856061
 ALLOWED_HOSTS = config(
@@ -542,17 +497,6 @@ ATTACHMENTS_AWS_S3_ENDPOINT_URL = config(
 # Kuma doesn't index anything, that's done by the Yari Deployer, but we need
 # to know what the index is called for searching.
 SEARCH_INDEX_NAME = config("SEARCH_INDEX_NAME", default="mdn_docs")
-
-PLUS_VARIANTS = config(
-    "PLUS_VARIANTS_JSON",
-    default=json.dumps(
-        [
-            "$X a month or $XX a year",
-            "$Y a month or $YY a year",
-        ]
-    ),
-    cast=json.loads,
-)
 
 # When someone wants to bookmark something we only allow the URI (pathname)
 # to be supplied. We control what the absolute URL becomes based on that.

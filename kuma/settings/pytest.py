@@ -76,9 +76,6 @@ INDEX_CSS_CLASSNAMES = True
 # change shouldn't affect the tests.
 CONTRIBUTION_AMOUNT_USD = 4.99
 
-# Hardcode this option
-PLUS_VARIANTS = ["Foo", "Bar", "Buz"]
-
 # So it never accidentally actually uses the real value
 BOOKMARKS_BASE_URL = "https://developer.example.com"
 

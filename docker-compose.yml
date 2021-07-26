@@ -34,7 +34,6 @@ services:
       - SESSION_COOKIE_SECURE=False
       - SITE_URL=${SITE_URL:-http://localhost:8000}
       - STATIC_URL=${STATIC_URL:-http://localhost:8000/static/}
-      # - WAFFLE_COOKIE_SECURE=False
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=True
