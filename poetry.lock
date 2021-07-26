@@ -631,18 +631,19 @@ requests = ">=2.9"
 
 [[package]]
 name = "pytest-cov"
-version = "2.8.1"
+version = "2.12.1"
 description = "Pytest plugin for measuring coverage."
 category = "dev"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [package.dependencies]
-coverage = ">=4.4"
-pytest = ">=3.6"
+coverage = ">=5.2.1"
+pytest = ">=4.6"
+toml = "*"
 
 [package.extras]
-testing = ["fields", "hunter", "process-tests (==2.0.2)", "six", "virtualenv"]
+testing = ["fields", "hunter", "process-tests", "six", "pytest-xdist", "virtualenv"]
 
 [[package]]
 name = "pytest-django"
@@ -943,7 +944,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "b9fdb2d8eb41e24004499c85173f5532722f9aa4ea7f1654bfe627ccfc57ea48"
+content-hash = "c6661446b7192778ecc610886a2d8da6bbca52726c2ab7fdb9ea68f247b15dfb"
 
 [metadata.files]
 amqp = [
@@ -1335,8 +1336,8 @@ pytest-base-url = [
     {file = "pytest_base_url-1.4.1-py2.py3-none-any.whl", hash = "sha256:31e42366a5fc22f450b398837dc819bb7569f5e6bd5d74e494b2b9ec239876d1"},
 ]
 pytest-cov = [
-    {file = "pytest-cov-2.8.1.tar.gz", hash = "sha256:cc6742d8bac45070217169f5f72ceee1e0e55b0221f54bcf24845972d3a47f2b"},
-    {file = "pytest_cov-2.8.1-py2.py3-none-any.whl", hash = "sha256:cdbdef4f870408ebdbfeb44e63e07eb18bb4619fae852f6e760645fa36172626"},
+    {file = "pytest-cov-2.12.1.tar.gz", hash = "sha256:261ceeb8c227b726249b376b8526b600f38667ee314f910353fa318caa01f4d7"},
+    {file = "pytest_cov-2.12.1-py2.py3-none-any.whl", hash = "sha256:261bb9e47e65bd099c89c3edf92972865210c36813f80ede5277dceb77a4a62a"},
 ]
 pytest-django = [
     {file = "pytest-django-3.10.0.tar.gz", hash = "sha256:4de6dbd077ed8606616958f77655fed0d5e3ee45159475671c7fa67596c6dba6"},
