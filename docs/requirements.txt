@@ -3,7 +3,7 @@
 
 # These should stay synced with other requirements files
 Babel==2.9.1
-docutils==0.12
+docutils==0.17.1
 Jinja2==3.0.1
 pytz==2018.5
 
