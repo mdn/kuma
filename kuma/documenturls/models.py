@@ -27,7 +27,7 @@ class DocumentURL(models.Model):
     # E.g. /en-us/docs/web/javascript (note that it's lowercased!)
     # (the longest URI in all our of content as of mid-2021 is 121 characters)
     uri = models.CharField(max_length=250, unique=True, verbose_name="URI")
-    # E.g. https://developer.allizom.org/en-US/docs/Web/JavaScript
+    # E.g. https://developer.allizom.org/en-us/docs/web/javascript/index.json
     absolute_url = models.URLField(verbose_name="Absolute URL")
     # If it's applicable, it's a download of the `index.json` for that URL.
     metadata = models.JSONField(null=True)
