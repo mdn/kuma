@@ -20,7 +20,7 @@ class NotOKDocumentURLError(Exception):
     """When the document URL doesn't resolve as a 200 OK"""
 
 
-def is_subscriber(func):
+def require_subscriber(func):
     @functools.wraps(func)
     def inner(request, *args, **kwargs):
         user = request.user
@@ -41,7 +41,7 @@ def is_subscriber(func):
 
 @never_cache
 @require_http_methods(["GET"])
-@is_subscriber
+@require_subscriber
 def bookmarks(request):
     try:
         page = int(request.GET.get("page") or "1")
@@ -89,7 +89,7 @@ def bookmarks(request):
 
 @never_cache
 @require_http_methods(["GET", "POST"])
-@is_subscriber
+@require_subscriber
 def bookmarked(request):
 
     url = (
