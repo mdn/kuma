@@ -40,9 +40,19 @@ def require_subscriber(func):
 
 
 @never_cache
-@require_http_methods(["GET"])
+@require_http_methods(["GET", "POST"])
 @require_subscriber
 def bookmarks(request):
+    # E.g. POST -d url=https://... /api/v1/bookmarks/
+    # or   GET /api/v1/bookmarks/?url=https://...
+    if request.method == "POST" or request.GET.get("url"):
+        return _toggle_bookmark(request)
+
+    # E.g. GET /api/v1/bookmarks/
+    return _get_bookmarks(request)
+
+
+def _get_bookmarks(request):
     try:
         page = int(request.GET.get("page") or "1")
         assert page > 0 and page < 100
@@ -87,11 +97,7 @@ def bookmarks(request):
     return JsonResponse(context)
 
 
-@never_cache
-@require_http_methods(["GET", "POST"])
-@require_subscriber
-def bookmarked(request):
-
+def _toggle_bookmark(request):
     url = (
         (request.GET.get("url") or "")
         .strip()

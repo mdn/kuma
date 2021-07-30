@@ -15,13 +15,8 @@ urlpatterns = [
         name="api.v1.plus.landing_page.survey",
     ),
     path(
-        "plus/bookmarks/bookmarked/",
-        bookmarks.bookmarked,
-        name="api.v1.plus.bookmarks.bookmarked",
-    ),
-    path(
         "plus/bookmarks/",
         bookmarks.bookmarks,
-        name="api.v1.plus.bookmarks.all",
+        name="api.v1.plus.bookmarks",
     ),
 ]

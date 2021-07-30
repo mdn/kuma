@@ -9,7 +9,7 @@ from kuma.core.urlresolvers import reverse
 @pytest.mark.django_db
 def test_bookmarked_anonymous(client):
     response = client.get(
-        reverse("api.v1.plus.bookmarks.bookmarked"),
+        reverse("api.v1.plus.bookmarks"),
     )
     assert response.status_code == 403
     assert "not signed in" in response.content.decode("utf-8")
@@ -17,17 +17,13 @@ def test_bookmarked_anonymous(client):
 
 @pytest.mark.django_db
 def test_is_bookmarked_signed_in(user_client, wiki_user, settings):
-    url = reverse("api.v1.plus.bookmarks.bookmarked")
+    url = reverse("api.v1.plus.bookmarks")
     response = user_client.get(url)
-    print(response.content)
     assert response.status_code == 403
     assert "not a subscriber" in response.content.decode("utf-8")
 
     # TEMPORARY until all things auth + subscription come together.
     settings.FAKE_USER_SUBSCRIBER_NUMBER = 1234
-    response = user_client.get(url)
-    assert response.status_code == 400
-    assert "missing 'url'" in response.content.decode("utf-8")
 
     response = user_client.get(url, {"url": "some junk"})
     assert response.status_code == 400
@@ -63,7 +59,7 @@ def test_toggle_bookmarked(user_client, wiki_user, mock_requests, settings):
         "GET", settings.BOOKMARKS_BASE_URL + "/en-US/docs/Web/index.json", json=doc_data
     )
 
-    url = reverse("api.v1.plus.bookmarks.bookmarked")
+    url = reverse("api.v1.plus.bookmarks")
     get_url = f'{url}?{urlencode({"url": "/en-US/docs/Web"})}'
     response = user_client.post(get_url)
     assert response.status_code == 201
@@ -104,7 +100,7 @@ def test_toggle_bookmarked(user_client, wiki_user, mock_requests, settings):
 @pytest.mark.django_db
 def test_bookmarks_anonymous(client):
     response = client.get(
-        reverse("api.v1.plus.bookmarks.all"),
+        reverse("api.v1.plus.bookmarks"),
     )
     assert response.status_code == 403
     assert "not signed in" in response.content.decode("utf-8")
@@ -112,7 +108,7 @@ def test_bookmarks_anonymous(client):
 
 @pytest.mark.django_db
 def test_bookmarks_signed_in(user_client, wiki_user, settings):
-    url = reverse("api.v1.plus.bookmarks.all")
+    url = reverse("api.v1.plus.bookmarks")
     response = user_client.get(url)
     assert response.status_code == 403
     assert "not a subscriber" in response.content.decode("utf-8")
@@ -171,7 +167,7 @@ def test_bookmarks_pagination(user_client, wiki_user, mock_requests, settings):
         clone["doc"]["parents"][-1]["uri"] = mdn_url
         return clone
 
-    url = reverse("api.v1.plus.bookmarks.bookmarked")
+    url = reverse("api.v1.plus.bookmarks")
 
     for i in range(1, 21):
         mdn_url = f"/en-US/docs/Web/Doc{i}"
@@ -196,7 +192,6 @@ def test_bookmarks_pagination(user_client, wiki_user, mock_requests, settings):
     response = user_client.post(get_url)
     assert response.status_code == 201
 
-    url = reverse("api.v1.plus.bookmarks.all")
     response = user_client.get(url, {"per_page": "5"})
     assert response.status_code == 200
     assert len(response.json()["items"]) == 5
@@ -256,31 +251,24 @@ def test_undo_bookmark(user_client, wiki_user, mock_requests, settings):
         json=create_doc_data("/en-US/docs/Buzz", "Buzz!"),
     )
 
-    bookmark_url = reverse("api.v1.plus.bookmarks.bookmarked")
+    url = reverse("api.v1.plus.bookmarks")
 
     assert (
-        user_client.post(
-            f'{bookmark_url}?{urlencode({"url": "/en-US/docs/Foo"})}'
-        ).status_code
+        user_client.post(f'{url}?{urlencode({"url": "/en-US/docs/Foo"})}').status_code
         == 201
     )
 
     assert (
-        user_client.post(
-            f'{bookmark_url}?{urlencode({"url": "/en-US/docs/Bar"})}'
-        ).status_code
+        user_client.post(f'{url}?{urlencode({"url": "/en-US/docs/Bar"})}').status_code
         == 201
     )
 
     assert (
-        user_client.post(
-            f'{bookmark_url}?{urlencode({"url": "/en-US/docs/Buzz"})}'
-        ).status_code
+        user_client.post(f'{url}?{urlencode({"url": "/en-US/docs/Buzz"})}').status_code
         == 201
     )
 
-    bookmarks_url = reverse("api.v1.plus.bookmarks.all")
-    response = user_client.get(bookmarks_url)
+    response = user_client.get(url)
     assert response.status_code == 200
     items = response.json()["items"]
     assert len(items) == 3
@@ -294,14 +282,12 @@ def test_undo_bookmark(user_client, wiki_user, mock_requests, settings):
     ]
     # Suppose you decide to un-bookmark the first one.
     assert (
-        user_client.post(
-            f'{bookmark_url}?{urlencode({"url": "/en-US/docs/Foo"})}'
-        ).status_code
+        user_client.post(f'{url}?{urlencode({"url": "/en-US/docs/Foo"})}').status_code
         == 201
     )
 
     # Check that it disappears from the listing
-    response = user_client.get(bookmarks_url)
+    response = user_client.get(url)
     assert response.status_code == 200
     items = response.json()["items"]
     assert len(items) == 2
@@ -309,15 +295,13 @@ def test_undo_bookmark(user_client, wiki_user, mock_requests, settings):
     # And let's pretend we change our mind and undo that. Which is basically
     # to toggle it again.
     assert (
-        user_client.post(
-            f'{bookmark_url}?{urlencode({"url": "/en-US/docs/Foo"})}'
-        ).status_code
+        user_client.post(f'{url}?{urlencode({"url": "/en-US/docs/Foo"})}').status_code
         == 201
     )
 
     # Because it became an undo, it should not have moved this untoggle into
     # the first spot.
-    response = user_client.get(bookmarks_url)
+    response = user_client.get(url)
     assert response.status_code == 200
     items = response.json()["items"]
     assert len(items) == 3
@@ -332,34 +316,26 @@ def test_undo_bookmark(user_client, wiki_user, mock_requests, settings):
 
     # This time, un-bookmark two but re-bookmark them in the wrong order.
     assert (
-        user_client.post(
-            f'{bookmark_url}?{urlencode({"url": "/en-US/docs/Buzz"})}'
-        ).status_code
+        user_client.post(f'{url}?{urlencode({"url": "/en-US/docs/Buzz"})}').status_code
         == 201
     )
     assert (
-        user_client.post(
-            f'{bookmark_url}?{urlencode({"url": "/en-US/docs/Bar"})}'
-        ).status_code
+        user_client.post(f'{url}?{urlencode({"url": "/en-US/docs/Bar"})}').status_code
         == 201
     )
 
     # The last one to be touched was "Bar", let's now bookmark them back
     # but this time, do it in the opposite order.
     assert (
-        user_client.post(
-            f'{bookmark_url}?{urlencode({"url": "/en-US/docs/Buzz"})}'
-        ).status_code
+        user_client.post(f'{url}?{urlencode({"url": "/en-US/docs/Buzz"})}').status_code
         == 201
     )
     assert (
-        user_client.post(
-            f'{bookmark_url}?{urlencode({"url": "/en-US/docs/Bar"})}'
-        ).status_code
+        user_client.post(f'{url}?{urlencode({"url": "/en-US/docs/Bar"})}').status_code
         == 201
     )
 
-    response = user_client.get(bookmarks_url)
+    response = user_client.get(url)
     assert response.status_code == 200
     items = response.json()["items"]
     assert len(items) == 3
