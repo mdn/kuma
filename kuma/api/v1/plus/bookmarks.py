@@ -117,14 +117,15 @@ def _toggle_bookmark(request):
             assert not documenturl.invalid
         except DocumentURL.DoesNotExist:
             response = download_url(absolute_url)
-            metadata = response.json()["doc"]
-            # Because it's so big, don't store certain fields that are
-            # not helpful.
-            metadata.pop("body", None)
-            metadata.pop("toc", None)
-            metadata.pop("sidebarHTML", None)
-            metadata.pop("other_translations", None)
-            metadata.pop("flaws", None)
+            # Because it's so big, only store certain fields that are used.
+            full_metadata = response.json()["doc"]
+            metadata = {}
+            # Should we so day realize that we want to and need to store more
+            # about the remote Yari documents, we'd simply invoke some background
+            # processing job that forces a refresh.
+            for key in ("title", "mdn_url", "parents"):
+                if key in full_metadata:
+                    metadata[key] = full_metadata[key]
 
             documenturl = DocumentURL.objects.create(
                 uri=DocumentURL.normalize_uri(url),

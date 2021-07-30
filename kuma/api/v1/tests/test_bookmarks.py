@@ -49,11 +49,7 @@ def test_toggle_bookmarked(user_client, wiki_user, mock_requests, settings):
     # TEMPORARY until all things auth + subscription come together.
     settings.FAKE_USER_SUBSCRIBER_NUMBER = 1234
 
-    doc_data = {
-        "doc": {
-            "title": "Web",
-        }
-    }
+    doc_data = {"doc": {"title": "Web", "mdn_url": "/en-US/docs/Web"}}
 
     mock_requests.register_uri(
         "GET", settings.BOOKMARKS_BASE_URL + "/en-US/docs/Web/index.json", json=doc_data
