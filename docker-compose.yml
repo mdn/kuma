@@ -40,6 +40,8 @@ services:
       - PYTHONWARNINGS=${PYTHONWARNINGS:-}
       - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
       - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
+      - OIDC_RP_CLIENT_ID=${OIDC_RP_CLIENT_ID:-undefined}
+      - OIDC_RP_CLIENT_SECRET=${OIDC_RP_CLIENT_SECRET:-undefined}
 
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:

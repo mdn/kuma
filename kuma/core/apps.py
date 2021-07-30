@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 from django.conf import settings
+from django.core.checks import register
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
@@ -17,6 +18,15 @@ class CoreConfig(AppConfig):
 
     def ready(self):
         """Configure kuma.core after models are loaded."""
+        self.register_checks()
+        self.add_periodc_tasks()
+
+    def register_checks(self):
+        from .checks import oidc_config_check
+
+        register(oidc_config_check)
+
+    def add_periodc_tasks(self):
         # Clean up expired sessions every 60 minutes
         from kuma.core.tasks import clean_sessions
 

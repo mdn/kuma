@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib import admin
-from django.urls import include, re_path
+from django.urls import include, path, re_path
 from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
 
@@ -32,10 +32,10 @@ else:
     ]
 
 urlpatterns += [re_path("", include("kuma.attachments.urls"))]
-# urlpatterns += [re_path("users/", include("kuma.users.urls"))]
-# urlpatterns += i18n_patterns(
-#     re_path("", decorator_include(never_cache, users_lang_urlpatterns))
-# )
+urlpatterns += [
+    path("users/fxa/login/", include("mozilla_django_oidc.urls")),
+]
+
 urlpatterns += [
     # Services and sundry.
     re_path("^api/", include("kuma.api.urls")),

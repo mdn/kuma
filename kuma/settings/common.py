@@ -257,6 +257,7 @@ INSTALLED_APPS = [
     "kuma.attachments.apps.AttachmentsConfig",
     "kuma.plus.apps.PlusConfig",
     # 3rd party
+    "mozilla_django_oidc",
     "django_extensions",
 ]
 
@@ -276,6 +277,38 @@ TEMPLATES = [
         },
     },
 ]
+
+# Authentication
+AUTHENTICATION_BACKENDS = [
+    "mozilla_django_oidc.auth.OIDCAuthenticationBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+# To get these default URLS, use:
+# https://accounts.firefox.com/.well-known/openid-configuration
+# or if you have stage credentials:
+# https://accounts.stage.mozaws.net/.well-known/openid-configuration
+OIDC_OP_AUTHORIZATION_ENDPOINT = config(
+    "OIDC_OP_AUTHORIZATION_ENDPOINT",
+    default="https://accounts.firefox.com/authorization",
+)
+OIDC_OP_TOKEN_ENDPOINT = config(
+    "OIDC_OP_TOKEN_ENDPOINT", default="https://oauth.accounts.firefox.com/v1/token"
+)
+OIDC_OP_USER_ENDPOINT = config(
+    "OIDC_OP_USER_ENDPOINT", default="https://profile.accounts.firefox.com/v1/profile"
+)
+OIDC_OP_JWKS_ENDPOINT = config(
+    "OIDC_OP_JWKS_ENDPOINT", default="https://oauth.accounts.firefox.com/v1/jwks"
+)
+OIDC_RP_SIGN_ALGO = config("OIDC_RP_SIGN_ALGO", default="RS256")
+OIDC_USE_NONCE = config("OIDC_USE_NONCE", cast=bool, default=False)
+
+# Allow null on these because you should be able run Kuma with these set.
+# It'll just mean you can't use kuma to authenticate. And a warning
+# (or error if !DEBUG) from the system checks will remind you.
+OIDC_RP_CLIENT_ID = config("OIDC_RP_CLIENT_ID", default=None)
+OIDC_RP_CLIENT_SECRET = config("OIDC_RP_CLIENT_SECRET", default=None)
 
 # Session cookies
 SESSION_COOKIE_DOMAIN = DOMAIN
