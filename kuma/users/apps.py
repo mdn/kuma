@@ -1,5 +1,5 @@
-from django.core.checks import register
 from django.apps import AppConfig
+from django.core.checks import register
 from django.utils.translation import gettext_lazy as _
 
 
