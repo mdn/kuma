@@ -1,6 +1,8 @@
 from django.urls import path
 
-from . import plus, search, views
+from . import search, views
+from .plus import bookmarks, landing_page
+
 
 urlpatterns = [
     path("whoami", views.whoami, name="api.v1.whoami"),
@@ -9,7 +11,12 @@ urlpatterns = [
     path("search", search.search, name="api.v1.search"),
     path(
         "plus/landing-page/survey/",
-        plus.landing_page_survey,
-        name="api.v1.plus.landing_page_survey",
+        landing_page.survey,
+        name="api.v1.plus.landing_page.survey",
+    ),
+    path(
+        "plus/bookmarks/",
+        bookmarks.bookmarks,
+        name="api.v1.plus.bookmarks",
     ),
 ]

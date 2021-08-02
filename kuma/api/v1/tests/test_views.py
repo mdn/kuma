@@ -61,7 +61,7 @@ def test_whoami(
         "username": wiki_user.username,
         "is_authenticated": True,
         "avatar_url": None,  # temporary
-        # "subscriber_number": None,
+        "subscriber_number": 0,
         "email": "wiki_user@example.com",
     }
     if is_staff:

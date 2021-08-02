@@ -7,8 +7,8 @@ from kuma.plus.models import LandingPageSurvey
 
 
 @pytest.mark.django_db
-def test_ping_landing_page_survey_happy_path(client, settings):
-    url = reverse("api.v1.plus.landing_page_survey")
+def test_ping_landing_page_survey_happy_path(client):
+    url = reverse("api.v1.plus.landing_page.survey")
     response = client.get(url, HTTP_CLOUDFRONT_VIEWER_COUNTRY_NAME="Antartica")
     assert response.status_code == 200
     (result,) = LandingPageSurvey.objects.all()
@@ -30,7 +30,7 @@ def test_ping_landing_page_survey_happy_path(client, settings):
 
 @pytest.mark.django_db
 def test_ping_landing_page_survey_bad_request(client):
-    url = reverse("api.v1.plus.landing_page_survey")
+    url = reverse("api.v1.plus.landing_page.survey")
 
     # Not a valid UUID
     response = client.get(url, {"uuid": "xxx"})
@@ -53,7 +53,7 @@ def test_ping_landing_page_survey_bad_request(client):
 
 @pytest.mark.django_db
 def test_ping_landing_page_survey_reuse_uuid(client):
-    url = reverse("api.v1.plus.landing_page_survey")
+    url = reverse("api.v1.plus.landing_page.survey")
     response1 = client.get(url, HTTP_CLOUDFRONT_VIEWER_COUNTRY_NAME="Sweden")
     assert response1.status_code == 200
     assert LandingPageSurvey.objects.all().count() == 1

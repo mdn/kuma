@@ -12,7 +12,7 @@ from kuma.plus.models import LandingPageSurvey
 
 @ratelimit(key="user_or_ip", rate="100/m", block=True)
 @require_http_methods(["GET", "POST"])
-def landing_page_survey(request):
+def survey(request):
     context = {}
     if request.method == "POST":
         uuid = request.POST.get("uuid")
