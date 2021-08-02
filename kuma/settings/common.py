@@ -320,12 +320,21 @@ OIDC_USE_NONCE = config("OIDC_USE_NONCE", cast=bool, default=False)
 # The default is 'openid email' but according to openid-configuration they
 # will send 'openid profile email'.
 OIDC_RP_SCOPES = config("OIDC_RP_SCOPES", default="openid profile email")
+# If you're doing local development with Yari, it's recommened that you add
+#   echo 'OIDC_REDIRECT_ALLOWED_HOSTS=localhost:3000' >> .env
+# so you get redirected back to http://localhost:3000/... after signing in.
+OIDC_REDIRECT_ALLOWED_HOSTS = config(
+    "OIDC_REDIRECT_ALLOWED_HOSTS", default="", cast=Csv()
+)
 
 # Allow null on these because you should be able run Kuma with these set.
 # It'll just mean you can't use kuma to authenticate. And a warning
 # (or error if !DEBUG) from the system checks will remind you.
 OIDC_RP_CLIENT_ID = config("OIDC_RP_CLIENT_ID", default=None)
 OIDC_RP_CLIENT_SECRET = config("OIDC_RP_CLIENT_SECRET", default=None)
+
+# Function that gets called
+OIDC_OP_LOGOUT_URL_METHOD = "kuma.users.auth.logout_url"
 
 # Session cookies
 SESSION_COOKIE_DOMAIN = DOMAIN
