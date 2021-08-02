@@ -257,6 +257,8 @@ INSTALLED_APPS = [
     "kuma.api.apps.APIConfig",
     "kuma.attachments.apps.AttachmentsConfig",
     "kuma.plus.apps.PlusConfig",
+    "kuma.documenturls.apps.DocumentURLsConfig",
+    "kuma.bookmarks.apps.BookmarksConfig",
     # 3rd party
     "mozilla_django_oidc",
     "django_extensions",
@@ -544,6 +546,17 @@ ATTACHMENTS_AWS_S3_ENDPOINT_URL = config(
 # to know what the index is called for searching.
 SEARCH_INDEX_NAME = config("SEARCH_INDEX_NAME", default="mdn_docs")
 
+# When someone wants to bookmark something we only allow the URI (pathname)
+# to be supplied. We control what the absolute URL becomes based on that.
+# It might be practical to override this in local development to something like:
+#
+#  echo 'BOOKMARKS_BASE_URL=http://localhost:5000' >> .env
+#
+# So it can read from your local Yari instance.
+BOOKMARKS_BASE_URL = config(
+    "BOOKMARKS_BASE_URL", default="https://developer.mozilla.org"
+)
+API_V1_BOOKMARKS_PAGE_SIZE = config("API_V1_BOOKMARKS_PAGE_SIZE", cast=int, default=20)
 
 SENTRY_DSN = config("SENTRY_DSN", default="")
 if SENTRY_DSN:
@@ -551,3 +564,10 @@ if SENTRY_DSN:
         dsn=SENTRY_DSN,
         integrations=[DjangoIntegration()],
     )
+
+
+# These are temporary while we wait for the new authentication and
+# subscription works. Having this off-by-default option makes it possible
+# to testing things out, locally, such as bookmarking.
+FAKE_USER_AVATAR_URL = config("FAKE_USER_AVATAR_URL", default=None)
+FAKE_USER_SUBSCRIBER_NUMBER = config("FAKE_USER_SUBSCRIBER_NUMBER", default=0, cast=int)
