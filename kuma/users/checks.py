@@ -5,9 +5,9 @@ from django.core.checks import Error, Warning
 
 from kuma.core.utils import requests_retry_session
 
-MISSING_OIDC_RP_CLIENT_ID_ERROR = "kuma.core.E001"
-MISSING_OIDC_RP_CLIENT_SECRET_ERROR = "kuma.core.E002"
-MISSING_OIDC_CONFIGURATION_ERROR = "kuma.core.E003"
+MISSING_OIDC_RP_CLIENT_ID_ERROR = "kuma.users.E001"
+MISSING_OIDC_RP_CLIENT_SECRET_ERROR = "kuma.users.E002"
+MISSING_OIDC_CONFIGURATION_ERROR = "kuma.users.E003"
 
 
 def oidc_config_check(app_configs, **kwargs):

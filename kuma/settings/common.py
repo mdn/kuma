@@ -251,8 +251,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # MDN
+    # Kuma
     "kuma.core.apps.CoreConfig",
+    "kuma.users.apps.UsersConfig",
     "kuma.api.apps.APIConfig",
     "kuma.attachments.apps.AttachmentsConfig",
     "kuma.plus.apps.PlusConfig",
@@ -280,7 +281,7 @@ TEMPLATES = [
 
 # Authentication
 AUTHENTICATION_BACKENDS = [
-    "mozilla_django_oidc.auth.OIDCAuthenticationBackend",
+    "kuma.users.auth.KumaOIDCAuthenticationBackend",
     "django.contrib.auth.backends.ModelBackend",
 ]
 
