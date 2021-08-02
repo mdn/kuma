@@ -284,10 +284,20 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
 
-# To get these default URLS, use:
-# https://accounts.firefox.com/.well-known/openid-configuration
-# or if you have stage credentials:
-# https://accounts.stage.mozaws.net/.well-known/openid-configuration
+# This will download the configuration and set up all the settings that
+# the mozilla_django_oidc needs.
+OIDC_CONFIGURATION_URL = config(
+    "OIDC_CONFIGURATION_URL",
+    # Change to https://accounts.stage.mozaws.net/.well-known/openid-configuration
+    # for stage.
+    default="https://accounts.firefox.com/.well-known/openid-configuration",
+)
+# This will open `OIDC_CONFIGURATION_URL` and compare its JSON with the
+# other settings.
+OIDC_CONFIGURATION_CHECK = config(
+    "OIDC_CONFIGURATION_CHECK", cast=bool, default=not DEBUG
+)
+
 OIDC_OP_AUTHORIZATION_ENDPOINT = config(
     "OIDC_OP_AUTHORIZATION_ENDPOINT",
     default="https://accounts.firefox.com/authorization",
@@ -302,7 +312,11 @@ OIDC_OP_JWKS_ENDPOINT = config(
     "OIDC_OP_JWKS_ENDPOINT", default="https://oauth.accounts.firefox.com/v1/jwks"
 )
 OIDC_RP_SIGN_ALGO = config("OIDC_RP_SIGN_ALGO", default="RS256")
+# Firefox Accounts doesn't support nonce, so don't bother sending it.
 OIDC_USE_NONCE = config("OIDC_USE_NONCE", cast=bool, default=False)
+# The default is 'openid email' but according to openid-configuration they
+# will send 'openid profile email'.
+OIDC_RP_SCOPES = config("OIDC_RP_SCOPES", default="openid profile email")
 
 # Allow null on these because you should be able run Kuma with these set.
 # It'll just mean you can't use kuma to authenticate. And a warning
