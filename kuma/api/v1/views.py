@@ -43,9 +43,8 @@ def whoami(request):
             ):
                 data["avatar_url"] = user_profile_claims["avatar"]
 
-            # XXX would be nice to use the profile to set:
-            # data['subscriber_number'] = ...
-            # data['is_subscriber'] = ...
+            subscriptions = user_profile_claims.get("subscriptions")
+            data["is_subscriber"] = bool(subscriptions and "mdn_plus" in subscriptions)
 
     else:
         data = {}
