@@ -2,8 +2,10 @@ import copy
 from urllib.parse import urlencode
 
 import pytest
+from django.utils import timezone
 
 from kuma.core.urlresolvers import reverse
+from kuma.users.models import UserProfile
 
 
 @pytest.mark.django_db
@@ -22,8 +24,12 @@ def test_is_bookmarked_signed_in(user_client, wiki_user, settings):
     assert response.status_code == 403
     assert "not a subscriber" in response.content.decode("utf-8")
 
-    # TEMPORARY until all things auth + subscription come together.
-    settings.FAKE_USER_SUBSCRIBER_NUMBER = 1234
+    UserProfile.objects.create(user=wiki_user)
+    response = user_client.get(url)
+    assert response.status_code == 403
+    assert "not a subscriber" in response.content.decode("utf-8")
+
+    UserProfile.objects.filter(user=wiki_user).update(is_subscriber=timezone.now())
 
     response = user_client.get(url, {"url": "some junk"})
     assert response.status_code == 400
@@ -46,8 +52,7 @@ def test_is_bookmarked_signed_in(user_client, wiki_user, settings):
 
 @pytest.mark.django_db
 def test_toggle_bookmarked(user_client, wiki_user, mock_requests, settings):
-    # TEMPORARY until all things auth + subscription come together.
-    settings.FAKE_USER_SUBSCRIBER_NUMBER = 1234
+    UserProfile.objects.create(user=wiki_user, is_subscriber=timezone.now())
 
     doc_data = {"doc": {"title": "Web", "mdn_url": "/en-US/docs/Web"}}
 
@@ -109,8 +114,7 @@ def test_bookmarks_signed_in(user_client, wiki_user, settings):
     assert response.status_code == 403
     assert "not a subscriber" in response.content.decode("utf-8")
 
-    # TEMPORARY until all things auth + subscription come together.
-    settings.FAKE_USER_SUBSCRIBER_NUMBER = 1234
+    UserProfile.objects.create(user=wiki_user, is_subscriber=timezone.now())
     response = user_client.get(url)
     assert response.status_code == 200
     assert len(response.json()["items"]) == 0
@@ -135,8 +139,7 @@ def test_bookmarks_signed_in(user_client, wiki_user, settings):
 
 @pytest.mark.django_db
 def test_bookmarks_pagination(user_client, wiki_user, mock_requests, settings):
-    # TEMPORARY until all things auth + subscription come together.
-    settings.FAKE_USER_SUBSCRIBER_NUMBER = 1234
+    UserProfile.objects.create(user=wiki_user, is_subscriber=timezone.now())
 
     base_doc_data = {
         "doc": {
@@ -204,8 +207,7 @@ def test_bookmarks_pagination(user_client, wiki_user, mock_requests, settings):
 
 
 def test_undo_bookmark(user_client, wiki_user, mock_requests, settings):
-    # TEMPORARY until all things auth + subscription come together.
-    settings.FAKE_USER_SUBSCRIBER_NUMBER = 1234
+    UserProfile.objects.create(user=wiki_user, is_subscriber=timezone.now())
 
     def create_doc_data(mdn_url, title):
         base_doc_data = {

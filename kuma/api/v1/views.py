@@ -63,13 +63,14 @@ def whoami(request):
 @never_cache
 def account_settings(request):
     user = request.user
+    if not user.is_authenticated:
+        return HttpResponseForbidden("not signed in")
+
     for user_profile in UserProfile.objects.filter(user=user):
         break
     else:
         user_profile = None
 
-    if not user.is_authenticated:
-        return HttpResponseForbidden("not signed in")
     if request.method == "DELETE":
         user.delete()
         return JsonResponse({"deleted": True})
@@ -84,6 +85,8 @@ def account_settings(request):
             if user_profile:
                 user_profile.locale = set_locale
                 user_profile.save()
+            else:
+                user_profile = UserProfile.objects.create(user=user, locale=set_locale)
 
         response = JsonResponse({"ok": True})
         if set_locale:
@@ -100,9 +103,6 @@ def account_settings(request):
 
     context = {
         "csrfmiddlewaretoken": get_token(request),
-        "locale": user_profile and user_profile.locale or None,
-        # "subscription": user.stripe_customer_id
-        # and retrieve_and_synchronize_stripe_subscription(user)
-        # or None,
+        "locale": user_profile.locale if user_profile else None,
     }
     return JsonResponse(context)

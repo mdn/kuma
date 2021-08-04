@@ -5,11 +5,15 @@ from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 from .models import UserProfile
 
 
+class InvalidClaimsError(ValueError):
+    """When the claims are bonkers"""
+
+
 class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
     def filter_users_by_claims(self, claims):
         email = claims.get("email")
         if not email:
-            raise NotImplementedError(
+            raise InvalidClaimsError(
                 "'email' should always be a claim. See OIDC_OP_* configuration"
             )
         return super().filter_users_by_claims(claims)
@@ -64,6 +68,6 @@ def logout_url(request):
     return (
         request.GET.get("next")
         or request.session.get("oidc_login_next")
-        or getattr(settings, "LOGOUT_REDIRECT_URL")
+        or getattr(settings, "LOGOUT_REDIRECT_URL", None)
         or "/"
     )

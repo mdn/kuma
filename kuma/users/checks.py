@@ -27,12 +27,12 @@ def oidc_config_check(app_configs, **kwargs):
             )
 
     if settings.OIDC_CONFIGURATION_CHECK:
-        errors.extend(_get_oidc_configuration_errors())
+        errors.extend(_get_oidc_configuration_errors(MISSING_OIDC_CONFIGURATION_ERROR))
 
     return errors
 
 
-def _get_oidc_configuration_errors():
+def _get_oidc_configuration_errors(id):
     errors = []
 
     configuration_url = settings.OIDC_CONFIGURATION_URL
@@ -55,7 +55,7 @@ def _get_oidc_configuration_errors():
             errors.append(
                 Warning(
                     f"{setting_key} is set but {key!r} is not exposed in {configuration_url}",
-                    id=MISSING_OIDC_CONFIGURATION_ERROR,
+                    id=id,
                 )
             )
             continue
@@ -65,7 +65,7 @@ def _get_oidc_configuration_errors():
                 Error(
                     f"{setting_key}'s value is different from that on {configuration_url}"
                     f" ({setting_value!r} != {config_value!r}",
-                    id=MISSING_OIDC_CONFIGURATION_ERROR,
+                    id=id,
                 )
             )
 
@@ -77,7 +77,7 @@ def _get_oidc_configuration_errors():
             Error(
                 f"Invalid settings.OIDC_RP_SCOPES ({settings.OIDC_RP_SCOPES!r}). "
                 f"Requested: {scopes_requested}, Supported: {scopes_supported}",
-                id=MISSING_OIDC_CONFIGURATION_ERROR,
+                id=id,
             )
         )
 
@@ -89,7 +89,7 @@ def _get_oidc_configuration_errors():
                 f"Invalid settings.OIDC_RP_SIGN_ALGO. "
                 f"{settings.OIDC_RP_SIGN_ALGO!r} not in "
                 f'{openid_configuration["id_token_signing_alg_values_supported"]}',
-                id=MISSING_OIDC_CONFIGURATION_ERROR,
+                id=id,
             )
         )
 

@@ -1,9 +1,11 @@
 import pytest
 
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
+from kuma.users.models import UserProfile
 
 
 @pytest.mark.parametrize("http_method", ["put", "post", "delete", "options", "head"])
@@ -60,8 +62,6 @@ def test_whoami(
     expect = {
         "username": wiki_user.username,
         "is_authenticated": True,
-        "avatar_url": None,  # temporary
-        "subscriber_number": 0,
         "email": "wiki_user@example.com",
     }
     if is_staff:
@@ -73,29 +73,54 @@ def test_whoami(
     assert_no_cache_header(response)
 
 
-# @pytest.mark.django_db
-# def test_whoami_subscriber(
-#     user_client,
-#     wiki_user,
-# ):
-#     """Test responses for logged-in users and whether they have an active
-#     subscription."""
-#     url = reverse("api.v1.whoami")
-#     response = user_client.get(url)
-#     assert response.status_code == 200
-#     assert "is_subscriber" not in response.json()
+@pytest.mark.django_db
+def test_whoami_avatar_url(
+    user_client,
+    wiki_user,
+):
+    url = reverse("api.v1.whoami")
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert "avatar_url" not in response.json()
 
-#     UserSubscription.set_active(wiki_user, "abc123")
-#     response = user_client.get(url)
-#     assert response.status_code == 200
-#     assert response.json()["is_subscriber"] is True
-#     assert response.json()["subscriber_number"] == 1
+    user_profile = UserProfile.objects.create(user=wiki_user)
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert "avatar_url" not in response.json()
 
-#     UserSubscription.set_canceled(wiki_user, "abc123")
-#     response = user_client.get(url)
-#     assert response.status_code == 200
-#     assert "is_subscriber" not in response.json()
-#     assert response.json()["subscriber_number"] == 1
+    user_profile.claims = {"avatar": "https://example.com/pic.svg"}
+    user_profile.save()
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert response.json()["avatar_url"] == "https://example.com/pic.svg"
+
+    user_profile.claims["avatarDefault"] = True
+    user_profile.save()
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert "avatar_url" not in response.json()
+
+
+@pytest.mark.django_db
+def test_whoami_subscriber(
+    user_client,
+    wiki_user,
+):
+    url = reverse("api.v1.whoami")
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert "is_subscriber" not in response.json()
+
+    user_profile = UserProfile.objects.create(user=wiki_user)
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert "is_subscriber" not in response.json()
+
+    user_profile.is_subscriber = timezone.now()
+    user_profile.save()
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert response.json()["is_subscriber"]
 
 
 @pytest.mark.django_db
@@ -116,31 +141,34 @@ def test_account_settings_delete(user_client, wiki_user):
     assert not User.objects.filter(username=username).exists()
 
 
-# def test_get_and_set_settings_happy_path(user_client):
-#     url = reverse("api.v1.settings")
-#     response = user_client.get(url)
-#     assert response.status_code == 200
-#     assert_no_cache_header(response)
-#     assert response.json()["locale"] == "en-US"
+def test_get_and_set_settings_happy_path(user_client):
+    url = reverse("api.v1.settings")
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert_no_cache_header(response)
+    assert response.json()["locale"] is None
 
-#     response = user_client.post(url, {"locale": "zh-CN"})
-#     assert response.status_code == 200
+    response = user_client.post(url, {"locale": "zh-CN"})
+    assert response.status_code == 200
 
-#     response = user_client.get(url)
-#     assert response.status_code == 200
-#     assert response.json()["locale"] == "zh-CN"
+    response = user_client.post(url, {"locale": "fr"})
+    assert response.status_code == 200
 
-#     # You can also omit certain things and things won't be set
-#     response = user_client.post(url, {})
-#     assert response.status_code == 200
-#     response = user_client.get(url)
-#     assert response.status_code == 200
-#     assert response.json()["locale"] == "zh-CN"
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert response.json()["locale"] == "fr"
+
+    # You can also omit certain things and things won't be set
+    response = user_client.post(url, {})
+    assert response.status_code == 200
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert response.json()["locale"] == "fr"
 
 
-# def test_set_settings_validation_errors(user_client):
-#     url = reverse("api.v1.settings")
-#     response = user_client.post(url, {"locale": "never heard of"})
-#     assert response.status_code == 400
-#     assert response.json()["errors"]["locale"][0]["code"] == "invalid_choice"
-#     assert response.json()["errors"]["locale"][0]["message"]
+def test_set_settings_validation_errors(user_client):
+    url = reverse("api.v1.settings")
+    response = user_client.post(url, {"locale": "never heard of"})
+    assert response.status_code == 400
+    assert response.json()["errors"]["locale"][0]["code"] == "invalid_choice"
+    assert response.json()["errors"]["locale"][0]["message"]

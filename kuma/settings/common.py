@@ -573,10 +573,3 @@ if SENTRY_DSN:
         dsn=SENTRY_DSN,
         integrations=[DjangoIntegration()],
     )
-
-
-# These are temporary while we wait for the new authentication and
-# subscription works. Having this off-by-default option makes it possible
-# to testing things out, locally, such as bookmarking.
-FAKE_USER_AVATAR_URL = config("FAKE_USER_AVATAR_URL", default=None)
-FAKE_USER_SUBSCRIBER_NUMBER = config("FAKE_USER_SUBSCRIBER_NUMBER", default=0, cast=int)
