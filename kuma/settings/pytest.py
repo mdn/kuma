@@ -77,6 +77,7 @@ CONTRIBUTION_AMOUNT_USD = 4.99
 BOOKMARKS_BASE_URL = "https://developer.example.com"
 
 # OIDC related
+OIDC_CONFIGURATION_CHECK = True
 OIDC_RP_CLIENT_ID = "123456789"
 OIDC_RP_CLIENT_SECRET = "xyz-secret-123"
 OIDC_CONFIGURATION_URL = "https://accounts.examples.com"
