@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.utils import timezone
 from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 
 from .models import UserProfile
@@ -26,17 +27,36 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         return user
 
     def _create_or_set_user_profile(self, user, claims):
-        # profile, created = UserProfile.objects.update_or_create(
-        UserProfile.objects.update_or_create(
-            user=user,
-            defaults={
-                "claims": claims,
-            },
+        subscriptions = claims.get("subscriptions")
+        is_subscriber = (
+            timezone.now() if subscriptions and "mdn_plus" in subscriptions else None
         )
-        # XXX Once we can use the claims stuff here to find out if they've
-        # payed for MDN Plus, we can use that to forcibly set a
-        # `subscriber_number` on the profile the first time we know they are
-        # a paying subscriber.
+        for user_profile in UserProfile.objects.filter(user=user):
+            user_profile.claims = claims
+            if not user_profile.is_subscriber and is_subscriber:
+                # Welcome to being a new subscriber!
+                user_profile.subscriber_number = (
+                    UserProfile.objects.exclude(
+                        user=user, is_subscriber__isnull=True
+                    ).count()
+                    + 1
+                )
+            user_profile.is_subscriber = is_subscriber
+            user_profile.save()
+            break
+        else:
+            subscriber_number = None
+            if is_subscriber:
+                # New profile AND is a paying subscriber!
+                subscriber_number = (
+                    UserProfile.objects.filter(is_subscriber=timezone.now()).count() + 1
+                )
+            UserProfile.objects.create(
+                user=user,
+                claims=claims,
+                is_subscriber=is_subscriber,
+                subscriber_number=subscriber_number,
+            )
 
 
 def logout_url(request):

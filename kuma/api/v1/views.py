@@ -31,9 +31,9 @@ def whoami(request):
             data["is_staff"] = True
         if user.is_superuser:
             data["is_superuser"] = True
-        for user_profile_claims in UserProfile.objects.filter(user=user).values_list(
-            "claims", flat=True
-        ):
+        for user_profile_claims, is_subscriber in UserProfile.objects.filter(
+            user=user
+        ).values_list("claims", "is_subscriber"):
             # 'avatarDefault' is set to truthy if the user doesn't have an avatar.
             # If it's the case, the user simply hasn't uploaded an avatar. And
             # FxA will still send a default avatar which is usually just a
@@ -42,9 +42,8 @@ def whoami(request):
                 "avatarDefault"
             ):
                 data["avatar_url"] = user_profile_claims["avatar"]
-
-            subscriptions = user_profile_claims.get("subscriptions")
-            data["is_subscriber"] = bool(subscriptions and "mdn_plus" in subscriptions)
+            if is_subscriber:
+                data["is_subscriber"] = True
 
     else:
         data = {}
