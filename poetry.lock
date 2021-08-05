@@ -197,6 +197,25 @@ toml = {version = "*", optional = true, markers = "extra == \"toml\""}
 toml = ["toml"]
 
 [[package]]
+name = "cryptography"
+version = "3.4.7"
+description = "cryptography is a package which provides cryptographic recipes and primitives to Python developers."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+cffi = ">=1.12"
+
+[package.extras]
+docs = ["sphinx (>=1.6.5,!=1.8.0,!=3.1.0,!=3.1.1)", "sphinx-rtd-theme"]
+docstest = ["doc8", "pyenchant (>=1.6.11)", "twine (>=1.12.0)", "sphinxcontrib-spelling (>=4.0.1)"]
+pep8test = ["black", "flake8", "flake8-import-order", "pep8-naming"]
+sdist = ["setuptools-rust (>=0.11.4)"]
+ssh = ["bcrypt (>=3.1.5)"]
+test = ["pytest (>=6.0)", "pytest-cov", "pytest-subtests", "pytest-xdist", "pretend", "iso8601", "pytz", "hypothesis (>=1.11.4,!=3.79.2)"]
+
+[[package]]
 name = "dennis"
 version = "0.9"
 description = "Utilities for working with PO and POT files to ease development and improve localization quality"
@@ -226,7 +245,7 @@ python-versions = "*"
 
 [[package]]
 name = "django"
-version = "3.2.5"
+version = "3.2.6"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
 optional = false
@@ -442,6 +461,23 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "josepy"
+version = "1.8.0"
+description = "JOSE protocol implementation in Python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+cryptography = ">=0.8"
+PyOpenSSL = ">=0.13"
+
+[package.extras]
+dev = ["mypy", "pytest", "tox"]
+docs = ["Sphinx (>=1.0)", "sphinx-rtd-theme"]
+tests = ["coverage (>=4.0)", "pytest-cache (>=1.0)", "pytest-cov", "flake8", "pytest-flake8 (>=0.5)", "pytest (>=2.8.0)"]
+
+[[package]]
 name = "kombu"
 version = "4.6.10"
 description = "Messaging library for Python."
@@ -490,6 +526,20 @@ docs = ["sphinx"]
 test = ["pytest (<5.4)", "pytest-cov"]
 
 [[package]]
+name = "mozilla-django-oidc"
+version = "2.0.0"
+description = "A lightweight authentication and access management library for integration with OpenID Connect enabled authentication services."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+cryptography = "*"
+Django = ">=2.2"
+josepy = "*"
+requests = "*"
+
+[[package]]
 name = "mypy-extensions"
 version = "0.4.3"
 description = "Experimental type system extensions for programs checked with the mypy typechecker."
@@ -499,7 +549,7 @@ python-versions = "*"
 
 [[package]]
 name = "newrelic"
-version = "6.4.4.161"
+version = "6.8.0.163"
 description = "New Relic Python Agent"
 category = "main"
 optional = false
@@ -586,6 +636,22 @@ description = "passive checker of Python programs"
 category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+
+[[package]]
+name = "pyopenssl"
+version = "20.0.1"
+description = "Python wrapper module around the OpenSSL library"
+category = "main"
+optional = false
+python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*"
+
+[package.dependencies]
+cryptography = ">=3.2"
+six = ">=1.5.2"
+
+[package.extras]
+docs = ["sphinx", "sphinx-rtd-theme"]
+test = ["flaky", "pretend", "pytest (>=3.0.1)"]
 
 [[package]]
 name = "pyparsing"
@@ -935,7 +1001,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "40bf4c861638f67277cd8f60019176dabc5342b042f090a30fc1abe2258d36ed"
+content-hash = "f4b9126a4c369fb4dd401956cfec36573fc951ea26d678308713a86c03bfbd13"
 
 [metadata.files]
 amqp = [
@@ -1074,6 +1140,20 @@ coverage = [
     {file = "coverage-5.5-pp37-none-any.whl", hash = "sha256:2a3859cb82dcbda1cfd3e6f71c27081d18aa251d20a17d87d26d4cd216fb0af4"},
     {file = "coverage-5.5.tar.gz", hash = "sha256:ebe78fe9a0e874362175b02371bdfbee64d8edc42a044253ddf4ee7d3c15212c"},
 ]
+cryptography = [
+    {file = "cryptography-3.4.7-cp36-abi3-macosx_10_10_x86_64.whl", hash = "sha256:3d8427734c781ea5f1b41d6589c293089704d4759e34597dce91014ac125aad1"},
+    {file = "cryptography-3.4.7-cp36-abi3-macosx_11_0_arm64.whl", hash = "sha256:8e56e16617872b0957d1c9742a3f94b43533447fd78321514abbe7db216aa250"},
+    {file = "cryptography-3.4.7-cp36-abi3-manylinux2010_x86_64.whl", hash = "sha256:37340614f8a5d2fb9aeea67fd159bfe4f5f4ed535b1090ce8ec428b2f15a11f2"},
+    {file = "cryptography-3.4.7-cp36-abi3-manylinux2014_aarch64.whl", hash = "sha256:240f5c21aef0b73f40bb9f78d2caff73186700bf1bc6b94285699aff98cc16c6"},
+    {file = "cryptography-3.4.7-cp36-abi3-manylinux2014_x86_64.whl", hash = "sha256:1e056c28420c072c5e3cb36e2b23ee55e260cb04eee08f702e0edfec3fb51959"},
+    {file = "cryptography-3.4.7-cp36-abi3-win32.whl", hash = "sha256:0f1212a66329c80d68aeeb39b8a16d54ef57071bf22ff4e521657b27372e327d"},
+    {file = "cryptography-3.4.7-cp36-abi3-win_amd64.whl", hash = "sha256:de4e5f7f68220d92b7637fc99847475b59154b7a1b3868fb7385337af54ac9ca"},
+    {file = "cryptography-3.4.7-pp36-pypy36_pp73-manylinux2010_x86_64.whl", hash = "sha256:26965837447f9c82f1855e0bc8bc4fb910240b6e0d16a664bb722df3b5b06873"},
+    {file = "cryptography-3.4.7-pp36-pypy36_pp73-manylinux2014_x86_64.whl", hash = "sha256:eb8cc2afe8b05acbd84a43905832ec78e7b3873fb124ca190f574dca7389a87d"},
+    {file = "cryptography-3.4.7-pp37-pypy37_pp73-manylinux2010_x86_64.whl", hash = "sha256:7ec5d3b029f5fa2b179325908b9cd93db28ab7b85bb6c1db56b10e0b54235177"},
+    {file = "cryptography-3.4.7-pp37-pypy37_pp73-manylinux2014_x86_64.whl", hash = "sha256:ee77aa129f481be46f8d92a1a7db57269a2f23052d5f2433b4621bb457081cc9"},
+    {file = "cryptography-3.4.7.tar.gz", hash = "sha256:3d10de8116d25649631977cb37da6cbdd2d6fa0e0281d014a5b7d337255ca713"},
+]
 dennis = [
     {file = "dennis-0.9-py2.py3-none-any.whl", hash = "sha256:f6487392ac91800c5f0684a99b404b7fd0f72ceb48faeb5a0ce4e2c24fb62d3f"},
     {file = "dennis-0.9.tar.gz", hash = "sha256:8c942dd5da7d03c65daebc069c5ee5c7f1374ac9b0c8c89c627caa66fe822604"},
@@ -1087,8 +1167,8 @@ dj-email-url = [
     {file = "dj_email_url-1.0.2-py2.py3-none-any.whl", hash = "sha256:15148141c6ef123636e4ca3663e95231ed94ca5ed267e91977e5a4397be8b34c"},
 ]
 django = [
-    {file = "Django-3.2.5-py3-none-any.whl", hash = "sha256:c58b5f19c5ae0afe6d75cbdd7df561e6eb929339985dbbda2565e1cabb19a62e"},
-    {file = "Django-3.2.5.tar.gz", hash = "sha256:3da05fea54fdec2315b54a563d5b59f3b4e2b1e69c3a5841dda35019c01855cd"},
+    {file = "Django-3.2.6-py3-none-any.whl", hash = "sha256:7f92413529aa0e291f3be78ab19be31aefb1e1c9a52cd59e130f505f27a51f13"},
+    {file = "Django-3.2.6.tar.gz", hash = "sha256:f27f8544c9d4c383bbe007c57e3235918e258364577373d4920e9162837be022"},
 ]
 django-decorator-include = [
     {file = "django-decorator-include-3.0.tar.gz", hash = "sha256:18db98e0e48dbb3977ab79b5520dbf5ecbb35f0bced8e15ed62dc66762345856"},
@@ -1225,6 +1305,10 @@ iniconfig = [
     {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
+josepy = [
+    {file = "josepy-1.8.0-py2.py3-none-any.whl", hash = "sha256:6d632fcdaf0bed09e33f81f13b10575d4f0b7c37319350b725454e04a41e6a49"},
+    {file = "josepy-1.8.0.tar.gz", hash = "sha256:a5a182eb499665d99e7ec54bb3fe389f9cbc483d429c9651f20384ba29564269"},
+]
 kombu = [
     {file = "kombu-4.6.10-py2.py3-none-any.whl", hash = "sha256:dc282bb277197d723bccda1a9ba30a27a28c9672d0ab93e9e51bb05a37bd29c3"},
     {file = "kombu-4.6.10.tar.gz", hash = "sha256:437b9cdea193cc2ed0b8044c85fd0f126bb3615ca2f4d4a35b39de7cacfa3c1a"},
@@ -1237,19 +1321,28 @@ mock = [
     {file = "mock-4.0.3-py3-none-any.whl", hash = "sha256:122fcb64ee37cfad5b3f48d7a7d51875d7031aaf3d8be7c42e2bee25044eee62"},
     {file = "mock-4.0.3.tar.gz", hash = "sha256:7d3fbbde18228f4ff2f1f119a45cdffa458b4c0dee32eb4d2bb2f82554bac7bc"},
 ]
+mozilla-django-oidc = [
+    {file = "mozilla-django-oidc-2.0.0.tar.gz", hash = "sha256:a8b2f27c69c122d2f4d801c3759761d33debf06ae9dabbab8aed82887bba3bb8"},
+    {file = "mozilla_django_oidc-2.0.0-py2.py3-none-any.whl", hash = "sha256:53c39755b667e8c5923b1dffc3c29673198d03aa107aa42ac86b8a38b4720c25"},
+]
 mypy-extensions = [
     {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
 ]
 newrelic = [
-    {file = "newrelic-6.4.4.161-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:8b390fcb97357c9a44be60d377bb42609383150b0d8c414e6107379115eb9140"},
-    {file = "newrelic-6.4.4.161-cp27-cp27m-manylinux2010_x86_64.whl", hash = "sha256:a3719fac034716e2a4e1a66684a884f7ad8115f0bbc5e8d9ff5a05294839db4a"},
-    {file = "newrelic-6.4.4.161-cp27-cp27m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:0df636c22908507397a59003ecb82a208f9e4a03537f2397777e897c6ecd7180"},
-    {file = "newrelic-6.4.4.161-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:2fe66cff59e729484f959eef553d81b6ac51427d02b15965a7293d7d97b8e117"},
-    {file = "newrelic-6.4.4.161-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:edb8d70464e3833d301aba11c5e879b02e9ea2afb30aea50d50ef4a5ce6a90f9"},
-    {file = "newrelic-6.4.4.161-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:9b7bf8a9c21278f9bcdcf36e9e90ce81bad8b780125eebcb393756ec1f9836e5"},
-    {file = "newrelic-6.4.4.161-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:b008ec2cd684c107c340bbd1c54814a1421e4f45276c22be24a21ea9baf24519"},
-    {file = "newrelic-6.4.4.161.tar.gz", hash = "sha256:e99fb5fefef7ac1d4c00bde721d2e4b32dd85cde6f76cade2624dc4c75beeb99"},
+    {file = "newrelic-6.8.0.163-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:5f1b835c523e151ba0dc0270ad39717ae2ee62d7d57fded8c7e8370c89e89365"},
+    {file = "newrelic-6.8.0.163-cp27-cp27m-manylinux2010_x86_64.whl", hash = "sha256:9cc250bd5a6968eaef7ae71dc5da1ccb4ec9c2539cfe76ccaa2909365626aefd"},
+    {file = "newrelic-6.8.0.163-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:c6d9a8b70f6aaaca6d5752ea2f162ccdb84a9c07117004b3239345b99e94ff3b"},
+    {file = "newrelic-6.8.0.163-cp27-cp27mu-manylinux2010_x86_64.whl", hash = "sha256:466fbe9b92ab246c13d8bda65c6ba8cfe2707227175466a6690f5fac6c6c3ba9"},
+    {file = "newrelic-6.8.0.163-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:9217f9fe6d0dff45c6d50e4d75dc51891ef30e143d06a0271c6c306efd7846c4"},
+    {file = "newrelic-6.8.0.163-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:d930e514588182ac082836c89dbc498312e1df14450a83e9527faeb9a6c78721"},
+    {file = "newrelic-6.8.0.163-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:a175bea1439b2f1af7756f635cccf9ac9b4ac7a5368cf7496edd3eaa59c07c23"},
+    {file = "newrelic-6.8.0.163-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:d0a1643fb0bde39559c889262c4e37183cd23d006ba63e2185f0e4dc113e2e12"},
+    {file = "newrelic-6.8.0.163-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:57d547d6591b2aef1d56b90c5775911d24473a7c93527abffe4783ede8ebc695"},
+    {file = "newrelic-6.8.0.163-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:a651b3b366a44fe54795528b73ce023f24b36f680bf467dbb94161daeb3b9da5"},
+    {file = "newrelic-6.8.0.163-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:21f37b6553997f077d0080426e689d3b0252a796cf02bd69de04c60538a92a3d"},
+    {file = "newrelic-6.8.0.163-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:cac282f199d4d0b9c748db178dcc7df21efbd321f51abe7ee63493474140882a"},
+    {file = "newrelic-6.8.0.163.tar.gz", hash = "sha256:5c993040ff20f6807ae08492a507ef4b232f747ae8d04f3fcc826d0420e028b0"},
 ]
 packaging = [
     {file = "packaging-20.1-py2.py3-none-any.whl", hash = "sha256:170748228214b70b672c581a3dd610ee51f733018650740e98c7df862a583f73"},
@@ -1313,6 +1406,10 @@ pycparser = [
 pyflakes = [
     {file = "pyflakes-2.3.1-py2.py3-none-any.whl", hash = "sha256:7893783d01b8a89811dd72d7dfd4d84ff098e5eed95cfa8905b22bbffe52efc3"},
     {file = "pyflakes-2.3.1.tar.gz", hash = "sha256:f5bc8ecabc05bb9d291eb5203d6810b49040f6ff446a756326104746cc00c1db"},
+]
+pyopenssl = [
+    {file = "pyOpenSSL-20.0.1-py2.py3-none-any.whl", hash = "sha256:818ae18e06922c066f777a33f1fca45786d85edfe71cd043de6379337a7f274b"},
+    {file = "pyOpenSSL-20.0.1.tar.gz", hash = "sha256:4c231c759543ba02560fcd2480c48dcec4dae34c9da7d3747c508227e0624b51"},
 ]
 pyparsing = [
     {file = "pyparsing-2.4.6-py2.py3-none-any.whl", hash = "sha256:c342dccb5250c08d45fd6f8b4a559613ca603b57498511740e65cd11a2e7dcec"},
