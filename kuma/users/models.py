@@ -9,7 +9,7 @@ class UserProfile(models.Model):
     claims = models.JSONField(default=dict)
     locale = models.CharField(max_length=6, null=True)
     is_subscriber = models.DateTimeField(null=True)
-    subscriber_number = models.PositiveIntegerField(null=True)
+    subscriber_number = models.PositiveIntegerField(null=True, unique=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
