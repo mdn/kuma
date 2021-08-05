@@ -59,6 +59,14 @@ def test_create_and_update_user_new_subscriber():
     assert not user_profile.is_subscriber
     assert user_profile.subscriber_number == 1
 
+    # Create another subscriber and make sure the subscriber_number increments
+    user = backend.create_user(
+        {"email": "ryan@example.com", "subscriptions": ["mdn_plus"]}
+    )
+    user_profile = UserProfile.objects.get(user=user)
+    assert user_profile.is_subscriber
+    assert user_profile.subscriber_number == 2
+
 
 @pytest.mark.django_db
 def test_update_user_from_not_to_new_subscriber():
@@ -83,6 +91,54 @@ def test_update_user_from_not_to_new_subscriber():
     user_profile.refresh_from_db()
     assert user_profile.is_subscriber
     assert user_profile.subscriber_number == 1
+
+    # Create another subscriber and make sure the subscriber_number increments
+    user = backend.create_user(
+        {"email": "ryan@example.com", "subscriptions": ["mdn_plus"]}
+    )
+    user_profile = UserProfile.objects.get(user=user)
+    assert user_profile.is_subscriber
+    assert user_profile.subscriber_number == 2
+
+
+@pytest.mark.django_db
+def test_subscriber_numbers_always_go_up():
+    """In this test, the following timeline happens:
+
+    1. Subscribing user is created becomes subscriber_number=1
+    2. Same user, no longer subscribing, is updated and keeps subscriber_number=1
+    3. New subscribing user is created and becomes subscriber_number=2
+
+    """
+    backend = KumaOIDCAuthenticationBackend()
+    user = backend.create_user(
+        {
+            "email": "peterbe@example.com",
+            "subscriptions": ["mdn_plus"],
+        }
+    )
+    user_profile = UserProfile.objects.get(user=user)
+    assert user_profile.is_subscriber
+    assert user_profile.subscriber_number == 1
+
+    backend.update_user(
+        user,
+        {
+            "email": "peterbe@example.com",
+            "subscriptions": [],  # Note!
+        },
+    )
+    user_profile.refresh_from_db()
+    assert not user_profile.is_subscriber
+    assert user_profile.subscriber_number == 1
+
+    # Create another subscriber and make sure the subscriber_number increments
+    user = backend.create_user(
+        {"email": "ryan@example.com", "subscriptions": ["mdn_plus"]}
+    )
+    user_profile = UserProfile.objects.get(user=user)
+    assert user_profile.is_subscriber
+    assert user_profile.subscriber_number == 2
 
 
 def test_logout_url(settings):
