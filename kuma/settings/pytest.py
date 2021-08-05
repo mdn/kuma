@@ -76,8 +76,16 @@ CONTRIBUTION_AMOUNT_USD = 4.99
 # So it never accidentally actually uses the real value
 BOOKMARKS_BASE_URL = "https://developer.example.com"
 
-# These are temporary while we wait for the new authentication and
-# subscription works. Having this off-by-default option makes it possible
-# to testing things out, locally, such as bookmarking.
-FAKE_USER_AVATAR_URL = None
-FAKE_USER_SUBSCRIBER_NUMBER = 0
+# OIDC related
+OIDC_CONFIGURATION_CHECK = True
+OIDC_RP_CLIENT_ID = "123456789"
+OIDC_RP_CLIENT_SECRET = "xyz-secret-123"
+OIDC_CONFIGURATION_URL = "https://accounts.examples.com"
+OIDC_OP_AUTHORIZATION_ENDPOINT = f"{OIDC_CONFIGURATION_URL}/authorization"
+
+OIDC_OP_TOKEN_ENDPOINT = f"{OIDC_CONFIGURATION_URL}/v1/token"
+OIDC_OP_USER_ENDPOINT = f"{OIDC_CONFIGURATION_URL}/v1/profile"
+OIDC_OP_JWKS_ENDPOINT = f"{OIDC_CONFIGURATION_URL}/v1/jwks"
+OIDC_RP_SIGN_ALGO = "XYZ"
+OIDC_USE_NONCE = False
+OIDC_RP_SCOPES = "openid profile email"

@@ -251,14 +251,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # MDN
+    # Kuma
     "kuma.core.apps.CoreConfig",
+    "kuma.users.apps.UsersConfig",
     "kuma.api.apps.APIConfig",
     "kuma.attachments.apps.AttachmentsConfig",
     "kuma.plus.apps.PlusConfig",
     "kuma.documenturls.apps.DocumentURLsConfig",
     "kuma.bookmarks.apps.BookmarksConfig",
     # 3rd party
+    "mozilla_django_oidc",
     "django_extensions",
 ]
 
@@ -278,6 +280,61 @@ TEMPLATES = [
         },
     },
 ]
+
+# Authentication
+AUTHENTICATION_BACKENDS = [
+    "kuma.users.auth.KumaOIDCAuthenticationBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+# This will download the configuration and set up all the settings that
+# the mozilla_django_oidc needs.
+OIDC_CONFIGURATION_URL = config(
+    "OIDC_CONFIGURATION_URL",
+    # Change to https://accounts.stage.mozaws.net/.well-known/openid-configuration
+    # for stage.
+    default="https://accounts.firefox.com/.well-known/openid-configuration",
+)
+# This will open `OIDC_CONFIGURATION_URL` and compare its JSON with the
+# other settings.
+OIDC_CONFIGURATION_CHECK = config(
+    "OIDC_CONFIGURATION_CHECK", cast=bool, default=not DEBUG
+)
+
+OIDC_OP_AUTHORIZATION_ENDPOINT = config(
+    "OIDC_OP_AUTHORIZATION_ENDPOINT",
+    default="https://accounts.firefox.com/authorization",
+)
+OIDC_OP_TOKEN_ENDPOINT = config(
+    "OIDC_OP_TOKEN_ENDPOINT", default="https://oauth.accounts.firefox.com/v1/token"
+)
+OIDC_OP_USER_ENDPOINT = config(
+    "OIDC_OP_USER_ENDPOINT", default="https://profile.accounts.firefox.com/v1/profile"
+)
+OIDC_OP_JWKS_ENDPOINT = config(
+    "OIDC_OP_JWKS_ENDPOINT", default="https://oauth.accounts.firefox.com/v1/jwks"
+)
+OIDC_RP_SIGN_ALGO = config("OIDC_RP_SIGN_ALGO", default="RS256")
+# Firefox Accounts doesn't support nonce, so don't bother sending it.
+OIDC_USE_NONCE = config("OIDC_USE_NONCE", cast=bool, default=False)
+# The default is 'openid email' but according to openid-configuration they
+# will send 'openid profile email'.
+OIDC_RP_SCOPES = config("OIDC_RP_SCOPES", default="openid profile email")
+# If you're doing local development with Yari, it's recommened that you add
+#   echo 'OIDC_REDIRECT_ALLOWED_HOSTS=localhost:3000' >> .env
+# so you get redirected back to http://localhost:3000/... after signing in.
+OIDC_REDIRECT_ALLOWED_HOSTS = config(
+    "OIDC_REDIRECT_ALLOWED_HOSTS", default="", cast=Csv()
+)
+
+# Allow null on these because you should be able run Kuma with these set.
+# It'll just mean you can't use kuma to authenticate. And a warning
+# (or error if !DEBUG) from the system checks will remind you.
+OIDC_RP_CLIENT_ID = config("OIDC_RP_CLIENT_ID", default=None)
+OIDC_RP_CLIENT_SECRET = config("OIDC_RP_CLIENT_SECRET", default=None)
+
+# Function that gets called
+OIDC_OP_LOGOUT_URL_METHOD = "kuma.users.auth.logout_url"
 
 # Session cookies
 SESSION_COOKIE_DOMAIN = DOMAIN
@@ -516,10 +573,3 @@ if SENTRY_DSN:
         dsn=SENTRY_DSN,
         integrations=[DjangoIntegration()],
     )
-
-
-# These are temporary while we wait for the new authentication and
-# subscription works. Having this off-by-default option makes it possible
-# to testing things out, locally, such as bookmarking.
-FAKE_USER_AVATAR_URL = config("FAKE_USER_AVATAR_URL", default=None)
-FAKE_USER_SUBSCRIBER_NUMBER = config("FAKE_USER_SUBSCRIBER_NUMBER", default=0, cast=int)

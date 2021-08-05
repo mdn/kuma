@@ -17,6 +17,9 @@ class CoreConfig(AppConfig):
 
     def ready(self):
         """Configure kuma.core after models are loaded."""
+        self.add_periodc_tasks()
+
+    def add_periodc_tasks(self):
         # Clean up expired sessions every 60 minutes
         from kuma.core.tasks import clean_sessions
 
