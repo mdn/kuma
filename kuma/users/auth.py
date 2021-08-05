@@ -10,6 +10,16 @@ class InvalidClaimsError(ValueError):
     """When the claims are bonkers"""
 
 
+def get_next_subscriber_number():
+    max_subscriber_number = UserProfile.objects.filter(
+        subscriber_number__isnull=False
+    ).aggregate(max_subscriber_number=Max("subscriber_number"))["max_subscriber_number"]
+    # The absolute very first time you do this aggregate it
+    # will become None because there's 0 rows to aggregate on.
+    # That's why we do this `max_subscriber_number or 0`.
+    return (max_subscriber_number or 0) + 1
+
+
 class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
     def filter_users_by_claims(self, claims):
         email = claims.get("email")
@@ -40,29 +50,12 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
             user_profile.claims = claims
             if not user_profile.is_subscriber and is_subscriber:
                 # Welcome to being a new subscriber!
-                user_profile.subscriber_number = (
-                    UserProfile.objects.exclude(
-                        user=user, is_subscriber__isnull=True
-                    ).count()
-                    + 1
-                )
+                user_profile.subscriber_number = get_next_subscriber_number()
             user_profile.is_subscriber = is_subscriber
             user_profile.save()
             break
         else:
-            subscriber_number = None
-            if is_subscriber:
-                # New profile AND is a paying subscriber!
-                max_subscriber_number = UserProfile.objects.filter(
-                    subscriber_number__isnull=False
-                ).aggregate(max_subscriber_number=Max("subscriber_number"))[
-                    "max_subscriber_number"
-                ]
-                # The absolute very first time you do this aggregate it
-                # will become None because there's 0 rows to aggregate on.
-                # That's why we do this `max_subscriber_number or 0`.
-                subscriber_number = (max_subscriber_number or 0) + 1
-
+            subscriber_number = get_next_subscriber_number() if is_subscriber else None
             UserProfile.objects.create(
                 user=user,
                 claims=claims,
