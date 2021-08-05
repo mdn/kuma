@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.db.models import Max
 from django.utils import timezone
 from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 
@@ -52,9 +53,16 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
             subscriber_number = None
             if is_subscriber:
                 # New profile AND is a paying subscriber!
-                subscriber_number = (
-                    UserProfile.objects.filter(is_subscriber=timezone.now()).count() + 1
-                )
+                max_subscriber_number = UserProfile.objects.filter(
+                    subscriber_number__isnull=False
+                ).aggregate(max_subscriber_number=Max("subscriber_number"))[
+                    "max_subscriber_number"
+                ]
+                # The absolute very first time you do this aggregate it
+                # will become None because there's 0 rows to aggregate on.
+                # That's why we do this `max_subscriber_number or 0`.
+                subscriber_number = (max_subscriber_number or 0) + 1
+
             UserProfile.objects.create(
                 user=user,
                 claims=claims,
