@@ -37,6 +37,10 @@ def test_is_bookmarked_signed_in(user_client, wiki_user, settings):
     assert response.status_code == 400
     assert "invalid 'url'" in response.content.decode("utf-8")
 
+    response = user_client.get(url, {"url": "   "})
+    assert response.status_code == 400
+    assert "missing 'url'" in response.content.decode("utf-8")
+
     response = user_client.get(url, {"url": "/en-US/docs/Web"})
     assert response.status_code == 200
     # It's NOT been toggled yet

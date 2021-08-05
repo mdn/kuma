@@ -76,6 +76,10 @@ CONTRIBUTION_AMOUNT_USD = 4.99
 # So it never accidentally actually uses the real value
 BOOKMARKS_BASE_URL = "https://developer.example.com"
 
+# Document URLs
+REFRESH_DOCUMENTURLS_MIN_AGE_SECONDS = 60
+REFRESH_DOCUMENTURLS_LIMIT = 10
+
 # These are temporary while we wait for the new authentication and
 # subscription works. Having this off-by-default option makes it possible
 # to testing things out, locally, such as bookmarking.

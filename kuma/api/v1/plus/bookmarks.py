@@ -153,6 +153,9 @@ def _toggle_bookmark(request, url):
         assert not documenturl.invalid
     except DocumentURL.DoesNotExist:
         response = download(absolute_url)
+        # Since this is the first time this URL has ever been bookmarked,
+        # it's NOT ok to get a 404.
+        response.raise_for_status()
         documenturl = DocumentURL.store(url, absolute_url, response)
 
     users_bookmarks = Bookmark.objects.filter(
