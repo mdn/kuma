@@ -13,7 +13,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_http_methods
 
 from kuma.bookmarks.models import Bookmark
-from kuma.documenturls.models import DocumentURL, download_url
+from kuma.documenturls.models import DocumentURL, download
 
 
 class NotOKDocumentURLError(Exception):
@@ -152,22 +152,8 @@ def _toggle_bookmark(request, url):
         documenturl = DocumentURL.objects.get(uri=DocumentURL.normalize_uri(url))
         assert not documenturl.invalid
     except DocumentURL.DoesNotExist:
-        response = download_url(absolute_url)
-        # Because it's so big, only store certain fields that are used.
-        full_metadata = response.json()["doc"]
-        metadata = {}
-        # Should we so day realize that we want to and need to store more
-        # about the remote Yari documents, we'd simply invoke some background
-        # processing job that forces a refresh.
-        for key in ("title", "mdn_url", "parents"):
-            if key in full_metadata:
-                metadata[key] = full_metadata[key]
-
-        documenturl = DocumentURL.objects.create(
-            uri=DocumentURL.normalize_uri(url),
-            absolute_url=absolute_url,
-            metadata=metadata,
-        )
+        response = download(absolute_url)
+        documenturl = DocumentURL.store(url, absolute_url, response)
 
     users_bookmarks = Bookmark.objects.filter(
         user_id=request.user.id, documenturl=documenturl

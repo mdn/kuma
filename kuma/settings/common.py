@@ -510,6 +510,14 @@ BOOKMARKS_BASE_URL = config(
 )
 API_V1_BOOKMARKS_PAGE_SIZE = config("API_V1_BOOKMARKS_PAGE_SIZE", cast=int, default=20)
 
+# When even considering which document URLs to refresh, they need to be at
+# least this old (in seconds)
+REFRESH_DOCUMENTURLS_MIN_AGE_SECONDS = config(
+    "REFRESH_DOCUMENTURLS_MIN_AGE_SECONDS", cast=int, default=60 * 60 * 24
+)
+# Max how many document URLs to refresh each time the periodic task ticks.
+REFRESH_DOCUMENTURLS_LIMIT = config("REFRESH_DOCUMENTURLS_LIMIT", cast=int, default=10)
+
 SENTRY_DSN = config("SENTRY_DSN", default="")
 if SENTRY_DSN:
     sentry_sdk.init(
