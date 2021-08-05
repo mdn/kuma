@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from django.conf import settings
 
 from kuma.celery import app
 
@@ -10,4 +11,6 @@ class DocumentURLsConfig(AppConfig):
     def ready(self):
         from kuma.documenturls.tasks import refresh_document_urls
 
-        app.add_periodic_task(60, refresh_document_urls.s())
+        app.add_periodic_task(
+            settings.REFRESH_DOCUMENTURLS_PERIODICITY_SECONDS, refresh_document_urls.s()
+        )

@@ -574,6 +574,9 @@ REFRESH_DOCUMENTURLS_MIN_AGE_SECONDS = config(
 )
 # Max how many document URLs to refresh each time the periodic task ticks.
 REFRESH_DOCUMENTURLS_LIMIT = config("REFRESH_DOCUMENTURLS_LIMIT", cast=int, default=10)
+REFRESH_DOCUMENTURLS_PERIODICITY_SECONDS = config(
+    "REFRESH_DOCUMENTURLS_PERIODICITY_SECONDS", cast=int, default=60 * 60
+)
 
 SENTRY_DSN = config("SENTRY_DSN", default="")
 if SENTRY_DSN:
