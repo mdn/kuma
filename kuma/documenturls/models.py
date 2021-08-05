@@ -78,6 +78,9 @@ def assert_lowercase_uri(sender, instance, **kwargs):
 
 
 class DocumentURLCheck(models.Model):
+    # TODO: This should have been called `documenturl` for consistency
+    # because that's what it's called as a variable whenever referring
+    # to instances of the DocumentURL model.
     document_url = models.ForeignKey(
         DocumentURL, on_delete=models.CASCADE, verbose_name="Document URL"
     )
@@ -92,22 +95,20 @@ class DocumentURLCheck(models.Model):
         return f"{self.http_error} on {self.document_url.absolute_url}"
 
     @classmethod
-    def store_response(cls, document_url, response, cleanup_old=False):
+    def store_response(cls, documenturl, response, cleanup_old=False):
         headers = dict(response.headers)
         checked = cls.objects.create(
-            document_url=document_url,
+            document_url=documenturl,
             http_error=response.status_code,
             headers=headers,
         )
         if cleanup_old:
-            cls.objects.filter(document_url=document_url).exclude(
-                id=checked.id
-            ).delete()
+            cls.objects.filter(document_url=documenturl).exclude(id=checked.id).delete()
         return checked
 
 
-def refresh(document_url, cleanup_old=False, retry_options=None):
-    absolute_url = document_url.absolute_url
+def refresh(documenturl, cleanup_old=False, retry_options=None):
+    absolute_url = documenturl.absolute_url
 
     # Note that this can throw. If there's a connection error
     # or something, it will raise that error after it's done some
@@ -118,22 +119,22 @@ def refresh(document_url, cleanup_old=False, retry_options=None):
     response = download(absolute_url, retry_options=retry_options)
 
     checked = DocumentURLCheck.store_response(
-        document_url, response, cleanup_old=cleanup_old
+        documenturl, response, cleanup_old=cleanup_old
     )
-    print(f"Checked {document_url!r} and got {checked.http_error}")
+    print(f"Checked {documenturl!r} and got {checked.http_error}")
     if checked.http_error == 200:
-        DocumentURL.store(document_url.uri, absolute_url, response)
+        DocumentURL.store(documenturl.uri, absolute_url, response)
     elif checked.http_error >= 500:
         # It'll just try again later.
         pass
     elif checked.http_error == 404:
-        document_url.invalid = timezone.now()
-        document_url.save()
+        documenturl.invalid = timezone.now()
+        documenturl.save()
     elif checked.http_error >= 301 and checked.http_error < 400:
         # TODO: Would be nice to heed the 'location' header
         # and perhaps potentially merge this or something.
         # But because requests.get() will follow redirects it should
         # yield a response we can store at least.
-        DocumentURL.store(document_url.uri, absolute_url, response)
+        DocumentURL.store(documenturl.uri, absolute_url, response)
     else:
         raise NotImplementedError(f"don't know how to deal with {checked.http_error}")

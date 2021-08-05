@@ -9,8 +9,8 @@ class DocumentURLsConfig(AppConfig):
     verbose_name = "Document URLs"
 
     def ready(self):
-        from kuma.documenturls.tasks import refresh_document_urls
+        from kuma.documenturls.tasks import refresh_documenturls
 
         app.add_periodic_task(
-            settings.REFRESH_DOCUMENTURLS_PERIODICITY_SECONDS, refresh_document_urls.s()
+            settings.REFRESH_DOCUMENTURLS_PERIODICITY_SECONDS, refresh_documenturls.s()
         )

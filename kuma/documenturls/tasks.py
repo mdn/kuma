@@ -10,12 +10,12 @@ from kuma.documenturls.models import DocumentURL, refresh
 
 @task
 @skip_in_maintenance_mode
-def refresh_document_urls():
+def refresh_documenturls():
     old = timezone.now() - datetime.timedelta(
         seconds=settings.REFRESH_DOCUMENTURLS_MIN_AGE_SECONDS
     )
     due = DocumentURL.objects.filter(modified__lt=old)
     limit = settings.REFRESH_DOCUMENTURLS_LIMIT
     # Oldest first
-    for document_url in due.order_by("modified")[:limit]:
-        refresh(document_url)
+    for documenturl in due.order_by("modified")[:limit]:
+        refresh(documenturl)

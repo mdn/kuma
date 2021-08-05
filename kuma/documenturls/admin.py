@@ -30,7 +30,7 @@ class DocumentURLAdmin(admin.ModelAdmin):
 @admin.register(DocumentURLCheck)
 class DocumentURLCheckAdmin(admin.ModelAdmin):
     list_display = (
-        "_document_url",
+        "_documenturl",
         "http_error",
         "created",
     )
@@ -42,9 +42,9 @@ class DocumentURLCheckAdmin(admin.ModelAdmin):
     )
 
     list_filter = ("http_error",)
-    search_fields = ("document_url__uri", "document_url__absolute_url")
+    search_fields = ("documenturl__uri", "document_url__absolute_url")
     ordering = ("-created",)
     list_per_page = 10
 
-    def _document_url(self, obj):
+    def _documenturl(self, obj):
         return obj.document_url.absolute_url

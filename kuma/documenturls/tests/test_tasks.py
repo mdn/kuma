@@ -4,7 +4,7 @@ import pytest
 from django.utils import timezone
 
 from kuma.documenturls.models import DocumentURL, DocumentURLCheck
-from kuma.documenturls.tasks import refresh_document_urls
+from kuma.documenturls.tasks import refresh_documenturls
 
 
 @pytest.mark.django_db
@@ -78,7 +78,7 @@ def test_happy_path_refresh(mock_requests, settings):
     # Note that we never set up a mock request for /en-US/docs/C/index.json
     # because it won't even be attempted.
 
-    refresh_document_urls()
+    refresh_documenturls()
 
     a.refresh_from_db()
     assert a.metadata["title"] == "New A"
