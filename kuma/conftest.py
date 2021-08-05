@@ -7,6 +7,8 @@ from django.urls import set_urlconf
 from django.utils import timezone
 from django.utils.translation import activate
 
+from kuma.users.models import UserProfile
+
 
 @pytest.fixture(autouse=True)
 def clear_cache():
@@ -70,6 +72,16 @@ def wiki_user(db, django_user_model):
 @pytest.fixture
 def user_client(client, wiki_user):
     """A test client with wiki_user logged in."""
+    wiki_user.set_password("password")
+    wiki_user.save()
+    client.login(username=wiki_user.username, password="password")
+    return client
+
+
+@pytest.fixture
+def subscriber_client(client, wiki_user):
+    """A test client with wiki_user logged in and a paying subscriber."""
+    UserProfile.objects.create(user=wiki_user, is_subscriber=timezone.now())
     wiki_user.set_password("password")
     wiki_user.save()
     client.login(username=wiki_user.username, password="password")
