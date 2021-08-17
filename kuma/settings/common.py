@@ -336,6 +336,22 @@ OIDC_RP_CLIENT_SECRET = config("OIDC_RP_CLIENT_SECRET", default=None)
 # Function that gets called
 OIDC_OP_LOGOUT_URL_METHOD = "kuma.users.auth.logout_url"
 
+# This is the default URL that mozilla_django_oidc will use if there is no
+# appropriate `?next=...` it can use.
+LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL_FAILURE = "/?login=failure"
+
+# This will HEAD request `SUBSCRIPTION_SUBSCRIBE_URL` and
+# `SUBSCRIPTION_SETTINGS_URL` to see if they're reachable at all.
+SUBPLAT_CONFIGURATION_CHECK = config(
+    "SUBPLAT_CONFIGURATION_CHECK", cast=bool, default=not DEBUG
+)
+# This is the URL used to send people to become MDN Plus subscribers
+# E.g. https://accounts.stage.mozaws.net/subscriptions/products/prod_Jtbg9tyGyLRuB0?plan=price_1JFoTYKb9q6OnNsLalexa03p
+SUBSCRIPTION_SUBSCRIBE_URL = config("SUBSCRIPTION_SUBSCRIBE_URL", default=None)
+# E.g. https://accounts.stage.mozaws.net/subscriptions
+SUBSCRIPTION_SETTINGS_URL = config("SUBSCRIPTION_SETTINGS_URL", default=None)
+
 # Session cookies
 SESSION_COOKIE_DOMAIN = DOMAIN
 SESSION_COOKIE_SECURE = config("SESSION_COOKIE_SECURE", default=True, cast=bool)

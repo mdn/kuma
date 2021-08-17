@@ -8,6 +8,8 @@ from kuma.core.utils import requests_retry_session
 MISSING_OIDC_RP_CLIENT_ID_ERROR = "kuma.users.E001"
 MISSING_OIDC_RP_CLIENT_SECRET_ERROR = "kuma.users.E002"
 MISSING_OIDC_CONFIGURATION_ERROR = "kuma.users.E003"
+MISSING_SUBPLAT_CONFIGURATION_ERROR = "kuma.users.E004"
+INVALID_SUBPLAT_CONFIGURATION_ERROR = "kuma.users.E005"
 
 
 def oidc_config_check(app_configs, **kwargs):
@@ -92,5 +94,45 @@ def _get_oidc_configuration_errors(id):
                 id=id,
             )
         )
+
+    return errors
+
+
+def subplat_config_check(app_configs, **kwargs):
+    errors = []
+
+    # This is true if `DEBUG==False` or explicitly set when `DEBUG==True`.
+    if settings.SUBPLAT_CONFIGURATION_CHECK:
+        for key in ("SUBSCRIPTION_SUBSCRIBE_URL", "SUBSCRIPTION_SETTINGS_URL"):
+            value = getattr(settings, key)
+            if not value:
+                errors.append(
+                    Error(
+                        f"settings.{key} is not set.",
+                        id=INVALID_SUBPLAT_CONFIGURATION_ERROR,
+                    )
+                )
+            else:
+                response = requests_retry_session().head(value)
+                if response.status_code != 200:
+                    errors.append(
+                        Error(
+                            f"Checking settings.{key} ({value}) failed. "
+                            f"Status code: {response.status_code}",
+                            id=INVALID_SUBPLAT_CONFIGURATION_ERROR,
+                        )
+                    )
+
+    else:
+        # Just check if they're set and warn
+        for key in ("SUBSCRIPTION_SUBSCRIBE_URL", "SUBSCRIPTION_SETTINGS_URL"):
+            value = getattr(settings, key)
+            if not value:
+                errors.append(
+                    Warning(
+                        f"settings.{key} is not set. ",
+                        id=MISSING_SUBPLAT_CONFIGURATION_ERROR,
+                    )
+                )
 
     return errors

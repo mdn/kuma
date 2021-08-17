@@ -34,6 +34,7 @@ else:
 urlpatterns += [re_path("", include("kuma.attachments.urls"))]
 urlpatterns += [
     path("users/fxa/login/", include("mozilla_django_oidc.urls")),
+    path("users/", include("kuma.users.urls")),
 ]
 
 urlpatterns += [

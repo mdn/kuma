@@ -12,5 +12,7 @@ class UsersConfig(AppConfig):
 
     def register_checks(self):
         from .checks import oidc_config_check
+        from .checks import subplat_config_check
 
         register(oidc_config_check)
+        register(subplat_config_check)

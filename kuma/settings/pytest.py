@@ -89,3 +89,7 @@ OIDC_OP_JWKS_ENDPOINT = f"{OIDC_CONFIGURATION_URL}/v1/jwks"
 OIDC_RP_SIGN_ALGO = "XYZ"
 OIDC_USE_NONCE = False
 OIDC_RP_SCOPES = "openid profile email"
+
+SUBSCRIPTION_SUBSCRIBE_URL = "https://accounts.example.com/subscriptions/products/"
+SUBSCRIPTION_SETTINGS_URL = "https://accounts.example.com/subscriptions/settings/"
+SUBPLAT_CONFIGURATION_CHECK = True

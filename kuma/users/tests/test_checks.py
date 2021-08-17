@@ -1,8 +1,11 @@
 from kuma.users.checks import (
+    INVALID_SUBPLAT_CONFIGURATION_ERROR,
     MISSING_OIDC_CONFIGURATION_ERROR,
     MISSING_OIDC_RP_CLIENT_ID_ERROR,
     MISSING_OIDC_RP_CLIENT_SECRET_ERROR,
+    MISSING_SUBPLAT_CONFIGURATION_ERROR,
     oidc_config_check,
+    subplat_config_check,
 )
 
 
@@ -71,3 +74,63 @@ def test_missing_important_rp_client_credentials(mock_requests, settings):
     assert errors
     ids = [error.id for error in errors]
     assert ids == [MISSING_OIDC_RP_CLIENT_ID_ERROR, MISSING_OIDC_RP_CLIENT_SECRET_ERROR]
+
+
+def test_subplat_config_happy_path(mock_requests, settings):
+    mock_requests.register_uri(
+        "HEAD",
+        settings.SUBSCRIPTION_SUBSCRIBE_URL,
+        text="OK",
+    )
+    mock_requests.register_uri(
+        "HEAD",
+        settings.SUBSCRIPTION_SETTINGS_URL,
+        text="OK",
+    )
+
+    errors = subplat_config_check(None)
+    assert not errors
+
+
+def test_subplat_config_failure(mock_requests, settings):
+    mock_requests.register_uri(
+        "HEAD",
+        settings.SUBSCRIPTION_SUBSCRIBE_URL,
+        text="OK",
+    )
+    mock_requests.register_uri(
+        "HEAD", settings.SUBSCRIPTION_SETTINGS_URL, status_code=404
+    )
+
+    errors = subplat_config_check(None)
+    assert errors
+    ids = [error.id for error in errors]
+    assert ids == [INVALID_SUBPLAT_CONFIGURATION_ERROR]
+
+
+def test_subplat_config_not_set(mock_requests, settings):
+    mock_requests.register_uri(
+        "HEAD",
+        settings.SUBSCRIPTION_SUBSCRIBE_URL,
+        text="OK",
+    )
+    settings.SUBSCRIPTION_SETTINGS_URL = None
+    errors = subplat_config_check(None)
+    assert errors
+    ids = [error.id for error in errors]
+    assert ids == [INVALID_SUBPLAT_CONFIGURATION_ERROR]
+
+
+def test_subplat_config_warnings_happy_path(settings):
+    settings.SUBPLAT_CONFIGURATION_CHECK = False
+    errors = subplat_config_check(None)
+    assert not errors
+
+
+def test_subplat_config_warnings_missing(settings):
+    settings.SUBPLAT_CONFIGURATION_CHECK = False
+    settings.SUBSCRIPTION_SUBSCRIBE_URL = None
+    errors = subplat_config_check(None)
+    assert errors
+    ids = [error.id for error in errors]
+    assert ids == [MISSING_SUBPLAT_CONFIGURATION_ERROR]
