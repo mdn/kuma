@@ -15,7 +15,6 @@ def settings_(request):
 class KumaSessionRefresh(SessionRefresh):
     def is_refreshable_url(self, request):
         return True
-        # return super().is_refreshable_url(request)
 
     def process_request(self, request):
         # Trick the SessionRefresh middleware to pretend the user hasn't
