@@ -573,3 +573,7 @@ if SENTRY_DSN:
         dsn=SENTRY_DSN,
         integrations=[DjangoIntegration()],
     )
+
+# Honor the X-Forwarded-Proto header, so we can detect HTTPS when deployed behind a
+# load balancer that's terminating the HTTPS connection and speaking to us with HTTP.
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
