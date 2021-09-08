@@ -21,6 +21,13 @@ def get_next_subscriber_number():
 
 
 class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
+    def verify_claims(self, claims):
+        """
+        Fail authentication if the user is not an MDN Plus subscriber.
+        """
+        subscriptions = claims.get("subscriptions")
+        return subscriptions and "mdn_plus" in subscriptions
+
     def filter_users_by_claims(self, claims):
         email = claims.get("email")
         if not email:

@@ -336,6 +336,13 @@ OIDC_RP_CLIENT_SECRET = config("OIDC_RP_CLIENT_SECRET", default=None)
 # Function that gets called
 OIDC_OP_LOGOUT_URL_METHOD = "kuma.users.auth.logout_url"
 
+# The mozilla-django-oidc package uses this URL if a "next" URL isn't specified.
+LOGIN_REDIRECT_URL = "/"
+# The mozilla-django-oidc package uses this URL if there's a failure during login.
+# Note that if the user has an active FxA account, but is not an MDN-Plus subscriber,
+# that's considered a login failure.
+LOGIN_REDIRECT_URL_FAILURE = "/plus?reason=no-active-subscription-found"
+
 # Session cookies
 SESSION_COOKIE_DOMAIN = DOMAIN
 SESSION_COOKIE_SECURE = config("SESSION_COOKIE_SECURE", default=True, cast=bool)
