@@ -6,6 +6,7 @@ from django.views.generic import RedirectView
 
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
+from kuma.users import views as users_views
 
 
 DAY = 60 * 60 * 24
@@ -34,6 +35,11 @@ else:
 urlpatterns += [re_path("", include("kuma.attachments.urls"))]
 urlpatterns += [
     path("users/fxa/login/", include("mozilla_django_oidc.urls")),
+    path(
+        "users/fxa/login/no-prompt/",
+        users_views.no_prompt_login,
+        name="no_prompt_login",
+    ),
 ]
 
 urlpatterns += [
