@@ -5,9 +5,8 @@ from pathlib import Path
 
 import dj_database_url
 import sentry_sdk
-from decouple import config, Csv
+from decouple import Csv, config
 from sentry_sdk.integrations.django import DjangoIntegration
-
 
 DEBUG = config("DEBUG", default=False, cast=bool)
 
@@ -584,3 +583,6 @@ if SENTRY_DSN:
 # Honor the X-Forwarded-Proto header, so we can detect HTTPS when deployed behind a
 # load balancer that's terminating the HTTPS connection and speaking to us with HTTP.
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# MDN Plus section
+MDN_PLUS_SUBSCRIPTION = config("MDN_PLUS_SUBSCRIPTION", default="mdn_plus")
