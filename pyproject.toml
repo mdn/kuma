@@ -45,7 +45,7 @@ pytest-base-url = "^1.4.2"
 pytest-cov = "~2.12.1"
 pytest-django = "~4.4.0"
 pytest-metadata = "^1.11.0"
-pytest-rerunfailures = "^10.1"
+pytest-rerunfailures = "^10.2"
 requests-mock = "^1.9.3"
 
 ElasticMock = "^1.8.0"
