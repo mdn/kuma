@@ -15,6 +15,16 @@ class InvalidClaimsError(ValueError):
 class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
     """Extend mozilla-django-oidc authbackend."""
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.refresh_token = None
+
+    def get_token(self, payload):
+        """Override get_token to extract the refresh token."""
+        token_info = super().get_token(payload)
+        self.refresh_token = token_info.get("refresh_token")
+        return token_info
+
     def filter_users_by_claims(self, claims):
         user_model = get_user_model()
         fxa_uid = claims.get("uid")
@@ -44,9 +54,21 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         return user
 
     def _create_or_set_user_profile(self, user, claims):
+        """Update user and profile attributes."""
+        email = claims.get("email")
+        if email and user.email != email:
+            user.email = email
+            user.save()
+
         profile, _ = UserProfile.objects.get_or_create(user=user)
-        profile.claims = claims
+        profile.is_subscriber = settings.MDN_PLUS_SUBSCRIPTION in claims.get(
+            "subscriptions", []
+        )
+        profile.avatar = claims.get("avatar")
         profile.fxa_uid = claims.get("uid")
+
+        if self.refresh_token:
+            profile.fxa_refresh_token = self.refresh_token
         profile.save()
 
 

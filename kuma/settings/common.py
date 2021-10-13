@@ -325,6 +325,7 @@ OIDC_RP_SCOPES = config("OIDC_RP_SCOPES", default="openid profile email")
 OIDC_REDIRECT_ALLOWED_HOSTS = config(
     "OIDC_REDIRECT_ALLOWED_HOSTS", default="", cast=Csv()
 )
+OIDC_AUTH_REQUEST_EXTRA_PARAMS = {"access_type": "offline"}
 
 # Allow null on these because you should be able run Kuma with these set.
 # It'll just mean you can't use kuma to authenticate. And a warning

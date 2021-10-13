@@ -1,5 +1,4 @@
 import pytest
-
 from django.contrib.auth.models import User
 from django.utils import timezone
 
@@ -71,34 +70,6 @@ def test_whoami(
 
     assert response.json() == expect
     assert_no_cache_header(response)
-
-
-@pytest.mark.django_db
-def test_whoami_avatar_url(
-    user_client,
-    wiki_user,
-):
-    url = reverse("api.v1.whoami")
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert "avatar_url" not in response.json()
-
-    user_profile = UserProfile.objects.create(user=wiki_user)
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert "avatar_url" not in response.json()
-
-    user_profile.claims = {"avatar": "https://example.com/pic.svg"}
-    user_profile.save()
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert response.json()["avatar_url"] == "https://example.com/pic.svg"
-
-    user_profile.claims["avatarDefault"] = True
-    user_profile.save()
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert "avatar_url" not in response.json()
 
 
 @pytest.mark.django_db

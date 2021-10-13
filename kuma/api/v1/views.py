@@ -40,19 +40,10 @@ def whoami(request):
     try:
         profile = UserProfile.objects.get(user=user)
     except UserProfile.DoesNotExist:
-        # todo: validate this
         profile = None
 
-    # 'avatarDefault' is set to truthy if the user doesn't have an avatar.
-    # If it's the case, the user simply hasn't uploaded an avatar. And
-    # FxA will still send a default avatar which is usually just a
-    # a picture of the initial letter of the email.
-    if (
-        profile
-        and not profile.claims.get("avatarDefault")
-        and profile.claims.get("avatar")
-    ):
-        data["avatar_url"] = profile.claims["avatar"]
+    if profile:
+        data["avatar_url"] = profile.avatar
     return JsonResponse(data)
 
 
