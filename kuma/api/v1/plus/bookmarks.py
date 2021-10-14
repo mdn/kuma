@@ -9,7 +9,6 @@ from django.views.decorators.http import require_http_methods
 
 from kuma.bookmarks.models import Bookmark
 from kuma.documenturls.models import DocumentURL, download_url
-from kuma.users.models import UserProfile
 
 
 class NotOKDocumentURLError(Exception):

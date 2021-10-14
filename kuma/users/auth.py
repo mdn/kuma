@@ -1,15 +1,8 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from mozilla_django_oidc.auth import OIDCAuthenticationBackend
-from requests.api import get
 
 from .models import UserProfile
-
-MDN_PLUS_SUBSCRIPTION = "mdn_plus"
-
-
-class InvalidClaimsError(ValueError):
-    """When the claims are bonkers"""
 
 
 class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
@@ -27,7 +20,6 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
 
     def filter_users_by_claims(self, claims):
         user_model = get_user_model()
-        fxa_uid = claims.get("uid")
 
         if not (fxa_uid := claims.get("uid")):
             return user_model.objects.none()
@@ -37,11 +29,9 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         ) or super().filter_users_by_claims(claims)
 
     def create_user(self, claims):
-        # This should be enough until it's clear what's happening
-        # with non active subscriptions. Eg delete users vs deactivate
         if (
             not (subscriptions := claims.get("subscriptions"))
-            or not settings.MDN_PLUS_SUBSCRIPTION in subscriptions
+            or settings.MDN_PLUS_SUBSCRIPTION not in subscriptions
         ):
             return None
         user = super().create_user(claims)
@@ -56,15 +46,14 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
     def _create_or_set_user_profile(self, user, claims):
         """Update user and profile attributes."""
         email = claims.get("email")
-        user_is_subscribed = settings.MDN_PLUS_SUBSCRIPTION in claims.get(
-            "subscriptions", []
-        )
 
         # update the email if needed
         if email and user.email != email:
             user.email = email
         # toggle user status based on subscriptions
-        user.is_active = user_is_subscribed
+        user.is_active = settings.MDN_PLUS_SUBSCRIPTION in claims.get(
+            "subscriptions", []
+        )
         user.save()
 
         profile, _ = UserProfile.objects.get_or_create(user=user)

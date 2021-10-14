@@ -1,12 +1,6 @@
-import pytest
 from django.test import RequestFactory
 
-from kuma.users.auth import (
-    InvalidClaimsError,
-    KumaOIDCAuthenticationBackend,
-    logout_url,
-)
-from kuma.users.models import UserProfile
+from kuma.users.auth import logout_url
 
 
 # TODO: Check which new tests are needed.

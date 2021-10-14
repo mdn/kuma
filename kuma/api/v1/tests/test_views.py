@@ -62,6 +62,7 @@ def test_whoami(
         "username": wiki_user.username,
         "is_authenticated": True,
         "email": "wiki_user@example.com",
+        "is_subscriber": True,
     }
     if is_staff:
         expect["is_staff"] = True
@@ -70,28 +71,6 @@ def test_whoami(
 
     assert response.json() == expect
     assert_no_cache_header(response)
-
-
-@pytest.mark.django_db
-def test_whoami_subscriber(
-    user_client,
-    wiki_user,
-):
-    url = reverse("api.v1.whoami")
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert "is_subscriber" not in response.json()
-
-    user_profile = UserProfile.objects.create(user=wiki_user)
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert "is_subscriber" not in response.json()
-
-    user_profile.is_subscriber = timezone.now()
-    user_profile.save()
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert response.json()["is_subscriber"]
 
 
 @pytest.mark.django_db
