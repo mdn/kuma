@@ -56,14 +56,18 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
     def _create_or_set_user_profile(self, user, claims):
         """Update user and profile attributes."""
         email = claims.get("email")
-        if email and user.email != email:
-            user.email = email
-            user.save()
-
-        profile, _ = UserProfile.objects.get_or_create(user=user)
-        profile.is_subscriber = settings.MDN_PLUS_SUBSCRIPTION in claims.get(
+        user_is_subscribed = settings.MDN_PLUS_SUBSCRIPTION in claims.get(
             "subscriptions", []
         )
+
+        # update the email if needed
+        if email and user.email != email:
+            user.email = email
+        # toggle user status based on subscriptions
+        user.is_active = user_is_subscribed
+        user.save()
+
+        profile, _ = UserProfile.objects.get_or_create(user=user)
         profile.avatar = claims.get("avatar")
         profile.fxa_uid = claims.get("uid")
 
