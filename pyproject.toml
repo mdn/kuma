@@ -60,6 +60,8 @@ dennis = "^0.9" # Used by `make localetest` to lint po files
 coverage = {extras = ["toml"], version = "^5"} # Use optional toml support
 pytest-watch = "^4.2.0"
 honcho = "^1.0.1"
+ipdb = "^0.13.9"
+ipython = "^7.27.0"
 
 [tool.black]
 target-version = ["py38"]

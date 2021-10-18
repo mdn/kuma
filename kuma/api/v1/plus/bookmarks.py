@@ -1,11 +1,7 @@
 import functools
 
 from django.conf import settings
-from django.http import (
-    HttpResponseBadRequest,
-    HttpResponseForbidden,
-    JsonResponse,
-)
+from django.http import HttpResponseBadRequest, HttpResponseForbidden, JsonResponse
 from django.middleware.csrf import get_token
 from django.utils import timezone
 from django.views.decorators.cache import never_cache
@@ -13,7 +9,6 @@ from django.views.decorators.http import require_http_methods
 
 from kuma.bookmarks.models import Bookmark
 from kuma.documenturls.models import DocumentURL, download_url
-from kuma.users.models import UserProfile
 
 
 class NotOKDocumentURLError(Exception):
@@ -26,16 +21,8 @@ def require_subscriber(view_function):
         user = request.user
         if not user.is_authenticated:
             return HttpResponseForbidden("not signed in")
-        for is_subscriber in UserProfile.objects.filter(user=user).values_list(
-            "is_subscriber", flat=True
-        ):
-            if not is_subscriber:
-                return HttpResponseForbidden("not a subscriber")
-            break
-        else:
-            # Don't even have a user profile!
+        if not user.is_active:
             return HttpResponseForbidden("not a subscriber")
-
         return view_function(request, *args, **kwargs)
 
     return inner

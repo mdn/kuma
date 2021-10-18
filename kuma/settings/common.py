@@ -8,7 +8,6 @@ import sentry_sdk
 from decouple import config, Csv
 from sentry_sdk.integrations.django import DjangoIntegration
 
-
 DEBUG = config("DEBUG", default=False, cast=bool)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -326,6 +325,7 @@ OIDC_RP_SCOPES = config("OIDC_RP_SCOPES", default="openid profile email")
 OIDC_REDIRECT_ALLOWED_HOSTS = config(
     "OIDC_REDIRECT_ALLOWED_HOSTS", default="", cast=Csv()
 )
+OIDC_AUTH_REQUEST_EXTRA_PARAMS = {"access_type": "offline"}
 
 # Allow null on these because you should be able run Kuma with these set.
 # It'll just mean you can't use kuma to authenticate. And a warning
@@ -584,3 +584,6 @@ if SENTRY_DSN:
 # Honor the X-Forwarded-Proto header, so we can detect HTTPS when deployed behind a
 # load balancer that's terminating the HTTPS connection and speaking to us with HTTP.
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# MDN Plus section
+MDN_PLUS_SUBSCRIPTION = config("MDN_PLUS_SUBSCRIPTION", default="mdn_plus")

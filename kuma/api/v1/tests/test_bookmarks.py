@@ -20,13 +20,11 @@ def test_bookmarked_anonymous(client):
 def test_is_bookmarked_signed_in(user_client, wiki_user):
     url = reverse("api.v1.plus.bookmarks")
     response = user_client.get(url)
-    assert response.status_code == 403
-    assert "not a subscriber" in response.content.decode("utf-8")
+    assert response.status_code == 200
 
     UserProfile.objects.create(user=wiki_user)
     response = user_client.get(url)
-    assert response.status_code == 403
-    assert "not a subscriber" in response.content.decode("utf-8")
+    assert response.status_code == 200
 
 
 @pytest.mark.django_db
@@ -104,14 +102,6 @@ def test_bookmarks_anonymous(client):
     )
     assert response.status_code == 403
     assert "not signed in" in response.content.decode("utf-8")
-
-
-@pytest.mark.django_db
-def test_bookmarks_signed_in_not_subscriber(user_client):
-    url = reverse("api.v1.plus.bookmarks")
-    response = user_client.get(url)
-    assert response.status_code == 403
-    assert "not a subscriber" in response.content.decode("utf-8")
 
 
 @pytest.mark.django_db

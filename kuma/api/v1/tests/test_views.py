@@ -1,11 +1,8 @@
 import pytest
-
 from django.contrib.auth.models import User
-from django.utils import timezone
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
-from kuma.users.models import UserProfile
 
 
 @pytest.mark.parametrize("http_method", ["put", "post", "delete", "options", "head"])
@@ -63,6 +60,7 @@ def test_whoami(
         "username": wiki_user.username,
         "is_authenticated": True,
         "email": "wiki_user@example.com",
+        "is_subscriber": True,
     }
     if is_staff:
         expect["is_staff"] = True
@@ -71,56 +69,6 @@ def test_whoami(
 
     assert response.json() == expect
     assert_no_cache_header(response)
-
-
-@pytest.mark.django_db
-def test_whoami_avatar_url(
-    user_client,
-    wiki_user,
-):
-    url = reverse("api.v1.whoami")
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert "avatar_url" not in response.json()
-
-    user_profile = UserProfile.objects.create(user=wiki_user)
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert "avatar_url" not in response.json()
-
-    user_profile.claims = {"avatar": "https://example.com/pic.svg"}
-    user_profile.save()
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert response.json()["avatar_url"] == "https://example.com/pic.svg"
-
-    user_profile.claims["avatarDefault"] = True
-    user_profile.save()
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert "avatar_url" not in response.json()
-
-
-@pytest.mark.django_db
-def test_whoami_subscriber(
-    user_client,
-    wiki_user,
-):
-    url = reverse("api.v1.whoami")
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert "is_subscriber" not in response.json()
-
-    user_profile = UserProfile.objects.create(user=wiki_user)
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert "is_subscriber" not in response.json()
-
-    user_profile.is_subscriber = timezone.now()
-    user_profile.save()
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert response.json()["is_subscriber"]
 
 
 @pytest.mark.django_db

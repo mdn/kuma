@@ -1,12 +1,8 @@
 from django.conf import settings
-from django.http import (
-    HttpResponseForbidden,
-    JsonResponse,
-)
+from django.http import HttpResponseForbidden, JsonResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
-
 
 from kuma.api.v1.forms import AccountSettingsForm
 from kuma.users.models import UserProfile
@@ -19,44 +15,35 @@ def whoami(request):
     Return a JSON object representing the current user, either
     authenticated or anonymous.
     """
+    data = {}
     user = request.user
-    if user.is_authenticated:
-        data = {
-            "username": user.username,
-            "is_authenticated": True,
-            "email": user.email,
-        }
-
-        if user.is_staff:
-            data["is_staff"] = True
-        if user.is_superuser:
-            data["is_superuser"] = True
-        for user_profile_claims, is_subscriber in UserProfile.objects.filter(
-            user=user
-        ).values_list("claims", "is_subscriber"):
-            # 'avatarDefault' is set to truthy if the user doesn't have an avatar.
-            # If it's the case, the user simply hasn't uploaded an avatar. And
-            # FxA will still send a default avatar which is usually just a
-            # a picture of the initial letter of the email.
-            if user_profile_claims.get("avatar") and not user_profile_claims.get(
-                "avatarDefault"
-            ):
-                data["avatar_url"] = user_profile_claims["avatar"]
-            if is_subscriber:
-                data["is_subscriber"] = True
-
-    else:
-        data = {}
-
-    geo = {}
-    # https://aws.amazon.com/about-aws/whats-new/2020/07/cloudfront-geolocation-headers/
     cloudfront_country_header = "HTTP_CLOUDFRONT_VIEWER_COUNTRY_NAME"
     cloudfront_country_value = request.META.get(cloudfront_country_header)
     if cloudfront_country_value:
-        geo["country"] = cloudfront_country_value
-    if geo:
-        data["geo"] = geo
+        data.update({"geo": {"country": cloudfront_country_value}})
 
+    if not user.is_authenticated:
+        return JsonResponse(data)
+
+    data = {
+        "username": user.username,
+        "is_authenticated": True,
+        "email": user.email,
+    }
+
+    if user.is_staff:
+        data["is_staff"] = True
+    if user.is_superuser:
+        data["is_superuser"] = True
+    if user.is_active:
+        data["is_subscriber"] = True
+    try:
+        profile = UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
+        profile = None
+
+    if profile:
+        data["avatar_url"] = profile.avatar
     return JsonResponse(data)
 
 

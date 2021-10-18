@@ -1,6 +1,5 @@
 import pytest
 import requests_mock
-
 from django.contrib.auth.models import Group
 from django.core.cache import caches
 from django.urls import set_urlconf
@@ -81,7 +80,7 @@ def user_client(client, wiki_user):
 @pytest.fixture
 def subscriber_client(client, wiki_user):
     """A test client with wiki_user logged in and a paying subscriber."""
-    UserProfile.objects.create(user=wiki_user, is_subscriber=timezone.now())
+    UserProfile.objects.create(user=wiki_user)
     wiki_user.set_password("password")
     wiki_user.save()
     client.login(username=wiki_user.username, password="password")

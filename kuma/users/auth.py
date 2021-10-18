@@ -1,45 +1,40 @@
 from django.conf import settings
-from django.db.models import Max
-from django.utils import timezone
+from django.contrib.auth import get_user_model
 from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 
 from .models import UserProfile
 
 
-class InvalidClaimsError(ValueError):
-    """When the claims are bonkers"""
-
-
-def get_next_subscriber_number():
-    max_subscriber_number = UserProfile.objects.filter(
-        subscriber_number__isnull=False
-    ).aggregate(max_subscriber_number=Max("subscriber_number"))["max_subscriber_number"]
-    # The absolute very first time you do this aggregate it
-    # will become None because there's 0 rows to aggregate on.
-    # That's why we do this `max_subscriber_number or 0`.
-    return (max_subscriber_number or 0) + 1
-
-
 class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
-    def verify_claims(self, claims):
-        """
-        Fail authentication if the user is not an MDN Plus subscriber.
-        """
-        subscriptions = claims.get("subscriptions")
-        return subscriptions and "mdn_plus" in subscriptions
+    """Extend mozilla-django-oidc authbackend."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.refresh_token = None
+
+    def get_token(self, payload):
+        """Override get_token to extract the refresh token."""
+        token_info = super().get_token(payload)
+        self.refresh_token = token_info.get("refresh_token")
+        return token_info
 
     def filter_users_by_claims(self, claims):
-        email = claims.get("email")
-        if not email:
-            raise InvalidClaimsError(
-                "'email' should always be a claim. See OIDC_OP_* configuration"
-            )
-        return super().filter_users_by_claims(claims)
+        user_model = get_user_model()
+
+        if not (fxa_uid := claims.get("uid")):
+            return user_model.objects.none()
+
+        return user_model.objects.filter(
+            userprofile__fxa_uid=fxa_uid
+        ) or super().filter_users_by_claims(claims)
 
     def create_user(self, claims):
-        email = claims.get("email")
-        username = self.get_username(claims)
-        user = self.UserModel.objects.create_user(username, email=email)
+        if (
+            not (subscriptions := claims.get("subscriptions"))
+            or settings.MDN_PLUS_SUBSCRIPTION not in subscriptions
+        ):
+            return None
+        user = super().create_user(claims)
 
         self._create_or_set_user_profile(user, claims)
         return user
@@ -49,26 +44,25 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         return user
 
     def _create_or_set_user_profile(self, user, claims):
-        subscriptions = claims.get("subscriptions")
-        is_subscriber = (
-            timezone.now() if subscriptions and "mdn_plus" in subscriptions else None
+        """Update user and profile attributes."""
+        email = claims.get("email")
+
+        # update the email if needed
+        if email and user.email != email:
+            user.email = email
+        # toggle user status based on subscriptions
+        user.is_active = settings.MDN_PLUS_SUBSCRIPTION in claims.get(
+            "subscriptions", []
         )
-        for user_profile in UserProfile.objects.filter(user=user):
-            user_profile.claims = claims
-            if not user_profile.is_subscriber and is_subscriber:
-                # Welcome to being a new subscriber!
-                user_profile.subscriber_number = get_next_subscriber_number()
-            user_profile.is_subscriber = is_subscriber
-            user_profile.save()
-            break
-        else:
-            subscriber_number = get_next_subscriber_number() if is_subscriber else None
-            UserProfile.objects.create(
-                user=user,
-                claims=claims,
-                is_subscriber=is_subscriber,
-                subscriber_number=subscriber_number,
-            )
+        user.save()
+
+        profile, _ = UserProfile.objects.get_or_create(user=user)
+        profile.avatar = claims.get("avatar")
+        profile.fxa_uid = claims.get("uid")
+
+        if self.refresh_token:
+            profile.fxa_refresh_token = self.refresh_token
+        profile.save()
 
 
 def logout_url(request):
