@@ -1,10 +1,8 @@
 import pytest
 from django.contrib.auth.models import User
-from django.utils import timezone
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
-from kuma.users.models import UserProfile
 
 
 @pytest.mark.parametrize("http_method", ["put", "post", "delete", "options", "head"])
