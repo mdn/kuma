@@ -15,7 +15,7 @@ jobs:
       UID: 0
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.3.5
 
       - name: Environment info
         run: |
