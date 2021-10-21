@@ -5,4 +5,4 @@ from kuma.notifications.models import Notification
 
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
-    pass
+    raw_id_fields = ["user"]

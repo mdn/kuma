@@ -574,9 +574,7 @@ BOOKMARKS_BASE_URL = config(
     "BOOKMARKS_BASE_URL", default="https://developer.mozilla.org"
 )
 API_V1_BOOKMARKS_PAGE_SIZE = config("API_V1_BOOKMARKS_PAGE_SIZE", cast=int, default=20)
-API_V1_NOTIFICATIONS_PAGE_SIZE = config(
-    "API_V1_NOTIFICATIONS_PAGE_SIZE", cast=int, default=20
-)
+API_V1_PAGE_SIZE = config("API_V1_PAGE_SIZE", cast=int, default=20)
 
 SENTRY_DSN = config("SENTRY_DSN", default="")
 if SENTRY_DSN:

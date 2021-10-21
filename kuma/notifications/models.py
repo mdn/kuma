@@ -9,5 +9,10 @@ class Notification(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
+    def serialize(self):
+        return {
+            "id": self.id,
+        }
+
     def __str__(self):
         return self.title

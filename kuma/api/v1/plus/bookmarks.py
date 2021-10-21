@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_http_methods
 
-from kuma.api.v1.plus import require_subscriber
+from kuma.api.v1.plus import require_subscriber, api_list, ItemGenerationData
 from kuma.bookmarks.models import Bookmark
 from kuma.documenturls.models import DocumentURL, download_url
 
@@ -33,49 +33,25 @@ def bookmarks(request):
     return _get_bookmarks(request)
 
 
-def _get_bookmarks(request):
-    try:
-        page = int(request.GET.get("page") or "1")
-        assert page > 0 and page < 100
-    except (ValueError, AssertionError):
-        return HttpResponseBadRequest("invalid 'page'")
-    try:
-        per_page = int(
-            request.GET.get("per_page") or settings.API_V1_BOOKMARKS_PAGE_SIZE
-        )
-        assert per_page > 0 and per_page <= 100
-    except (ValueError, AssertionError):
-        return HttpResponseBadRequest("invalid 'per_page'")
+@api_list
+def _get_bookmarks(request) -> ItemGenerationData:
+    qs = (
+        Bookmark.objects.filter(user_id=request.user.id, deleted__isnull=True)
+        .select_related("documenturl")
+        .order_by("-created")
+    )
 
-    users_bookmarks = Bookmark.objects.filter(
-        user_id=request.user.id, deleted__isnull=True
-    ).order_by("-created")
+    def serialize_bookmark(bookmark):
+        parents = bookmark.documenturl.metadata.get("parents", [])[:-1]
+        return {
+            "id": bookmark.id,
+            "url": bookmark.documenturl.metadata["mdn_url"],
+            "title": bookmark.documenturl.metadata["title"],
+            "parents": parents,
+            "created": bookmark.created,
+        }
 
-    def serialize_bookmarks(qs):
-        for bookmark in qs.select_related("documenturl"):
-            # In Yari, the `metadata["parents"]` will always include "self"
-            # in the last link. Omit that here.
-            parents = bookmark.documenturl.metadata.get("parents", [])[:-1]
-            yield {
-                "id": bookmark.id,
-                "url": bookmark.documenturl.metadata["mdn_url"],
-                "title": bookmark.documenturl.metadata["title"],
-                "parents": parents,
-                "created": bookmark.created,
-            }
-
-    m = (page - 1) * per_page
-    n = page * per_page
-    context = {
-        "items": list(serialize_bookmarks(users_bookmarks[m:n])),
-        "metadata": {
-            "total": users_bookmarks.count(),
-            "page": page,
-            "per_page": per_page,
-        },
-        "csrfmiddlewaretoken": get_token(request),
-    }
-    return JsonResponse(context)
+    return qs, serialize_bookmark
 
 
 def valid_url(url):
