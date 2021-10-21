@@ -21,6 +21,6 @@ urlpatterns = [
     path(
         "plus/notifications/",
         notifications.notifications,
-        name="api.v1.plus.bookmarks",
+        name="api.v1.plus.notifications",
     ),
 ]
