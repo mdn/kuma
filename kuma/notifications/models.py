@@ -12,6 +12,10 @@ class Notification(models.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "title": self.title,
+            "text": self.text,
+            "created": self.created,
+            "read": False,
         }
 
     def __str__(self):
