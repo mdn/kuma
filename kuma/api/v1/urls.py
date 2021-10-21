@@ -1,8 +1,7 @@
 from django.urls import path
 
 from . import search, views
-from .plus import bookmarks, landing_page
-
+from .plus import bookmarks, landing_page, notifications
 
 urlpatterns = [
     path("whoami", views.whoami, name="api.v1.whoami"),
@@ -17,6 +16,11 @@ urlpatterns = [
     path(
         "plus/bookmarks/",
         bookmarks.bookmarks,
+        name="api.v1.plus.bookmarks",
+    ),
+    path(
+        "plus/notifications/",
+        notifications.notifications,
         name="api.v1.plus.bookmarks",
     ),
 ]

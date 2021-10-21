@@ -1,31 +1,19 @@
 import functools
 
 from django.conf import settings
-from django.http import HttpResponseBadRequest, HttpResponseForbidden, JsonResponse
+from django.http import HttpResponseBadRequest, JsonResponse
 from django.middleware.csrf import get_token
 from django.utils import timezone
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_http_methods
 
+from kuma.api.v1.plus import require_subscriber
 from kuma.bookmarks.models import Bookmark
 from kuma.documenturls.models import DocumentURL, download_url
 
 
 class NotOKDocumentURLError(Exception):
     """When the document URL doesn't resolve as a 200 OK"""
-
-
-def require_subscriber(view_function):
-    @functools.wraps(view_function)
-    def inner(request, *args, **kwargs):
-        user = request.user
-        if not user.is_authenticated:
-            return HttpResponseForbidden("not signed in")
-        if not user.is_active:
-            return HttpResponseForbidden("not a subscriber")
-        return view_function(request, *args, **kwargs)
-
-    return inner
 
 
 @never_cache
@@ -85,8 +73,8 @@ def _get_bookmarks(request):
             "page": page,
             "per_page": per_page,
         },
+        "csrfmiddlewaretoken": get_token(request),
     }
-    context["csrfmiddlewaretoken"] = get_token(request)
     return JsonResponse(context)
 
 

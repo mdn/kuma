@@ -258,6 +258,7 @@ INSTALLED_APPS = [
     "kuma.plus.apps.PlusConfig",
     "kuma.documenturls.apps.DocumentURLsConfig",
     "kuma.bookmarks.apps.BookmarksConfig",
+    "kuma.notifications.apps.NotificationsConfig",
     # 3rd party
     "mozilla_django_oidc",
     "django_extensions",
@@ -573,6 +574,9 @@ BOOKMARKS_BASE_URL = config(
     "BOOKMARKS_BASE_URL", default="https://developer.mozilla.org"
 )
 API_V1_BOOKMARKS_PAGE_SIZE = config("API_V1_BOOKMARKS_PAGE_SIZE", cast=int, default=20)
+API_V1_NOTIFICATIONS_PAGE_SIZE = config(
+    "API_V1_NOTIFICATIONS_PAGE_SIZE", cast=int, default=20
+)
 
 SENTRY_DSN = config("SENTRY_DSN", default="")
 if SENTRY_DSN:
