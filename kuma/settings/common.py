@@ -335,6 +335,8 @@ OIDC_RP_CLIENT_SECRET = config("OIDC_RP_CLIENT_SECRET", default=None)
 
 # Function that gets called
 OIDC_OP_LOGOUT_URL_METHOD = "kuma.users.auth.logout_url"
+# Set the issuer of the token.
+FXA_TOKEN_ISSUER = config("FXA_TOKEN_ISSUER", default="https://accounts.firefox.com")
 
 # The mozilla-django-oidc package uses this URL if a "next" URL isn't specified.
 LOGIN_REDIRECT_URL = "/"
