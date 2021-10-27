@@ -86,7 +86,9 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         user = self.create_or_update_subscriber(claims, user)
 
         if self.refresh_token:
-            UserProfile.objects.update(user=user, fxa_refresh_token=self.refresh_token)
+            UserProfile.objects.filter(user=user).update(
+                fxa_refresh_token=self.refresh_token
+            )
 
 
 def logout_url(request):
