@@ -3,9 +3,10 @@ from django.db import models
 
 
 class Notification(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    users = models.ManyToManyField(User)
     title = models.CharField(max_length=256)
     text = models.CharField(max_length=256)
+    read = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
