@@ -92,20 +92,15 @@ DATABASE = {
 
 
 class NotificationGenerator:
-    def __init__(self, old_data, new_data):
-        old_name, old_support = old_data
-        new_name, new_support = new_data
-        if old_name != new_name:
-            raise ValueError("InvalidData: Not the same feature")
-
-        self.path = new_name
-        self.old = old_support
-        self.new = new_support
+    def __init__(self, path, old, new):
+        self.path = path
+        self.old = old
+        self.new = new
 
     def support(self):
         # Is this static?
-        old_support = self.old.get("support", {})
-        new_support = self.new.get("support", {})
+        old_support = self.old.get("support", {}) if self.old else {}
+        new_support = self.new.get("support", {}) if self.new else {}
         browsers = set(list(old_support.keys()) + list(new_support.keys()))
 
         for browser in browsers:
@@ -119,6 +114,12 @@ class NotificationGenerator:
 
     def generate(self):
         for browser, old, new in self.support():
+            # ToDo: This is not covered in the spec.
+            if isinstance(old, list):
+                old = old[0] if old else {}
+            if isinstance(new, list):
+                new = new[0] if new else {}
+
             if template := self.compare(old, new):
                 yield self.notification_text(template, browser)
 

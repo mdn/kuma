@@ -21,3 +21,8 @@ class Notification(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class CompatibilityData(models.Model):
+    bcd = models.JSONField()
+    created = models.DateTimeField(auto_now_add=True)
