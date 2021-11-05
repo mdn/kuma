@@ -16,7 +16,7 @@ class Notification(models.Model):
             "title": self.title,
             "text": self.text,
             "created": self.created,
-            "read": False,
+            "read": self.read,
         }
 
     def __str__(self):

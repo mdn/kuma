@@ -34,5 +34,4 @@ def mark_as_read(request, id):
 
     notification.read = True
     notification.save()
-
-    return JsonResponse({"OK": True}, status=201)
+    return JsonResponse({"OK": True}, status=200)
