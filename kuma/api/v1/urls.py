@@ -28,4 +28,9 @@ urlpatterns = [
         notifications.mark_as_read,
         name="api.v1.plus.notifications.mark_as_read",
     ),
+    path(
+        "plus/notifications/all/mark-as-read/",
+        notifications.mark_as_read,
+        name="api.v1.plus.notifications.mark_all_as_read",
+    ),
 ]
