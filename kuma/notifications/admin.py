@@ -1,14 +1,28 @@
 from django.contrib import admin
 
-from kuma.notifications.models import Notification, CompatibilityData
+from kuma.notifications.models import (
+    Notification,
+    NotificationData,
+    CompatibilityData,
+    Watch,
+)
 
 
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
     ...
-    # raw_id_fields = ["user"]
+
+
+@admin.register(NotificationData)
+class NotificationDataAdmin(admin.ModelAdmin):
+    ...
 
 
 @admin.register(CompatibilityData)
 class CompatibilityDataAdmin(admin.ModelAdmin):
-    pass
+    ...
+
+
+@admin.register(Watch)
+class WatchAdmin(admin.ModelAdmin):
+    ...

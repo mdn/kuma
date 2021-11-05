@@ -19,7 +19,9 @@ def notifications(request):
 @api_list
 def _notification_list(request) -> ItemGenerationData:
     return (
-        Notification.objects.filter(users__id=request.user.id).order_by("-created"),
+        Notification.objects.filter(users__id=request.user.id)
+        .select_related("notification")
+        .order_by("-created"),
         lambda notification: notification.serialize(),
     )
 
