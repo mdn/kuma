@@ -19,9 +19,9 @@ def notifications(request):
 @api_list
 def _notification_list(request) -> ItemGenerationData:
     return (
-        Notification.objects.filter(users__id=request.user.id)
+        Notification.objects.filter(user_id=request.user.id)
         .select_related("notification")
-        .order_by("-created"),
+        .order_by("-notification__created"),
         lambda notification: notification.serialize(),
     )
 
@@ -31,7 +31,7 @@ def _notification_list(request) -> ItemGenerationData:
 @require_subscriber
 def mark_as_read(request, id: int | str):
     # E.g.POST /api/v1/notifications/<id>/mark-as-read/
-    kwargs = dict(users=request.user, read=False)
+    kwargs = dict(user=request.user, read=False)
 
     if isinstance(id, int):
         kwargs["id"] = id

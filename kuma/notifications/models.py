@@ -13,8 +13,8 @@ class NotificationData(models.Model):
 
 
 class Notification(models.Model):
-    # notification = models.ForeignKey(NotificationData, on_delete=models.CASCADE)
-    users = models.ForeignKey(User, on_delete=models.CASCADE)
+    notification = models.ForeignKey(NotificationData, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     read = models.BooleanField(default=False)
 
     def serialize(self):
