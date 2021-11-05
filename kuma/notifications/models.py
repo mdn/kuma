@@ -40,8 +40,8 @@ class CompatibilityData(models.Model):
 
 class Watch(models.Model):
     users = models.ManyToManyField(User)
-    slug = models.SlugField()
+    url = models.TextField()
     path = models.CharField(max_length=4096)
 
     def __str__(self):
-        return f"<Watchers for: {self.slug}, {self.path}>"
+        return f"<Watchers for: {self.url}, {self.path}>"
