@@ -40,6 +40,7 @@ class CompatibilityData(models.Model):
 
 class Watch(models.Model):
     users = models.ManyToManyField(User)
+    title = models.CharField(max_length=2048)
     url = models.TextField()
     path = models.CharField(max_length=4096)
 
