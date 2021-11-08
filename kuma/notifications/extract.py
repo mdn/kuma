@@ -127,7 +127,7 @@ class NotificationGenerator:
 class NowSupported(NotificationGenerator):
     def compare(self, old, new):
         if new.get("version_added") and not old.get("version_added"):
-            return "{feature} is now supported in {browser}"
+            return f"Now supported in {{browser}} {new['version_added']}"
 
 
 class Removed(NotificationGenerator):
@@ -135,7 +135,7 @@ class Removed(NotificationGenerator):
         if (old.get("version_added") and not old.get("version_removed")) and (
             not new.get("version_added") or new.get("version_removed")
         ):
-            return "{feature} is no longer supported in {browser}"
+            return "No longer supported in {browser}"
 
 
 generators = [NowSupported, Removed]
