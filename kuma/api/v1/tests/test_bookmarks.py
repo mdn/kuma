@@ -13,7 +13,7 @@ def test_bookmarked_anonymous(client):
         reverse("api.v1.plus.bookmarks"),
     )
     assert response.status_code == 403
-    assert "not signed in" in response.content.decode("utf-8")
+    assert "not a subscriber" in response.content.decode("utf-8")
 
 
 @pytest.mark.django_db
@@ -101,7 +101,7 @@ def test_bookmarks_anonymous(client):
         reverse("api.v1.plus.bookmarks"),
     )
     assert response.status_code == 403
-    assert "not signed in" in response.content.decode("utf-8")
+    assert "not a subscriber" in response.content.decode("utf-8")
 
 
 @pytest.mark.django_db

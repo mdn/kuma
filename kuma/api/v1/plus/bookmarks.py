@@ -7,7 +7,8 @@ from django.utils import timezone
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_http_methods
 
-from kuma.api.v1.plus import require_subscriber, api_list, ItemGenerationData
+from kuma.api.v1.decorators import require_subscriber
+from kuma.api.v1.plus import api_list, ItemGenerationData
 from kuma.bookmarks.models import Bookmark
 from kuma.documenturls.models import DocumentURL, download_url
 
@@ -21,7 +22,6 @@ class NotOKDocumentURLError(Exception):
 @require_subscriber
 def bookmarks(request):
     # E.g. POST -d url=https://... /api/v1/bookmarks/
-
     if request.method == "POST":
         return _toggle_bookmark(request)
 
@@ -82,6 +82,7 @@ def get_url(view_function):
 
 @get_url
 def _get_bookmark(request, url):
+
     users_bookmarks = Bookmark.objects.filter(
         user_id=request.user.id, deleted__isnull=True
     )
