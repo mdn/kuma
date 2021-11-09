@@ -3,21 +3,8 @@ from typing import Callable, Tuple
 
 from django.db.models import QuerySet
 from django.conf import settings
-from django.http import HttpResponseForbidden, HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponseBadRequest, JsonResponse
 from django.middleware.csrf import get_token
-
-
-def require_subscriber(view_function):
-    @functools.wraps(view_function)
-    def inner(request, *args, **kwargs):
-        user = request.user
-        if not user.is_authenticated:
-            return HttpResponseForbidden("not signed in")
-        if not user.is_active:
-            return HttpResponseForbidden("not a subscriber")
-        return view_function(request, *args, **kwargs)
-
-    return inner
 
 
 ItemGenerationData = Tuple[QuerySet, Callable]
