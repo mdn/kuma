@@ -4,7 +4,8 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_http_methods
 
-from kuma.api.v1.plus import require_subscriber, api_list, ItemGenerationData
+from kuma.api.v1.decorators import require_subscriber
+from kuma.api.v1.plus import api_list, ItemGenerationData
 from kuma.notifications.models import Notification
 
 
