@@ -1,3 +1,4 @@
+import functools
 import itertools
 import json
 import sys
@@ -26,81 +27,25 @@ def walk(data, path=None, depth=sys.maxsize):
             )
 
 
-# Added in IE, removed in Opera (Android)
-DATABASE = {
-    "css.properties.font-variant.css_fonts_shorthand": {
-        "description": "CSS Fonts Module Level 3 shorthand",
-        "support": {
-            "chrome": {"version_added": "52"},
-            "chrome_android": {"version_added": "52"},
-            "edge": {"version_added": "79"},
-            "firefox": {"version_added": "34"},
-            "firefox_android": {"version_added": "34"},
-            "ie": {"version_added": "4"},
-            "opera": {"version_added": "39"},
-            "opera_android": {"version_added": False},
-            "safari": {"version_added": "9.1"},
-            "safari_ios": {"version_added": "9.3"},
-            "samsunginternet_android": {"version_added": "6.0"},
-            "webview_android": {"version_added": "52"},
-        },
-        "status": {"experimental": False, "standard_track": True, "deprecated": False},
-    },
-    "html.elements.area.ping": {
-        "support": {
-            "chrome": {"version_added": "12"},
-            "chrome_android": {"version_added": "18"},
-            "edge": {"version_added": "17"},
-            "firefox": {
-                "version_added": True,
-                "flags": [
-                    {
-                        "type": "preference",
-                        "name": "browser.send_pings",
-                        "value_to_set": "true",
-                    }
-                ],
-            },
-            "firefox_android": {
-                "version_added": True,
-                "version_removed": "79",
-                "flags": [
-                    {
-                        "type": "preference",
-                        "name": "browser.send_pings",
-                        "value_to_set": "true",
-                    }
-                ],
-            },
-            "ie": {"version_added": "8"},
-            "opera": {"version_added": "15"},
-            "opera_android": {"version_added": "14"},
-            "safari": {"version_added": "6"},
-            "safari_ios": {"version_added": "6"},
-            "samsunginternet_android": {"version_added": "1.0"},
-            "webview_android": {"version_added": False},
-        },
-        "status": {"experimental": False, "standard_track": True, "deprecated": False},
-    },
-}
-
-# Assumption Qs
-#  * Is the list of browsers static? can we make it a global variable? (yes, but get it from the data)
-#  * Translations? (prob no)
-#  * What's the best way to generate the name for a feature? (From the content repo)
-#  * Do we have a very old version of the compat data? (generate it from repo)
+def get_feature(bcd, feature):
+    try:
+        return functools.reduce(dict.get, feature.split("."), bcd)
+    except (TypeError, KeyError):
+        return None
 
 
 class NotificationGenerator:
-    def __init__(self, path, old, new):
+    def __init__(self, path, old_bcd, new_bcd):
         self.path = path
-        self.old = old
-        self.new = new
+        self.old_bcd = old_bcd
+        self.new_bcd = new_bcd
+        self.old_feature = get_feature(old_bcd, path).get("__compat", None)
+        self.new_feature = get_feature(new_bcd, path).get("__compat", None)
 
     def support(self):
         # Is this static?
-        old_support = self.old.get("support", {}) if self.old else {}
-        new_support = self.new.get("support", {}) if self.new else {}
+        old_support = self.old_feature.get("support", {}) if self.old_feature else {}
+        new_support = self.new_feature.get("support", {}) if self.new_feature else {}
         browsers = set(list(old_support.keys()) + list(new_support.keys()))
 
         for browser in browsers:
@@ -127,7 +72,15 @@ class NotificationGenerator:
 class NowSupported(NotificationGenerator):
     def compare(self, old, new):
         if new.get("version_added") and not old.get("version_added"):
-            return f"Now supported in {{browser}} {new['version_added']}"
+            return f"{{browser}} {new['version_added']}"
+
+    def generate(self):
+        notifications = list(super().generate())
+        if len(notifications) > 3:
+            return ["Now supported in multiple browsers"]
+        elif len(notifications) > 0:
+            return ["Now supported in " + ", ".join(notifications)]
+        return notifications
 
 
 class Removed(NotificationGenerator):
@@ -135,15 +88,26 @@ class Removed(NotificationGenerator):
         if (old.get("version_added") and not old.get("version_removed")) and (
             not new.get("version_added") or new.get("version_removed")
         ):
-            return "No longer supported in {browser}"
+            return "{browser}"
+
+    def generate(self):
+        notifications = list(super().generate())
+        if len(notifications) > 3:
+            return ["No longer supported in multiple browsers"]
+        elif len(notifications) > 0:
+            return ["No longer supported in " + ", ".join(notifications)]
+        return notifications
 
 
-generators = [NowSupported, Removed]
+class SubFeatures(NotificationGenerator):
+    def compare(self, old, new):
+        if new != old:
+            return f"We have new data about subfeatures for {{browser}} {new['version_added']}"
+
+    def generate(self):
+        for child in walk(self.new_bcd, self.path):
+            self.path = child[0]
+            yield from super().generate()
 
 
-def generate_notifications():
-    # itertools.islice(walk(bcd), 50)
-    for feature in walk(bcd):
-        for generator in generators:
-            if new_feature := DATABASE.get(feature[0]):
-                yield from generator(feature, (feature[0], new_feature)).generate()
+generators = [NowSupported, Removed, SubFeatures]

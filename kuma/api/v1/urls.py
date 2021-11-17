@@ -33,4 +33,9 @@ urlpatterns = [
         notifications.mark_as_read,
         name="api.v1.plus.notifications.mark_all_as_read",
     ),
+    path(
+        "plus/notifications/watch/",
+        notifications.watch,
+        name="api.v1.plus.notifications.watch",
+    ),
 ]

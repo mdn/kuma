@@ -28,25 +28,24 @@ class Command(BaseCommand):
         parser.add_argument("file", type=open)
 
     def handle(self, *args, **options):
-        bcd = json.loads(options["file"].read())
+        new_bcd = json.loads(options["file"].read())
         latest = CompatibilityData.objects.all().order_by("created").last()
         old_bcd = latest.bcd
         for watched in Watch.objects.distinct("path"):
-            for key, feature in walk(get_feature(bcd, watched.path), path=watched.path):
-                old_feature = get_feature(old_bcd, key)
-                for gen in generators:
-                    for notification in gen(
-                        key, old_feature.get("__compat", None), feature
-                    ).generate():
-                        print(notification)
-                        obj = NotificationData.objects.create(
-                            title=watched.title,
-                            text=notification,
+            for gen in generators:
+                for notification in gen(watched.path, old_bcd, new_bcd).generate():
+                    print(notification)
+                    obj = NotificationData.objects.create(
+                        title=watched.title,
+                        text=notification,
+                    )
+                    for user in watched.users.all():
+                        Notification.objects.create(
+                            notification=obj, user=user, read=False
                         )
-                        for user in watched.users.all():
-                            Notification.objects.create(
-                                notification=obj, user=user, read=False
-                            )
+
+            # for key, feature in walk(get_feature(bcd, watched.path), path=watched.path):
+            #     old_feature = get_feature(old_bcd, key)
 
         # Replace the old compatibility data
-        CompatibilityData.objects.create(bcd=bcd)
+        CompatibilityData.objects.create(bcd=new_bcd)

@@ -43,3 +43,11 @@ def mark_as_read(request, id: int | str):
 
     unread.update(read=True)
     return JsonResponse({"OK": True}, status=200)
+
+
+@never_cache
+@require_http_methods(["POST"])
+@require_subscriber
+def watch(request):
+    # E.g.POST /api/v1/notifications/watch/
+    return JsonResponse({"OK": True}, status=200)
