@@ -35,6 +35,8 @@ def get_feature(bcd, feature):
 
 
 class NotificationGenerator:
+    text = "Notification for "
+
     def __init__(self, path, old_bcd, new_bcd):
         self.path = path
         self.old_bcd = old_bcd
@@ -57,7 +59,7 @@ class NotificationGenerator:
     def compare(self, old, new):
         raise NotImplemented
 
-    def generate(self):
+    def generate_for_browsers(self):
         for browser, old, new in self.support():
             # ToDo: This is not covered in the spec.
             if isinstance(old, list):
@@ -68,46 +70,44 @@ class NotificationGenerator:
             if template := self.compare(old, new):
                 yield self.notification_text(template, browser)
 
+    def generate(self):
+        notifications = list(self.generate_for_browsers())
+        if len(notifications) > 3:
+            return [self.text + "multiple browsers"]
+        elif len(notifications) > 0:
+            return [self.text + ", ".join(notifications)]
+        return [self.text + i for i in notifications]
+
 
 class NowSupported(NotificationGenerator):
+    text = "Now supported in "
+
     def compare(self, old, new):
         if new.get("version_added") and not old.get("version_added"):
             return f"{{browser}} {new['version_added']}"
 
-    def generate(self):
-        notifications = list(super().generate())
-        if len(notifications) > 3:
-            return ["Now supported in multiple browsers"]
-        elif len(notifications) > 0:
-            return ["Now supported in " + ", ".join(notifications)]
-        return notifications
-
 
 class Removed(NotificationGenerator):
+    text = "No longer supported in "
+
     def compare(self, old, new):
         if (old.get("version_added") and not old.get("version_removed")) and (
             not new.get("version_added") or new.get("version_removed")
         ):
             return "{browser}"
 
-    def generate(self):
-        notifications = list(super().generate())
-        if len(notifications) > 3:
-            return ["No longer supported in multiple browsers"]
-        elif len(notifications) > 0:
-            return ["No longer supported in " + ", ".join(notifications)]
-        return notifications
-
 
 class SubFeatures(NotificationGenerator):
+    text = "We have new data about subfeatures for "
+
     def compare(self, old, new):
         if new != old:
-            return f"We have new data about subfeatures for {{browser}} {new['version_added']}"
+            return f"{{browser}} {new['version_added']}"
 
-    def generate(self):
+    def generate_for_browsers(self):
         for child in walk(self.new_bcd, self.path):
             self.path = child[0]
-            yield from super().generate()
+            yield from super().generate_for_browsers()
 
 
 generators = [NowSupported, Removed, SubFeatures]
