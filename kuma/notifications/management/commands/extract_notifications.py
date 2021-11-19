@@ -30,6 +30,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         new_bcd = json.loads(options["file"].read())
         latest = CompatibilityData.objects.all().order_by("created").last()
+        if not latest:
+            print("You need to load the initial BCD data before running this command")
+            return
         old_bcd = latest.bcd
         for watched in Watch.objects.distinct("path"):
             for gen in generators:
