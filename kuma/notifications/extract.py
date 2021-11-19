@@ -31,7 +31,7 @@ def get_feature(bcd, feature):
     try:
         return functools.reduce(dict.get, feature.split("."), bcd)
     except (TypeError, KeyError):
-        return None
+        return {}
 
 
 class NotificationGenerator:
@@ -102,7 +102,7 @@ class SubFeatures(NotificationGenerator):
 
     def compare(self, old, new):
         if new != old:
-            return f"{{browser}} {new['version_added']}"
+            return f"{{browser}} {new.get('version_added', '')}"
 
     def generate_for_browsers(self):
         for child in walk(self.new_bcd, self.path):

@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 
 from . import search, views
 from .plus import bookmarks, landing_page, notifications
@@ -33,8 +33,8 @@ urlpatterns = [
         notifications.mark_as_read,
         name="api.v1.plus.notifications.mark_all_as_read",
     ),
-    path(
-        "plus/notifications/watch/",
+    re_path(
+        "plus/watch(?P<url>/.+)",
         notifications.watch,
         name="api.v1.plus.notifications.watch",
     ),
