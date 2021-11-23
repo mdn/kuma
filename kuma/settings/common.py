@@ -9,6 +9,7 @@ from decouple import config, Csv
 from sentry_sdk.integrations.django import DjangoIntegration
 
 DEBUG = config("DEBUG", default=False, cast=bool)
+DEV = config("DEV", cast=bool, default=False)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -236,6 +237,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "kuma.users.middleware.ValidateAccessTokenMiddleware",
 ]
 
 ROOT_URLCONF = "kuma.urls"
@@ -332,11 +334,18 @@ OIDC_AUTH_REQUEST_EXTRA_PARAMS = {"access_type": "offline"}
 # (or error if !DEBUG) from the system checks will remind you.
 OIDC_RP_CLIENT_ID = config("OIDC_RP_CLIENT_ID", default=None)
 OIDC_RP_CLIENT_SECRET = config("OIDC_RP_CLIENT_SECRET", default=None)
-
 # Function that gets called
 OIDC_OP_LOGOUT_URL_METHOD = "kuma.users.auth.logout_url"
+# Store the access token in session
+OIDC_STORE_ACCESS_TOKEN = config("OIDC_STORE_ACCESS_TOKEN", cast=bool, default=True)
 # Set the issuer of the token.
 FXA_TOKEN_ISSUER = config("FXA_TOKEN_ISSUER", default="https://accounts.firefox.com")
+# Validate access token endpoint.
+FXA_VERIFY_URL = config(
+    "FXA_VERIFY_URL", default="https://oauth.accounts.firefox.com/v1/verify"
+)
+# Set token re-check time to an hour in seconds
+FXA_TOKEN_EXPIRY = config("FXA_TOKEN_EXPIRY", default=3600)
 
 # The mozilla-django-oidc package uses this URL if a "next" URL isn't specified.
 LOGIN_REDIRECT_URL = "/"
