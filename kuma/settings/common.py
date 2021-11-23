@@ -374,17 +374,6 @@ ATTACHMENT_SITE_URL = PROTOCOL + ATTACHMENT_HOST
 _PROD_ATTACHMENT_ORIGIN = "demos-origin.mdn.mozit.cloud"
 ATTACHMENT_ORIGIN = config("ATTACHMENT_ORIGIN", default=_PROD_ATTACHMENT_ORIGIN)
 
-# Primary use case if for file attachments that are still served via Kuma.
-# We have settings.ATTACHMENTS_USE_S3 on by default. So a URL like
-# `/files/3710/Test_Form_2.jpg` will trigger a 302 response (to its final
-# public S3 URL). This 302 response can be cached in the CDN. That's what
-# this setting controls.
-# We can make it pretty aggressive, because as of early 2021, you can't
-# edit images by uploading a different one through the Wiki UI.
-ATTACHMENTS_CACHE_CONTROL_MAX_AGE = config(
-    "ATTACHMENTS_CACHE_CONTROL_MAX_AGE", default=60 * 60 * 24, cast=int
-)
-
 # This should never be false for the production and stage deployments.
 ENABLE_RESTRICTIONS_BY_HOST = config(
     "ENABLE_RESTRICTIONS_BY_HOST", default=True, cast=bool
@@ -540,19 +529,6 @@ CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
     "CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE", default=60 * 5, cast=int
 )
 
-
-# Setting for configuring the AWS S3 bucket name used for the document API.
-MDN_API_S3_BUCKET_NAME = config("MDN_API_S3_BUCKET_NAME", default=None)
-
-# AWS S3 credentials and settings for uploading attachments
-ATTACHMENTS_AWS_ACCESS_KEY_ID = config("ATTACHMENTS_AWS_ACCESS_KEY_ID", default=None)
-ATTACHMENTS_AWS_SECRET_ACCESS_KEY = config(
-    "ATTACHMENTS_AWS_SECRET_ACCESS_KEY", default=None
-)
-ATTACHMENTS_AWS_STORAGE_BUCKET_NAME = config(
-    "ATTACHMENTS_AWS_STORAGE_BUCKET_NAME", default="media"
-)
-
 ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN = config(
     "ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN", default="media.prod.mdn.mozit.cloud"
 )  # For example, Cloudfront CDN domain
@@ -561,9 +537,6 @@ ATTACHMENTS_AWS_S3_SECURE_URLS = config(
 )  # Does the custom domain use TLS
 ATTACHMENTS_AWS_S3_CUSTOM_URL = f"{'https' if ATTACHMENTS_AWS_S3_SECURE_URLS else 'http'}://{ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN}"
 
-ATTACHMENTS_AWS_S3_REGION_NAME = config(
-    "ATTACHMENTS_AWS_S3_REGION_NAME", default="us-east-1"
-)
 ATTACHMENTS_AWS_S3_ENDPOINT_URL = config(
     "ATTACHMENTS_AWS_S3_ENDPOINT_URL", default=None
 )
