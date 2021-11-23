@@ -46,9 +46,6 @@ GOOGLE_ANALYTICS_ACCOUNT = None
 AWS_BUCKET_ACL = None
 AWS_DEFAULT_ACL = None
 
-# Use a dedicated minio bucket for tests
-ATTACHMENTS_AWS_STORAGE_BUCKET_NAME = "test"
-
 # To make absolutely sure we never accidentally trigger the GA tracking
 # within tests to the actual (and default) www.google-analytics.com this is
 # an extra safeguard.
@@ -56,11 +53,6 @@ GOOGLE_ANALYTICS_TRACKING_URL = "https://thisllneverwork.example.com/collect"
 
 # Because that's what all the tests presume.
 SITE_ID = 1
-
-# Stripe API KEY settings
-STRIPE_PUBLIC_KEY = "testing"
-STRIPE_SECRET_KEY = "testing"
-STRIPE_PRICE_IDS = ["price_0000001", "price_0000002"]
 
 # For legacy reasons, the tests assume these are always true so don't
 # let local overrides take effect.
