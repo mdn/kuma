@@ -5,7 +5,6 @@ from pathlib import Path
 from django.conf import settings
 from django.http import HttpResponseNotFound
 from django.shortcuts import redirect
-from django.views.decorators.cache import cache_control
 
 from .utils import (
     convert_to_http_date,
@@ -50,7 +49,6 @@ with open(MINDTOUCH_REDIRECTS_FILE) as f:
     assert _mindtouch_redirects
 
 
-@cache_control(public=True, max_age=settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE)
 def raw_file(request, attachment_id, filename):
     """
     Serve up an attachment's file.
@@ -65,7 +63,6 @@ def raw_file(request, attachment_id, filename):
     return _redirect_final_path(_redirects[attachment_id])
 
 
-@cache_control(public=True, max_age=settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE)
 def mindtouch_file_redirect(request, file_id, filename):
     """Redirect an old MindTouch file URL to a new kuma file URL."""
     if file_id not in _mindtouch_redirects:
