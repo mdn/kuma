@@ -39,6 +39,9 @@ class ValidateAccessTokenMiddleware(SessionRefresh):
                 response_token_info.get("code") == 400
                 and response_token_info.get("message") == "Invalid token"
             ):
+                profile = request.user.userprofile
+                profile.fxa_refresh_token = ""
+                profile.save()
                 logout(request)
             else:
                 request.session["oidc_id_token_expiration"] = (
