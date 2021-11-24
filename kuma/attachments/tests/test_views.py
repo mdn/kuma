@@ -34,11 +34,6 @@ def test_mindtouch_redirect(client, settings, sample_mindtouch_attachment_redire
 
     assert response["x-frame-options"] == f"ALLOW-FROM {settings.DOMAIN}"
     assert response["Last-Modified"]
-    assert "public" in response["Cache-Control"]
-    assert (
-        f"max-age={settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE}"
-        in response["Cache-Control"]
-    )
 
 
 def test_mindtouch_redirect_requires_attachment_host(
@@ -63,13 +58,7 @@ def test_mindtouch_redirect_requires_attachment_host(
     response = client.get(mindtouch_url)
     assert response.status_code == 301
     url = full_mindtouch_attachment_url(id, filename)
-    assert "public" in response["Cache-Control"]
-    assert (
-        f"max-age={settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE}"
-        in response["Cache-Control"]
-    )
     assert response["Location"] == url
-    assert "Vary" not in response
 
 
 def test_mindtouch_not_found(client, settings):
@@ -102,13 +91,7 @@ def test_raw_file_requires_attachment_host(
     # Force the HOST header to look like something other than "demos".
     response = client.get(url, HTTP_HOST="testserver")
     assert response.status_code == 301
-    assert "public" in response["Cache-Control"]
-    assert (
-        f"max-age={settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE}"
-        in response["Cache-Control"]
-    )
     assert response["Location"] == url
-    assert "Vary" not in response
 
     response = client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
     # Figure out the external scheme + host for our attachments bucket
@@ -125,11 +108,6 @@ def test_raw_file_requires_attachment_host(
 
     assert response["x-frame-options"] == f"ALLOW-FROM {settings.DOMAIN}"
     assert response["Last-Modified"]
-    assert "public" in response["Cache-Control"]
-    assert (
-        f"max-age={settings.ATTACHMENTS_CACHE_CONTROL_MAX_AGE}"
-        in response["Cache-Control"]
-    )
 
 
 def test_raw_file_not_found(client, settings):
