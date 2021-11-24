@@ -48,7 +48,7 @@ pytest-metadata = "^1.11.0"
 pytest-rerunfailures = "^10.2"
 requests-mock = "^1.9.3"
 
-ElasticMock = "^1.8.0"
+ElasticMock = "^1.8.1"
 
 # Linting
 black = "21.9b0"
