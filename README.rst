@@ -18,12 +18,12 @@ Kuma
    :target: https://github.com/mdn/kuma/actions?query=workflow%3A%22Documentation+Build%22
    :alt: Documentation Build
 
-.. image:: https://codecov.io/github/mdn/kuma/coverage.svg?branch=master
-   :target: https://codecov.io/github/mdn/kuma?branch=master
+.. image:: https://codecov.io/github/mdn/kuma/coverage.svg?branch=main
+   :target: https://codecov.io/github/mdn/kuma?branch=main
    :alt: Code Coverage Status
 
 .. image:: http://img.shields.io/badge/license-MPL2-blue.svg
-   :target: https://raw.githubusercontent.com/mdn/kuma/master/LICENSE
+   :target: https://raw.githubusercontent.com/mdn/kuma/main/LICENSE
    :alt: License
 
 .. image:: https://img.shields.io/badge/whatsdeployed-stage,prod-green.svg
@@ -62,5 +62,5 @@ Getting started
 ===============
 
 Want to help make MDN great? Our `contribution guide
-<https://github.com/mdn/kuma/blob/master/CONTRIBUTING.md>`_ lists some good
+<https://github.com/mdn/kuma/blob/main/CONTRIBUTING.md>`_ lists some good
 first projects and offers direction on submitting code.

@@ -122,13 +122,13 @@ You can check the status, progress, and logs of any pipeline runs via
 `MDN's Jenkins-based multi-branch pipeline`_.
 
 .. _`mozmar/jenkins-pipeline`: https://github.com/mozmar/jenkins-pipeline
-.. _`Jenkinsfile`: https://github.com/mdn/kuma/blob/master/Jenkinsfile
-.. _`Jenkinsfiles directory`: https://github.com/mdn/kuma/tree/master/Jenkinsfiles
-.. _`Jenkinsfiles/master.groovy`: https://github.com/mdn/kuma/blob/master/Jenkinsfiles/master.groovy
-.. _`Jenkinsfiles/default.groovy`: https://github.com/mdn/kuma/blob/master/Jenkinsfiles/default.groovy
-.. _`Jenkinsfiles/integration-tests.groovy`: https://github.com/mdn/kuma/blob/master/Jenkinsfiles/integration-tests.groovy
-.. _`Jenkinsfiles/prod-integration-tests.yml` : https://github.com/mdn/kuma/blob/master/Jenkinsfiles/prod-integration-tests.yml
-.. _`Jenkinsfiles/stage-integration-tests.yml` : https://github.com/mdn/kuma/blob/master/Jenkinsfiles/stage-integration-tests.yml
+.. _`Jenkinsfile`: https://github.com/mdn/kuma/blob/main/Jenkinsfile
+.. _`Jenkinsfiles directory`: https://github.com/mdn/kuma/tree/main/Jenkinsfiles
+.. _`Jenkinsfiles/master.groovy`: https://github.com/mdn/kuma/blob/main/Jenkinsfiles/master.groovy
+.. _`Jenkinsfiles/default.groovy`: https://github.com/mdn/kuma/blob/main/Jenkinsfiles/default.groovy
+.. _`Jenkinsfiles/integration-tests.groovy`: https://github.com/mdn/kuma/blob/main/Jenkinsfiles/integration-tests.groovy
+.. _`Jenkinsfiles/prod-integration-tests.yml` : https://github.com/mdn/kuma/blob/main/Jenkinsfiles/prod-integration-tests.yml
+.. _`Jenkinsfiles/stage-integration-tests.yml` : https://github.com/mdn/kuma/blob/main/Jenkinsfiles/stage-integration-tests.yml
 
 Markers
 =======
