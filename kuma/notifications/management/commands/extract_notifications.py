@@ -25,15 +25,35 @@ class Command(BaseCommand):
     help = "Extracts notifications from a bcd.json file"
 
     def add_arguments(self, parser):
+        parser.add_argument('--test-all', default=False, action='store_true')
+        parser.add_argument('--load-initial', default=False, action='store_true')
         parser.add_argument("file", type=open)
 
     def handle(self, *args, **options):
         new_bcd = json.loads(options["file"].read())
+        load_initial = options['load_initial']
         latest = CompatibilityData.objects.all().order_by("created").last()
+
         if not latest:
-            print("You need to load the initial BCD data before running this command")
+            if load_initial:
+                print('Loading file as initial data...')
+                CompatibilityData.objects.create(bcd=new_bcd)
+            else:
+                print("You need to load the initial BCD data before running this command")
             return
+
         old_bcd = latest.bcd
+
+        if options['test_all']:
+            all_notifications = {}
+            for obj in walk(new_bcd):
+                path = obj[0]
+                for gen in generators:
+                    for notification in gen(path, old_bcd, new_bcd).generate():
+                        all_notifications[path] = notification
+            print(all_notifications)
+            return
+
         for watched in Watch.objects.distinct("path"):
             for gen in generators:
                 for notification in gen(watched.path, old_bcd, new_bcd).generate():

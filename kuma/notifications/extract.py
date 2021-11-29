@@ -29,7 +29,7 @@ def walk(data, path=None, depth=sys.maxsize):
 
 def get_feature(bcd, feature):
     try:
-        return functools.reduce(dict.get, feature.split("."), bcd)
+        return functools.reduce(dict.get, feature.split("."), bcd) or {}
     except (TypeError, KeyError):
         return {}
 
@@ -61,7 +61,7 @@ class NotificationGenerator:
 
     def generate_for_browsers(self):
         for browser, old, new in self.support():
-            # ToDo: This is not covered in the spec.
+            # ToDo: Review the spec and deal with lists
             if isinstance(old, list):
                 old = old[0] if old else {}
             if isinstance(new, list):
