@@ -1,6 +1,7 @@
 import argparse
 import functools
 import json
+from datetime import datetime
 
 from django.core.management.base import BaseCommand, CommandError
 
@@ -45,13 +46,19 @@ class Command(BaseCommand):
         old_bcd = latest.bcd
 
         if options['test_all']:
-            all_notifications = {}
             for obj in walk(new_bcd):
                 path = obj[0]
                 for gen in generators:
+                    print('\nprocessing generator')
+                    before = datetime.now()
+                    done = datetime.now()
                     for notification in gen(path, old_bcd, new_bcd).generate():
-                        all_notifications[path] = notification
-            print(all_notifications)
+                        generated = datetime.now()
+                        print(notification)
+                        done = datetime.now()
+                        print('printed notification', done - generated)
+                        print('processed notification', done - before)
+                    print('finished generator', done-before)
             return
 
         for watched in Watch.objects.distinct("path"):
