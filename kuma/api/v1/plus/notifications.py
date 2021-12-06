@@ -6,9 +6,10 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_http_methods
 
+from django.conf import settings
 from kuma.api.v1.decorators import require_subscriber
 from kuma.api.v1.plus import api_list, ItemGenerationData
-from kuma.notifications.models import Notification, Watch
+from kuma.notifications.models import Notification, Watch, NotificationData
 
 
 @never_cache
@@ -75,3 +76,36 @@ def watch(request, url):
         return JsonResponse({"ok": True}, status=200)
 
     return JsonResponse({"ok": False}, status=403)
+
+
+@never_cache
+@require_http_methods(["POST"])
+def create(request):
+    # E.g.GET /api/v1/notifications/create/
+    try:
+        data = json.loads(request.body.decode("UTF-8"))
+    except Exception:
+        return JsonResponse({"ok": False, "error": "bad data"}, status=400)
+
+    auth = request.headers.get('Authorization')
+    if not auth or auth != settings.NOTIFICATIONS_ADMIN_TOKEN:
+        return JsonResponse({"ok": False, "error": "not authorized"}, status=401)
+
+    page = data.get("page", "")
+    if not page:
+        return JsonResponse({"ok": False, "error": "missing page"}, status=400)
+
+    title = data.get("title", "")
+    text = data.get("text", "")
+
+    if not title or not text:
+        return JsonResponse({"ok": False, "error": "missing notification data"}, status=400)
+
+    watchers = Watch.objects.filter(url=page)
+    notification_data, _ = NotificationData.objects.get_or_create(text=title, title=title)
+    for watcher in watchers:
+        # considering the possibility of multiple pages existing for the same path
+        for user in watcher.users.all():
+            Notification.objects.create(notification=notification_data, user=user)
+
+    return JsonResponse({"ok": True}, status=200)

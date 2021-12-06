@@ -264,6 +264,8 @@ INSTALLED_APPS = [
     "django_extensions",
 ]
 
+NOTIFICATIONS_ADMIN_TOKEN = config("NOTIFICATIONS_ADMIN_TOKEN", default='')
+
 
 TEMPLATES = [
     {

@@ -33,6 +33,11 @@ urlpatterns = [
         notifications.mark_as_read,
         name="api.v1.plus.notifications.mark_all_as_read",
     ),
+    path(
+        "plus/notifications/create/",
+        notifications.create,
+        name="api.v1.plus.notifications.create",
+    ),
     re_path(
         "plus/watch(?P<url>/.+)",
         notifications.watch,
