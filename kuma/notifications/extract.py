@@ -110,4 +110,4 @@ class SubFeatures(NotificationGenerator):
             yield from super().generate_for_browsers()
 
 
-generators = [NowSupported, Removed, SubFeatures]
+generators = [NowSupported, Removed]
