@@ -82,14 +82,14 @@ def watch(request, url):
 @require_http_methods(["POST"])
 def create(request):
     # E.g.GET /api/v1/notifications/create/
+    auth = request.headers.get('Authorization')
+    if not auth or auth != settings.NOTIFICATIONS_ADMIN_TOKEN:
+        return JsonResponse({"ok": False, "error": "not authorized"}, status=401)
+
     try:
         data = json.loads(request.body.decode("UTF-8"))
     except Exception:
         return JsonResponse({"ok": False, "error": "bad data"}, status=400)
-
-    auth = request.headers.get('Authorization')
-    if not auth or auth != settings.NOTIFICATIONS_ADMIN_TOKEN:
-        return JsonResponse({"ok": False, "error": "not authorized"}, status=401)
 
     page = data.get("page", "")
     if not page:
@@ -107,5 +107,19 @@ def create(request):
         # considering the possibility of multiple pages existing for the same path
         for user in watcher.users.all():
             Notification.objects.create(notification=notification_data, user=user)
+
+    return JsonResponse({"ok": True}, status=200)
+
+
+@never_cache
+@require_http_methods(["POST"])
+def update(request):
+    # E.g.GET /api/v1/notifications/update/
+    auth = request.headers.get('Authorization')
+    if not auth or auth != settings.NOTIFICATIONS_ADMIN_TOKEN:
+        return JsonResponse({"ok": False, "error": "not authorized"}, status=401)
+
+    # ToDo: Fetch file from S3
+    file = '{}'
 
     return JsonResponse({"ok": True}, status=200)
