@@ -10,6 +10,7 @@ from django.conf import settings
 from kuma.api.v1.decorators import require_subscriber
 from kuma.api.v1.plus import api_list, ItemGenerationData
 from kuma.notifications.models import Notification, Watch, NotificationData
+from kuma.notifications.utils import process_changes
 
 
 @never_cache
@@ -120,6 +121,7 @@ def update(request):
         return JsonResponse({"ok": False, "error": "not authorized"}, status=401)
 
     # ToDo: Fetch file from S3
-    file = '{}'
+    changes = json.loads('{}')
+    process_changes(changes)
 
     return JsonResponse({"ok": True}, status=200)
