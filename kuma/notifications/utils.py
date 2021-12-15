@@ -9,7 +9,7 @@ def publish_notification(path, text, dry_run=False, data=None):
 
     print(watcher.title, text)
     if not dry_run:
-        notification_data, _ = NotificationData.objects.get_or_create(title=watcher.title, text=text, data=data)
+        notification_data, _ = NotificationData.objects.get_or_create(title=watcher.title, text=text, data=data, type='compat')
         for user in watcher.users.all():
             Notification.objects.create(notification=notification_data, user=user)
 

@@ -5,6 +5,7 @@ from django.db import models
 class NotificationData(models.Model):
     title = models.CharField(max_length=256)
     text = models.CharField(max_length=256)
+    type = models.CharField(max_length=32, choices=(('content', 'content'), ('compat', 'compat')), default='compat')
     data = models.JSONField(default=dict)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -16,6 +17,7 @@ class NotificationData(models.Model):
 class Notification(models.Model):
     notification = models.ForeignKey(NotificationData, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    starred = models.BooleanField(default=False)
     read = models.BooleanField(default=False)
 
     def serialize(self):
@@ -25,6 +27,7 @@ class Notification(models.Model):
             "text": self.notification.text,
             "created": self.notification.created,
             "read": self.read,
+            "starred": self.starred,
         }
 
     def __str__(self):

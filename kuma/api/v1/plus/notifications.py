@@ -23,8 +23,16 @@ def notifications(request):
 
 @api_list
 def _notification_list(request) -> ItemGenerationData:
+    filters = {}
+    print(request.GET)
+    if 'filterStarred' in request.GET:
+        filters['starred'] = any(i == request.GET.get('filterStarred') for i in ["true", "True"])
+    type = request.GET.get('filterType', None)
+    if type:
+        filters['notification__type'] = type
+    print(filters)
     return (
-        Notification.objects.filter(user_id=request.user.id)
+        Notification.objects.filter(user_id=request.user.id, **filters)
         .select_related("notification")
         .order_by("-notification__created"),
         lambda notification: notification.serialize(),
@@ -120,7 +128,7 @@ def create(request):
         return JsonResponse({"ok": False, "error": "missing notification data"}, status=400)
 
     watchers = Watch.objects.filter(url=page)
-    notification_data, _ = NotificationData.objects.get_or_create(text=title, title=title)
+    notification_data, _ = NotificationData.objects.get_or_create(text=title, title=title, type='content')
     for watcher in watchers:
         # considering the possibility of multiple pages existing for the same path
         for user in watcher.users.all():
