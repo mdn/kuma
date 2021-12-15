@@ -78,6 +78,22 @@ def mark_as_read(request, id: int | str):
 
 
 @never_cache
+@require_http_methods(["POST"])
+@require_subscriber
+def toggle_starred(request, id: int):
+    # E.g.POST /api/v1/notifications/<id>/star/
+    try:
+        notification = Notification.objects.get(user=request.user, id=id)
+    except Notification.DoesNotExist:
+        return HttpResponseBadRequest("invalid 'id'")
+
+    notification.starred = not notification.starred
+    notification.save()
+    return JsonResponse({"OK": True}, status=200)
+
+
+
+@never_cache
 @require_http_methods(["GET", "POST"])
 @require_subscriber
 def watch(request, url):
