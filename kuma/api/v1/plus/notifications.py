@@ -24,17 +24,20 @@ def notifications(request):
 @api_list
 def _notification_list(request) -> ItemGenerationData:
     filters = {}
-    print(request.GET)
     if 'filterStarred' in request.GET:
         filters['starred'] = any(i == request.GET.get('filterStarred') for i in ["true", "True"])
     type = request.GET.get('filterType', None)
     if type:
         filters['notification__type'] = type
-    print(filters)
+    sort = request.GET.get('sort', None)
+    order_by = '-notification__created'
+    if sort and sort == 'title':
+        order_by = 'notification__title'
+
     return (
         Notification.objects.filter(user_id=request.user.id, **filters)
         .select_related("notification")
-        .order_by("-notification__created"),
+        .order_by(order_by),
         lambda notification: notification.serialize(),
     )
 
