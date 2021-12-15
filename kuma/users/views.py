@@ -1,4 +1,8 @@
-from mozilla_django_oidc.views import OIDCAuthenticationRequestView
+from kuma.users.models import UserProfile
+from mozilla_django_oidc.views import (
+    OIDCAuthenticationRequestView,
+    OIDCAuthenticationCallbackView,
+)
 
 
 class NoPromptOIDCAuthenticationRequestView(OIDCAuthenticationRequestView):
@@ -13,3 +17,18 @@ class NoPromptOIDCAuthenticationRequestView(OIDCAuthenticationRequestView):
 
 
 no_prompt_login = NoPromptOIDCAuthenticationRequestView.as_view()
+
+
+class KumaOIDCAuthenticationCallbackView(OIDCAuthenticationCallbackView):
+    @property
+    def success_url(self):
+        try:
+            profile = UserProfile.objects.get(user=self.user)
+            is_subscriber = profile.subscriber
+        except UserProfile.DoesNotExist:
+            is_subscriber = False
+
+        # Redirect new users to Plus.
+        if self.user.created and not is_subscriber:
+            return "/en-US/plus"
+        return super().success_url

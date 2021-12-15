@@ -329,6 +329,8 @@ OIDC_REDIRECT_ALLOWED_HOSTS = config(
 )
 OIDC_AUTH_REQUEST_EXTRA_PARAMS = {"access_type": "offline"}
 
+OIDC_CALLBACK_CLASS = "kuma.users.views.KumaOIDCAuthenticationCallbackView"
+
 # Allow null on these because you should be able run Kuma with these set.
 # It'll just mean you can't use kuma to authenticate. And a warning
 # (or error if !DEBUG) from the system checks will remind you.

@@ -29,18 +29,15 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         return user_model.objects.filter(username=fxa_uid)
 
     def create_user(self, claims):
-        if (
-            not (subscriptions := claims.get("subscriptions"))
-            or settings.MDN_PLUS_SUBSCRIPTION not in subscriptions
-        ):
-            return None
         user = super().create_user(claims)
 
         self._create_or_set_user_profile(user, claims)
+        user.created = True
         return user
 
     def update_user(self, user, claims):
         self._create_or_set_user_profile(user, claims)
+        user.created = False
         return user
 
     def get_username(self, claims):
@@ -69,16 +66,18 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         if email and user.email != email:
             user.email = email
         # toggle user status based on subscriptions
-        user.is_active = settings.MDN_PLUS_SUBSCRIPTION in claims.get(
-            "subscriptions", []
-        ) or settings.MDN_PLUS_SUBSCRIPTION == claims.get("fxa-subscriptions", "")
-
+        user.is_active = True
         user.save()
 
         profile, _ = UserProfile.objects.get_or_create(user=user)
         if avatar := claims.get("avatar"):
             profile.avatar = avatar
-            profile.save()
+
+        profile.is_subscriber = settings.MDN_PLUS_SUBSCRIPTION in claims.get(
+            "subscriptions", []
+        ) or settings.MDN_PLUS_SUBSCRIPTION == claims.get("fxa-subscriptions", "")
+        profile.save()
+
         return user
 
     def _create_or_set_user_profile(self, user, claims):
