@@ -32,6 +32,23 @@ def _notification_list(request) -> ItemGenerationData:
 
 
 @never_cache
+@require_http_methods(["GET"])
+@require_subscriber
+def watched(request):
+    # E.g. GET /api/v1/notifications/
+    return _watched_list(request)
+
+
+@api_list
+def _watched_list(request) -> ItemGenerationData:
+    return (
+        Watch.objects.filter(users=request.user.id),
+        lambda obj: obj.serialize(),
+    )
+
+
+
+@never_cache
 @require_http_methods(["POST"])
 @require_subscriber
 def mark_as_read(request, id: int | str):

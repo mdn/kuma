@@ -37,5 +37,12 @@ class Watch(models.Model):
     url = models.TextField()
     path = models.CharField(max_length=4096)
 
+    def serialize(self):
+        return {
+            "title": self.title,
+            "url": self.url,
+            "path": self.path,
+        }
+
     def __str__(self):
         return f"<Watchers for: {self.url}, {self.path}>"
