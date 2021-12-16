@@ -42,8 +42,7 @@ def whoami(request):
 
     if profile:
         data["avatar_url"] = profile.avatar
-        if profile.is_subscriber:
-            data["is_subscriber"] = True
+        data["is_subscriber"] = profile.is_subscriber
     return JsonResponse(data)
 
 
