@@ -11,6 +11,7 @@ class UserProfile(models.Model):
     modified = models.DateTimeField(auto_now=True)
     avatar = models.URLField(max_length=512, blank=True, default="")
     fxa_refresh_token = models.CharField(blank=True, default="", max_length=128)
+    is_subscriber = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "User profile"
@@ -19,7 +20,7 @@ class UserProfile(models.Model):
         return json.dumps(
             {
                 "uid": self.user.username,
-                "is_subscriber": self.user.is_active,
+                "is_subscriber": self.user.is_subscriber,
                 "email": self.user.email,
                 "avatar": self.avatar,
             }
