@@ -25,7 +25,7 @@ class KumaOIDCAuthenticationCallbackView(OIDCAuthenticationCallbackView):
     def success_url(self):
         try:
             profile = UserProfile.objects.get(user=self.user)
-            is_subscriber = profile.subscriber
+            is_subscriber = profile.is_subscriber
         except UserProfile.DoesNotExist:
             is_subscriber = False
 
