@@ -30,6 +30,10 @@ class KumaOIDCAuthenticationCallbackView(OIDCAuthenticationCallbackView):
             is_subscriber = False
 
         # Redirect new users to Plus.
-        if self.request.get("created") and not is_subscriber:
+        if (
+            hasattr(self.request, "created")
+            and self.request.created
+            and not is_subscriber
+        ):
             return "/en-US/plus"
         return super().success_url
