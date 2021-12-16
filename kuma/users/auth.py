@@ -32,12 +32,12 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         user = super().create_user(claims)
 
         self._create_or_set_user_profile(user, claims)
-        user.created = True
+        self.request.created = True
         return user
 
     def update_user(self, user, claims):
         self._create_or_set_user_profile(user, claims)
-        user.created = False
+        self.request.created = False
         return user
 
     def get_username(self, claims):
