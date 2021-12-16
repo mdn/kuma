@@ -1,8 +1,9 @@
-from kuma.users.models import UserProfile
 from mozilla_django_oidc.views import (
-    OIDCAuthenticationRequestView,
     OIDCAuthenticationCallbackView,
+    OIDCAuthenticationRequestView,
 )
+
+from kuma.users.models import UserProfile
 
 
 class NoPromptOIDCAuthenticationRequestView(OIDCAuthenticationRequestView):
