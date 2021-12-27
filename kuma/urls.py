@@ -8,7 +8,6 @@ from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
 from kuma.users import views as users_views
 
-
 DAY = 60 * 60 * 24
 MONTH = DAY * 30
 
@@ -39,6 +38,11 @@ urlpatterns += [
         "users/fxa/login/no-prompt/",
         users_views.no_prompt_login,
         name="no_prompt_login",
+    ),
+    path(
+        "events/fxa",
+        users_views.WebhookView.as_view(),
+        name="fxa_webhook",
     ),
 ]
 
