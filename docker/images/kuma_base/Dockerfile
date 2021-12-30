@@ -17,7 +17,10 @@ RUN set -x \
     gettext \
     build-essential \
     # Needed for Python to build cffi
-    libffi-dev
+    libffi-dev \
+    # Needed for Python to build psycopg2_binary
+    # which it should not need
+    libpq-dev
 
 # add non-privileged user
 RUN useradd --uid 1000 --shell /bin/bash --create-home kuma \
