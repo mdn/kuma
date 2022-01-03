@@ -1,4 +1,5 @@
 import json
+
 import requests
 
 from django.conf import settings
@@ -11,16 +12,14 @@ from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
-
 from josepy.jwk import JWK
 from josepy.jws import JWS
-
 from mozilla_django_oidc.views import (
     OIDCAuthenticationCallbackView,
     OIDCAuthenticationRequestView,
 )
 
-from kuma.users.models import UserProfile, AccountEvent
+from kuma.users.models import AccountEvent, UserProfile
 
 
 class NoPromptOIDCAuthenticationRequestView(OIDCAuthenticationRequestView):
