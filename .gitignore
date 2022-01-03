@@ -84,6 +84,7 @@ node_modules/
 kuma/javascript/dist/
 /tmp/emails/*.log
 npm-debug.log
+dist/
 
 # Not an actual file any more but kept for simplicity.
 humans.txt
