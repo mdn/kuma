@@ -1,6 +1,7 @@
+from unittest.mock import patch
+
 import pytest
 from elasticmock import FakeElasticsearch
-from unittest.mock import patch
 
 from kuma.core.urlresolvers import reverse
 
