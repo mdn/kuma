@@ -348,6 +348,10 @@ FXA_VERIFY_URL = config(
 )
 # Set token re-check time to an hour in seconds
 FXA_TOKEN_EXPIRY = config("FXA_TOKEN_EXPIRY", default=3600)
+FXA_SET_ISSUER = config("FXA_SET_ISSUER", default="https://accounts.firefox.com")
+FXA_SET_ID_PREFIX = config(
+    "FXA_SET_ID_PREFIX", default="https://schemas.accounts.firefox.com/event/"
+)
 
 # The mozilla-django-oidc package uses this URL if a "next" URL isn't specified.
 LOGIN_REDIRECT_URL = "/"

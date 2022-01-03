@@ -1,4 +1,4 @@
-FROM python:3.8.12-slim@sha256:8ddf57366e75a05db040713356c734c5b7a4a4e259f2c2004786916a618336a4
+FROM python:3.10.1-slim@sha256:9f702aa0f2bd7fe7a43bcf46e487040ba3237f2115994ae74ea7b270479ea8f3
 
 # Set the environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -28,7 +28,7 @@ RUN useradd --uid 1000 --shell /bin/bash --create-home kuma \
 # install Python libraries
 WORKDIR /app
 COPY --chown=kuma:kuma ./pyproject.toml ./poetry.lock /app/
-RUN pip install poetry~=1.1.7 \
+RUN pip install poetry~=1.1.12 \
     && POETRY_VIRTUALENVS_CREATE=false poetry install --no-root \
     && rm -rf ~/.cache/pip ~/.cache/pypoetry/cache
 
