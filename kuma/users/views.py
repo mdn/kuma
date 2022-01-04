@@ -3,6 +3,7 @@ import json
 import requests
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.exceptions import SuspiciousOperation
 from django.http import (
     Http404,
@@ -117,6 +118,12 @@ class WebhookView(View):
         fxa_uid = payload.get("sub")
         events = payload.get("events")
 
+        try:
+            user = get_user_model().objects.get(username=fxa_uid)
+        except get_user_model().DoesNotExist:
+            user = None
+        print(user)
+
         for long_id, event in events.items():
             short_id = long_id.replace(settings.FXA_SET_ID_PREFIX, "")
 
@@ -130,8 +137,21 @@ class WebhookView(View):
             )
             print(account_event)
 
+            if user:
+                if short_id == AccountEvent.DELETE_USER:
+                    pass
+                elif short_id == AccountEvent.SUBSCRIPTION_STATE_CHANGE:
+                    pass
+                elif short_id == AccountEvent.PASSWORD_CHANGE:
+                    pass
+                elif short_id == AccountEvent.PROFILE_CHANGE:
+                    pass
+                else:
+                    pass
+
     def post(self, request, *args, **kwargs):
         authorization = request.META.get("HTTP_AUTHORIZATION")
+        print(authorization)
         if not authorization:
             raise Http404
 

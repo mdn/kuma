@@ -33,6 +33,11 @@ class AccountEvent(models.Model):
     Each event is processed by Celery and stored in this table.
     """
 
+    PASSWORD_CHANGE = "password-change"
+    PROFILE_CHANGE = "profile-change"
+    SUBSCRIPTION_STATE_CHANGE = "subscription-state-change"
+    DELETE_USER = "delete-user"
+
     class EventType(models.IntegerChoices):
         """Type of event received from Firefox Accounts."""
 
