@@ -21,6 +21,11 @@ from mozilla_django_oidc.views import (
 )
 
 from kuma.users.models import AccountEvent, UserProfile
+from kuma.users.tasks import (
+    process_event_delete_user,
+    process_event_password_change,
+    process_event_subscription_state_change,
+)
 
 
 class NoPromptOIDCAuthenticationRequestView(OIDCAuthenticationRequestView):
@@ -124,27 +129,43 @@ class WebhookView(View):
             user = None
         print(user)
 
+        if not user:
+            return
+
         for long_id, event in events.items():
             short_id = long_id.replace(settings.FXA_SET_ID_PREFIX, "")
+            if short_id == "password-change":
+                event_type = AccountEvent.EventType.PASSWORD_CHANGED
+            elif short_id == "profile-change":
+                event_type = AccountEvent.EventType.PROFILE_CHANGED
+            elif short_id == "subscription-state-change":
+                event_type = AccountEvent.EventType.SUBSCRIPTION_CHANGED
+            elif short_id == "delete-user":
+                event_type = AccountEvent.EventType.PROFILE_DELETED
+            else:
+                event_type = None
+
+            if not event_type:
+                continue
 
             account_event = AccountEvent.objects.create(
                 issued_at=payload["iat"],
                 jwt_id=payload["jti"],
                 fxa_uid=fxa_uid,
-                status=AccountEvent.PENDING,
+                status=AccountEvent.EventStatus.PENDING,
                 payload=json.dumps(event),
-                event_type=short_id,
+                event_type=event_type,
             )
-            print(account_event)
 
             if user:
-                if short_id == AccountEvent.DELETE_USER:
-                    pass
-                elif short_id == AccountEvent.SUBSCRIPTION_STATE_CHANGE:
-                    pass
-                elif short_id == AccountEvent.PASSWORD_CHANGE:
-                    pass
-                elif short_id == AccountEvent.PROFILE_CHANGE:
+                if event_type == AccountEvent.EventType.PROFILE_DELETED:
+                    process_event_delete_user(account_event.id)
+                elif event_type == AccountEvent.EventType.SUBSCRIPTION_CHANGED:
+                    process_event_subscription_state_change.delay(account_event.id)
+                elif event_type == AccountEvent.EventType.PASSWORD_CHANGED:
+                    process_event_password_change(account_event.id)
+                elif event_type == AccountEvent.EventType.PROFILE_CHANGED:
+                    print(f"profile change for {user}")
                     pass
                 else:
                     pass
