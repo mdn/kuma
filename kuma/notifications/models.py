@@ -35,7 +35,7 @@ class Notification(models.Model):
 
 
 class Watch(models.Model):
-    users = models.ManyToManyField(User)
+    users = models.ManyToManyField(User, through="UserWatch")
     title = models.CharField(max_length=2048)
     url = models.TextField()
     path = models.CharField(max_length=4096)
@@ -49,3 +49,30 @@ class Watch(models.Model):
 
     def __str__(self):
         return f"<Watchers for: {self.url}, {self.path}>"
+
+
+class UserWatch(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    watch = models.ForeignKey(Watch, on_delete=models.CASCADE)
+    custom = models.BooleanField(default=False)
+    content_updates = models.BooleanField(default=True)
+    browser_compatibility = models.JSONField(default=list)
+
+    class Meta:
+        db_table = "notifications_watch_users"
+
+    def serialize(self):
+        data = {
+            "title": self.watch.title,
+            "url": self.watch.url,
+            "path": self.watch.path,
+        }
+        if self.custom:
+            data["custom"] = {
+                "content": self.content_updates,
+                "compatibility": self.browser_compatibility,
+            }
+        return data
+
+    def __str__(self):
+        return f"User {self.user_id} watching {self.watch_id}"

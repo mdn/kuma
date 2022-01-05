@@ -62,8 +62,31 @@ class Migration(migrations.Migration):
                 ),
                 ("slug", models.SlugField()),
                 ("path", models.CharField(max_length=4096)),
-                ("users", models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
+                ("users", models.ManyToManyField(to=settings.AUTH_USER_MODEL, through="notifications.UserWatch")),
             ],
+        ),
+        migrations.CreateModel(
+            name="UserWatch",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+                ),
+                (
+                    "watch",
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='notifications.watch'),
+                ),
+            ],
+            options={"db_table": "notifications_watch_users"},
         ),
         migrations.CreateModel(
             name="Notification",
