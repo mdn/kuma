@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from typing import Optional
 
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.cache import never_cache
@@ -9,7 +10,7 @@ from django.views.decorators.http import require_http_methods
 from django.conf import settings
 from kuma.api.v1.decorators import require_subscriber
 from kuma.api.v1.plus import api_list, ItemGenerationData
-from kuma.notifications.models import Notification, Watch, NotificationData
+from kuma.notifications.models import Notification, UserWatch, Watch, NotificationData
 from kuma.notifications.utils import process_changes
 
 
@@ -98,26 +99,53 @@ def toggle_starred(request, id: int):
 @require_subscriber
 def watch(request, url):
     # E.g.GET /api/v1/notifications/watch/en-US/docs/Web/CSS/
+    watched: Optional[UserWatch] = request.user.userwatch_set.select_related("watch").filter(watch__url=url).first()
     if request.method == "GET":
-        watched = Watch.objects.filter(users=request.user, url=url).first()
-        status = "unwatched"
+        response = {"ok": True}
         if watched:
-            status = "major"
-        return JsonResponse({"ok": True, status: status}, status=200)
+            if not watched.custom:
+                response["status"] = "major"
+            else:
+                response["status"] = "custom"
+                response["content"] = watched.content_updates
+                response["compatibility"] = watched.browser_compatibility
+        else:
+            response["status"] = "unwatched"
+
+        return JsonResponse(response, status=200)
 
     elif request.method == "POST":
         try:
             data = json.loads(request.body.decode("UTF-8"))
         except Exception:
             return JsonResponse({"ok": False, "error": "bad data"}, status=400)
+
+        if data.get('unwatch'):
+            if watched:
+                watched.delete()
+            return JsonResponse({"ok": True}, status=200)
+
         title = data.get("title", None)
-        path = data.get("path", "")
         if not title:
             return JsonResponse({"ok": False, "error": "missing title"}, status=400)
-
-        watched, _ = Watch.objects.get_or_create(url=url, title=title, path=path)
-        watched.users.add(request.user)
-
+        path = data.get("path", "")
+        custom = "content" in data
+        watch_data = {"custom": custom}
+        if custom:
+            watch_data["content_updates"] = bool(data.get("content"))
+            if not isinstance(data.get("compatibility"), list):
+                return JsonResponse({"ok": False, "error": "bad compatibility list"}, status=400)
+            watch_data["browser_compatibility"] = sorted(data["compatibility"])
+        if watched:
+            watch: Watch = watched.watch
+            # Update the title / path if they changed.
+            if title != watch.title or path != watch.path:
+                watch.title = title
+                watch.path = path
+                watch.save()
+        else:
+            watch = Watch.objects.get_or_create(url=url, title=title, path=path)[0]
+        request.user.userwatch_set.update_or_create(watch=watch, defaults=watch_data)
         return JsonResponse({"ok": True}, status=200)
 
     return JsonResponse({"ok": False}, status=403)
