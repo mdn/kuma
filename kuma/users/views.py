@@ -24,6 +24,7 @@ from kuma.users.models import AccountEvent, UserProfile
 from kuma.users.tasks import (
     process_event_delete_user,
     process_event_password_change,
+    process_event_profile_change,
     process_event_subscription_state_change,
 )
 
@@ -159,14 +160,13 @@ class WebhookView(View):
 
             if user:
                 if event_type == AccountEvent.EventType.PROFILE_DELETED:
-                    process_event_delete_user(account_event.id)
+                    process_event_delete_user.delay(account_event.id)
                 elif event_type == AccountEvent.EventType.SUBSCRIPTION_CHANGED:
                     process_event_subscription_state_change.delay(account_event.id)
                 elif event_type == AccountEvent.EventType.PASSWORD_CHANGED:
-                    process_event_password_change(account_event.id)
+                    process_event_password_change.delay(account_event.id)
                 elif event_type == AccountEvent.EventType.PROFILE_CHANGED:
-                    print(f"profile change for {user}")
-                    pass
+                    process_event_profile_change.delay(account_event.id)
                 else:
                     pass
 

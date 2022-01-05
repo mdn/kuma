@@ -42,7 +42,7 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
     def get_username(self, claims):
         """Get the username from the claims."""
         # use the fxa_uid as the username
-        return claims.get("sub")
+        return claims.get("sub", claims.get("uid"))
 
     @staticmethod
     def create_or_update_subscriber(claims, user=None):
@@ -51,7 +51,7 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         Static helper method that routes requests that are not part of the login flow
         """
         email = claims.get("email")
-        fxa_uid = claims.get("sub")
+        fxa_uid = claims.get("sub", claims.get("uid"))
         if not fxa_uid:
             return
 

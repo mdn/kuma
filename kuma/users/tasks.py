@@ -3,6 +3,7 @@ import json
 from celery import task
 from django.contrib.auth import get_user_model
 
+from kuma.users.auth import KumaOIDCAuthenticationBackend
 from kuma.users.models import AccountEvent, UserProfile
 
 
@@ -62,30 +63,35 @@ def process_event_password_change(event_id):
     event.save()
 
 
-# @task
-# def process_event_profile_change(event_id):
-#     event = AccountEvent.objects.get(id=event_id)
-#     refresh_token = event.profile.fxa_refresh_token
-#
-#     if not refresh_token:
-#         event.status = AccountEvent.IGNORED
-#         event.save()
-#         return
-#
-#     fxa = KumaOIDCAuthenticationBackend()
-#     token_info = fxa.get_token(
-#         {
-#             "client_id": fxa.OIDC_RP_CLIENT_ID,
-#             "client_secret": fxa.OIDC_RP_CLIENT_SECRET,
-#             "grant_type": "refresh_token",
-#             "refresh_token": refresh_token,
-#             "ttl": 60 * 5,
-#         }
-#     )
-#     access_token = token_info.get("access_token")
-#     user_info = fxa.get_userinfo(access_token, None, None)
-#     fxa.update_user(event.profile.user, user_info)
-#
-#     event.status = AccountEvent.PROCESSED
-#     event.save()
-#
+@task
+def process_event_profile_change(event_id):
+    event = AccountEvent.objects.get(id=event_id)
+    try:
+        user = get_user_model().objects.get(username=event.fxa_uid)
+        profile = UserProfile.objects.get(user=user)
+    except get_user_model().DoesNotExist:
+        return
+
+    refresh_token = profile.fxa_refresh_token
+
+    if not refresh_token:
+        event.status = AccountEvent.IGNORED
+        event.save()
+        return
+
+    fxa = KumaOIDCAuthenticationBackend()
+    token_info = fxa.get_token(
+        {
+            "client_id": fxa.OIDC_RP_CLIENT_ID,
+            "client_secret": fxa.OIDC_RP_CLIENT_SECRET,
+            "grant_type": "refresh_token",
+            "refresh_token": refresh_token,
+            "ttl": 60 * 5,
+        }
+    )
+    access_token = token_info.get("access_token")
+    user_info = fxa.get_userinfo(access_token, None, None)
+    fxa.update_user(user, user_info)
+
+    event.status = AccountEvent.EventStatus.PROCESSED
+    event.save()
