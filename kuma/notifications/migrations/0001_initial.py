@@ -62,7 +62,6 @@ class Migration(migrations.Migration):
                 ),
                 ("slug", models.SlugField()),
                 ("path", models.CharField(max_length=4096)),
-                ("users", models.ManyToManyField(to=settings.AUTH_USER_MODEL, through="notifications.UserWatch")),
             ],
         ),
         migrations.CreateModel(
