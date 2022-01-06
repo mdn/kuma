@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -5,7 +6,11 @@ from django.db import models
 class NotificationData(models.Model):
     title = models.CharField(max_length=256)
     text = models.CharField(max_length=256)
-    type = models.CharField(max_length=32, choices=(('content', 'content'), ('compat', 'compat')), default='compat')
+    type = models.CharField(
+        max_length=32,
+        choices=(("content", "content"), ("compat", "compat")),
+        default="compat",
+    )
     data = models.JSONField(default=dict)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -51,28 +56,41 @@ class Watch(models.Model):
         return f"<Watchers for: {self.url}, {self.path}>"
 
 
-class UserWatch(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    watch = models.ForeignKey(Watch, on_delete=models.CASCADE)
-    custom = models.BooleanField(default=False)
+class CustomBaseModel(models.Model):
     content_updates = models.BooleanField(default=True)
     browser_compatibility = models.JSONField(default=list)
+
+    class Meta:
+        abstract = True
+
+    def custom_serialize(self):
+        return {
+            "content": self.content_updates,
+            "compatibility": self.browser_compatibility,
+        }
+
+
+class UserWatch(CustomBaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    watch = models.ForeignKey(Watch, on_delete=models.CASCADE)
+    custom = models.BooleanField(default=False)
+    custom_default = models.BooleanField(default=False)
 
     class Meta:
         db_table = "notifications_watch_users"
 
     def serialize(self):
-        data = {
+        return {
             "title": self.watch.title,
             "url": self.watch.url,
             "path": self.watch.path,
+            "custom": self.watch.custom,
+            "custom_default": self.watch.custom_default,
         }
-        if self.custom:
-            data["custom"] = {
-                "content": self.content_updates,
-                "compatibility": self.browser_compatibility,
-            }
-        return data
 
     def __str__(self):
         return f"User {self.user_id} watching {self.watch_id}"
+
+
+class DefaultWatch(CustomBaseModel):
+    user = models.OneToOneField(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

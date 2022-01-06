@@ -10,7 +10,13 @@ from django.views.decorators.http import require_http_methods
 from django.conf import settings
 from kuma.api.v1.decorators import require_subscriber
 from kuma.api.v1.plus import api_list, ItemGenerationData
-from kuma.notifications.models import Notification, UserWatch, Watch, NotificationData
+from kuma.notifications.models import (
+    Notification,
+    UserWatch,
+    Watch,
+    NotificationData,
+    DefaultWatch,
+)
 from kuma.notifications.utils import process_changes
 
 
@@ -25,15 +31,17 @@ def notifications(request):
 @api_list
 def _notification_list(request) -> ItemGenerationData:
     filters = {}
-    if 'filterStarred' in request.GET:
-        filters['starred'] = any(i == request.GET.get('filterStarred') for i in ["true", "True"])
-    type = request.GET.get('filterType', None)
+    if "filterStarred" in request.GET:
+        filters["starred"] = any(
+            i == request.GET.get("filterStarred") for i in ["true", "True"]
+        )
+    type = request.GET.get("filterType", None)
     if type:
-        filters['notification__type'] = type
-    sort = request.GET.get('sort', None)
-    order_by = '-notification__created'
-    if sort and sort == 'title':
-        order_by = 'notification__title'
+        filters["notification__type"] = type
+    sort = request.GET.get("sort", None)
+    order_by = "-notification__created"
+    if sort and sort == "title":
+        order_by = "notification__title"
 
     return (
         Notification.objects.filter(user_id=request.user.id, **filters)
@@ -57,7 +65,6 @@ def _watched_list(request) -> ItemGenerationData:
         Watch.objects.filter(users=request.user.id),
         lambda obj: obj.serialize(),
     )
-
 
 
 @never_cache
@@ -93,22 +100,34 @@ def toggle_starred(request, id: int):
     return JsonResponse({"OK": True}, status=200)
 
 
-
 @never_cache
 @require_http_methods(["GET", "POST"])
 @require_subscriber
 def watch(request, url):
     # E.g.GET /api/v1/notifications/watch/en-US/docs/Web/CSS/
-    watched: Optional[UserWatch] = request.user.userwatch_set.select_related("watch").filter(watch__url=url).first()
+    watched: Optional[UserWatch] = (
+        request.user.userwatch_set.select_related("watch", "user__defaultwatch")
+        .filter(watch__url=url)
+        .first()
+    )
+    user = watched.user if watched else request.user
+
     if request.method == "GET":
         response = {"ok": True}
+        try:
+            response["default"] = user.defaultwatch.custom_serialize()
+        except DefaultWatch.DoesNotExist:
+            pass
+
         if watched:
             if not watched.custom:
                 response["status"] = "major"
             else:
                 response["status"] = "custom"
-                response["content"] = watched.content_updates
-                response["compatibility"] = watched.browser_compatibility
+                if watched.custom_default and "default" in response:
+                    response["custom"] = True
+                else:
+                    response["custom"] = watched.custom_serialize()
         else:
             response["status"] = "unwatched"
 
@@ -120,7 +139,7 @@ def watch(request, url):
         except Exception:
             return JsonResponse({"ok": False, "error": "bad data"}, status=400)
 
-        if data.get('unwatch'):
+        if data.get("unwatch"):
             if watched:
                 watched.delete()
             return JsonResponse({"ok": True}, status=200)
@@ -130,12 +149,32 @@ def watch(request, url):
             return JsonResponse({"ok": False, "error": "missing title"}, status=400)
         path = data.get("path", "")
         custom = "content" in data
-        watch_data = {"custom": custom}
+        watched_data = {"custom": custom}
         if custom:
-            watch_data["content_updates"] = bool(data.get("content"))
+            custom_default = bool(data.get("custom_default"))
+            watched_data["custom_default"] = custom_default
+            update_custom_default = data.get("update_custom_default")
+            custom_data = {
+                "content_updates": bool(data.get("content")),
+            }
             if not isinstance(data.get("compatibility"), list):
-                return JsonResponse({"ok": False, "error": "bad compatibility list"}, status=400)
-            watch_data["browser_compatibility"] = sorted(data["compatibility"])
+                return JsonResponse(
+                    {"ok": False, "error": "bad compatibility list"}, status=400
+                )
+            custom_data["browser_compatibility"] = sorted(data["compatibility"])
+            if custom_default:
+                try:
+                    default_watch = user.defaultwatch
+                    if update_custom_default:
+                        for key, value in custom_data.items():
+                            setattr(default_watch, key, value)
+                        default_watch.save()
+                except DefaultWatch.DoesNotExist:
+                    # Always create custom defaults if they are missing.
+                    DefaultWatch.objects.update_or_create(
+                        user=user, defaults=custom_data
+                    )
+            watched_data.update(custom_data)
         if watched:
             watch: Watch = watched.watch
             # Update the title / path if they changed.
@@ -145,7 +184,7 @@ def watch(request, url):
                 watch.save()
         else:
             watch = Watch.objects.get_or_create(url=url, title=title, path=path)[0]
-        request.user.userwatch_set.update_or_create(watch=watch, defaults=watch_data)
+        user.userwatch_set.update_or_create(watch=watch, defaults=watched_data)
         return JsonResponse({"ok": True}, status=200)
 
     return JsonResponse({"ok": False}, status=403)
@@ -155,7 +194,7 @@ def watch(request, url):
 @require_http_methods(["POST"])
 def create(request):
     # E.g.GET /api/v1/notifications/create/
-    auth = request.headers.get('Authorization')
+    auth = request.headers.get("Authorization")
     if not auth or auth != settings.NOTIFICATIONS_ADMIN_TOKEN:
         return JsonResponse({"ok": False, "error": "not authorized"}, status=401)
 
@@ -172,10 +211,14 @@ def create(request):
     text = data.get("text", "")
 
     if not title or not text:
-        return JsonResponse({"ok": False, "error": "missing notification data"}, status=400)
+        return JsonResponse(
+            {"ok": False, "error": "missing notification data"}, status=400
+        )
 
     watchers = Watch.objects.filter(url=page)
-    notification_data, _ = NotificationData.objects.get_or_create(text=title, title=title, type='content')
+    notification_data, _ = NotificationData.objects.get_or_create(
+        text=title, title=title, type="content"
+    )
     for watcher in watchers:
         # considering the possibility of multiple pages existing for the same path
         for user in watcher.users.all():
@@ -188,12 +231,12 @@ def create(request):
 @require_http_methods(["POST"])
 def update(request):
     # E.g.GET /api/v1/notifications/update/
-    auth = request.headers.get('Authorization')
+    auth = request.headers.get("Authorization")
     if not auth or auth != settings.NOTIFICATIONS_ADMIN_TOKEN:
         return JsonResponse({"ok": False, "error": "not authorized"}, status=401)
 
     # ToDo: Fetch file from S3
-    changes = json.loads('{}')
+    changes = json.loads("{}")
     process_changes(changes)
 
     return JsonResponse({"ok": True}, status=200)
