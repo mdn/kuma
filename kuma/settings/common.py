@@ -9,6 +9,7 @@ from decouple import config, Csv
 from sentry_sdk.integrations.django import DjangoIntegration
 
 DEBUG = config("DEBUG", default=False, cast=bool)
+DEV = config("DEV", cast=bool, default=False)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -236,6 +237,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "kuma.users.middleware.ValidateAccessTokenMiddleware",
 ]
 
 ROOT_URLCONF = "kuma.urls"
@@ -330,16 +332,29 @@ OIDC_REDIRECT_ALLOWED_HOSTS = config(
 )
 OIDC_AUTH_REQUEST_EXTRA_PARAMS = {"access_type": "offline"}
 
+OIDC_CALLBACK_CLASS = "kuma.users.views.KumaOIDCAuthenticationCallbackView"
+
 # Allow null on these because you should be able run Kuma with these set.
 # It'll just mean you can't use kuma to authenticate. And a warning
 # (or error if !DEBUG) from the system checks will remind you.
 OIDC_RP_CLIENT_ID = config("OIDC_RP_CLIENT_ID", default=None)
 OIDC_RP_CLIENT_SECRET = config("OIDC_RP_CLIENT_SECRET", default=None)
-
 # Function that gets called
 OIDC_OP_LOGOUT_URL_METHOD = "kuma.users.auth.logout_url"
+# Store the access token in session
+OIDC_STORE_ACCESS_TOKEN = config("OIDC_STORE_ACCESS_TOKEN", cast=bool, default=True)
 # Set the issuer of the token.
 FXA_TOKEN_ISSUER = config("FXA_TOKEN_ISSUER", default="https://accounts.firefox.com")
+# Validate access token endpoint.
+FXA_VERIFY_URL = config(
+    "FXA_VERIFY_URL", default="https://oauth.accounts.firefox.com/v1/verify"
+)
+# Set token re-check time to an hour in seconds
+FXA_TOKEN_EXPIRY = config("FXA_TOKEN_EXPIRY", default=3600)
+FXA_SET_ISSUER = config("FXA_SET_ISSUER", default="https://accounts.firefox.com")
+FXA_SET_ID_PREFIX = config(
+    "FXA_SET_ID_PREFIX", default="https://schemas.accounts.firefox.com/event/"
+)
 
 # The mozilla-django-oidc package uses this URL if a "next" URL isn't specified.
 LOGIN_REDIRECT_URL = "/"
@@ -367,17 +382,6 @@ ATTACHMENT_HOST = config("ATTACHMENT_HOST", default=_PROD_ATTACHMENT_HOST)
 ATTACHMENT_SITE_URL = PROTOCOL + ATTACHMENT_HOST
 _PROD_ATTACHMENT_ORIGIN = "demos-origin.mdn.mozit.cloud"
 ATTACHMENT_ORIGIN = config("ATTACHMENT_ORIGIN", default=_PROD_ATTACHMENT_ORIGIN)
-
-# Primary use case if for file attachments that are still served via Kuma.
-# We have settings.ATTACHMENTS_USE_S3 on by default. So a URL like
-# `/files/3710/Test_Form_2.jpg` will trigger a 302 response (to its final
-# public S3 URL). This 302 response can be cached in the CDN. That's what
-# this setting controls.
-# We can make it pretty aggressive, because as of early 2021, you can't
-# edit images by uploading a different one through the Wiki UI.
-ATTACHMENTS_CACHE_CONTROL_MAX_AGE = config(
-    "ATTACHMENTS_CACHE_CONTROL_MAX_AGE", default=60 * 60 * 24, cast=int
-)
 
 # This should never be false for the production and stage deployments.
 ENABLE_RESTRICTIONS_BY_HOST = config(
@@ -534,19 +538,6 @@ CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
     "CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE", default=60 * 5, cast=int
 )
 
-
-# Setting for configuring the AWS S3 bucket name used for the document API.
-MDN_API_S3_BUCKET_NAME = config("MDN_API_S3_BUCKET_NAME", default=None)
-
-# AWS S3 credentials and settings for uploading attachments
-ATTACHMENTS_AWS_ACCESS_KEY_ID = config("ATTACHMENTS_AWS_ACCESS_KEY_ID", default=None)
-ATTACHMENTS_AWS_SECRET_ACCESS_KEY = config(
-    "ATTACHMENTS_AWS_SECRET_ACCESS_KEY", default=None
-)
-ATTACHMENTS_AWS_STORAGE_BUCKET_NAME = config(
-    "ATTACHMENTS_AWS_STORAGE_BUCKET_NAME", default="media"
-)
-
 ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN = config(
     "ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN", default="media.prod.mdn.mozit.cloud"
 )  # For example, Cloudfront CDN domain
@@ -555,9 +546,6 @@ ATTACHMENTS_AWS_S3_SECURE_URLS = config(
 )  # Does the custom domain use TLS
 ATTACHMENTS_AWS_S3_CUSTOM_URL = f"{'https' if ATTACHMENTS_AWS_S3_SECURE_URLS else 'http'}://{ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN}"
 
-ATTACHMENTS_AWS_S3_REGION_NAME = config(
-    "ATTACHMENTS_AWS_S3_REGION_NAME", default="us-east-1"
-)
 ATTACHMENTS_AWS_S3_ENDPOINT_URL = config(
     "ATTACHMENTS_AWS_S3_ENDPOINT_URL", default=None
 )

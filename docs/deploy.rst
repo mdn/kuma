@@ -11,7 +11,7 @@ used to `deploy and maintain MDN`_.
 .. _Docker: https://www.docker.com/
 .. _Kubernetes: https://kubernetes.io/
 .. _`infra repository`: https://github.com/mdn/infra
-.. _`deploy and maintain MDN`: https://github.com/mdn/infra/tree/master/apps/mdn/mdn-aws
+.. _`deploy and maintain MDN`: https://github.com/mdn/infra/tree/main/apps/mdn/mdn-aws
 
 Deploying new code to AWS takes several steps, and about 60 minutes for the
 full process. The deployer is responsible for emergency issues for the next 24
@@ -42,10 +42,10 @@ Before deploying, a staff member should:
   the development environment in sync.
 
     - Commit or stash any changes in your working copy.
-    - Create a pre-push branch from master::
+    - Create a pre-push branch from main::
 
         git fetch origin
-        git checkout -b pre-push-`date +"%Y-%m-%d"` origin/master
+        git checkout -b pre-push-`date +"%Y-%m-%d"` origin/main
 
     - Update the submodules::
 
@@ -166,12 +166,12 @@ pushing to production.
 
     git fetch origin
     git checkout stage-push
-    git merge --ff-only origin/master
+    git merge --ff-only origin/main
     git push
     cd kumascript
     git fetch origin
     git checkout stage-push
-    git merge --ff-only origin/master
+    git merge --ff-only origin/main
     git push
     cd ..
 
@@ -185,7 +185,7 @@ pushing to production.
 * Merge and push to the ``stage-integration-tests`` branch::
 
     git checkout stage-integration-tests
-    git merge --ff-only origin/master
+    git merge --ff-only origin/main
     git push
 
   This will kick off `functional tests`_ in Jenkins_, which will also report
@@ -213,12 +213,12 @@ monitored by the development team and MozMEAO.
 
     git fetch origin
     git checkout prod-push
-    git merge --ff-only origin/master
+    git merge --ff-only origin/main
     git push
     cd kumascript
     git fetch origin
     git checkout prod-push
-    git merge --ff-only origin/master
+    git merge --ff-only origin/main
     git push
     cd ..
 
@@ -246,11 +246,11 @@ the AWS US West datacenter.
 
     git fetch origin
     git checkout standby-push
-    git merge --ff-only origin/master
+    git merge --ff-only origin/main
     git push
     cd kumascript
     git fetch origin
     git checkout standby-push
-    git merge --ff-only origin/master
+    git merge --ff-only origin/main
     git push
     cd ..

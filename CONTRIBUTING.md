@@ -8,7 +8,7 @@ Things to know when contributing code
   ``locale/``). Please use [Pontoon][pontoon] instead.
 
 [MPL2]: http://www.mozilla.org/MPL/2.0/
-[coc]: https://github.com/mdn/kuma/blob/master/CODE_OF_CONDUCT.md
+[coc]: https://github.com/mdn/kuma/blob/main/CODE_OF_CONDUCT.md
 [discourse]: https://discourse.mozilla.org/c/mdn
 [bugs]: https://github.com/mdn/kuma/issues
 [pontoon]: https://pontoon.mozilla.org/projects/mdn/

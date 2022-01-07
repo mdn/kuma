@@ -9,7 +9,7 @@ repository = "https://github.com/mdn/kuma"
 documentation = "https://kuma.readthedocs.io"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 
 celery = "^4.4.7"
 dj-database-url = "^0.5.0"

@@ -60,7 +60,6 @@ def test_whoami(
         "username": wiki_user.username,
         "is_authenticated": True,
         "email": "wiki_user@example.com",
-        "is_subscriber": True,
     }
     if is_staff:
         expect["is_staff"] = True

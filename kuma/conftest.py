@@ -23,14 +23,6 @@ def set_default_language():
 
 
 @pytest.fixture(autouse=True)
-def disable_s3(settings):
-    """
-    Disable S3 when running tests just in case it's enabled for manual testing.
-    """
-    settings.MDN_API_S3_BUCKET_NAME = None
-
-
-@pytest.fixture(autouse=True)
 def reset_urlconf():
     """
     Reset the default urlconf used by "reverse" to the one provided
