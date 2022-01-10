@@ -72,10 +72,11 @@ def watched(request):
 
 @api_list
 def _watched_list(request) -> ItemGenerationData:
-    return (
-        Watch.objects.filter(users=request.user.id),
-        lambda obj: obj.serialize(),
-    )
+    qs = Watch.objects.filter(users=request.user.id).order_by("title")
+    search = request.GET.get("q")
+    if search:
+        qs = qs.filter(title__icontains=search)
+    return (qs, lambda obj: obj.serialize())
 
 
 @never_cache
