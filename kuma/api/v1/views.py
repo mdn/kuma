@@ -35,8 +35,6 @@ def whoami(request):
         data["is_staff"] = True
     if user.is_superuser:
         data["is_superuser"] = True
-    if user.is_active:
-        data["is_subscriber"] = True
     try:
         profile = UserProfile.objects.get(user=user)
     except UserProfile.DoesNotExist:
@@ -44,6 +42,7 @@ def whoami(request):
 
     if profile:
         data["avatar_url"] = profile.avatar
+        data["is_subscriber"] = profile.is_subscriber
     return JsonResponse(data)
 
 

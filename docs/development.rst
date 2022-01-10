@@ -64,7 +64,7 @@ See CONTRIBUTING.md_ for details of the coding style on Kuma.
 New code is expected to have test coverage.  See the
 :doc:`Test Suite docs <tests>` for tips on writing tests.
 
-.. _CONTRIBUTING.md: https://github.com/mdn/kuma/blob/master/CONTRIBUTING.md
+.. _CONTRIBUTING.md: https://github.com/mdn/kuma/blob/main/CONTRIBUTING.md
 
 Managing dependencies
 =====================

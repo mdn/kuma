@@ -29,14 +29,10 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         return user_model.objects.filter(username=fxa_uid)
 
     def create_user(self, claims):
-        if (
-            not (subscriptions := claims.get("subscriptions"))
-            or settings.MDN_PLUS_SUBSCRIPTION not in subscriptions
-        ):
-            return None
         user = super().create_user(claims)
 
         self._create_or_set_user_profile(user, claims)
+        self.request.created = True
         return user
 
     def update_user(self, user, claims):
@@ -46,7 +42,7 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
     def get_username(self, claims):
         """Get the username from the claims."""
         # use the fxa_uid as the username
-        return claims.get("sub")
+        return claims.get("sub", claims.get("uid"))
 
     @staticmethod
     def create_or_update_subscriber(claims, user=None):
@@ -55,7 +51,7 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         Static helper method that routes requests that are not part of the login flow
         """
         email = claims.get("email")
-        fxa_uid = claims.get("sub")
+        fxa_uid = claims.get("sub", claims.get("uid"))
         if not fxa_uid:
             return
 
@@ -69,16 +65,18 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         if email and user.email != email:
             user.email = email
         # toggle user status based on subscriptions
-        user.is_active = settings.MDN_PLUS_SUBSCRIPTION in claims.get(
-            "subscriptions", []
-        ) or settings.MDN_PLUS_SUBSCRIPTION == claims.get("fxa-subscriptions", "")
-
+        user.is_active = True
         user.save()
 
         profile, _ = UserProfile.objects.get_or_create(user=user)
         if avatar := claims.get("avatar"):
             profile.avatar = avatar
-            profile.save()
+
+        profile.is_subscriber = settings.MDN_PLUS_SUBSCRIPTION in claims.get(
+            "subscriptions", []
+        ) or settings.MDN_PLUS_SUBSCRIPTION == claims.get("fxa-subscriptions", "")
+        profile.save()
+
         return user
 
     def _create_or_set_user_profile(self, user, claims):
