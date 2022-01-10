@@ -100,7 +100,7 @@ def mark_as_read(request, id: int | str):
 @require_http_methods(["POST"])
 @require_subscriber
 def toggle_starred(request, id: int):
-    # E.g.POST /api/v1/notifications/<id>/star/
+    # E.g.POST /api/v1/notifications/<id>/toggle-starred/
     try:
         notification = Notification.objects.get(user=request.user, id=id)
     except Notification.DoesNotExist:
@@ -108,6 +108,15 @@ def toggle_starred(request, id: int):
 
     notification.starred = not notification.starred
     notification.save()
+    return JsonResponse({"OK": True}, status=200)
+
+
+@never_cache
+@require_http_methods(["POST"])
+@require_subscriber
+def delete_notification(request, id: int):
+    # E.g.POST /api/v1/notifications/<id>/delete/
+    request.user.notification_set.filter(id=id).delete()
     return JsonResponse({"OK": True}, status=200)
 
 
