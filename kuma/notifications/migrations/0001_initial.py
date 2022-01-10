@@ -60,7 +60,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("slug", models.SlugField()),
+                ("slug", models.SlugField(null=True)),
                 ("path", models.CharField(max_length=4096)),
             ],
         ),
