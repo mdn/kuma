@@ -49,6 +49,6 @@ def require_subscriber(view_function):
                 payload
             )
             return view_function(request, *args, **kwargs)
-        return HttpResponseForbidden("not a subscriber")
+        return HttpResponseForbidden("not signed in")
 
     return is_authorized
