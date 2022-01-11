@@ -4,6 +4,7 @@ from django.middleware.csrf import get_token
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 
+from kuma.api.v1.decorators import require_subscriber
 from kuma.api.v1.forms import AccountSettingsForm
 from kuma.users.models import UserProfile
 
@@ -47,6 +48,7 @@ def whoami(request):
 
 
 @never_cache
+@require_subscriber
 def account_settings(request):
     user = request.user
     if not user.is_authenticated:
