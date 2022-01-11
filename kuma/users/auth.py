@@ -120,8 +120,4 @@ def is_authorized_request(token, **kwargs):
     if exp < time.time():
         return {"error": "token expired"}
 
-    # check if there is a valid subscription
-    if payload.get("fxa-subscriptions", "") != settings.MDN_PLUS_SUBSCRIPTION:
-        return {"error": "not a subscriber"}
-
     return payload
