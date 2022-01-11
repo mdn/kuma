@@ -3,19 +3,20 @@ from __future__ import annotations
 import json
 from typing import Optional
 
-from django.http import JsonResponse, HttpResponseBadRequest
+from django.conf import settings
+from django.db.models import Q
+from django.http import HttpResponseBadRequest, JsonResponse
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_http_methods
 
-from django.conf import settings
 from kuma.api.v1.decorators import require_subscriber
-from kuma.api.v1.plus import api_list, ItemGenerationData
+from kuma.api.v1.plus import ItemGenerationData, api_list
 from kuma.notifications.models import (
+    DefaultWatch,
     Notification,
+    NotificationData,
     UserWatch,
     Watch,
-    NotificationData,
-    DefaultWatch,
 )
 from kuma.notifications.utils import process_changes
 
@@ -30,23 +31,33 @@ def notifications(request):
 
 @api_list
 def _notification_list(request) -> ItemGenerationData:
-    filters = {}
+    qs = request.user.notification_set.select_related("notification")
+
     if "filterStarred" in request.GET:
-        filters["starred"] = any(
-            i == request.GET.get("filterStarred") for i in ["true", "True"]
+        qs = qs.filter(
+            starred=any(i == request.GET.get("filterStarred") for i in ["true", "True"])
         )
-    type = request.GET.get("filterType", None)
+
+    type = request.GET.get("filterType")
     if type:
-        filters["notification__type"] = type
-    sort = request.GET.get("sort", None)
-    order_by = "-notification__created"
-    if sort and sort == "title":
+        qs = qs.filter(notification__type=type)
+
+    terms = request.GET.get("q")
+    if terms:
+        qs = qs.filter(
+            Q(notification__title__icontains=terms)
+            | Q(notification__text__icontains=terms)
+        )
+
+    sort = request.GET.get("sort")
+    if sort == "title":
         order_by = "notification__title"
+    else:
+        order_by = "-notification__created"
+    qs = qs.order_by(order_by)
 
     return (
-        Notification.objects.filter(user_id=request.user.id, **filters)
-        .select_related("notification")
-        .order_by(order_by),
+        qs,
         lambda notification: notification.serialize(),
     )
 
@@ -61,10 +72,11 @@ def watched(request):
 
 @api_list
 def _watched_list(request) -> ItemGenerationData:
-    return (
-        Watch.objects.filter(users=request.user.id),
-        lambda obj: obj.serialize(),
-    )
+    qs = Watch.objects.filter(users=request.user.id).order_by("title")
+    search = request.GET.get("q")
+    if search:
+        qs = qs.filter(title__icontains=search)
+    return (qs, lambda obj: obj.serialize())
 
 
 @never_cache
@@ -89,7 +101,7 @@ def mark_as_read(request, id: int | str):
 @require_http_methods(["POST"])
 @require_subscriber
 def toggle_starred(request, id: int):
-    # E.g.POST /api/v1/notifications/<id>/star/
+    # E.g.POST /api/v1/notifications/<id>/toggle-starred/
     try:
         notification = Notification.objects.get(user=request.user, id=id)
     except Notification.DoesNotExist:
@@ -97,6 +109,15 @@ def toggle_starred(request, id: int):
 
     notification.starred = not notification.starred
     notification.save()
+    return JsonResponse({"OK": True}, status=200)
+
+
+@never_cache
+@require_http_methods(["POST"])
+@require_subscriber
+def delete_notification(request, id: int):
+    # E.g.POST /api/v1/notifications/<id>/delete/
+    request.user.notification_set.filter(id=id).delete()
     return JsonResponse({"OK": True}, status=200)
 
 

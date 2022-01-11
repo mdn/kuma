@@ -39,6 +39,11 @@ urlpatterns = [
         name="api.v1.plus.notifications.toggle_starred",
     ),
     path(
+        "plus/notifications/<id>/delete/",
+        notifications.delete_notification,
+        name="api.v1.plus.notifications.delete",
+    ),
+    path(
         "plus/notifications/create/",
         notifications.create,
         name="api.v1.plus.notifications.create",
