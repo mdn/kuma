@@ -1,10 +1,11 @@
 import time
 
-import requests
 from django.conf import settings
 from django.contrib.auth import logout
 from django.core.exceptions import MiddlewareNotUsed
 from mozilla_django_oidc.middleware import SessionRefresh
+
+from kuma.users.auth import KumaOIDCAuthenticationBackend
 
 
 class ValidateAccessTokenMiddleware(SessionRefresh):
@@ -27,23 +28,20 @@ class ValidateAccessTokenMiddleware(SessionRefresh):
         expiration = request.session.get("oidc_id_token_expiration", 0)
         now = time.time()
         access_token = request.session.get("oidc_access_token")
+        profile = request.user.userprofile
 
         if access_token and expiration < now:
 
-            response_token_info = (
-                requests.post(settings.FXA_VERIFY_URL, data={"token": access_token})
-            ).json()
-
-            # if the token is not verified, log the user out
-            if (
-                response_token_info.get("code") == 400
-                and response_token_info.get("message") == "Invalid token"
-            ):
-                profile = request.user.userprofile
-                profile.fxa_refresh_token = ""
-                profile.save()
-                logout(request)
-            else:
+            token_info = KumaOIDCAuthenticationBackend.refresh_access_token(
+                profile.fxa_refresh_token
+            )
+            new_access_token = token_info.get("access_token")
+            if new_access_token:
+                request.session["oidc_access_token"] = new_access_token
                 request.session["oidc_id_token_expiration"] = (
                     now + settings.FXA_TOKEN_EXPIRY
                 )
+            else:
+                profile.fxa_refresh_token = ""
+                profile.save()
+                logout(request)
