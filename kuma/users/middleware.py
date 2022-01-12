@@ -32,7 +32,9 @@ class ValidateAccessTokenMiddleware(SessionRefresh):
 
         if access_token and expiration < now:
 
-            token_info = KumaOIDCAuthenticationBackend.refresh_access_token(profile.fxa_refresh_token)
+            token_info = KumaOIDCAuthenticationBackend.refresh_access_token(
+                profile.fxa_refresh_token
+            )
             new_access_token = token_info.get("access_token")
             if new_access_token:
                 request.session["oidc_access_token"] = new_access_token
