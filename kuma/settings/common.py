@@ -347,7 +347,7 @@ FXA_VERIFY_URL = config(
     "FXA_VERIFY_URL", default="https://oauth.accounts.firefox.com/v1/verify"
 )
 # Set token re-check time to an hour in seconds
-FXA_TOKEN_EXPIRY = config("FXA_TOKEN_EXPIRY", default=3600)
+FXA_TOKEN_EXPIRY = config("FXA_TOKEN_EXPIRY", default=43200)
 FXA_SET_ISSUER = config("FXA_SET_ISSUER", default="https://accounts.firefox.com")
 FXA_SET_ID_PREFIX = config(
     "FXA_SET_ID_PREFIX", default="https://schemas.accounts.firefox.com/event/"
