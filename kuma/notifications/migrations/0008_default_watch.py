@@ -9,25 +9,39 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('notifications', '0007_watch_users'),
+        ("notifications", "0007_watch_users"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='userwatch',
-            name='custom_default',
+            model_name="userwatch",
+            name="custom_default",
             field=models.BooleanField(default=False),
         ),
         migrations.CreateModel(
-            name='DefaultWatch',
+            name="DefaultWatch",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_updates', models.BooleanField(default=True)),
-                ('browser_compatibility', models.JSONField(default=list)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("content_updates", models.BooleanField(default=True)),
+                ("browser_compatibility", models.JSONField(default=list)),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

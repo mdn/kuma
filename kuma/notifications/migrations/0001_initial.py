@@ -78,11 +78,17 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "user",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
                 ),
                 (
                     "watch",
-                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='notifications.watch'),
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="notifications.watch",
+                    ),
                 ),
             ],
             options={"db_table": "notifications_watch_users"},

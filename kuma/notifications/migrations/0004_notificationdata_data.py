@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('notifications', '0003_watch_title'),
+        ("notifications", "0003_watch_title"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='notificationdata',
-            name='data',
-            field=models.JSONField(default='{}'),
+            model_name="notificationdata",
+            name="data",
+            field=models.JSONField(default="{}"),
         ),
     ]

@@ -6,26 +6,30 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('notifications', '0004_notificationdata_data'),
+        ("notifications", "0004_notificationdata_data"),
     ]
 
     operations = [
         migrations.DeleteModel(
-            name='CompatibilityData',
+            name="CompatibilityData",
         ),
         migrations.AddField(
-            model_name='notification',
-            name='starred',
+            model_name="notification",
+            name="starred",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='notificationdata',
-            name='type',
-            field=models.CharField(choices=[('content', 'content'), ('compat', 'compat')], default='compat', max_length=32),
+            model_name="notificationdata",
+            name="type",
+            field=models.CharField(
+                choices=[("content", "content"), ("compat", "compat")],
+                default="compat",
+                max_length=32,
+            ),
         ),
         migrations.AlterField(
-            model_name='notificationdata',
-            name='data',
+            model_name="notificationdata",
+            name="data",
             field=models.JSONField(default=dict),
         ),
     ]

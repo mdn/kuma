@@ -27,7 +27,6 @@ class CoreConfig(AppConfig):
         # Delete old notifications every month
         app.add_periodic_task(60 * 60 * 24 * 30, clear_old_notifications.s())
 
-
     @cached_property
     def language_mapping(self):
         """
