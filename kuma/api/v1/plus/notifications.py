@@ -214,6 +214,7 @@ def watch(request, url):
 
 
 @never_cache
+@csrf_exempt
 @require_http_methods(["POST"])
 def create(request):
     # E.g.GET /api/v1/notifications/create/
