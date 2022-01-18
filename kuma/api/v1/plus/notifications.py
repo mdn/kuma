@@ -259,14 +259,15 @@ def update(request):
 
     try:
         data = json.loads(request.body.decode("UTF-8"))
-        print(data)
-        if not data.get("url"):
+        if not data.get("filename"):
             raise Exception
     except Exception:
         return JsonResponse({"ok": False, "error": "bad data"}, status=400)
 
     try:
-        changes = json.loads(requests.get(data["url"]).content)
+        changes = json.loads(
+            requests.get(settings.NOTIFICATIONS_CHANGES_URL + data["filename"]).content
+        )
     except Exception:
         return JsonResponse({"ok": False, "error": "bad url"}, status=400)
 
