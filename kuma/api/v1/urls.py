@@ -49,6 +49,11 @@ urlpatterns = [
         name="api.v1.plus.notifications.create",
     ),
     path(
+        "plus/notifications/update/",
+        notifications.update,
+        name="api.v1.plus.notifications.update",
+    ),
+    path(
         "plus/watched/",
         notifications.watched,
         name="api.v1.plus.notifications.watched",

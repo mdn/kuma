@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from typing import Optional
 
+import requests
 from django.conf import settings
 from django.db.models import Q
 from django.http import HttpResponseBadRequest, JsonResponse
@@ -256,8 +257,24 @@ def update(request):
     if not auth or auth != settings.NOTIFICATIONS_ADMIN_TOKEN:
         return JsonResponse({"ok": False, "error": "not authorized"}, status=401)
 
-    # ToDo: Fetch file from S3
-    changes = json.loads("{}")
-    process_changes(changes)
+    try:
+        data = json.loads(request.body.decode("UTF-8"))
+        print(data)
+        if not data.get("url"):
+            raise Exception
+    except Exception:
+        return JsonResponse({"ok": False, "error": "bad data"}, status=400)
+
+    try:
+        changes = json.loads(requests.get(data["url"]).content)
+    except Exception:
+        return JsonResponse({"ok": False, "error": "bad url"}, status=400)
+
+    try:
+        process_changes(changes)
+    except Exception:
+        return JsonResponse(
+            {"ok": False, "error": "Error while processing file"}, status=400
+        )
 
     return JsonResponse({"ok": True}, status=200)
