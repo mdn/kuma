@@ -8,6 +8,7 @@ from django.conf import settings
 from django.db.models import Q
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 from kuma.api.v1.decorators import require_subscriber
@@ -250,6 +251,7 @@ def create(request):
 
 
 @never_cache
+@csrf_exempt
 @require_http_methods(["POST"])
 def update(request):
     # E.g.GET /api/v1/notifications/update/
