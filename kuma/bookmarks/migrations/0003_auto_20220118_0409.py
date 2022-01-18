@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bookmarks', '0002_remove_bookmark_notes'),
+        ("bookmarks", "0002_remove_bookmark_notes"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='bookmark',
-            name='custom_name',
+            model_name="bookmark",
+            name="custom_name",
             field=models.CharField(blank=True, max_length=500),
         ),
         migrations.AddField(
-            model_name='bookmark',
-            name='notes',
+            model_name="bookmark",
+            name="notes",
             field=models.CharField(blank=True, max_length=500),
         ),
     ]
