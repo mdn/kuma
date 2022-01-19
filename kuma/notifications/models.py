@@ -11,6 +11,9 @@ class NotificationData(models.Model):
         choices=(("content", "content"), ("compat", "compat")),
         default="compat",
     )
+    # Storing the page url in the notification because the watch object might be deleted if the user
+    # unsubscribes
+    page_url = models.TextField()
     data = models.JSONField(default=dict)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -33,6 +36,7 @@ class Notification(models.Model):
             "created": self.notification.created,
             "read": self.read,
             "starred": self.starred,
+            "url": self.notification.page_url,
         }
 
     def __str__(self):

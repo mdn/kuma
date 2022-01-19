@@ -266,8 +266,11 @@ INSTALLED_APPS = [
     "django_extensions",
 ]
 
-NOTIFICATIONS_ADMIN_TOKEN = config("NOTIFICATIONS_ADMIN_TOKEN", default='')
-
+NOTIFICATIONS_ADMIN_TOKEN = config("NOTIFICATIONS_ADMIN_TOKEN", default="")
+NOTIFICATIONS_CHANGES_URL = config(
+    "NOTIFICATIONS_CHANGES_URL",
+    default="https://updates.developer.allizom.org/notifications/",
+)
 
 TEMPLATES = [
     {

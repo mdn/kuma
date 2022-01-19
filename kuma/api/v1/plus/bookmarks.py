@@ -1,4 +1,5 @@
 import functools
+from typing import Optional
 
 from django.conf import settings
 from django.http import HttpResponseBadRequest, JsonResponse
@@ -23,7 +24,7 @@ class NotOKDocumentURLError(Exception):
 def bookmarks(request):
     # E.g. POST -d url=https://... /api/v1/bookmarks/
     if request.method == "POST":
-        return _toggle_bookmark(request)
+        return _save_or_delete_bookmark(request)
 
     # E.g GET /api/v1/bookmarks/?url=https://...
     elif request.GET.get("url"):
@@ -33,6 +34,18 @@ def bookmarks(request):
     return _get_bookmarks(request)
 
 
+def serialize_bookmark(bookmark: Bookmark):
+    parents = bookmark.documenturl.metadata.get("parents", [])[:-1]
+    return {
+        "id": bookmark.id,
+        "url": bookmark.documenturl.metadata["mdn_url"],
+        "title": bookmark.title,
+        "notes": bookmark.notes,
+        "parents": parents,
+        "created": bookmark.created,
+    }
+
+
 @api_list
 def _get_bookmarks(request) -> ItemGenerationData:
     qs = (
@@ -40,16 +53,6 @@ def _get_bookmarks(request) -> ItemGenerationData:
         .select_related("documenturl")
         .order_by("-created")
     )
-
-    def serialize_bookmark(bookmark):
-        parents = bookmark.documenturl.metadata.get("parents", [])[:-1]
-        return {
-            "id": bookmark.id,
-            "url": bookmark.documenturl.metadata["mdn_url"],
-            "title": bookmark.documenturl.metadata["title"],
-            "parents": parents,
-            "created": bookmark.created,
-        }
 
     return qs, serialize_bookmark
 
@@ -82,25 +85,18 @@ def get_url(view_function):
 
 @get_url
 def _get_bookmark(request, url):
-
-    users_bookmarks = Bookmark.objects.filter(
-        user_id=request.user.id, deleted__isnull=True
-    )
-    bookmarked = None
-    for bookmark in users_bookmarks.filter(
-        documenturl__uri=DocumentURL.normalize_uri(url)
-    ):
-        bookmarked = {"id": bookmark.id, "created": bookmark.created}
-
+    bookmark: Optional[Bookmark] = request.user.bookmark_set.filter(
+        documenturl__uri=DocumentURL.normalize_uri(url), deleted=None
+    ).first()
     context = {
-        "bookmarked": bookmarked,
+        "bookmarked": bookmark and serialize_bookmark(bookmark),
         "csrfmiddlewaretoken": get_token(request),
     }
     return JsonResponse(context)
 
 
 @get_url
-def _toggle_bookmark(request, url):
+def _save_or_delete_bookmark(request, url):
     absolute_url = f"{settings.BOOKMARKS_BASE_URL}{url}/index.json"
     try:
         documenturl = DocumentURL.objects.get(uri=DocumentURL.normalize_uri(url))
@@ -123,37 +119,38 @@ def _toggle_bookmark(request, url):
             metadata=metadata,
         )
 
-    users_bookmarks = Bookmark.objects.filter(
-        user_id=request.user.id, documenturl=documenturl
-    )
+    bookmark: Optional[Bookmark] = request.user.bookmark_set.filter(
+        documenturl=documenturl
+    ).first()
 
-    for bookmark in users_bookmarks:
-        # If had a bookmark before, only need to toggle the 'deleted'
-        if bookmark.deleted:
+    if "delete" in request.POST:
+        if bookmark and not bookmark.deleted:
+            bookmark.deleted = timezone.now()
+            bookmark.save()
+    else:
+        if bookmark:
             bookmark.deleted = None
 
             # If a user deletes a bookmark and then decides to bookmark it again
             # it's because they used the "undo" functionality in the front-end.
             # If this is the case, the most recently modified bookmark is going
             # to be the one they deleted.
-            was_undo = False
-            for most_recently_modified in Bookmark.objects.filter(
-                user_id=request.user.id,
-            ).order_by("-modified")[:1]:
-                was_undo = most_recently_modified.id == bookmark.id
+            most_recently_deleted: Optional[Bookmark] = (
+                request.user.bookmark_set.exclude(deleted=None)
+                .order_by("modified")
+                .last()
+            )
+            was_undo = most_recently_deleted and most_recently_deleted.pk == bookmark.pk
             if not was_undo:
                 # When you undo, it doesn't change the 'created' date.
                 # But if you've re-bookmarked it after some time
                 bookmark.created = timezone.now()
         else:
-            bookmark.deleted = timezone.now()
+            # Otherwise, create a brand new entry
+            bookmark = request.user.bookmark_set.create(documenturl=documenturl)
+        if "name" in request.POST:
+            bookmark.custom_name = (request.POST["name"] or "")[:500]
+            bookmark.notes = (request.POST.get("notes") or "")[:500]
         bookmark.save()
-        break
-    else:
-        # Otherwise, create a brand new entry
-        Bookmark.objects.create(
-            user_id=request.user.id,
-            documenturl=documenturl,
-        )
 
     return JsonResponse({"OK": True}, status=201)

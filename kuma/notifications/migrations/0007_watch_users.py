@@ -8,13 +8,15 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('notifications', '0006_auto_20220105_0138'),
+        ("notifications", "0006_auto_20220105_0138"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='watch',
-            name='users',
-            field=models.ManyToManyField(through='notifications.UserWatch', to=settings.AUTH_USER_MODEL),
+            model_name="watch",
+            name="users",
+            field=models.ManyToManyField(
+                through="notifications.UserWatch", to=settings.AUTH_USER_MODEL
+            ),
         ),
     ]

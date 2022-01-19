@@ -3,10 +3,12 @@ from __future__ import annotations
 import json
 from typing import Optional
 
+import requests
 from django.conf import settings
 from django.db.models import Q
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 from kuma.api.v1.decorators import require_subscriber
@@ -212,6 +214,7 @@ def watch(request, url):
 
 
 @never_cache
+@csrf_exempt
 @require_http_methods(["POST"])
 def create(request):
     # E.g.GET /api/v1/notifications/create/
@@ -249,6 +252,7 @@ def create(request):
 
 
 @never_cache
+@csrf_exempt
 @require_http_methods(["POST"])
 def update(request):
     # E.g.GET /api/v1/notifications/update/
@@ -256,8 +260,25 @@ def update(request):
     if not auth or auth != settings.NOTIFICATIONS_ADMIN_TOKEN:
         return JsonResponse({"ok": False, "error": "not authorized"}, status=401)
 
-    # ToDo: Fetch file from S3
-    changes = json.loads("{}")
-    process_changes(changes)
+    try:
+        data = json.loads(request.body.decode("UTF-8"))
+        if not data.get("filename"):
+            raise Exception
+    except Exception:
+        return JsonResponse({"ok": False, "error": "bad data"}, status=400)
+
+    try:
+        changes = json.loads(
+            requests.get(settings.NOTIFICATIONS_CHANGES_URL + data["filename"]).content
+        )
+    except Exception:
+        return JsonResponse({"ok": False, "error": "bad url"}, status=400)
+
+    try:
+        process_changes(changes)
+    except Exception:
+        return JsonResponse(
+            {"ok": False, "error": "Error while processing file"}, status=400
+        )
 
     return JsonResponse({"ok": True}, status=200)

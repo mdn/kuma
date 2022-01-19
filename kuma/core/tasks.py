@@ -67,4 +67,6 @@ def clear_old_notifications():
     """
     Delete old notifications from the database
     """
-    NotificationData.objects.filter(created__lt=datetime.now()-timedelta(days=6*30)).delete()
+    NotificationData.objects.filter(
+        created__lt=datetime.now() - timedelta(days=6 * 30)
+    ).delete()
