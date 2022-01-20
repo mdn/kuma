@@ -2,6 +2,8 @@ import functools
 from typing import Optional
 
 from django.conf import settings
+from django.db.models import Case, CharField, F, Q, When
+from django.db.models.functions import Cast
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.middleware.csrf import get_token
 from django.utils import timezone
@@ -53,6 +55,26 @@ def _get_bookmarks(request) -> ItemGenerationData:
         .select_related("documenturl")
         .order_by("-created")
     )
+
+    terms = request.GET.get("q")
+
+    if request.GET.get("sort") == "title" or terms:
+
+        qs = qs.annotate(
+            display_title=Case(
+                When(
+                    custom_name="",
+                    then=Cast("documenturl__metadata__title", CharField()),
+                ),
+                default=F("custom_name"),
+            )
+        )
+
+    if request.GET.get("sort") == "title":
+        qs = qs.order_by("display_title")
+
+    if terms:
+        qs = qs.filter(Q(display_title__icontains=terms) | Q(notes__icontains=terms))
 
     return qs, serialize_bookmark
 
