@@ -2,9 +2,7 @@ import json
 from collections import defaultdict
 
 from kuma.notifications.models import Watch, Notification, NotificationData
-
-
-browsers: dict = json.loads(open("browsers.json").read())
+from kuma.notifications.browsers import browsers
 
 
 def publish_notification(path, text, dry_run=False, data=None):
@@ -98,7 +96,6 @@ def process_changes(changes, dry_run=False):
 
     for key, group in mergable.items():
         for path, content in group.items():
-            breakpoint()
             if not content:
                 continue
             browser_list = pluralize([i["browser"] for i in content])
