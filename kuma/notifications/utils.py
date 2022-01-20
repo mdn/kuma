@@ -1,4 +1,9 @@
+import json
+
 from kuma.notifications.models import Watch, Notification, NotificationData
+
+
+browsers: dict = json.loads(open("browsers.json").read())
 
 
 def publish_notification(path, text, dry_run=False, data=None):
@@ -20,13 +25,20 @@ def publish_notification(path, text, dry_run=False, data=None):
             Notification.objects.create(notification=notification_data, user=user)
 
 
+def get_browser_info(browser, info="name"):
+    return browsers.get(browser, {info: browser}).get(info, "")
+
+
 def process_changes(changes, dry_run=False):
     for change in changes:
+        browser = get_browser_info(change.get("browser", ""))
+        browser_preview = get_browser_info(change.get("browser", ""), "preview_name")
+
         if change["event"] == "added_stable":
             for feature in change["features"]:
                 publish_notification(
                     feature["path"],
-                    f"is now stable in {change['browser']} {change['version']}",
+                    f"is now stable in {browser} {change['version']}",
                     dry_run=dry_run,
                     data=change,
                 )
@@ -34,7 +46,7 @@ def process_changes(changes, dry_run=False):
             for feature in change["features"]:
                 publish_notification(
                     feature["path"],
-                    f"is no longer supported in {change['browser']} {change['version']}",
+                    f"is no longer supported in {browser} {change['version']}",
                     dry_run=dry_run,
                     data=change,
                 )
@@ -42,25 +54,29 @@ def process_changes(changes, dry_run=False):
             for feature in change["features"]:
                 publish_notification(
                     feature["path"],
-                    f"{feature['path']} is now in preview in {change['browser']}",
+                    f"is now in development in {browser} {browser_preview}",
                     dry_run=dry_run,
                     data=change,
                 )
         elif change["event"] == "added_nonnull":
-            browsers = [i["browser"] for i in change["support_changes"]]
-            if len(browsers) == 1:
-                text = browsers[0]
-            elif len(browsers) > 3:
-                text = f"{len(browsers)} browsers"
+            browser_list = [
+                get_browser_info(i["browser"]) for i in change["support_changes"]
+            ]
+            if len(browser_list) == 1:
+                text = browser_list[0]
             else:
-                text = ",".join(browsers[:-1]) + f", and {browsers[-1]}"
+                text = ",".join(browser_list[:-1]) + f", and {browser_list[-1]}"
             publish_notification(
                 change["path"],
-                f"Support information added for {text}",
+                f"has more complete compatibility data for {text}",
                 dry_run=dry_run,
                 data=change,
             )
         elif change["event"] == "added_subfeatures":
+            n = len(change["subfeatures"])
             publish_notification(
-                change["path"], "has new subfeatures", dry_run=dry_run, data=change
+                change["path"],
+                f"is now reporting compatibility data for {n} subfeature{'s'[:n^1]}",
+                dry_run=dry_run,
+                data=change,
             )
