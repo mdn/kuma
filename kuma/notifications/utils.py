@@ -1,4 +1,5 @@
 import json
+from collections import defaultdict
 
 from kuma.notifications.models import Watch, Notification, NotificationData
 
@@ -29,54 +30,85 @@ def get_browser_info(browser, info="name"):
     return browsers.get(browser, {info: browser}).get(info, "")
 
 
+def pluralize(browser_list):
+    if len(browser_list) == 1:
+        return browser_list[0]
+    else:
+        return ", ".join(browser_list[:-1]) + f", and {browser_list[-1]}"
+
+
 def process_changes(changes, dry_run=False):
+    copy = {
+        "added_stable": "is supported in ",
+        "removed_stable": "is no longer supported in ",
+        "added_preview": "is in development in ",
+    }
+    mergable = {key: defaultdict(list) for key in copy.keys()}
+    notifications = []
     for change in changes:
         browser = get_browser_info(change.get("browser", ""))
         browser_preview = get_browser_info(change.get("browser", ""), "preview_name")
 
         if change["event"] == "added_stable":
             for feature in change["features"]:
-                publish_notification(
-                    feature["path"],
-                    f"is now stable in {browser} {change['version']}",
-                    dry_run=dry_run,
-                    data=change,
+                mergable["added_stable"][feature["path"]].append(
+                    {
+                        "browser": f"{browser} {change['version']}",
+                        "data": change,
+                    }
                 )
-        elif change["event"] == "remove_stable":
+
+        elif change["event"] == "removed_stable":
             for feature in change["features"]:
-                publish_notification(
-                    feature["path"],
-                    f"is no longer supported in {browser} {change['version']}",
-                    dry_run=dry_run,
-                    data=change,
+                mergable["removed_stable"][feature["path"]].append(
+                    {
+                        "browser": f"{browser} {change['version']}",
+                        "data": change,
+                    }
                 )
         elif change["event"] == "added_preview":
             for feature in change["features"]:
-                publish_notification(
-                    feature["path"],
-                    f"is now in development in {browser} {browser_preview}",
-                    dry_run=dry_run,
-                    data=change,
+                mergable["added_preview"][feature["path"]].append(
+                    {
+                        "browser": f"{browser} {browser_preview}",
+                        "data": change,
+                    }
                 )
+        elif change["event"] == "added_subfeatures":
+            n = len(change["subfeatures"])
+            notifications.append(
+                {
+                    "path": change["path"],
+                    "text": f"is now reporting compatibility data for {n} subfeature{'s'[:n ^ 1]}",
+                    "data": change,
+                }
+            )
         elif change["event"] == "added_nonnull":
             browser_list = [
                 get_browser_info(i["browser"]) for i in change["support_changes"]
             ]
-            if len(browser_list) == 1:
-                text = browser_list[0]
-            else:
-                text = ",".join(browser_list[:-1]) + f", and {browser_list[-1]}"
-            publish_notification(
-                change["path"],
-                f"has more complete compatibility data for {text}",
-                dry_run=dry_run,
-                data=change,
+            text = pluralize(browser_list)
+            notifications.append(
+                {
+                    "path": change["path"],
+                    "text": f"has more complete compatibility data for {text}",
+                    "data": change,
+                }
             )
-        elif change["event"] == "added_subfeatures":
-            n = len(change["subfeatures"])
-            publish_notification(
-                change["path"],
-                f"is now reporting compatibility data for {n} subfeature{'s'[:n^1]}",
-                dry_run=dry_run,
-                data=change,
+
+    for key, group in mergable.items():
+        for path, content in group.items():
+            breakpoint()
+            if not content:
+                continue
+            browser_list = pluralize([i["browser"] for i in content])
+            notifications.append(
+                {
+                    "path": path,
+                    "text": copy[key] + browser_list,
+                    "data": [i["data"] for i in content],
+                }
             )
+
+    for notification in notifications:
+        publish_notification(**notification, dry_run=dry_run)
