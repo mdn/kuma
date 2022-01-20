@@ -3,7 +3,7 @@ import json
 from kuma.notifications.models import Watch, Notification, NotificationData
 
 
-browsers: dict = json.loads(open("browsers.json").read())
+# browsers: dict = json.loads(open("browsers.json").read())
 
 
 def publish_notification(path, text, dry_run=False, data=None):
@@ -26,7 +26,8 @@ def publish_notification(path, text, dry_run=False, data=None):
 
 
 def get_browser_info(browser, info="name"):
-    return browsers.get(browser, {info: browser}).get(info, "")
+    return browser;
+    # return browsers.get(browser, {info: browser}).get(info, "")
 
 
 def process_changes(changes, dry_run=False):
