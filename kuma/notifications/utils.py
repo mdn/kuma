@@ -35,49 +35,49 @@ def pluralize(browser_list):
         return ", ".join(browser_list[:-1]) + f", and {browser_list[-1]}"
 
 
+BROWSER_GROUP = {
+    "firefox": "firefox",
+    "firefox_android": "firefox",
+    "chrome": "chrome",
+    "chrome_android": "chrome",
+    "edge": "chrome",
+    "webview": "chrome",
+    "safari": "safari",
+    "safari_ios": "safari",
+}
+COPY = {
+    "added_stable": "is supported in ",
+    "removed_stable": "is no longer supported in ",
+    "added_preview": "is in development in ",
+}
+
+
 def process_changes(changes, dry_run=False):
-    copy = {
-        "added_stable": "is supported in ",
-        "removed_stable": "is no longer supported in ",
-        "added_preview": "is in development in ",
-    }
-    mergable = {key: defaultdict(list) for key in copy.keys()}
     notifications = []
     for change in changes:
-        browser = get_browser_info(change.get("browser", ""))
-        browser_preview = get_browser_info(change.get("browser", ""), "preview_name")
-
-        if change["event"] == "added_stable":
+        if change["event"] in ["added_stable", "removed_stable", "added_preview"]:
+            groups = defaultdict(list)
             for browser_data in change["browsers"]:
-                browser = get_browser_info(browser_data["browser"])
-                mergable["added_stable"][change["path"]].append(
+                browser = get_browser_info(
+                    browser_data["browser"],
+                    "preview_name" if change["event"] == "added_preview" else "name",
+                )
+                groups[BROWSER_GROUP.get(browser_data["browser"], browser)].append(
                     {
                         "browser": f"{browser} {browser_data['version']}",
                         "data": change,
                     }
                 )
+            for group in groups.values():
+                browser_list = pluralize([i["browser"] for i in group])
+                notifications.append(
+                    {
+                        "path": change["path"],
+                        "text": COPY[change["event"]] + browser_list,
+                        "data": [i["data"] for i in group],
+                    }
+                )
 
-        elif change["event"] == "removed_stable":
-            for browser_data in change["browsers"]:
-                browser = get_browser_info(browser_data["browser"])
-                mergable["removed_stable"][change["path"]].append(
-                    {
-                        "browser": f"{browser} {browser_data['version']}",
-                        "data": change,
-                    }
-                )
-        elif change["event"] == "added_preview":
-            for browser_data in change["browsers"]:
-                browser = get_browser_info(browser_data["browser"])
-                browser_preview = get_browser_info(
-                    browser_data["browser"], "preview_name"
-                )
-                mergable["added_preview"][change["path"]].append(
-                    {
-                        "browser": f"{browser} {browser_preview}",
-                        "data": change,
-                    }
-                )
         elif change["event"] == "added_subfeatures":
             n = len(change["subfeatures"])
             notifications.append(
@@ -97,19 +97,6 @@ def process_changes(changes, dry_run=False):
                     "path": change["path"],
                     "text": f"has more complete compatibility data for {text}",
                     "data": change,
-                }
-            )
-
-    for key, group in mergable.items():
-        for path, content in group.items():
-            if not content:
-                continue
-            browser_list = pluralize([i["browser"] for i in content])
-            notifications.append(
-                {
-                    "path": path,
-                    "text": copy[key] + browser_list,
-                    "data": [i["data"] for i in content],
                 }
             )
 
