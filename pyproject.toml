@@ -63,6 +63,7 @@ pytest-watch = "^4.2.0"
 honcho = "^1.0.1"
 ipdb = "^0.13.9"
 ipython = "^7.27.0"
+model-bakery = "^1.4.0"
 
 [tool.black]
 target-version = ["py38"]

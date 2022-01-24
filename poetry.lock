@@ -626,6 +626,17 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "model-bakery"
+version = "1.4.0"
+description = "Smart object creation facility for Django."
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+django = ">=2.2"
+
+[[package]]
 name = "mozilla-django-oidc"
 version = "2.0.0"
 description = "A lightweight authentication and access management library for integration with OpenID Connect enabled authentication services."
@@ -1216,7 +1227,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "ce20146c54d496e51e00e2bcbf8e879826898a95c6dd6aea8ca87ab757512a7a"
+content-hash = "b72672211f55c3c5b25778859ff889700cf209675aec3e2bdaf011e69bbb1fae"
 
 [metadata.files]
 amqp = [
@@ -1600,6 +1611,10 @@ matplotlib-inline = [
 mccabe = [
     {file = "mccabe-0.6.1-py2.py3-none-any.whl", hash = "sha256:ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42"},
     {file = "mccabe-0.6.1.tar.gz", hash = "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"},
+]
+model-bakery = [
+    {file = "model_bakery-1.4.0-py2.py3-none-any.whl", hash = "sha256:a89befaae667380f5e2352981d45fed36747941f5c3e9dffa962fc6ba8d661d1"},
+    {file = "model_bakery-1.4.0.tar.gz", hash = "sha256:c29fb821c81cda2c37dfbdcb1dd2218cda179ecb96c6edb6cd9cdaa146706d92"},
 ]
 mozilla-django-oidc = [
     {file = "mozilla-django-oidc-2.0.0.tar.gz", hash = "sha256:a8b2f27c69c122d2f4d801c3759761d33debf06ae9dabbab8aed82887bba3bb8"},
