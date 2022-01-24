@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 from typing import Any
 
 from django.conf import settings
 from django.http import HttpRequest
-from ninja.security import SessionAuth
+from ninja.security import SessionAuth, HttpBearer
 
 from kuma.users.auth import KumaOIDCAuthenticationBackend, is_authorized_request
 
@@ -45,5 +47,9 @@ class SubscriberAuth(SessionAuth):
 subscriber_auth = SubscriberAuth()
 
 
-def is_notifications_admin(request):
-    return request.headers.get("Authorization") == settings.NOTIFICATIONS_ADMIN_TOKEN
+class AdminAuth(HttpBearer):
+    def authenticate(self, request: HttpRequest, token: str) -> Any:
+        return token == settings.NOTIFICATIONS_ADMIN_TOKEN
+
+
+admin_auth = AdminAuth()

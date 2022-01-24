@@ -5,11 +5,12 @@ import json
 from typing import Optional
 
 # import requests
+import requests
 from django.db.models import Q
+from django.conf import settings
 from ninja import Field, Router
 from ninja.pagination import paginate
 
-from kuma.api.v1.auth import is_notifications_admin
 from kuma.api.v1.decorators import require_subscriber
 from kuma.notifications.models import (
     DefaultWatch,
@@ -23,6 +24,7 @@ from kuma.notifications.utils import process_changes
 from ..smarter_schema import Schema
 from ..pagination import PageNumberPaginationWithMeta, PaginatedSchema
 
+admin_router = Router(tags=["admin"])
 notifications_router = Router(tags=["notifications"])
 watch_router = Router(tags=["collection"])
 paginate_with_meta = paginate(PageNumberPaginationWithMeta)
@@ -189,6 +191,8 @@ def update_watch(request, url, data: UpdateWatch):
         return 400, {"error": "missing title"}
 
     path = data.path or ""
+    if path and not path.endswith("/"):
+        path += "/"
     custom = data.custom is not None
     watched_data = {"custom": custom}
     if custom:
@@ -226,17 +230,20 @@ def update_watch(request, url, data: UpdateWatch):
 
 
 class CreateNotificationSchema(Schema):
-    page: int
+    url: str = Field(..., alias="page")
     title: str
     text: str
 
 
-@notifications_router.post("/create/", auth=is_notifications_admin, response=Ok)
+@admin_router.post("/create/", response={200: Ok, 400: NotOk})
 def create(request, body: CreateNotificationSchema):
-    watchers = Watch.objects.filter(url=body.page)
+    watchers = Watch.objects.filter(url=body.url.rstrip("/") + "/")
+    if not watchers:
+        return 400, {"error": "No watchers found"}
     notification_data, _ = NotificationData.objects.get_or_create(
         text=body.text, title=body.title, type="content"
     )
+    print(notification_data)
     for watcher in watchers:
         # considering the possibility of multiple pages existing for the same path
         for user in watcher.users.all():
@@ -245,16 +252,22 @@ def create(request, body: CreateNotificationSchema):
     return True
 
 
-@notifications_router.post(
-    "/update/", auth=is_notifications_admin, response={200: Ok, 400: NotOk}
-)
-def update(request):
-    # ToDo: Fetch file from S3
-    changes = json.loads("{}")
+class UpdateNotificationSchema(Schema):
+    filename: str
+
+
+@admin_router.post("/update/", response={200: Ok, 400: NotOk, 401: NotOk})
+def update(request, body: UpdateNotificationSchema):
+    try:
+        changes = json.loads(
+            requests.get(settings.NOTIFICATIONS_CHANGES_URL + body.filename).content
+        )
+    except Exception:
+        return 400, {"error": "Error while processing file"}
 
     try:
         process_changes(changes)
     except Exception:
-        return 400, {"error": "Error while processing file"}
+        return 400, {"ok": False, "error": "Error while processing file"}
 
-    return True
+    return 200, True

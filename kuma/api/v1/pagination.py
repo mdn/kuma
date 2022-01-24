@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Generic, TypeVar
 from django.conf import settings
 from django.db.models import QuerySet
