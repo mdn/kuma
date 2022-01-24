@@ -41,10 +41,17 @@ BROWSER_GROUP = {
     "chrome": "chrome",
     "chrome_android": "chrome",
     "edge": "chrome",
-    "webview": "chrome",
+    "webview_android": "chrome",
+    "deno": "deno",
     "safari": "safari",
     "safari_ios": "safari",
+    "ie": "ie",
+    "nodejs": "nodejs",
+    "opera": "opera",
+    "opera_android": "opera",
+    "samsunginternet_android": "samsunginternet_android",
 }
+
 COPY = {
     "added_stable": "is supported in ",
     "removed_stable": "is no longer supported in ",
