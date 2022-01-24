@@ -120,8 +120,8 @@ def toggle_starred(request, pk: int):
 
 
 @notifications_router.post("/{int:pk}/delete/", response=Ok)
-def delete_notification(request, id: int):
-    request.user.notification_set.filter(id=id).delete()
+def delete_notification(request, pk: int):
+    request.user.notification_set.filter(id=pk).delete()
     return True
 
 
