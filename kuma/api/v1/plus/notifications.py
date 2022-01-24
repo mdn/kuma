@@ -41,6 +41,7 @@ class NotificationSchema(Schema):
     id: int
     title: str = Field(..., alias="notification.title")
     text: str = Field(..., alias="notification.text")
+    url: str = Field(..., alias="notification.page_url")
     created: datetime.datetime = Field(..., alias="notification.created")
     read: bool
     starred: bool
