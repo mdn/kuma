@@ -48,25 +48,31 @@ def process_changes(changes, dry_run=False):
         browser_preview = get_browser_info(change.get("browser", ""), "preview_name")
 
         if change["event"] == "added_stable":
-            for feature in change["features"]:
-                mergable["added_stable"][feature["path"]].append(
+            for browser_data in change["browsers"]:
+                browser = get_browser_info(browser_data["browser"])
+                mergable["added_stable"][change["path"]].append(
                     {
-                        "browser": f"{browser} {change['version']}",
+                        "browser": f"{browser} {browser_data['version']}",
                         "data": change,
                     }
                 )
 
         elif change["event"] == "removed_stable":
-            for feature in change["features"]:
-                mergable["removed_stable"][feature["path"]].append(
+            for browser_data in change["browsers"]:
+                browser = get_browser_info(browser_data["browser"])
+                mergable["removed_stable"][change["path"]].append(
                     {
-                        "browser": f"{browser} {change['version']}",
+                        "browser": f"{browser} {browser_data['version']}",
                         "data": change,
                     }
                 )
         elif change["event"] == "added_preview":
-            for feature in change["features"]:
-                mergable["added_preview"][feature["path"]].append(
+            for browser_data in change["browsers"]:
+                browser = get_browser_info(browser_data["browser"])
+                browser_preview = get_browser_info(
+                    browser_data["browser"], "preview_name"
+                )
+                mergable["added_preview"][change["path"]].append(
                     {
                         "browser": f"{browser} {browser_preview}",
                         "data": change,
