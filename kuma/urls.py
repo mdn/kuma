@@ -48,6 +48,7 @@ urlpatterns += [
 
 urlpatterns += [
     # Services and sundry.
+    re_path("^admin-api/", include("kuma.api.admin_urls")),
     re_path("^api/", include("kuma.api.urls")),
     re_path("", include("kuma.version.urls")),
     re_path(r"^humans.txt$", core_views.humans_txt, name="humans_txt"),
