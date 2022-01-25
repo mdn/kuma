@@ -99,7 +99,7 @@ def watched(request, q: str = "", **kwargs):
     return qs
 
 
-@notifications_router.get("/all/mark-as-read/", response=Ok)
+@notifications_router.post("/all/mark-as-read/", response=Ok)
 def mark_all_as_read(request):
     request.user.notification_set.filter(read=False).update(read=True)
     return True
