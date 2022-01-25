@@ -174,6 +174,9 @@ class UpdateWatch(Schema):
 
 @watch_router.post("/watch{path:url}", response={200: Ok, 400: NotOk})
 def update_watch(request, url, data: UpdateWatch):
+    if url and not url.endswith("/"):
+        url += "/"
+
     watched: Optional[UserWatch] = (
         request.user.userwatch_set.select_related("watch", "user__defaultwatch")
         .filter(watch__url=url)
@@ -191,8 +194,6 @@ def update_watch(request, url, data: UpdateWatch):
         return 400, {"error": "missing title"}
 
     path = data.path or ""
-    if path and not path.endswith("/"):
-        path += "/"
     custom = data.custom is not None
     watched_data = {"custom": custom}
     if custom:
