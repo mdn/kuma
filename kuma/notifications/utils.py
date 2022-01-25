@@ -1,4 +1,3 @@
-import json
 from collections import defaultdict
 
 from kuma.notifications.models import Watch, Notification, NotificationData
@@ -25,8 +24,7 @@ def publish_notification(path, text, dry_run=False, data=None):
 
 
 def get_browser_info(browser, info="name"):
-    return browser;
-    # return browsers.get(browser, {info: browser}).get(info, "")
+    return browsers.get(browser, {info: browser}).get(info, "")
 
 
 def pluralize(browser_list):
