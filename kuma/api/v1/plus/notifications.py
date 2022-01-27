@@ -46,6 +46,7 @@ class NotificationSchema(Schema):
     text: str = Field(..., alias="notification.text")
     url: str = Field(..., alias="notification.page_url")
     created: datetime.datetime = Field(..., alias="notification.created")
+    deleted: bool
     read: bool
     starred: bool
 
@@ -125,7 +126,13 @@ def toggle_starred(request, pk: int):
 
 @notifications_router.post("/{int:pk}/delete/", response=Ok)
 def delete_notification(request, pk: int):
-    request.user.notification_set.filter(id=pk).delete()
+    request.user.notification_set.filter(id=pk).update(deleted=True)
+    return True
+
+
+@notifications_router.post("/{int:pk}/undo-deletion/", response=Ok)
+def undo_deletion(request, pk: int):
+    request.user.notification_set.filter(id=pk).update(deleted=False)
     return True
 
 

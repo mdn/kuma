@@ -27,6 +27,7 @@ class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     starred = models.BooleanField(default=False)
     read = models.BooleanField(default=False)
+    deleted = models.BooleanField(default=False)
 
     def serialize(self):
         return {
