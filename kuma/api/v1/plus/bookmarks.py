@@ -14,6 +14,7 @@ from kuma.api.v1.decorators import require_subscriber
 from kuma.api.v1.plus import api_list, ItemGenerationData
 from kuma.bookmarks.models import Bookmark
 from kuma.documenturls.models import DocumentURL, download_url
+from kuma.users.models import UserProfile
 
 
 class NotOKDocumentURLError(Exception):
@@ -119,6 +120,17 @@ def _get_bookmark(request, url):
 
 @get_url
 def _save_or_delete_bookmark(request, url):
+    try:
+        profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        profile = None
+
+    if not profile:
+        return JsonResponse({"OK": False, "error": "not_logged_in"}, status=400)
+
+    if not profile.is_subscriber and request.user.bookmark_set.count() > 2:
+        return JsonResponse({"OK": False, "error": "max_subscriptions"}, status=400)
+
     absolute_url = f"{settings.BOOKMARKS_BASE_URL}{url}/index.json"
     try:
         documenturl = DocumentURL.objects.get(uri=DocumentURL.normalize_uri(url))

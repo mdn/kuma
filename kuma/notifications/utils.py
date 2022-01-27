@@ -23,8 +23,15 @@ def publish_notification(path, text, dry_run=False, data=None):
             Notification.objects.create(notification=notification_data, user=user)
 
 
-def get_browser_info(browser, info="name"):
-    return browsers.get(browser, {info: browser}).get(info, "")
+def get_browser_info(browser, preview=False):
+    name = browsers.get(browser, {"name": browser}).get("name", "")
+
+    if preview:
+        return browsers.get(browser, {"preview_name": browser, "name": browser}).get(
+            "preview_name", name
+        )
+
+    return name
 
 
 def pluralize(browser_list):
@@ -66,7 +73,7 @@ def process_changes(changes, dry_run=False):
             for browser_data in change["browsers"]:
                 browser = get_browser_info(
                     browser_data["browser"],
-                    "preview_name" if change["event"] == "added_preview" else "name",
+                    change["event"] == "added_preview",
                 )
                 groups[BROWSER_GROUP.get(browser_data["browser"], browser)].append(
                     {

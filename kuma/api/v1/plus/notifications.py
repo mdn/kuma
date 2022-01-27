@@ -20,6 +20,7 @@ from kuma.notifications.models import (
     Watch,
 )
 from kuma.notifications.utils import process_changes
+from kuma.users.models import UserProfile
 
 from ..smarter_schema import Schema
 from ..pagination import PageNumberPaginationWithMeta, PaginatedSchema
@@ -45,6 +46,7 @@ class NotificationSchema(Schema):
     text: str = Field(..., alias="notification.text")
     url: str = Field(..., alias="notification.page_url")
     created: datetime.datetime = Field(..., alias="notification.created")
+    deleted: bool
     read: bool
     starred: bool
 
@@ -124,7 +126,13 @@ def toggle_starred(request, pk: int):
 
 @notifications_router.post("/{int:pk}/delete/", response=Ok)
 def delete_notification(request, pk: int):
-    request.user.notification_set.filter(id=pk).delete()
+    request.user.notification_set.filter(id=pk).update(deleted=True)
+    return True
+
+
+@notifications_router.post("/{int:pk}/undo-deletion/", response=Ok)
+def undo_deletion(request, pk: int):
+    request.user.notification_set.filter(id=pk).update(deleted=False)
     return True
 
 
@@ -172,10 +180,21 @@ class UpdateWatch(Schema):
     compatibility: list[str] = None
 
 
-@watch_router.post("/watch{path:url}", response={200: Ok, 400: NotOk})
+@watch_router.post("/watch{path:url}", response={200: Ok, 400: NotOk, 400: NotOk})
 def update_watch(request, url, data: UpdateWatch):
     if url and not url.endswith("/"):
         url += "/"
+
+    try:
+        profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        profile = None
+
+    if not profile:
+        return 401, {"error": "unauthenticated"}
+
+    if not profile.is_subscriber and request.user.userwatch_set.count() > 2:
+        return 400, {"error": "max_subscriptions"}
 
     watched: Optional[UserWatch] = (
         request.user.userwatch_set.select_related("watch", "user__defaultwatch")
