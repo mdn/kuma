@@ -168,16 +168,19 @@ def watch(request, url):
     return response
 
 
+class UpdateWatchCustom(Schema):
+    compatibility: list[str]
+    content: bool
+
+
 class UpdateWatch(Schema):
     unwatch: bool = None
     title: str = None
     path: str = None
 
-    custom: bool = None
-    content: str = None
+    custom: UpdateWatchCustom = None
     custom_default: bool = None
-    update_custom_default: bool = None
-    compatibility: list[str] = None
+    update_custom_default: bool = False
 
 
 @watch_router.post("/watch{path:url}", response={200: Ok, 400: NotOk, 400: NotOk})
@@ -213,22 +216,18 @@ def update_watch(request, url, data: UpdateWatch):
         return 400, {"error": "missing title"}
 
     path = data.path or ""
-    custom = data.custom is not None
-    watched_data = {"custom": custom}
-    if custom:
+    watched_data = {"custom": data.custom is not None}
+    if data.custom:
         custom_default = bool(data.custom_default)
         watched_data["custom_default"] = custom_default
-        update_custom_default = data.get("update_custom_default")
         custom_data = {
-            "content_updates": bool(data.content),
+            "content_updates": data.custom.content,
         }
-        if not isinstance(data.compatibility, list):
-            return 400, {"error": "bad compatibility list"}
-        custom_data["browser_compatibility"] = sorted(data.compatibility)
+        custom_data["browser_compatibility"] = sorted(data.custom.compatibility)
         if custom_default:
             try:
                 default_watch = user.defaultwatch
-                if update_custom_default:
+                if data.update_custom_default:
                     for key, value in custom_data.items():
                         setattr(default_watch, key, value)
                     default_watch.save()
