@@ -9,7 +9,6 @@ from datetime import datetime
 import requests
 from requests.auth import HTTPBasicAuth
 
-
 # API keys and IDs are set with environment variables rather than on the
 # command line, to avoid displaying the key in logs
 NR_API_KEY_NAME = "NEW_RELIC_API_KEY"

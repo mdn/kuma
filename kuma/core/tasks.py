@@ -3,8 +3,8 @@ from datetime import datetime, timedelta
 from celery.task import task
 from django.contrib.sessions.models import Session
 
+from ..notifications.models import Notification, NotificationData
 from .decorators import skip_in_maintenance_mode
-from ..notifications.models import NotificationData, Notification
 
 LOCK_ID = "clean-sessions-lock"
 LOCK_EXPIRE = 60 * 5

@@ -3,12 +3,8 @@ from django.core import mail
 from django.core.mail.backends.locmem import EmailBackend
 from requests.exceptions import ConnectionError
 
-from kuma.core.utils import (
-    EmailMultiAlternativesRetrying,
-    order_params,
-    requests_retry_session,
-    send_mail_retrying,
-)
+from kuma.core.utils import (EmailMultiAlternativesRetrying, order_params,
+                             requests_retry_session, send_mail_retrying)
 
 
 @pytest.mark.parametrize(

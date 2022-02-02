@@ -1,8 +1,8 @@
 import json
 
+from django.core.serializers.json import DjangoJSONEncoder
 from django.urls import reverse
 from model_bakery import baker
-from django.core.serializers.json import DjangoJSONEncoder
 
 from kuma.notifications import models
 

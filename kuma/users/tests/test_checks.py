@@ -1,9 +1,7 @@
-from kuma.users.checks import (
-    MISSING_OIDC_CONFIGURATION_ERROR,
-    MISSING_OIDC_RP_CLIENT_ID_ERROR,
-    MISSING_OIDC_RP_CLIENT_SECRET_ERROR,
-    oidc_config_check,
-)
+from kuma.users.checks import (MISSING_OIDC_CONFIGURATION_ERROR,
+                               MISSING_OIDC_RP_CLIENT_ID_ERROR,
+                               MISSING_OIDC_RP_CLIENT_SECRET_ERROR,
+                               oidc_config_check)
 
 
 def test_happy_path_config_check(mock_requests, settings):

@@ -2,7 +2,7 @@ from functools import wraps
 
 from django.http import HttpResponseForbidden
 
-from .auth import is_subscriber, NotASubscriber
+from .auth import NotASubscriber, is_subscriber
 
 
 def allow_CORS_GET(func):

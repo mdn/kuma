@@ -5,7 +5,7 @@ from pathlib import Path
 
 import dj_database_url
 import sentry_sdk
-from decouple import config, Csv
+from decouple import Csv, config
 from sentry_sdk.integrations.django import DjangoIntegration
 
 DEBUG = config("DEBUG", default=False, cast=bool)

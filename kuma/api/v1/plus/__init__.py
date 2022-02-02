@@ -1,11 +1,10 @@
 import functools
 from typing import Callable, Tuple
 
-from django.db.models import QuerySet
 from django.conf import settings
+from django.db.models import QuerySet
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.middleware.csrf import get_token
-
 
 ItemGenerationData = Tuple[QuerySet, Callable]
 

@@ -11,7 +11,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_http_methods
 
 from kuma.api.v1.decorators import require_subscriber
-from kuma.api.v1.plus import api_list, ItemGenerationData
+from kuma.api.v1.plus import ItemGenerationData, api_list
 from kuma.bookmarks.models import Bookmark
 from kuma.documenturls.models import DocumentURL, download_url
 from kuma.users.models import UserProfile
