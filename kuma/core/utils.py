@@ -1,6 +1,6 @@
 import logging
 from smtplib import SMTPConnectError, SMTPServerDisconnected
-from urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
+from urllib.parse import ParseResult, parse_qsl, urlparse, urlsplit, urlunsplit
 
 import requests
 from django.conf import settings
@@ -12,7 +12,6 @@ from django.utils.http import urlencode
 from redo import retrying
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-
 
 log = logging.getLogger("kuma.core.utils")
 

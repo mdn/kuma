@@ -6,11 +6,8 @@ from django.conf import settings
 from django.http import HttpResponseNotFound
 from django.shortcuts import redirect
 
-from .utils import (
-    convert_to_http_date,
-    full_attachment_url,
-    full_mindtouch_attachment_url,
-)
+from .utils import (convert_to_http_date, full_attachment_url,
+                    full_mindtouch_attachment_url)
 
 # In the olden days of Kuma, we used to have people upload files into the Wiki.
 # These are called Attachments.

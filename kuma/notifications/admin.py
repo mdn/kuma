@@ -1,10 +1,6 @@
 from django.contrib import admin
 
-from kuma.notifications.models import (
-    Notification,
-    NotificationData,
-    Watch,
-)
+from kuma.notifications.models import Notification, NotificationData, Watch
 
 
 @admin.register(Notification)

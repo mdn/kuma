@@ -1,32 +1,24 @@
 import json
 
 import requests
-
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import SuspiciousOperation
-from django.http import (
-    Http404,
-    HttpResponse,
-)
+from django.http import Http404, HttpResponse
 from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from josepy.jwk import JWK
 from josepy.jws import JWS
-from mozilla_django_oidc.views import (
-    OIDCAuthenticationCallbackView,
-    OIDCAuthenticationRequestView,
-)
+from mozilla_django_oidc.views import (OIDCAuthenticationCallbackView,
+                                       OIDCAuthenticationRequestView)
 
 from kuma.users.models import AccountEvent, UserProfile
-from kuma.users.tasks import (
-    process_event_delete_user,
-    process_event_password_change,
-    process_event_profile_change,
-    process_event_subscription_state_change,
-)
+from kuma.users.tasks import (process_event_delete_user,
+                              process_event_password_change,
+                              process_event_profile_change,
+                              process_event_subscription_state_change)
 
 
 class NoPromptOIDCAuthenticationRequestView(OIDCAuthenticationRequestView):

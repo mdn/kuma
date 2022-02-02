@@ -2,7 +2,7 @@ from django import http
 from django.conf import settings
 from django.utils.cache import patch_cache_control
 from elasticsearch import exceptions
-from elasticsearch_dsl import Q, query, Search
+from elasticsearch_dsl import Q, Search, query
 from redo import retrying
 
 from kuma.api.v1.decorators import allow_CORS_GET

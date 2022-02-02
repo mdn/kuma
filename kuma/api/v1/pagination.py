@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Generic, TypeVar
+
 from django.conf import settings
 from django.db.models import QuerySet
 from django.http import HttpRequest
@@ -9,7 +10,6 @@ from ninja import Field
 from ninja.pagination import PageNumberPagination
 from ninja.schema import Schema
 from pydantic.generics import GenericModel
-
 
 ItemSchema = TypeVar("ItemSchema")
 

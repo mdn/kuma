@@ -1,6 +1,7 @@
 from django.test import TestCase
 
-from ..validators import valid_javascript_identifier, valid_jsonp_callback_value
+from ..validators import (valid_javascript_identifier,
+                          valid_jsonp_callback_value)
 
 
 class ValidatorTest(TestCase):

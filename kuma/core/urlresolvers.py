@@ -1,10 +1,7 @@
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.urls import (
-    LocalePrefixPattern,
-    reverse as django_reverse,
-    URLResolver,
-)
+from django.urls import LocalePrefixPattern, URLResolver
+from django.urls import reverse as django_reverse
 from django.utils import translation
 
 from .i18n import get_language

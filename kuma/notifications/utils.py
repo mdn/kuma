@@ -1,7 +1,7 @@
 from collections import defaultdict
 
-from kuma.notifications.models import Watch, Notification, NotificationData
 from kuma.notifications.browsers import browsers
+from kuma.notifications.models import Notification, NotificationData, Watch
 
 
 def publish_notification(path, text, dry_run=False, data=None):
