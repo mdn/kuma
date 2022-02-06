@@ -1,4 +1,3 @@
-import json
 from collections import defaultdict
 
 from kuma.notifications.browsers import browsers

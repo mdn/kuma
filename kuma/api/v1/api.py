@@ -1,5 +1,4 @@
 from ninja import NinjaAPI
-from ninja.errors import HttpError
 from ratelimit.exceptions import Ratelimited
 
 from .auth import admin_auth, subscriber_auth
