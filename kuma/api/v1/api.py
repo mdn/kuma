@@ -2,6 +2,7 @@ from ninja import NinjaAPI
 from ratelimit.exceptions import Ratelimited
 
 from .auth import admin_auth, subscriber_auth
+from .plus.bookmarks import router as bookmarks_router
 from .plus.landing_page import api as landing_page_router
 from .plus.notifications import admin_router, notifications_router, watch_router
 
@@ -13,6 +14,7 @@ admin_api = NinjaAPI(
 admin_api.add_router("/notifications/", admin_router)
 api.add_router("/plus/notifications/", notifications_router)
 api.add_router("/plus/", watch_router)
+api.add_router("/plus/bookmarks/", bookmarks_router)
 api.add_router("/plus/landing-page/", landing_page_router)
 
 

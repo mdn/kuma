@@ -25,7 +25,7 @@ class PaginatedMetadata(Schema):
     per_page: int
 
 
-class PaginatedSchema(Schema, GenericModel, Generic[ItemSchema]):
+class PaginatedResponse(Schema, GenericModel, Generic[ItemSchema]):
     items: list[ItemSchema]
     metadata: PaginatedMetadata
     csrfmiddlewaretoken: str

@@ -22,7 +22,7 @@ from kuma.notifications.models import (
 from kuma.notifications.utils import process_changes
 from kuma.users.models import UserProfile
 
-from ..pagination import PageNumberPaginationWithMeta, PaginatedSchema
+from ..pagination import PageNumberPaginationWithMeta, PaginatedResponse
 from ..smarter_schema import Schema
 
 admin_router = Router(tags=["admin"])
@@ -53,7 +53,7 @@ class NotificationSchema(Schema):
 
 @notifications_router.get(
     "/",
-    response=PaginatedSchema[NotificationSchema],
+    response=PaginatedResponse[NotificationSchema],
     url_name="plus.notifications",
 )
 @paginate_with_meta
@@ -93,7 +93,7 @@ class WatchSchema(Schema):
     path: str
 
 
-@watch_router.get("/watched/", response=PaginatedSchema[WatchSchema])
+@watch_router.get("/watched/", response=PaginatedResponse[WatchSchema])
 @paginate_with_meta
 def watched(request, q: str = "", **kwargs):
     qs = Watch.objects.filter(users=request.user.id).order_by("title")
