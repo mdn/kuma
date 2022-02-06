@@ -52,10 +52,11 @@ requests-mock = "^1.9.3"
 ElasticMock = "^1.8.0"
 
 # Linting
-black = "21.9b0"
+black = "^22.1.0"
 flake8 = "^3.9.2"
-flake8-import-order = "^0.18.1"
+flake8-isort = "^4.1.1"
 dennis = "^0.9" # Used by `make localetest` to lint po files
+isort = "^5.10.1"
 
 # Pinned Dependencies
 coverage = {extras = ["toml"], version = "^5"} # Use optional toml support
@@ -78,6 +79,9 @@ omit = ["*migrations*", "*/management/commands/*"]
 
 [tool.coverage.html]
 show_contexts = true
+
+[tool.isort]
+profile = "black"
 
 [build-system]
 requires = ["poetry>=0.12"]
