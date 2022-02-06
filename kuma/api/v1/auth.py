@@ -6,8 +6,7 @@ from django.conf import settings
 from django.http import HttpRequest
 from ninja.security import HttpBearer, SessionAuth
 
-from kuma.users.auth import (KumaOIDCAuthenticationBackend,
-                             is_authorized_request)
+from kuma.users.auth import KumaOIDCAuthenticationBackend, is_authorized_request
 
 
 class NotASubscriber(Exception):

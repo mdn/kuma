@@ -12,8 +12,13 @@ from ninja import Field, Router
 from ninja.pagination import paginate
 
 from kuma.api.v1.decorators import require_subscriber
-from kuma.notifications.models import (DefaultWatch, Notification,
-                                       NotificationData, UserWatch, Watch)
+from kuma.notifications.models import (
+    DefaultWatch,
+    Notification,
+    NotificationData,
+    UserWatch,
+    Watch,
+)
 from kuma.notifications.utils import process_changes
 from kuma.users.models import UserProfile
 
