@@ -7,6 +7,7 @@ from django.http import HttpRequest
 from ninja.security import HttpBearer, SessionAuth
 
 from kuma.users.auth import KumaOIDCAuthenticationBackend, is_authorized_request
+from kuma.users.models import UserProfile
 
 
 class NotASubscriber(Exception):
@@ -53,3 +54,14 @@ class AdminAuth(HttpBearer):
 
 
 admin_auth = AdminAuth()
+
+
+class ProfileAuth(SessionAuth):
+    def authenticate(self, request: HttpRequest, key: str | None) -> Any:
+        try:
+            return UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            return None
+
+
+profile_auth = ProfileAuth()

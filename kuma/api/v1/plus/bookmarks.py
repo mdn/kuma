@@ -9,7 +9,8 @@ from django.utils import timezone
 from ninja import Field, Query, Router
 from pydantic import validator
 
-from kuma.api.v1.plus.notifications import Ok
+from kuma.api.v1.auth import profile_auth
+from kuma.api.v1.plus.notifications import NotOk, Ok
 from kuma.api.v1.smarter_schema import Schema
 from kuma.bookmarks.models import Bookmark
 from kuma.documenturls.models import DocumentURL, download_url
@@ -26,7 +27,7 @@ class NotOKDocumentURLError(Exception):
     """When the document URL doesn't resolve as a 200 OK"""
 
 
-router = Router()
+router = Router(auth=profile_auth)
 
 
 class BookmarkSchema(Schema):
@@ -114,7 +115,7 @@ def bookmarks(request, filters: BookmarksPaginatedInput = Query(...)):
     return paginator.paginate_queryset(qs, request, pagination=filters)
 
 
-@router.post("", response={200: Ok, 201: Ok})
+@router.post("", response={200: Ok, 201: Ok, 400: NotOk})
 def save_or_delete_bookmark(request, url):
     absolute_url = f"{settings.BOOKMARKS_BASE_URL}{url}/index.json"
     try:
@@ -147,6 +148,13 @@ def save_or_delete_bookmark(request, url):
             bookmark.deleted = timezone.now()
             bookmark.save()
         return 200, True
+
+    profile: UserProfile = request.auth
+    if (
+        not profile.is_subscriber
+        and request.user.bookmark_set.filter(deleted=None).count() > 2
+    ):
+        return 400, {"error": "max_subscriptions"}
 
     if bookmark:
         bookmark.deleted = None
