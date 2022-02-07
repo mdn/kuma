@@ -10,7 +10,7 @@ from .views import settings_router
 api.add_router("/settings", settings_router)
 api.add_router("/plus/notifications/", notifications_router)
 api.add_router("/plus/", watch_router)
-api.add_router("/plus/bookmarks/", bookmarks_router)
+api.add_router("/plus/collection/", bookmarks_router)
 api.add_router("/plus/landing-page/", landing_page_router)
 
 urlpatterns = [

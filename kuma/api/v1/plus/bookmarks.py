@@ -30,17 +30,17 @@ class NotOKDocumentURLError(Exception):
 router = Router(auth=profile_auth, tags=["collection"])
 
 
-class BookmarkParent(Schema):
+class CollectionParent(Schema):
     uri: str
     title: str
 
 
-class BookmarkSchema(Schema):
+class CollectionItemSchema(Schema):
     id: int
     url: str
     title: str
     notes: str
-    parents: list[BookmarkParent]
+    parents: list[CollectionParent]
     created: datetime
 
     @staticmethod
@@ -52,12 +52,12 @@ class BookmarkSchema(Schema):
         return bookmark.documenturl.metadata.get("parents", [])[:-1]
 
 
-class SingleBookmarkResponse(Schema):
-    bookmarked: Optional[BookmarkSchema]
+class CollectionItemResponse(Schema):
+    bookmarked: Optional[CollectionItemSchema]
     csrfmiddlewaretoken: str
 
 
-class BookmarksPaginatedInput(PaginationInput):
+class CollectionPaginatedInput(PaginationInput):
     url: str = None
     terms: str = Field(None, alias="q")
     sort: str = None
@@ -69,14 +69,20 @@ class BookmarksPaginatedInput(PaginationInput):
             url.startswith("/")
             and ("/docs/" in url or "/plus/" in url)
             and "://" not in url
-        ), "invalid bookmark url"
+        ), "invalid collection item url"
         return url
 
 
 @router.get(
-    "", response=Union[PaginatedResponse[BookmarkSchema], SingleBookmarkResponse]
+    "",
+    response=Union[PaginatedResponse[CollectionItemSchema], CollectionItemResponse],
+    summary="Get collection",
 )
-def bookmarks(request, filters: BookmarksPaginatedInput = Query(...)):
+def bookmarks(request, filters: CollectionPaginatedInput = Query(...)):
+    """
+    If `url` is passed, return that specific collection item, otherwise return
+    a paginated list of collection items.
+    """
     user = request.user
 
     # Single bookmark request.
@@ -120,6 +126,11 @@ def bookmarks(request, filters: BookmarksPaginatedInput = Query(...)):
     return paginator.paginate_queryset(qs, request, pagination=filters)
 
 
+@router.post(
+    "",
+    response={200: Ok, 201: Ok, 400: NotOk},
+    summary="Save or delete a collection item",
+)
 def save_or_delete_bookmark(
     request,
     url,
