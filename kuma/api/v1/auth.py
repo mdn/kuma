@@ -57,11 +57,22 @@ admin_auth = AdminAuth()
 
 
 class ProfileAuth(SessionAuth):
+    """
+    Requires a Django authenticated user.
+
+    Does not actually *require* a profile, but for users without a profile will
+    rather return the unsaved profile ready for saving (available in
+    ``request.auth``).
+    """
+
     def authenticate(self, request: HttpRequest, key: str | None) -> Any:
-        try:
-            return UserProfile.objects.get(user=request.user)
-        except UserProfile.DoesNotExist:
+        user = request.user
+        if not user.is_authenticated:
             return None
+        try:
+            return UserProfile.objects.get(user=user)
+        except UserProfile.DoesNotExist:
+            return UserProfile(user=user)
 
 
 profile_auth = ProfileAuth()
