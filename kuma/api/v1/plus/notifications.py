@@ -27,7 +27,7 @@ from ..pagination import PageNumberPaginationWithMeta, PaginatedResponse
 from ..smarter_schema import Schema
 
 notifications_router = Router(tags=["notifications"])
-watch_router = Router(tags=["collection"])
+watch_router = Router(tags=["notifications"])
 paginate_with_meta = paginate(PageNumberPaginationWithMeta)
 
 
