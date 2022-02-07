@@ -6,7 +6,7 @@ from django.db.models import Case, CharField, F, Q, When
 from django.db.models.functions import Cast
 from django.middleware.csrf import get_token
 from django.utils import timezone
-from ninja import Field, Query, Router
+from ninja import Field, Form, Query, Router
 from pydantic import validator
 
 from kuma.api.v1.auth import profile_auth
@@ -27,7 +27,7 @@ class NotOKDocumentURLError(Exception):
     """When the document URL doesn't resolve as a 200 OK"""
 
 
-router = Router(auth=profile_auth, tags=["bookmarks"])
+router = Router(auth=profile_auth, tags=["collection"])
 
 
 class BookmarkParent(Schema):
@@ -120,8 +120,13 @@ def bookmarks(request, filters: BookmarksPaginatedInput = Query(...)):
     return paginator.paginate_queryset(qs, request, pagination=filters)
 
 
-@router.post("", response={200: Ok, 201: Ok, 400: NotOk})
-def save_or_delete_bookmark(request, url):
+def save_or_delete_bookmark(
+    request,
+    url,
+    delete: bool = Form(None),
+    name: str = Form(None),
+    notes: str = Form(None),
+):
     absolute_url = f"{settings.BOOKMARKS_BASE_URL}{url}/index.json"
     try:
         documenturl = DocumentURL.objects.get(uri=DocumentURL.normalize_uri(url))
@@ -148,7 +153,7 @@ def save_or_delete_bookmark(request, url):
         documenturl=documenturl
     ).first()
 
-    if "delete" in request.POST:
+    if delete:
         if bookmark and not bookmark.deleted:
             bookmark.deleted = timezone.now()
             bookmark.save()
@@ -180,9 +185,10 @@ def save_or_delete_bookmark(request, url):
         # Otherwise, create a brand new entry
         bookmark = request.user.bookmark_set.create(documenturl=documenturl)
 
-    if "name" in request.POST:
-        bookmark.custom_name = (request.POST["name"] or "")[:500]
-        bookmark.notes = (request.POST.get("notes") or "")[:500]
+    if name is not None:
+        bookmark.custom_name = name[:500]
+    if notes is not None:
+        bookmark.notes = notes[:500]
     bookmark.save()
 
     return 201, True
