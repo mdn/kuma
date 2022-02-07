@@ -81,7 +81,7 @@ def notifications(
         order_by = "notification__title"
     else:
         order_by = "-notification__created"
-    qs = qs.order_by(order_by)
+    qs = qs.order_by(order_by, "id")
 
     qs = qs.filter(deleted=False)
     return qs
