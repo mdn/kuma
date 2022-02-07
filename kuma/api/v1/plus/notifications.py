@@ -189,16 +189,7 @@ def update_watch(request, url, data: UpdateWatch):
     if url and not url.endswith("/"):
         url += "/"
 
-    try:
-        profile = UserProfile.objects.get(user=request.user)
-    except UserProfile.DoesNotExist:
-        profile = None
-
-    if not profile:
-        return 401, {"error": "unauthenticated"}
-
-    if not profile.is_subscriber and request.user.userwatch_set.count() > 2:
-        return 400, {"error": "max_subscriptions"}
+    profile: UserProfile = request.auth
 
     watched: Optional[UserWatch] = (
         request.user.userwatch_set.select_related("watch", "user__defaultwatch")
@@ -211,6 +202,9 @@ def update_watch(request, url, data: UpdateWatch):
         if watched:
             watched.delete()
         return 200, True
+
+    if not profile.is_subscriber and request.user.userwatch_set.count() > 2:
+        return 400, {"error": "max_subscriptions"}
 
     title = data.title
     if not title:

@@ -9,7 +9,6 @@ from django.utils import timezone
 from ninja import Field, Form, Query, Router
 from pydantic import validator
 
-from kuma.api.v1.auth import profile_auth
 from kuma.api.v1.plus.notifications import NotOk, Ok
 from kuma.api.v1.smarter_schema import Schema
 from kuma.bookmarks.models import Bookmark
@@ -27,7 +26,7 @@ class NotOKDocumentURLError(Exception):
     """When the document URL doesn't resolve as a 200 OK"""
 
 
-router = Router(auth=profile_auth, tags=["collection"])
+router = Router(tags=["collection"])
 
 
 class CollectionParent(Schema):

@@ -1,9 +1,9 @@
 from ninja import NinjaAPI
 from ratelimit.exceptions import Ratelimited
 
-from .auth import admin_auth, subscriber_auth
+from .auth import admin_auth, profile_auth
 
-api = NinjaAPI(auth=subscriber_auth, csrf=True, version="v1")
+api = NinjaAPI(auth=profile_auth, csrf=True, version="v1")
 admin_api = NinjaAPI(
     auth=admin_auth, csrf=False, version="v1", urls_namespace="admin_api"
 )

@@ -1,4 +1,5 @@
 from typing import Literal, Optional, Union
+
 from django.conf import settings
 from django.middleware.csrf import get_token
 from ninja import Router, Schema
