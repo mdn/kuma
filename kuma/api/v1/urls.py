@@ -2,6 +2,16 @@ from django.urls import path
 
 from . import search
 from .api import api
+from .plus.bookmarks import router as bookmarks_router
+from .plus.landing_page import api as landing_page_router
+from .plus.notifications import notifications_router, watch_router
+from .views import settings_router
+
+api.add_router("/settings", settings_router)
+api.add_router("/plus/notifications/", notifications_router)
+api.add_router("/plus/", watch_router)
+api.add_router("/plus/bookmarks/", bookmarks_router)
+api.add_router("/plus/landing-page/", landing_page_router)
 
 urlpatterns = [
     path("", api.urls),
