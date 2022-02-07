@@ -27,20 +27,25 @@ class NotOKDocumentURLError(Exception):
     """When the document URL doesn't resolve as a 200 OK"""
 
 
-router = Router(auth=profile_auth)
+router = Router(auth=profile_auth, tags=["bookmarks"])
+
+
+class BookmarkParent(Schema):
+    uri: str
+    title: str
 
 
 class BookmarkSchema(Schema):
     id: int
     url: str
     title: str
-    notes: list[str]
-    parents: str
+    notes: str
+    parents: list[BookmarkParent]
     created: datetime
 
     @staticmethod
     def resolve_url(bookmark):
-        return bookmark.document_url.metadata["mdn_url"]
+        return bookmark.documenturl.metadata["mdn_url"]
 
     @staticmethod
     def resolve_parents(bookmark):
