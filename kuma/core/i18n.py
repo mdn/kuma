@@ -12,11 +12,12 @@ from django.conf import settings
 from django.conf.locale import LANG_INFO
 from django.utils import translation
 from django.utils.translation.trans_real import check_for_language
-from django.utils.translation.trans_real import \
-    get_languages as _django_get_languages
-from django.utils.translation.trans_real import (language_code_prefix_re,
-                                                 language_code_re,
-                                                 parse_accept_lang_header)
+from django.utils.translation.trans_real import get_languages as _django_get_languages
+from django.utils.translation.trans_real import (
+    language_code_prefix_re,
+    language_code_re,
+    parse_accept_lang_header,
+)
 
 
 def django_language_code_to_kuma(lang_code):

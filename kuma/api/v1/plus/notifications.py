@@ -12,17 +12,22 @@ from ninja import Field, Router
 from ninja.pagination import paginate
 
 from kuma.api.v1.decorators import require_subscriber
-from kuma.notifications.models import (DefaultWatch, Notification,
-                                       NotificationData, UserWatch, Watch)
+from kuma.notifications.models import (
+    DefaultWatch,
+    Notification,
+    NotificationData,
+    UserWatch,
+    Watch,
+)
 from kuma.notifications.utils import process_changes
 from kuma.users.models import UserProfile
 
-from ..pagination import PageNumberPaginationWithMeta, PaginatedSchema
+from ..pagination import PageNumberPaginationWithMeta, PaginatedResponse
 from ..smarter_schema import Schema
 
 admin_router = Router(tags=["admin"])
 notifications_router = Router(tags=["notifications"])
-watch_router = Router(tags=["collection"])
+watch_router = Router(tags=["notifications"])
 paginate_with_meta = paginate(PageNumberPaginationWithMeta)
 
 
@@ -48,7 +53,7 @@ class NotificationSchema(Schema):
 
 @notifications_router.get(
     "/",
-    response=PaginatedSchema[NotificationSchema],
+    response=PaginatedResponse[NotificationSchema],
     url_name="plus.notifications",
 )
 @paginate_with_meta
@@ -76,7 +81,7 @@ def notifications(
         order_by = "notification__title"
     else:
         order_by = "-notification__created"
-    qs = qs.order_by(order_by)
+    qs = qs.order_by(order_by, "id")
 
     qs = qs.filter(deleted=False)
     return qs
@@ -88,7 +93,7 @@ class WatchSchema(Schema):
     path: str
 
 
-@watch_router.get("/watched/", response=PaginatedSchema[WatchSchema])
+@watch_router.get("/watched/", response=PaginatedResponse[WatchSchema])
 @paginate_with_meta
 def watched(request, q: str = "", **kwargs):
     qs = Watch.objects.filter(users=request.user.id).order_by("title")
@@ -184,16 +189,7 @@ def update_watch(request, url, data: UpdateWatch):
     if url and not url.endswith("/"):
         url += "/"
 
-    try:
-        profile = UserProfile.objects.get(user=request.user)
-    except UserProfile.DoesNotExist:
-        profile = None
-
-    if not profile:
-        return 401, {"error": "unauthenticated"}
-
-    if not profile.is_subscriber and request.user.userwatch_set.count() > 2:
-        return 400, {"error": "max_subscriptions"}
+    profile: UserProfile = request.auth
 
     watched: Optional[UserWatch] = (
         request.user.userwatch_set.select_related("watch", "user__defaultwatch")
@@ -206,6 +202,9 @@ def update_watch(request, url, data: UpdateWatch):
         if watched:
             watched.delete()
         return 200, True
+
+    if not profile.is_subscriber and request.user.userwatch_set.count() > 2:
+        return 400, {"error": "max_subscriptions"}
 
     title = data.title
     if not title:

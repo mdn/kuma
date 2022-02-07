@@ -1,7 +1,6 @@
 from django.test import TestCase
 
-from ..validators import (valid_javascript_identifier,
-                          valid_jsonp_callback_value)
+from ..validators import valid_javascript_identifier, valid_jsonp_callback_value
 
 
 class ValidatorTest(TestCase):
@@ -24,11 +23,11 @@ class ValidatorTest(TestCase):
 
         self.assertTrue(valid_javascript_identifier("Stra\u00dfe"))
 
-        self.assertTrue(valid_javascript_identifier(br"\u0062"))  # 'b'
+        self.assertTrue(valid_javascript_identifier(rb"\u0062"))  # 'b'
 
-        self.assertFalse(valid_javascript_identifier(br"\u62"))
+        self.assertFalse(valid_javascript_identifier(rb"\u62"))
 
-        self.assertFalse(valid_javascript_identifier(br"\u0020"))
+        self.assertFalse(valid_javascript_identifier(rb"\u0020"))
 
         self.assertTrue(valid_javascript_identifier(b"_bar"))
 

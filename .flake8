@@ -11,7 +11,3 @@ per-file-ignores =
     kuma/settings/local.py:F403,F405
     kuma/settings/prod.py:F403,F405
     kuma/settings/pytest.py:F403,F405
-
-# flake8-import-order settings
-import-order-style=edited
-application-import-names=kuma,pages,utils
