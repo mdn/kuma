@@ -11,7 +11,6 @@ from django.db.models import Q
 from ninja import Field, Router
 from ninja.pagination import paginate
 
-from kuma.api.v1.api import admin_api
 from kuma.api.v1.decorators import require_subscriber
 from kuma.notifications.models import (
     DefaultWatch,
@@ -26,6 +25,7 @@ from kuma.users.models import UserProfile
 from ..pagination import PageNumberPaginationWithMeta, PaginatedResponse
 from ..smarter_schema import Schema
 
+admin_router = Router(tags=["admin"])
 notifications_router = Router(tags=["notifications"])
 watch_router = Router(tags=["notifications"])
 paginate_with_meta = paginate(PageNumberPaginationWithMeta)
@@ -249,7 +249,7 @@ class CreateNotificationSchema(Schema):
     text: str
 
 
-@admin_api.post("/create/", response={200: Ok, 400: NotOk})
+@admin_router.post("/create/", response={200: Ok, 400: NotOk})
 def create(request, body: CreateNotificationSchema):
     watchers = Watch.objects.filter(url=body.url.rstrip("/") + "/")
     if not watchers:
@@ -270,7 +270,7 @@ class UpdateNotificationSchema(Schema):
     filename: str
 
 
-@admin_api.post("/update/", response={200: Ok, 400: NotOk, 401: NotOk})
+@admin_router.post("/update/", response={200: Ok, 400: NotOk, 401: NotOk})
 def update(request, body: UpdateNotificationSchema):
     try:
         changes = json.loads(
