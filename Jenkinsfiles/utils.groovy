@@ -8,7 +8,10 @@ STANDBY_BRANCH_NAME = 'standby-push'
 KUMA_PIPELINE = 'kuma'
 
 def get_commit_tag() {
-    return env.GIT_COMMIT.take(7)
+    return sh(
+        script: "printf \$(git rev-parse --short ${env.GIT_COMMIT})",
+        returnStdout: true
+    ).trim()
 }
 
 def get_target_name(target_name='') {
