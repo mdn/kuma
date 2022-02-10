@@ -21,6 +21,7 @@ from kuma.notifications.models import (
     Watch,
 )
 from kuma.notifications.utils import process_changes
+from kuma.settings.common import MAX_NON_SUBSCRIBED
 from kuma.users.models import UserProfile
 
 from ..pagination import PageNumberPaginationWithMeta, PaginatedResponse
@@ -203,7 +204,10 @@ def update_watch(request, raw_url, data: UpdateWatch):
             watched.delete()
         return 200, True
 
-    if not profile.is_subscriber and request.user.userwatch_set.count() > 2:
+    if (
+        not profile.is_subscriber
+        and request.user.userwatch_set.count() >= MAX_NON_SUBSCRIBED["notifications"]
+    ):
         return 400, {"error": "max_subscriptions"}
 
     title = data.title
