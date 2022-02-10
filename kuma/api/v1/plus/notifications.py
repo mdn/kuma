@@ -12,6 +12,7 @@ from ninja import Field, Router
 from ninja.pagination import paginate
 
 from kuma.api.v1.decorators import require_subscriber
+from kuma.documenturls.models import DocumentURL
 from kuma.notifications.models import (
     DefaultWatch,
     Notification,
@@ -20,6 +21,7 @@ from kuma.notifications.models import (
     Watch,
 )
 from kuma.notifications.utils import process_changes
+from kuma.settings.common import MAX_NON_SUBSCRIBED
 from kuma.users.models import UserProfile
 
 from ..pagination import PageNumberPaginationWithMeta, PaginatedResponse
@@ -137,10 +139,11 @@ def undo_deletion(request, pk: int):
     return True
 
 
-@watch_router.get("/watch{path:url}")
+@watch_router.get("/watch{path:raw_url}")
 @require_subscriber
-def watch(request, url):
+def watch(request, raw_url):
     # E.g.GET /api/v1/notifications/watch/en-US/docs/Web/CSS/
+    url = DocumentURL.normalize_uri(raw_url)
     watched: Optional[UserWatch] = (
         request.user.userwatch_set.select_related("watch", "user__defaultwatch")
         .filter(watch__url=url)
@@ -184,11 +187,9 @@ class UpdateWatch(Schema):
     update_custom_default: bool = False
 
 
-@watch_router.post("/watch{path:url}", response={200: Ok, 400: NotOk, 400: NotOk})
-def update_watch(request, url, data: UpdateWatch):
-    if url and not url.endswith("/"):
-        url += "/"
-
+@watch_router.post("/watch{path:raw_url}", response={200: Ok, 400: NotOk, 400: NotOk})
+def update_watch(request, raw_url, data: UpdateWatch):
+    url = DocumentURL.normalize_uri(raw_url)
     profile: UserProfile = request.auth
 
     watched: Optional[UserWatch] = (
@@ -203,7 +204,10 @@ def update_watch(request, url, data: UpdateWatch):
             watched.delete()
         return 200, True
 
-    if not profile.is_subscriber and request.user.userwatch_set.count() > 2:
+    if (
+        not profile.is_subscriber
+        and request.user.userwatch_set.count() >= MAX_NON_SUBSCRIBED["notifications"]
+    ):
         return 400, {"error": "max_subscriptions"}
 
     title = data.title
@@ -244,20 +248,21 @@ def update_watch(request, url, data: UpdateWatch):
 
 
 class CreateNotificationSchema(Schema):
-    url: str = Field(..., alias="page")
+    raw_url: str = Field(..., alias="page")
     title: str
     text: str
 
 
 @admin_router.post("/create/", response={200: Ok, 400: NotOk})
 def create(request, body: CreateNotificationSchema):
-    watchers = Watch.objects.filter(url=body.url.rstrip("/") + "/")
+    url = DocumentURL.normalize_uri(body.raw_url)
+    watchers = Watch.objects.filter(url=url)
     if not watchers:
         return 400, {"error": "No watchers found"}
     notification_data, _ = NotificationData.objects.get_or_create(
         text=body.text, title=body.title, type="content"
     )
-    print(notification_data)
+
     for watcher in watchers:
         # considering the possibility of multiple pages existing for the same path
         for user in watcher.users.all():
@@ -283,5 +288,31 @@ def update(request, body: UpdateNotificationSchema):
         process_changes(changes)
     except Exception:
         return 400, {"ok": False, "error": "Error while processing file"}
+
+    return 200, True
+
+
+class CreatePRNotificationSchema(Schema):
+    raw_url: str = Field(..., alias="page")
+    repo: str = Field(..., alias="repo")
+    pr: int
+
+
+@admin_router.post("/create/pr/", response={200: Ok, 400: NotOk, 401: NotOk})
+def create_pr(request, body: CreatePRNotificationSchema):
+    url = DocumentURL.normalize_uri(body.raw_url)
+    watchers = Watch.objects.filter(url=url)
+    if not watchers:
+        return 400, {"error": "No watchers found"}
+
+    content = f"has changed. See PR!{body.repo.strip('/')}!{body.pr}!! for details"
+    notification_data, _ = NotificationData.objects.get_or_create(
+        text=content, title=watchers[0].title, type="content"
+    )
+
+    for watcher in watchers:
+        # considering the possibility of multiple pages existing for the same path
+        for user in watcher.users.all():
+            Notification.objects.create(notification=notification_data, user=user)
 
     return 200, True

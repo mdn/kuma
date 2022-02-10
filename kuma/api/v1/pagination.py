@@ -11,6 +11,8 @@ from ninja.pagination import PageNumberPagination
 from ninja.schema import Schema
 from pydantic.generics import GenericModel
 
+from kuma.settings.common import MAX_NON_SUBSCRIBED
+
 ItemSchema = TypeVar("ItemSchema")
 
 
@@ -23,6 +25,7 @@ class PaginatedMetadata(Schema):
     total: int
     page: int
     per_page: int
+    max_non_subscribed: int
 
 
 class PaginatedResponse(Schema, GenericModel, Generic[ItemSchema]):
@@ -48,6 +51,7 @@ class PaginatedData:
             total=items.count() if isinstance(items, QuerySet) else len(items),
             page=pagination.page,
             per_page=pagination.per_page,
+            max_non_subscribed=MAX_NON_SUBSCRIBED.get(items.model.__name__, -1),
         )
         self.csrfmiddlewaretoken = csrfmiddlewaretoken
 
