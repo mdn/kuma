@@ -30,7 +30,11 @@ class AuthResponse(AnonResponse):
 
 
 @api.get(
-    "/whoami", auth=None, exclude_none=True, response=Union[AuthResponse, AnonResponse], url_name="whoami",
+    "/whoami",
+    auth=None,
+    exclude_none=True,
+    response=Union[AuthResponse, AnonResponse],
+    url_name="whoami",
 )
 def whoami(request):
     """

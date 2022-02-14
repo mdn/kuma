@@ -21,6 +21,8 @@ class Migration(migrations.Migration):
                     ("mdn_plus_5m", "MDN Plus 5M"),
                     ("mdn_plus_5y", "MDN Plus 5Y"),
                     ("mdn_plus_10m", "MDN Plus 10M"),
-                    ("mdn_plus_10y", "MDN Plus 10Y")])
+                    ("mdn_plus_10y", "MDN Plus 10Y"),
+                ],
+            ),
         ),
     ]

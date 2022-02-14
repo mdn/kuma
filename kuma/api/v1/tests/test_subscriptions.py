@@ -1,8 +1,8 @@
 import json
 
 import pytest
-
 from django.urls import reverse
+
 from kuma.users import models
 
 

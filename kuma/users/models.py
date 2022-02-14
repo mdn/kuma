@@ -6,7 +6,8 @@ from django.db import models
 
 class UserProfile(models.Model):
     class SubscriptionType(models.TextChoices):
-        """ Choices for MDN Subscription Types, add new subscription plans to be supported here """
+        """Choices for MDN Subscription Types, add new subscription plans to be supported here"""
+
         MDN_PLUS_5M = "mdn_plus_5m", "MDN Plus 5M"
         MDN_PLUS_5Y = "mdn_plus_5y", "MDN Plus 5Y"
         MDN_PLUS_10M = "mdn_plus_10m", "MDN Plus 10M"
