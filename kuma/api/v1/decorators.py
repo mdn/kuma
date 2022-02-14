@@ -2,7 +2,7 @@ from functools import wraps
 
 from django.http import HttpResponseForbidden
 
-from kuma.users.auth import is_authorized_request, KumaOIDCAuthenticationBackend
+from .auth import NotASubscriber, is_subscriber
 
 
 def allow_CORS_GET(func):
@@ -30,25 +30,10 @@ def require_subscriber(view_function):
 
     @wraps(view_function)
     def is_authorized(request, *args, **kwargs):
-        user = request.user
-
-        # If the user is logged in, allow access
-        if user.is_authenticated:
-            return view_function(request, *args, **kwargs)
-
-        # if we are here, the user is not logged in
-        # check if there is a bearer token in the header
-        if access_token := request.META.get("HTTP_AUTHORIZATION"):
-            payload = is_authorized_request(access_token)
-
-            if error := payload.get("error"):
-                return HttpResponseForbidden(error)
-
-            # create user if there is not one
-            request.user = KumaOIDCAuthenticationBackend.create_or_update_subscriber(
-                payload
-            )
-            return view_function(request, *args, **kwargs)
-        return HttpResponseForbidden("not signed in")
+        try:
+            assert is_subscriber(request, raise_error=True)
+        except NotASubscriber as e:
+            return HttpResponseForbidden(e)
+        return view_function(request, *args, **kwargs)
 
     return is_authorized

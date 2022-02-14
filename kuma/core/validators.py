@@ -7,7 +7,6 @@
 import re
 from unicodedata import category
 
-
 # ------------------------------------------------------------------------------
 # javascript identifier unicode categories and "exceptional" chars
 # ------------------------------------------------------------------------------

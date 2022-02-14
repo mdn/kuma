@@ -20,10 +20,12 @@ class CoreConfig(AppConfig):
         self.add_periodc_tasks()
 
     def add_periodc_tasks(self):
-        # Clean up expired sessions every 60 minutes
-        from kuma.core.tasks import clean_sessions
+        from kuma.core.tasks import clean_sessions, clear_old_notifications
 
+        # Clean up expired sessions every 60 minutes
         app.add_periodic_task(60 * 60, clean_sessions.s())
+        # Delete old notifications every month
+        app.add_periodic_task(60 * 60 * 24 * 30, clear_old_notifications.s())
 
     @cached_property
     def language_mapping(self):

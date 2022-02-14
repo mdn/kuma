@@ -5,7 +5,7 @@ from pathlib import Path
 
 import dj_database_url
 import sentry_sdk
-from decouple import config, Csv
+from decouple import Csv, config
 from sentry_sdk.integrations.django import DjangoIntegration
 
 DEBUG = config("DEBUG", default=False, cast=bool)
@@ -260,11 +260,17 @@ INSTALLED_APPS = [
     "kuma.plus.apps.PlusConfig",
     "kuma.documenturls.apps.DocumentURLsConfig",
     "kuma.bookmarks.apps.BookmarksConfig",
+    "kuma.notifications.apps.NotificationsConfig",
     # 3rd party
     "mozilla_django_oidc",
     "django_extensions",
 ]
 
+NOTIFICATIONS_ADMIN_TOKEN = config("NOTIFICATIONS_ADMIN_TOKEN", default="")
+NOTIFICATIONS_CHANGES_URL = config(
+    "NOTIFICATIONS_CHANGES_URL",
+    default="https://updates.developer.allizom.org/notifications/",
+)
 
 TEMPLATES = [
     {
@@ -563,6 +569,7 @@ BOOKMARKS_BASE_URL = config(
     "BOOKMARKS_BASE_URL", default="https://developer.mozilla.org"
 )
 API_V1_BOOKMARKS_PAGE_SIZE = config("API_V1_BOOKMARKS_PAGE_SIZE", cast=int, default=20)
+API_V1_PAGE_SIZE = config("API_V1_PAGE_SIZE", cast=int, default=20)
 
 SENTRY_DSN = config("SENTRY_DSN", default="")
 if SENTRY_DSN:
@@ -577,3 +584,4 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # MDN Plus section
 MDN_PLUS_SUBSCRIPTION = config("MDN_PLUS_SUBSCRIPTION", default="mdn_plus")
+MAX_NON_SUBSCRIBED = {"Notification": 3, "Bookmark": 3}

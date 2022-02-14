@@ -1,8 +1,10 @@
+from datetime import datetime, timedelta
+
 from celery.task import task
 from django.contrib.sessions.models import Session
 
+from ..notifications.models import Notification, NotificationData
 from .decorators import skip_in_maintenance_mode
-
 
 LOCK_ID = "clean-sessions-lock"
 LOCK_EXPIRE = 60 * 5
@@ -57,3 +59,15 @@ def clean_sessions():
     #     logger.error(
     #         "The clean_sessions task is already running since %s" % cache.get(LOCK_ID)
     #     )
+
+
+@task
+@skip_in_maintenance_mode
+def clear_old_notifications():
+    """
+    Delete old notifications from the database
+    """
+    NotificationData.objects.filter(
+        created__lt=datetime.now() - timedelta(days=6 * 30)
+    ).delete()
+    Notification.objects.filter(deleted=True).delete()
