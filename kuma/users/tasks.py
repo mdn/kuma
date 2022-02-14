@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 
 from kuma.users.auth import KumaOIDCAuthenticationBackend
 from kuma.users.models import AccountEvent, UserProfile
+from kuma.users.utils import get_valid_subscription_type_or_none
 
 
 @task
@@ -46,19 +47,12 @@ def process_event_subscription_state_change(event_id):
             return
 
     if "mdn_plus" in payload["capabilities"]:
-        # Should only be mdn_plus + one of 'SubscriptionType.values' but check anyway
-        subscription_types = list(
-            set(payload["capabilities"]) & set(UserProfile.SubscriptionType.values)
-        )
-        if len(subscription_types) > 1:
-            print(
-                "Multiple subscriptions found in capabilities %s" % subscription_types
-            )
 
         if payload["isActive"]:
+            # Should only be mdn_plus + one of 'SubscriptionType.values' but check anyway
             profile.is_subscriber = True
-            profile.subscription_type = (
-                subscription_types[0] if len(subscription_types) > 0 else ""
+            profile.subscription_type = get_valid_subscription_type_or_none(
+                payload["capabilities"]
             )
         else:
             profile.is_subscriber = False

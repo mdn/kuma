@@ -58,5 +58,5 @@ def test_multiple_valid_subscription_change_takes_first_in_array(wiki_user):
 
     process_event_subscription_state_change(created_event.id)
     profile.refresh_from_db()
-    # Ensure only first valid is persisted
-    assert profile.subscription_type == "mdn_plus_5y"
+    # Ensure only first (lexicographical) valid is persisted
+    assert profile.subscription_type == "mdn_plus_5m"
