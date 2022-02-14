@@ -46,8 +46,20 @@ def process_event_subscription_state_change(event_id):
             return
 
     if "mdn_plus" in payload["capabilities"]:
+        # Should only be mdn_plus + one of 'SubscriptionType.values' but check anyway
+        subscription_types = list(
+            set(payload["capabilities"]) & set(UserProfile.SubscriptionType.values)
+        )
+        if len(subscription_types) > 1:
+            print(
+                "Multiple subscriptions found in capabilities %s" % subscription_types
+            )
+
         if payload["isActive"]:
             profile.is_subscriber = True
+            profile.subscription_type = (
+                subscription_types[0] if len(subscription_types) > 0 else ""
+            )
         else:
             profile.is_subscriber = False
         profile.save()
