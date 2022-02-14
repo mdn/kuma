@@ -76,6 +76,7 @@ class CollectionPaginatedInput(PaginationInput):
     "",
     response=Union[PaginatedResponse[CollectionItemSchema], CollectionItemResponse],
     summary="Get collection",
+    url_name="collections",
 )
 def bookmarks(request, filters: CollectionPaginatedInput = Query(...)):
     """
