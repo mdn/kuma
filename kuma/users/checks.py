@@ -70,7 +70,6 @@ def _get_oidc_configuration_errors(id):
             )
 
     # ##TODO 14/02/22 - The additional profile:subscriptions scope is currently missing from the supportes scopes in oidc config
-    # 
     # settings.OIDC_RP_SCOPES can have less but not more that what's supported
     # scopes_requested = set(settings.OIDC_RP_SCOPES.split())
     # scopes_supported = set(openid_configuration["scopes_supported"])
