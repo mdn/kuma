@@ -49,7 +49,6 @@ def process_event_subscription_state_change(event_id):
     if "mdn_plus" in payload["capabilities"]:
 
         if payload["isActive"]:
-            # Should only be mdn_plus + one of 'SubscriptionType.values' but check anyway
             profile.is_subscriber = True
             profile.subscription_type = get_valid_subscription_type_or_none(
                 payload["capabilities"]
