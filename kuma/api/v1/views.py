@@ -26,10 +26,15 @@ class AuthResponse(AnonResponse):
     is_superuser: Optional[bool]
     avatar_url: Optional[str]
     is_subscriber: Optional[bool]
+    subscription_type: Optional[str]
 
 
 @api.get(
-    "/whoami", auth=None, exclude_none=True, response=Union[AuthResponse, AnonResponse]
+    "/whoami",
+    auth=None,
+    exclude_none=True,
+    response=Union[AuthResponse, AnonResponse],
+    url_name="whoami",
 )
 def whoami(request):
     """
@@ -61,6 +66,7 @@ def whoami(request):
     if profile:
         data["avatar_url"] = profile.avatar
         data["is_subscriber"] = profile.is_subscriber
+        data["subscription_type"] = profile.subscription_type
     return data
 
 
@@ -87,7 +93,6 @@ class FormErrors(Schema):
 @settings_router.post("", response={200: Ok, 400: FormErrors})
 def save_settings(request):
     user_profile: UserProfile = request.auth
-
     form = AccountSettingsForm(request.POST)
     if not form.is_valid():
         return 400, {"errors": form.errors.get_json_data()}

@@ -326,7 +326,9 @@ OIDC_RP_SIGN_ALGO = config("OIDC_RP_SIGN_ALGO", default="RS256")
 OIDC_USE_NONCE = config("OIDC_USE_NONCE", cast=bool, default=False)
 # The default is 'openid email' but according to openid-configuration they
 # will send 'openid profile email'.
-OIDC_RP_SCOPES = config("OIDC_RP_SCOPES", default="openid profile email")
+OIDC_RP_SCOPES = config(
+    "OIDC_RP_SCOPES", default="openid profile email profile:subscriptions"
+)
 # If you're doing local development with Yari, it's recommened that you add
 #   echo 'OIDC_REDIRECT_ALLOWED_HOSTS=localhost:3000' >> .env
 # so you get redirected back to http://localhost:3000/... after signing in.

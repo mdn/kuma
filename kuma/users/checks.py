@@ -69,17 +69,18 @@ def _get_oidc_configuration_errors(id):
                 )
             )
 
+    # ##TODO 14/02/22 - The additional profile:subscriptions scope is currently missing from the supportes scopes in oidc config
     # settings.OIDC_RP_SCOPES can have less but not more that what's supported
-    scopes_requested = set(settings.OIDC_RP_SCOPES.split())
-    scopes_supported = set(openid_configuration["scopes_supported"])
-    if scopes_supported - scopes_requested:
-        errors.append(
-            Error(
-                f"Invalid settings.OIDC_RP_SCOPES ({settings.OIDC_RP_SCOPES!r}). "
-                f"Requested: {scopes_requested}, Supported: {scopes_supported}",
-                id=id,
-            )
-        )
+    # scopes_requested = set(settings.OIDC_RP_SCOPES.split())
+    # scopes_supported = set(openid_configuration["scopes_supported"])
+    # if scopes_supported - scopes_requested:
+    #     errors.append(
+    #         Error(
+    #             f"Invalid settings.OIDC_RP_SCOPES ({settings.OIDC_RP_SCOPES!r}). "
+    #             f"Requested: {scopes_requested}, Supported: {scopes_supported}",
+    #             id=id,
+    #         )
+    #     )
 
     if settings.OIDC_RP_SIGN_ALGO not in set(
         openid_configuration["id_token_signing_alg_values_supported"]
