@@ -8,19 +8,18 @@ from kuma.core.urlresolvers import reverse
 @pytest.mark.parametrize("http_method", ["put", "post", "delete", "options", "head"])
 def test_whoami_disallowed_methods(client, http_method):
     """HTTP methods other than GET are not allowed."""
-    url = reverse("api.v1.whoami")
+    url = reverse("api-v1:whoami")
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
-    assert_no_cache_header(response)
 
 
 @pytest.mark.django_db
 def test_whoami_anonymous(client):
     """Test response for anonymous users."""
-    url = reverse("api.v1.whoami")
+    url = reverse("api-v1:whoami")
     response = client.get(url)
     assert response.status_code == 200
-    assert response["content-type"] == "application/json"
+    assert response["content-type"] == "application/json; charset=utf-8"
     assert response.json() == {}
     assert_no_cache_header(response)
 
@@ -28,10 +27,10 @@ def test_whoami_anonymous(client):
 @pytest.mark.django_db
 def test_whoami_anonymous_cloudfront_geo(client):
     """Test response for anonymous users."""
-    url = reverse("api.v1.whoami")
+    url = reverse("api-v1:whoami")
     response = client.get(url, HTTP_CLOUDFRONT_VIEWER_COUNTRY_NAME="US of A")
     assert response.status_code == 200
-    assert response["content-type"] == "application/json"
+    assert response["content-type"] == "application/json; charset=utf-8"
     assert response.json()["geo"] == {"country": "US of A"}
 
 
@@ -52,10 +51,10 @@ def test_whoami(
     wiki_user.is_superuser = is_superuser
     wiki_user.is_staff = is_staff
     wiki_user.save()
-    url = reverse("api.v1.whoami")
+    url = reverse("api-v1:whoami")
     response = user_client.get(url)
     assert response.status_code == 200
-    assert response["content-type"] == "application/json"
+    assert response["content-type"] == "application/json; charset=utf-8"
     expect = {
         "username": wiki_user.username,
         "is_authenticated": True,
@@ -72,24 +71,24 @@ def test_whoami(
 
 @pytest.mark.django_db
 def test_account_settings_auth(client):
-    url = reverse("api.v1.settings")
+    url = reverse("api-v1:settings")
     response = client.get(url)
-    assert response.status_code == 403
+    assert response.status_code == 401
     response = client.delete(url)
-    assert response.status_code == 403
+    assert response.status_code == 401
     response = client.post(url, {})
-    assert response.status_code == 403
+    assert response.status_code == 401
 
 
 def test_account_settings_delete(user_client, wiki_user):
     username = wiki_user.username
-    response = user_client.delete(reverse("api.v1.settings"))
+    response = user_client.delete(reverse("api-v1:settings"))
     assert response.status_code == 200
     assert not User.objects.filter(username=username).exists()
 
 
 def test_get_and_set_settings_happy_path(user_client):
-    url = reverse("api.v1.settings")
+    url = reverse("api-v1:settings")
     response = user_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
@@ -114,7 +113,7 @@ def test_get_and_set_settings_happy_path(user_client):
 
 
 def test_set_settings_validation_errors(user_client):
-    url = reverse("api.v1.settings")
+    url = reverse("api-v1:settings")
     response = user_client.post(url, {"locale": "never heard of"})
     assert response.status_code == 400
     assert response.json()["errors"]["locale"][0]["code"] == "invalid_choice"

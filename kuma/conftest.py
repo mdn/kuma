@@ -72,7 +72,7 @@ def user_client(client, wiki_user):
 @pytest.fixture
 def subscriber_client(client, wiki_user):
     """A test client with wiki_user logged in and a paying subscriber."""
-    UserProfile.objects.create(user=wiki_user)
+    UserProfile.objects.create(user=wiki_user, is_subscriber=True)
     wiki_user.set_password("password")
     wiki_user.save()
     client.login(username=wiki_user.username, password="password")

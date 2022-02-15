@@ -29,7 +29,11 @@ class AuthResponse(AnonResponse):
 
 
 @api.get(
-    "/whoami", auth=None, exclude_none=True, response=Union[AuthResponse, AnonResponse]
+    "/whoami",
+    auth=None,
+    exclude_none=True,
+    response=Union[AuthResponse, AnonResponse],
+    url_name="whoami",
 )
 def whoami(request):
     """
@@ -70,7 +74,7 @@ def delete_user(request):
     return {"deleted": True}
 
 
-@settings_router.get("")
+@settings_router.get("", url_name="settings")
 def account_settings(request):
     user_profile: UserProfile = request.auth
     return {
