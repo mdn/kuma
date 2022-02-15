@@ -81,7 +81,7 @@ def account_settings(request):
 
 class FormErrors(Schema):
     ok: Literal[False] = False
-    errors: dict[str, list[str]]
+    errors: dict[str, list[dict[str, str]]]
 
 
 @settings_router.post("", response={200: Ok, 400: FormErrors})
