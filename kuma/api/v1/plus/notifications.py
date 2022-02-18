@@ -305,7 +305,7 @@ def create_pr(request, body: CreatePRNotificationSchema):
     if not watchers:
         return 400, {"error": "No watchers found"}
 
-    content = f"has changed. See PR!{body.repo.strip('/')}!{body.pr}!! for details"
+    content = f"Page updated (see PR!{body.repo.strip('/')}!{body.pr}!!)"
     notification_data, _ = NotificationData.objects.get_or_create(
         text=content, title=watchers[0].title, type="content"
     )
