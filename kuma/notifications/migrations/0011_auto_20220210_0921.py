@@ -14,4 +14,8 @@ class Migration(migrations.Migration):
         ("notifications", "0010_notification_deleted"),
     ]
 
-    operations = [migrations.RunPython(code=delete_watchers, reverse_code=migrations.RunPython.noop)]
+    operations = [
+        migrations.RunPython(
+            code=delete_watchers, reverse_code=migrations.RunPython.noop
+        )
+    ]
