@@ -10,6 +10,12 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.AlterField(
+            model_name="watch",
+            field=models.SlugField(blank=True),
+            name="slug",
+            preserve_default=False,
+        ),
         migrations.RemoveField(
             model_name="watch",
             name="slug",
