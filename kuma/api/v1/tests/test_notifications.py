@@ -25,11 +25,13 @@ def test_notifications(user_client, wiki_user):
     assert json.loads(response.content)["items"] == [
         {
             "id": notification.pk,
+            "deleted": False,
             "created": json.loads(
                 DjangoJSONEncoder().encode(notification.notification.created)
             ),
             "title": notification.notification.title,
             "text": notification.notification.text,
+            "url": notification.notification.page_url,
             "read": notification.read,
             "starred": notification.starred,
         }

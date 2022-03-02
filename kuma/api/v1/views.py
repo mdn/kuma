@@ -76,7 +76,7 @@ def delete_user(request):
     return {"deleted": True}
 
 
-@settings_router.get("")
+@settings_router.get("", url_name="settings")
 def account_settings(request):
     user_profile: UserProfile = request.auth
     return {
@@ -87,7 +87,7 @@ def account_settings(request):
 
 class FormErrors(Schema):
     ok: Literal[False] = False
-    errors: dict[str, list[str]]
+    errors: dict[str, list[dict[str, str]]]
 
 
 @settings_router.post("", response={200: Ok, 400: FormErrors})
