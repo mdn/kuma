@@ -142,7 +142,7 @@ def star_many(request, data: StarMany):
     return 200, True
 
 
-@notifications_router.post("/unstar-ids/", response={200: Ok, 400: str})
+@notifications_router.post("/unstar-ids/", response={200: Ok, 400: str},url_name="notifications_unstar_ids")
 def unstar_many(request, data: StarMany):
     request.user.notification_set.filter(deleted=False).filter(pk__in=data.ids).update(
         starred=False
@@ -150,7 +150,7 @@ def unstar_many(request, data: StarMany):
     return 200, True
 
 
-@notifications_router.post("/{int:pk}/delete/", response=Ok)
+@notifications_router.post("/{int:pk}/delete/", response=Ok,url_name="notifications_delete_id")
 def delete_notification(request, pk: int):
     request.user.notification_set.filter(id=pk).update(deleted=True)
     return True
@@ -166,8 +166,8 @@ class DeleteMany(Schema):
     ids: list[int]
 
 
-@notifications_router.post("/delete-ids/", response={200: Ok, 400: NotOk})
-def update_watch(request, data: DeleteMany):
+@notifications_router.post("/delete-ids/", response={200: Ok, 400: NotOk},url_name="notifications_delete_many")
+def delete_notifications(request, data: DeleteMany):
     request.user.notification_set.filter(deleted=False).filter(pk__in=data.ids).update(
         deleted=True
     )
