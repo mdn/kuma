@@ -32,7 +32,7 @@ from ..smarter_schema import Schema
 
 admin_router = Router(tags=["admin"])
 notifications_router = Router(tags=["notifications"])
-watch_router = Router(tags=["notifications"])
+watch_router = Router(tags=["watch"])
 limit_offset_paginate_with_meta = paginate(LimitOffsetPaginationWithMeta)
 
 
@@ -98,7 +98,7 @@ class WatchSchema(Schema):
     path: str
 
 
-@watch_router.get("/watched/", response=LimitOffsetPaginatedResponse[WatchSchema])
+@watch_router.get("/watched/", response=LimitOffsetPaginatedResponse[WatchSchema],url_name="watched")
 @limit_offset_paginate_with_meta
 def watched(request, q: str = "", **kwargs):
     qs = Watch.objects.filter(users=request.user.id).order_by("title")
@@ -174,7 +174,7 @@ def delete_notifications(request, data: DeleteMany):
     return 200, True
 
 
-@watch_router.get("/watch{path:raw_url}")
+@watch_router.get("/watch{path:raw_url}",url_name="watch")
 @require_subscriber
 def watch(request, raw_url):
     # E.g.GET /api/v1/notifications/watch/en-US/docs/Web/CSS/
@@ -286,7 +286,7 @@ class UnwatchMany(Schema):
     unwatch: list[str]
 
 
-@watch_router.post("/unwatch-many/", response={200: Ok, 400: NotOk})
+@watch_router.post("/unwatch-many/", response={200: Ok, 400: NotOk}, url_name="unwatch_many")
 def unwatch(request, data: UnwatchMany):
 
     request.user.userwatch_set.select_related("watch", "user__watch").filter(
