@@ -18,7 +18,7 @@ class SurveySchema(Schema):
     response: Json
 
 
-@router.post("/survey/", response=Ok)
+@router.post("/survey/", response=Ok, url_name="plus.landing_page.survey", auth=None)
 @ratelimit(group="landing_page_survey", key="user_or_ip", rate="100/m", block=True)
 def post_survey(request, body: SurveySchema):
     survey = get_object_or_404(LandingPageSurvey, uuid=body.uuid)
@@ -27,7 +27,7 @@ def post_survey(request, body: SurveySchema):
     return True
 
 
-@router.get("/survey/")
+@router.get("/survey/", url_name="plus.landing_page.survey", auth=None)
 @ratelimit(group="landing_page_survey", key="user_or_ip", rate="100/m", block=True)
 def get_survey(request, uuid: UUID = None):
     # Inspired by https://github.com/mdn/kuma/pull/7849/files

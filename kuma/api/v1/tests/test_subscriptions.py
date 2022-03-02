@@ -14,7 +14,7 @@ def test_subscriptions(subscriber_client, wiki_user):
         "username": wiki_user.username,
         "is_authenticated": True,
         "email": wiki_user.email,
-        "is_subscriber": False,
+        "is_subscriber": True,
         "subscription_type": "",
         "avatar_url": "",
     }

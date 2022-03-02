@@ -73,7 +73,7 @@ class CollectionPaginatedInput(PaginationInput):
 
 
 @router.get(
-    "",
+    "/",
     response=Union[PaginatedResponse[CollectionItemSchema], CollectionItemResponse],
     summary="Get collection",
     url_name="collections",
@@ -127,7 +127,7 @@ def bookmarks(request, filters: CollectionPaginatedInput = Query(...)):
 
 
 @router.post(
-    "",
+    "/",
     response={200: Ok, 201: Ok, 400: NotOk},
     summary="Save or delete a collection item",
 )

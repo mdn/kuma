@@ -70,13 +70,13 @@ def whoami(request):
     return data
 
 
-@settings_router.delete("")
+@settings_router.delete("/", url_name="settings")
 def delete_user(request):
     request.user.delete()
     return {"deleted": True}
 
 
-@settings_router.get("")
+@settings_router.get("/", url_name="settings")
 def account_settings(request):
     user_profile: UserProfile = request.auth
     return {
@@ -87,10 +87,10 @@ def account_settings(request):
 
 class FormErrors(Schema):
     ok: Literal[False] = False
-    errors: dict[str, list[str]]
+    errors: dict[str, list[dict[str,str]]]
 
 
-@settings_router.post("", response={200: Ok, 400: FormErrors})
+@settings_router.post("/", response={200: Ok, 400: FormErrors}, url_name='settings')
 def save_settings(request):
     user_profile: UserProfile = request.auth
     form = AccountSettingsForm(request.POST)
