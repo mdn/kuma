@@ -11,7 +11,6 @@ def test_whoami_disallowed_methods(client, http_method):
     url = reverse("api-v1:whoami")
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
-    assert_no_cache_header(response)
 
 
 @pytest.mark.django_db

@@ -24,7 +24,7 @@ def test_ping_landing_page_survey_happy_path(client):
         },
         content_type="application/json",
     )
-    assert response.status_code == 200
+    assert response.status_code == 200, response.json()
     (result,) = LandingPageSurvey.objects.all()
     assert result.response == {"price": "perfect"}
 
@@ -43,13 +43,13 @@ def test_ping_landing_page_survey_bad_request(client):
 
     # No UUID in post
     response = client.post(url)
-    assert response.status_code == 400
+    assert response.status_code == 422
 
     response = client.get(url, {"variant": "1"})
     assert response.status_code == 200
     # Invalid JSON
     response = client.post(url, {"uuid": response.json()["uuid"], "response": "{{{{"})
-    assert response.status_code == 400
+    assert response.status_code == 422
 
 
 @pytest.mark.django_db

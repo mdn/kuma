@@ -2,7 +2,7 @@ from uuid import UUID
 
 from django.middleware.csrf import get_token
 from django.shortcuts import get_object_or_404
-from ninja import Router
+from ninja import Form, Router
 from pydantic import Json
 from ratelimit.decorators import ratelimit
 
@@ -10,19 +10,16 @@ from kuma.api.v1.plus.notifications import Ok
 from kuma.api.v1.smarter_schema import Schema
 from kuma.plus.models import LandingPageSurvey
 
-router = Router(auth=None)
+router = Router()
 
 
-class SurveySchema(Schema):
-    uuid: UUID
-    response: Json
 
 
 @router.post("/survey/", response=Ok, url_name="plus.landing_page.survey", auth=None)
 @ratelimit(group="landing_page_survey", key="user_or_ip", rate="100/m", block=True)
-def post_survey(request, body: SurveySchema):
-    survey = get_object_or_404(LandingPageSurvey, uuid=body.uuid)
-    survey.response = body.response
+def post_survey(request, uuid: str = Form(...), response: Json = Form(...)):
+    survey = get_object_or_404(LandingPageSurvey, uuid=uuid)
+    survey.response = response
     survey.save()
     return True
 

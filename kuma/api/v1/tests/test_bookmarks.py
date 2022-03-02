@@ -164,9 +164,9 @@ def test_bookmarks_pagination(subscriber_client, mock_requests, settings):
         print(get_url)
         response = subscriber_client.post(get_url)
         print(response)
-        assert response.status_code == 201
+        assert response.status_code == 201, response.json()
 
-    # Add one extra but this one toggle twice so it becomes soft-deleted
+    # Add one extra but then delete it
     i += 1
     mdn_url = f"/en-US/docs/Web/Doc{i}"
     doc_absolute_url = settings.BOOKMARKS_BASE_URL + mdn_url + "/index.json"
@@ -176,8 +176,8 @@ def test_bookmarks_pagination(subscriber_client, mock_requests, settings):
     get_url = f'{url}?{urlencode({"url": mdn_url})}'
     response = subscriber_client.post(get_url)
     assert response.status_code == 201
-    response = subscriber_client.post(get_url)
-    assert response.status_code == 201
+    response = subscriber_client.post(get_url, {'delete': 1})
+    assert response.status_code == 200
 
     response = subscriber_client.get(url, {"per_page": "5"})
     assert response.status_code == 200

@@ -59,9 +59,9 @@ BROWSER_GROUP = {
 }
 
 COPY = {
-    "added_stable": "is supported in ",
-    "removed_stable": "is no longer supported in ",
-    "added_preview": "is in development in ",
+    "added_stable": "Supported in ",
+    "removed_stable": "Removed from ",
+    "added_preview": "In development in ",
 }
 
 
@@ -96,7 +96,7 @@ def process_changes(changes, dry_run=False):
             notifications.append(
                 {
                     "path": change["path"],
-                    "text": f"is now reporting compatibility data for {n} subfeature{'s'[:n ^ 1]}",
+                    "text": f"{n} compatibility subfeature{'s'[:n ^ 1]} added",
                     "data": change,
                 }
             )
@@ -108,7 +108,7 @@ def process_changes(changes, dry_run=False):
             notifications.append(
                 {
                     "path": change["path"],
-                    "text": f"has more complete compatibility data for {text}",
+                    "text": f"More complete compatibility data added for {text}",
                     "data": change,
                 }
             )
