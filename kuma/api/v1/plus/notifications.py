@@ -24,10 +24,7 @@ from kuma.notifications.utils import process_changes
 from kuma.settings.common import MAX_NON_SUBSCRIBED
 from kuma.users.models import UserProfile
 
-from ..pagination import (
-    LimitOffsetPaginationWithMeta,
-    LimitOffsetPaginatedResponse,
-)
+from ..pagination import LimitOffsetPaginatedResponse, LimitOffsetPaginationWithMeta
 from ..smarter_schema import Schema
 
 admin_router = Router(tags=["admin"])

@@ -87,10 +87,10 @@ def account_settings(request):
 
 class FormErrors(Schema):
     ok: Literal[False] = False
-    errors: dict[str, list[dict[str,str]]]
+    errors: dict[str, list[dict[str, str]]]
 
 
-@settings_router.post("/", response={200: Ok, 400: FormErrors}, url_name='settings')
+@settings_router.post("/", response={200: Ok, 400: FormErrors}, url_name="settings")
 def save_settings(request):
     user_profile: UserProfile = request.auth
     form = AccountSettingsForm(request.POST)
