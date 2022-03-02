@@ -134,7 +134,7 @@ class StarMany(Schema):
     ids: list[int]
 
 
-@notifications_router.post("/star-ids/", response={200: Ok, 400: str})
+@notifications_router.post("/star-ids/", response={200: Ok, 400: str},url_name="notifications_star_ids")
 def star_many(request, data: StarMany):
     request.user.notification_set.filter(deleted=False).filter(pk__in=data.ids).update(
         starred=True
