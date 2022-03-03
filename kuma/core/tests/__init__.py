@@ -9,13 +9,12 @@ from django.test import TestCase
 from django.utils.translation import trans_real
 
 
-def assert_no_cache_header(response):
-    if "Cache-Control" in response:
-        assert "max-age=0" in response["Cache-Control"]
-        assert "no-cache" in response["Cache-Control"]
-        assert "no-store" in response["Cache-Control"]
-        assert "must-revalidate" in response["Cache-Control"]
-        assert "s-maxage" not in response["Cache-Control"]
+def assert_no_cache_header(response):    
+    assert "max-age=0" in response["Cache-Control"]
+    assert "no-cache" in response["Cache-Control"]
+    assert "no-store" in response["Cache-Control"]
+    assert "must-revalidate" in response["Cache-Control"]
+    assert "s-maxage" not in response["Cache-Control"]
 
 
 def assert_shared_cache_header(response):
