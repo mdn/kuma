@@ -24,13 +24,13 @@ from kuma.notifications.utils import process_changes
 from kuma.settings.common import MAX_NON_SUBSCRIBED
 from kuma.users.models import UserProfile
 
-from ..pagination import PageNumberPaginationWithMeta, PaginatedResponse
+from ..pagination import LimitOffsetPaginatedResponse, LimitOffsetPaginationWithMeta
 from ..smarter_schema import Schema
 
 admin_router = Router(tags=["admin"])
 notifications_router = Router(tags=["notifications"])
-watch_router = Router(tags=["notifications"])
-paginate_with_meta = paginate(PageNumberPaginationWithMeta)
+watch_router = Router(tags=["watch"])
+limit_offset_paginate_with_meta = paginate(LimitOffsetPaginationWithMeta)
 
 
 class Ok(Schema):
@@ -55,10 +55,10 @@ class NotificationSchema(Schema):
 
 @notifications_router.get(
     "/",
-    response=PaginatedResponse[NotificationSchema],
+    response=LimitOffsetPaginatedResponse[NotificationSchema],
     url_name="plus.notifications",
 )
-@paginate_with_meta
+@limit_offset_paginate_with_meta
 def notifications(
     request,
     starred: bool = None,
@@ -95,8 +95,10 @@ class WatchSchema(Schema):
     path: str
 
 
-@watch_router.get("/watched/", response=PaginatedResponse[WatchSchema])
-@paginate_with_meta
+@watch_router.get(
+    "/watched/", response=LimitOffsetPaginatedResponse[WatchSchema], url_name="watched"
+)
+@limit_offset_paginate_with_meta
 def watched(request, q: str = "", **kwargs):
     qs = Watch.objects.filter(users=request.user.id).order_by("title")
     if q:
@@ -127,7 +129,33 @@ def toggle_starred(request, pk: int):
     return 200, True
 
 
-@notifications_router.post("/{int:pk}/delete/", response=Ok)
+class StarMany(Schema):
+    ids: list[int]
+
+
+@notifications_router.post(
+    "/star-ids/", response={200: Ok, 400: str}, url_name="notifications_star_ids"
+)
+def star_many(request, data: StarMany):
+    request.user.notification_set.filter(deleted=False).filter(pk__in=data.ids).update(
+        starred=True
+    )
+    return 200, True
+
+
+@notifications_router.post(
+    "/unstar-ids/", response={200: Ok, 400: str}, url_name="notifications_unstar_ids"
+)
+def unstar_many(request, data: StarMany):
+    request.user.notification_set.filter(deleted=False).filter(pk__in=data.ids).update(
+        starred=False
+    )
+    return 200, True
+
+
+@notifications_router.post(
+    "/{int:pk}/delete/", response=Ok, url_name="notifications_delete_id"
+)
 def delete_notification(request, pk: int):
     request.user.notification_set.filter(id=pk).update(deleted=True)
     return True
@@ -139,7 +167,21 @@ def undo_deletion(request, pk: int):
     return True
 
 
-@watch_router.get("/watch{path:raw_url}")
+class DeleteMany(Schema):
+    ids: list[int]
+
+
+@notifications_router.post(
+    "/delete-ids/", response={200: Ok, 400: NotOk}, url_name="notifications_delete_many"
+)
+def delete_notifications(request, data: DeleteMany):
+    request.user.notification_set.filter(deleted=False).filter(pk__in=data.ids).update(
+        deleted=True
+    )
+    return 200, True
+
+
+@watch_router.get("/watch{path:raw_url}", url_name="watch")
 @require_subscriber
 def watch(request, raw_url):
     # E.g.GET /api/v1/notifications/watch/en-US/docs/Web/CSS/
@@ -244,6 +286,22 @@ def update_watch(request, raw_url, data: UpdateWatch):
     else:
         watch = Watch.objects.get_or_create(url=url, title=title, path=path)[0]
     user.userwatch_set.update_or_create(watch=watch, defaults=watched_data)
+    return 200, True
+
+
+class UnwatchMany(Schema):
+    unwatch: list[str]
+
+
+@watch_router.post(
+    "/unwatch-many/", response={200: Ok, 400: NotOk}, url_name="unwatch_many"
+)
+def unwatch(request, data: UnwatchMany):
+
+    request.user.userwatch_set.select_related("watch", "user__watch").filter(
+        watch__url__in=data.unwatch
+    ).delete()
+
     return 200, True
 
 

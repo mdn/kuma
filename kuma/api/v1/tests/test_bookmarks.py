@@ -176,7 +176,7 @@ def test_bookmarks_pagination(subscriber_client, mock_requests, settings):
     get_url = f'{url}?{urlencode({"url": mdn_url})}'
     response = subscriber_client.post(get_url)
     assert response.status_code == 201
-    response = subscriber_client.post(get_url, {'delete': 1})
+    response = subscriber_client.post(get_url, {"delete": 1})
     assert response.status_code == 200
 
     response = subscriber_client.get(url, {"per_page": "5"})

@@ -7,7 +7,7 @@ from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.middleware.csrf import get_token
 from ninja import Field
-from ninja.pagination import PageNumberPagination
+from ninja.pagination import LimitOffsetPagination, PageNumberPagination
 from ninja.schema import Schema
 from pydantic.generics import GenericModel
 
@@ -56,6 +56,20 @@ class PaginatedData:
         self.csrfmiddlewaretoken = csrfmiddlewaretoken
 
 
+class LimitOffsetPaginatedData:
+    items: QuerySet | list
+    csrfmiddlewaretoken: str
+
+    def __init__(self, items: QuerySet | list, csrfmiddlewaretoken: str):
+        self.items = items
+        self.csrfmiddlewaretoken = csrfmiddlewaretoken
+
+
+class LimitOffsetPaginatedResponse(Schema, GenericModel, Generic[ItemSchema]):
+    items: list[ItemSchema]
+    csrfmiddlewaretoken: str
+
+
 class PageNumberPaginationWithMeta(PageNumberPagination):
     Input = PaginationInput
 
@@ -63,3 +77,13 @@ class PageNumberPaginationWithMeta(PageNumberPagination):
         self, items: QuerySet, request: HttpRequest, pagination: Input, **params
     ) -> PaginatedData:
         return PaginatedData(items, pagination, get_token(request))
+
+
+class LimitOffsetPaginationWithMeta(LimitOffsetPagination):
+    def paginate_queryset(
+        self, items: QuerySet, request: HttpRequest, **params
+    ) -> LimitOffsetPaginatedData:
+        paginated_items = super().paginate_queryset(items, request, **params)
+        return LimitOffsetPaginatedData(
+            paginated_items, csrfmiddlewaretoken=get_token(request)
+        )
