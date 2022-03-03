@@ -182,14 +182,14 @@ def test_bookmarks_pagination(subscriber_client, mock_requests, settings):
     response = subscriber_client.get(url, {"per_page": "5"})
     assert response.status_code == 200
     assert len(response.json()["items"]) == 5
-    assert response.json()["metadata"]["total"] == 21
+    assert response.json()["metadata"]["total"] == 20
     assert response.json()["metadata"]["page"] == 1
     assert response.json()["metadata"]["per_page"] == 5
 
     response = subscriber_client.get(url, {"per_page": "5", "page": "2"})
     assert response.status_code == 200
     assert len(response.json()["items"]) == 5
-    assert response.json()["metadata"]["total"] == 21
+    assert response.json()["metadata"]["total"] == 20
     assert response.json()["metadata"]["page"] == 2
     assert response.json()["metadata"]["per_page"] == 5
 
