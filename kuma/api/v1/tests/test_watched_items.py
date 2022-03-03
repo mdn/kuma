@@ -1,9 +1,7 @@
 import json
 
-from django.core.serializers.json import DjangoJSONEncoder
 from django.urls import reverse
 from model_bakery import baker
-from pytest_watch import watch
 
 from kuma.notifications import models
 

@@ -31,7 +31,6 @@ def test_notifications(user_client, wiki_user):
             ),
             "title": notification.notification.title,
             "text": notification.notification.text,
-            "url": notification.notification.page_url,
             "read": notification.read,
             "url": notification.notification.page_url,
             "starred": notification.starred,
@@ -144,7 +143,7 @@ def test_star_many(user_client, wiki_user):
     assert len(items_json) == 15
 
     for i in range(0, 15):
-        assert items_json[i]["starred"] == False
+        assert not items_json[i]["starred"]
 
     star_many_url = reverse("api-v1:notifications_star_ids")
     # Star ids.
@@ -161,16 +160,16 @@ def test_star_many(user_client, wiki_user):
     for i, j in zip(range(0, 5), range(14, 9, -1)):
         # Top 6 are starred
         assert items_json[i]["id"] == j
-        assert items_json[i]["starred"] == True
+        assert items_json[i]["starred"]
 
     for i in range(6, 15):
         # Bottom 9 are not starred
-        assert items_json[i]["starred"] == False
+        assert not items_json[i]["starred"]
 
 
 def test_unstar_many(user_client, wiki_user):
     url = reverse("api-v1:plus.notifications")
-    ##Create 15 starred notifications
+    # Create 15 starred notifications
     ids = []
     for i in range(15):
         ids.append(i)
@@ -182,7 +181,7 @@ def test_unstar_many(user_client, wiki_user):
     assert len(items_json) == 15
 
     for i in range(0, 15):
-        assert items_json[i]["starred"] == True
+        assert items_json[i]["starred"]
 
     unstar_many_url = reverse("api-v1:notifications_unstar_ids")
     # Unstar all ids
@@ -197,4 +196,4 @@ def test_unstar_many(user_client, wiki_user):
     items_json = json.loads(response.content)["items"]
 
     for i in range(15):
-        assert items_json[i]["starred"] == False
+        assert not items_json[i]["starred"]

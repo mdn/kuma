@@ -7,7 +7,7 @@ from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.middleware.csrf import get_token
 from ninja import Field
-from ninja.pagination import PageNumberPagination, LimitOffsetPagination
+from ninja.pagination import LimitOffsetPagination, PageNumberPagination
 from ninja.schema import Schema
 from pydantic.generics import GenericModel
 
