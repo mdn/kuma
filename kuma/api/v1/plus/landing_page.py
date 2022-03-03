@@ -7,7 +7,6 @@ from pydantic import Json
 from ratelimit.decorators import ratelimit
 
 from kuma.api.v1.plus.notifications import Ok
-from kuma.api.v1.smarter_schema import Schema
 from kuma.plus.models import LandingPageSurvey
 
 router = Router()
