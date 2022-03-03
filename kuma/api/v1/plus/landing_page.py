@@ -13,8 +13,6 @@ from kuma.plus.models import LandingPageSurvey
 router = Router()
 
 
-
-
 @router.post("/survey/", response=Ok, url_name="plus.landing_page.survey", auth=None)
 @ratelimit(group="landing_page_survey", key="user_or_ip", rate="100/m", block=True)
 def post_survey(request, uuid: str = Form(...), response: Json = Form(...)):
