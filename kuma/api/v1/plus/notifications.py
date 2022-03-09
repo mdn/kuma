@@ -211,7 +211,9 @@ def watched(request, q: str = "", url: str = "", limit: int = 20, offset: int = 
                 res["custom"] = item.custom_serialize()
         results.append(res)
 
-    if len(results) == 1:
+    if url != "" and len(results) == 0:
+        response["status"] = "unwatched"
+    elif len(results) == 1 and url != "":
         response = response | results[0]
     else:
         response["items"] = results
@@ -235,6 +237,7 @@ class UpdateWatch(Schema):
 
 @watch_router.post("/watching/", response={200: Ok, 400: NotOk, 400: NotOk})
 def update_watch(request, url: str, data: UpdateWatch):
+    url = DocumentURL.normalize_uri(url)
     profile: UserProfile = request.auth
     watched: Optional[UserWatch] = (
         request.user.userwatch_set.select_related("watch", "user__defaultwatch")
