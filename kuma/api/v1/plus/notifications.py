@@ -8,10 +8,10 @@ from typing import Optional
 import requests
 from django.conf import settings
 from django.db.models import Q
+from django.middleware.csrf import get_token
 from ninja import Field, Router
 from ninja.pagination import paginate
 
-from kuma.api.v1.decorators import require_subscriber
 from kuma.documenturls.models import DocumentURL
 from kuma.notifications.models import (
     DefaultWatch,
@@ -86,23 +86,6 @@ def notifications(
     qs = qs.order_by(order_by, "id")
 
     qs = qs.filter(deleted=False)
-    return qs
-
-
-class WatchSchema(Schema):
-    title: str
-    url: str
-    path: str
-
-
-@watch_router.get(
-    "/watched/", response=LimitOffsetPaginatedResponse[WatchSchema], url_name="watched"
-)
-@limit_offset_paginate_with_meta
-def watched(request, q: str = "", **kwargs):
-    qs = Watch.objects.filter(users=request.user.id).order_by("title")
-    if q:
-        qs = qs.filter(title__icontains=q)
     return qs
 
 
@@ -181,36 +164,57 @@ def delete_notifications(request, data: DeleteMany):
     return 200, True
 
 
-@watch_router.get("/watch{path:raw_url}", url_name="watch")
-@require_subscriber
-def watch(request, raw_url):
-    # E.g.GET /api/v1/notifications/watch/en-US/docs/Web/CSS/
-    url = DocumentURL.normalize_uri(raw_url)
-    watched: Optional[UserWatch] = (
-        request.user.userwatch_set.select_related("watch", "user__defaultwatch")
-        .filter(watch__url=url)
-        .first()
-    )
-    user = watched.user if watched else request.user
+class WatchSchema(Schema):
+    title: str
+    url: str
+    path: str
 
-    response = {"ok": True}
+
+@watch_router.get("/watching/", url_name="watching")
+def watched(request, q: str = "", url: str = "", limit: int = 20, offset: int = 0):
+    qs = request.user.userwatch_set.select_related("watch", "user__defaultwatch")
+    hasDefault = None
     try:
-        response["default"] = user.defaultwatch.custom_serialize()
+        hasDefault = request.user.defaultwatch.custom_serialize()
     except DefaultWatch.DoesNotExist:
         pass
+    if url:
+        url = DocumentURL.normalize_uri(url)
+        qs = qs.filter(watch__url=url)
+    if q:
+        qs = qs.filter(watch__title__icontains=q)
 
-    if watched:
-        if not watched.custom:
-            response["status"] = "major"
+    qs = qs[offset : offset + limit]
+    response = {}
+    results = []
+    # Default settings at top level if exist
+    if hasDefault:
+        response["default"] = hasDefault
+    response["csrfmiddlewaretoken"] = get_token(request)
+    for item in qs:
+        res = {}
+        res["title"] = item.watch.title
+        res["url"] = item.watch.url
+        res["path"] = item.watch.path
+
+        # No custom notifications just major updates.
+        if not item.custom:
+            res["status"] = "major"
         else:
-            response["status"] = "custom"
-            if watched.custom_default and "default" in response:
-                response["custom"] = True
+            res["status"] = "custom"
+            # Subscribed to custom
+            if item.custom_default and hasDefault:
+                # Subscribed to the defaults
+                res["custom"] = "default"
             else:
-                response["custom"] = watched.custom_serialize()
-    else:
-        response["status"] = "unwatched"
+                # Subscribed to fine-grained options
+                res["custom"] = item.custom_serialize()
+        results.append(res)
 
+    if len(results) == 1:
+        response = response | results[0]
+    else:
+        response["items"] = results
     return response
 
 
@@ -229,11 +233,9 @@ class UpdateWatch(Schema):
     update_custom_default: bool = False
 
 
-@watch_router.post("/watch{path:raw_url}", response={200: Ok, 400: NotOk, 400: NotOk})
-def update_watch(request, raw_url, data: UpdateWatch):
-    url = DocumentURL.normalize_uri(raw_url)
+@watch_router.post("/watching/", response={200: Ok, 400: NotOk, 400: NotOk})
+def update_watch(request, url: str, data: UpdateWatch):
     profile: UserProfile = request.auth
-
     watched: Optional[UserWatch] = (
         request.user.userwatch_set.select_related("watch", "user__defaultwatch")
         .filter(watch__url=url)
