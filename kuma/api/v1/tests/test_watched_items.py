@@ -7,7 +7,7 @@ from kuma.notifications import models
 
 
 def test_unwatch_manys(user_client, wiki_user):
-    url = reverse("api-v1:watched")
+    url = reverse("api-v1:watching")
     user_watched_items = []
 
     for i in range(10):
