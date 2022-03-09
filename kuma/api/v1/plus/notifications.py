@@ -179,6 +179,7 @@ def watched(request, q: str = "", url: str = "", limit: int = 20, offset: int = 
     except DefaultWatch.DoesNotExist:
         pass
     if url:
+        url = DocumentURL.normalize_uri(url)
         qs = qs.filter(watch__url=url)
     if q:
         qs = qs.filter(watch__title__icontains=q)
@@ -235,7 +236,6 @@ class UpdateWatch(Schema):
 @watch_router.post("/watching/", response={200: Ok, 400: NotOk, 400: NotOk})
 def update_watch(request, url: str, data: UpdateWatch):
     profile: UserProfile = request.auth
-
     watched: Optional[UserWatch] = (
         request.user.userwatch_set.select_related("watch", "user__defaultwatch")
         .filter(watch__url=url)
