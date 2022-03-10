@@ -62,6 +62,7 @@ class NotificationSchema(Schema):
 def notifications(
     request,
     starred: bool = None,
+    unread: bool = None,
     filterType: str = None,
     q: str = None,
     sort: str = None,
@@ -70,6 +71,9 @@ def notifications(
     qs = request.user.notification_set.select_related("notification")
     if starred is not None:
         qs = qs.filter(starred=starred)
+
+    if unread is not None:
+        qs = qs.filter(read=not unread)
 
     if filterType:
         qs = qs.filter(notification__type=filterType)
