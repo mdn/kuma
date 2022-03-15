@@ -11,8 +11,6 @@ from ninja.pagination import LimitOffsetPagination
 from ninja.schema import Schema
 from pydantic.generics import GenericModel
 
-from kuma.settings.common import MAX_NON_SUBSCRIBED
-
 ItemSchema = TypeVar("ItemSchema")
 
 
