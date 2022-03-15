@@ -111,15 +111,12 @@ def test_bookmarks_signed_in_subscriber(subscriber_client):
     response = subscriber_client.get(url)
     assert response.status_code == 200
     assert len(response.json()["items"]) == 0
-    assert response.json()["metadata"]["total"] == 0
-    assert response.json()["metadata"]["page"] == 1
-    assert response.json()["metadata"]["per_page"] > 0
 
     # Try to mess with the `page` and `per_page`
-    response = subscriber_client.get(url, {"page": "xxx"})
+    response = subscriber_client.get(url, {"offset": "xxx"})
     assert response.status_code == 422
     assert "type_error.integer" in response.content.decode("utf-8")
-    response = subscriber_client.get(url, {"page": "-1"})
+    response = subscriber_client.get(url, {"limit": "-1"})
     assert response.status_code == 422
     assert "value_error.number.not_gt" in response.content.decode("utf-8")
 
@@ -179,19 +176,13 @@ def test_bookmarks_pagination(subscriber_client, mock_requests, settings):
     response = subscriber_client.post(get_url, {"delete": 1})
     assert response.status_code == 200
 
-    response = subscriber_client.get(url, {"per_page": "5"})
+    response = subscriber_client.get(url, {"limit": "5"})
     assert response.status_code == 200
     assert len(response.json()["items"]) == 5
-    assert response.json()["metadata"]["total"] == 20
-    assert response.json()["metadata"]["page"] == 1
-    assert response.json()["metadata"]["per_page"] == 5
 
-    response = subscriber_client.get(url, {"per_page": "5", "page": "2"})
+    response = subscriber_client.get(url, {"limit": "5", "offset": "5"})
     assert response.status_code == 200
     assert len(response.json()["items"]) == 5
-    assert response.json()["metadata"]["total"] == 20
-    assert response.json()["metadata"]["page"] == 2
-    assert response.json()["metadata"]["per_page"] == 5
 
 
 def test_undo_bookmark(subscriber_client, mock_requests, settings):
