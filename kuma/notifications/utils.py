@@ -5,22 +5,32 @@ from kuma.notifications.models import Notification, NotificationData, Watch
 
 
 def publish_notification(path, text, dry_run=False, data=None):
-    watcher = Watch.objects.filter(path=path).first()
-    if not watcher:
-        print(path, text)
-        return
+    # This traverses down the path to see if there's top level watchers
+    parts = path.split(".")
+    suffix = []
+    while len(parts) > 0:
+        subpath = ".".join(parts)
+        watcher = Watch.objects.filter(path=subpath).first()
+        suffix.append(parts.pop())
 
-    print(watcher.title, text)
-    if not dry_run:
-        notification_data, _ = NotificationData.objects.get_or_create(
-            title=watcher.title,
-            text=text,
-            data=data,
-            type="compat",
-            page_url=watcher.url,
-        )
-        for user in watcher.users.all():
-            Notification.objects.create(notification=notification_data, user=user)
+        if not watcher:
+            continue
+
+        # Add the suffix based on the path to the title.
+        # Since suffix contains the current title (which should be an exact match)
+        # we use the suffix as title (after reversing the order).
+        title = reversed(suffix)
+        title = ".".join(title)
+        if not dry_run:
+            notification_data, _ = NotificationData.objects.get_or_create(
+                title=title,
+                text=text,
+                data=data,
+                type="compat",
+                page_url=watcher.url,
+            )
+            for user in watcher.users.all():
+                Notification.objects.create(notification=notification_data, user=user)
 
 
 def get_browser_info(browser, preview=False):
