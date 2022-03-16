@@ -51,11 +51,9 @@ def whoami(request):
     if not user.is_authenticated:
         return data
 
-    data = {
-        "username": user.username,
-        "is_authenticated": True,
-        "email": user.email,
-    }
+    data["username"] = user.username
+    data["is_authenticated"] = True
+    data["email"] = user.email
 
     if user.is_staff:
         data["is_staff"] = True
