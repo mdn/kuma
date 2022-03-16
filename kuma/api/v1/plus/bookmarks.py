@@ -16,9 +16,9 @@ from kuma.documenturls.models import DocumentURL, download_url
 from kuma.users.models import UserProfile
 
 from ..pagination import (
-    PageNumberPaginationWithMeta,
-    PaginatedResponse,
-    PaginationInput,
+    LimitOffsetInput,
+    LimitOffsetPaginatedResponse,
+    LimitOffsetPaginationWithMeta,
 )
 
 
@@ -56,13 +56,13 @@ class CollectionItemResponse(Schema):
     csrfmiddlewaretoken: str
 
 
-class CollectionPaginatedInput(PaginationInput):
+class CollectionPaginatedInput(LimitOffsetInput):
     url: str = None
     terms: str = Field(None, alias="q")
     sort: str = None
 
     @validator("url")
-    def valid_bookmark_url(cls, url):
+    def valid_bookmark_url_2(cls, url):
         url = url.strip().replace("https://developer.mozilla.org", "")
         assert (
             url.startswith("/")
@@ -74,7 +74,9 @@ class CollectionPaginatedInput(PaginationInput):
 
 @router.get(
     "/",
-    response=Union[PaginatedResponse[CollectionItemSchema], CollectionItemResponse],
+    response=Union[
+        LimitOffsetPaginatedResponse[CollectionItemSchema], CollectionItemResponse
+    ],
     summary="Get collection",
     url_name="collections",
 )
@@ -121,9 +123,8 @@ def bookmarks(request, filters: CollectionPaginatedInput = Query(...)):
             Q(display_title__icontains=filters.terms)
             | Q(notes__icontains=filters.terms)
         )
-
-    paginator = PageNumberPaginationWithMeta()
-    return paginator.paginate_queryset(qs, request, pagination=filters)
+    paginator = LimitOffsetPaginationWithMeta()
+    return paginator.paginate_queryset(qs, request=request, pagination=filters)
 
 
 @router.post(
