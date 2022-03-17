@@ -13,15 +13,13 @@ from kuma.api.v1.plus.notifications import NotOk, Ok
 from kuma.api.v1.smarter_schema import Schema
 from kuma.bookmarks.models import Bookmark
 from kuma.documenturls.models import DocumentURL, download_url
+from kuma.settings.common import MAX_NON_SUBSCRIBED
 from kuma.users.models import UserProfile
 
-from kuma.settings.common import MAX_NON_SUBSCRIBED
 
-from ..pagination import (
-    LimitOffsetInput,
-    LimitOffsetPaginatedResponse,
-    LimitOffsetPaginationWithMeta,
-)
+class LimitOffsetInput(Schema):
+    limit: int = Field(20, gt=0)
+    offset: int = Field(0, ge=1)
 
 
 class NotOKDocumentURLError(Exception):
@@ -56,6 +54,13 @@ class CollectionItemSchema(Schema):
 class CollectionItemResponse(Schema):
     bookmarked: Optional[CollectionItemSchema]
     csrfmiddlewaretoken: str
+    subscription_limit_reached: Optional[bool]
+
+
+class MultipleCollectionItemResponse(Schema):
+    items: list[CollectionItemSchema]
+    csrfmiddlewaretoken: str
+    subscription_limit_reached: Optional[bool]
 
 
 class CollectionPaginatedInput(LimitOffsetInput):
@@ -64,7 +69,7 @@ class CollectionPaginatedInput(LimitOffsetInput):
     sort: str = None
 
     @validator("url")
-    def valid_bookmark_url_2(cls, url):
+    def valid_bookmark_url(cls, url):
         url = url.strip().replace("https://developer.mozilla.org", "")
         assert (
             url.startswith("/")
@@ -76,9 +81,7 @@ class CollectionPaginatedInput(LimitOffsetInput):
 
 @router.get(
     "/",
-    response=Union[
-        LimitOffsetPaginatedResponse[CollectionItemSchema], CollectionItemResponse
-    ],
+    response=Union[MultipleCollectionItemResponse, CollectionItemResponse],
     summary="Get collection",
     url_name="collections",
 )
@@ -88,16 +91,21 @@ def bookmarks(request, filters: CollectionPaginatedInput = Query(...)):
     a paginated list of collection items.
     """
     user = request.user
+    profile: UserProfile = request.auth
 
     # Single bookmark request.
     if filters.url:
         bookmark: Optional[Bookmark] = user.bookmark_set.filter(
             documenturl__uri=DocumentURL.normalize_uri(filters.url), deleted=None
         ).first()
-        return {
-            "bookmarked": bookmark,
-            "csrfmiddlewaretoken": get_token(request),
-        }
+        response = {"bookmarked": bookmark, "csrfmiddlewaretoken": get_token(request)}
+        if not profile.is_subscriber:
+            response["subscription_limit_reached"] = (
+                user.bookmark_set.filter(deleted=None).count()
+                >= MAX_NON_SUBSCRIBED["collection"]
+            )
+
+        return response
 
     # Otherwise return a paginated list of bookmarks.
     qs = (
@@ -125,8 +133,18 @@ def bookmarks(request, filters: CollectionPaginatedInput = Query(...)):
             Q(display_title__icontains=filters.terms)
             | Q(notes__icontains=filters.terms)
         )
-    paginator = LimitOffsetPaginationWithMeta()
-    return paginator.paginate_queryset(qs, request=request, pagination=filters)
+    response = {}
+    response["csrfmiddlewaretoken"] = get_token(request)
+    qs = qs[filters.offset : filters.offset + filters.limit]
+    response["items"] = []
+    for item in qs:
+        response["items"].append(item)
+    if not profile.is_subscriber:
+        response["subscription_limit_reached"] = (
+            user.bookmark_set.filter(deleted=None).count()
+            >= MAX_NON_SUBSCRIBED["collection"]
+        )
+    return response
 
 
 @router.post(

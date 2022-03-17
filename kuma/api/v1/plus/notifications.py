@@ -225,7 +225,9 @@ def watched(request, q: str = "", url: str = "", limit: int = 20, offset: int = 
     else:
         response["items"] = results
     if not profile.is_subscriber:
-        response['watch_limit_reached'] = request.user.userwatch_set.count() >= MAX_NON_SUBSCRIBED["notification"]
+        response["subscription_limit_reached"] = (
+            request.user.userwatch_set.count() >= MAX_NON_SUBSCRIBED["notification"]
+        )
     return response
 
 
