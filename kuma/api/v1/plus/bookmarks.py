@@ -15,6 +15,8 @@ from kuma.bookmarks.models import Bookmark
 from kuma.documenturls.models import DocumentURL, download_url
 from kuma.users.models import UserProfile
 
+from kuma.settings.common import MAX_NON_SUBSCRIBED
+
 from ..pagination import (
     LimitOffsetInput,
     LimitOffsetPaginatedResponse,
@@ -174,9 +176,13 @@ def save_or_delete_bookmark(
     profile: UserProfile = request.auth
     if (
         not profile.is_subscriber
-        and request.user.bookmark_set.filter(deleted=None).count() > 2
+        and request.user.bookmark_set.filter(deleted=None).count()
+        > MAX_NON_SUBSCRIBED["collection"]
     ):
-        return 400, {"error": "max_subscriptions"}
+        return 400, {
+            "error": "max_subscriptions",
+            "info": {"max_allowed": MAX_NON_SUBSCRIBED["collection"]},
+        }
 
     if bookmark:
         bookmark.deleted = None

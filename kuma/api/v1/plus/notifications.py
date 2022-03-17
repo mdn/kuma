@@ -40,6 +40,7 @@ class Ok(Schema):
 class NotOk(Schema):
     ok: bool = False
     error: str
+    info: dict
 
 
 class NotificationSchema(Schema):
@@ -177,6 +178,8 @@ class WatchSchema(Schema):
 @watch_router.get("/watching/", url_name="watching")
 def watched(request, q: str = "", url: str = "", limit: int = 20, offset: int = 0):
     qs = request.user.userwatch_set.select_related("watch", "user__defaultwatch")
+    profile: UserProfile = request.auth
+
     hasDefault = None
     try:
         hasDefault = request.user.defaultwatch.custom_serialize()
@@ -221,6 +224,8 @@ def watched(request, q: str = "", url: str = "", limit: int = 20, offset: int = 
         response = response | results[0]
     else:
         response["items"] = results
+    if not profile.is_subscriber:
+        response['watch_limit_reached'] = request.user.userwatch_set.count() >= MAX_NON_SUBSCRIBED["notification"]
     return response
 
 
@@ -257,9 +262,12 @@ def update_watch(request, url: str, data: UpdateWatch):
 
     if (
         not profile.is_subscriber
-        and request.user.userwatch_set.count() >= MAX_NON_SUBSCRIBED["notifications"]
+        and request.user.userwatch_set.count() >= MAX_NON_SUBSCRIBED["notification"]
     ):
-        return 400, {"error": "max_subscriptions"}
+        return 400, {
+            "error": "max_subscriptions",
+            "info": {"max_allowed": MAX_NON_SUBSCRIBED["notification"]},
+        }
 
     title = data.title
     if not title:
