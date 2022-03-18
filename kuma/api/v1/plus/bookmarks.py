@@ -9,7 +9,7 @@ from django.utils import timezone
 from ninja import Field, Form, Query, Router
 from pydantic import validator
 
-from kuma.api.v1.plus.notifications import NotOk, Ok
+from kuma.api.v1.plus.notifications import NotOk
 from kuma.api.v1.smarter_schema import Schema
 from kuma.bookmarks.models import Bookmark
 from kuma.documenturls.models import DocumentURL, download_url
@@ -61,6 +61,11 @@ class MultipleCollectionItemResponse(Schema):
     items: list[CollectionItemSchema]
     csrfmiddlewaretoken: str
     subscription_limit_reached: Optional[bool]
+
+
+class CollectionUpdateResponse(Schema):
+    subscription_limit_reached: Optional[bool]
+    ok: bool
 
 
 class CollectionPaginatedInput(LimitOffsetInput):
@@ -149,7 +154,7 @@ def bookmarks(request, filters: CollectionPaginatedInput = Query(...)):
 
 @router.post(
     "/",
-    response={200: Ok, 201: Ok, 400: NotOk},
+    response={200: CollectionUpdateResponse, 201: CollectionUpdateResponse, 400: NotOk},
     summary="Save or delete a collection item",
 )
 def save_or_delete_bookmark(
@@ -185,38 +190,45 @@ def save_or_delete_bookmark(
         documenturl=documenturl
     ).first()
 
+    bookmark_count = request.user.bookmark_set.filter(deleted=None).count()
     if delete:
         if bookmark and not bookmark.deleted:
             bookmark.deleted = timezone.now()
             bookmark.save()
-        return 200, True
+            # Having deleted it's unlikely that the limit will still be reached but check anyway.
+            subscription_limit_reached = (bookmark_count - 1) >= MAX_NON_SUBSCRIBED[
+                "collection"
+            ]
+        return 200, {
+            "subscription_limit_reached": subscription_limit_reached,
+            "ok": True,
+        }
 
+    subscription_limit_reached = bookmark_count >= MAX_NON_SUBSCRIBED["collection"]
     profile: UserProfile = request.auth
-    if (
-        not profile.is_subscriber
-        and request.user.bookmark_set.filter(deleted=None).count()
-        > MAX_NON_SUBSCRIBED["collection"]
-    ):
+
+    # Update logic
+    if bookmark and not bookmark.deleted:
+        if name is not None:
+            bookmark.custom_name = name[:500]
+        if notes is not None:
+            bookmark.notes = notes[:500]
+        bookmark.save()
+        return 201, {
+            "subscription_limit_reached": subscription_limit_reached,
+            "ok": True,
+        }
+
+    # Create or undelete. Check limits.
+    if not profile.is_subscriber and subscription_limit_reached:
         return 400, {
             "error": "max_subscriptions",
             "info": {"max_allowed": MAX_NON_SUBSCRIBED["collection"]},
         }
 
+    # If found undelete
     if bookmark:
         bookmark.deleted = None
-
-        # If a user deletes a bookmark and then decides to bookmark it again
-        # it's because they used the "undo" functionality in the front-end.
-        # If this is the case, the most recently modified bookmark is going
-        # to be the one they deleted.
-        most_recently_deleted: Optional[Bookmark] = (
-            request.user.bookmark_set.exclude(deleted=None).order_by("modified").last()
-        )
-        was_undo = most_recently_deleted and most_recently_deleted.pk == bookmark.pk
-        if not was_undo:
-            # When you undo, it doesn't change the 'created' date.
-            # But if you've re-bookmarked it after some time
-            bookmark.created = timezone.now()
     else:
         # Otherwise, create a brand new entry
         bookmark = request.user.bookmark_set.create(documenturl=documenturl)
@@ -225,6 +237,7 @@ def save_or_delete_bookmark(
         bookmark.custom_name = name[:500]
     if notes is not None:
         bookmark.notes = notes[:500]
-    bookmark.save()
 
-    return 201, True
+    bookmark.save()
+    subscription_limit_reached = bookmark_count + 1 >= MAX_NON_SUBSCRIBED["collection"]
+    return 201, {"subscription_limit_reached": subscription_limit_reached, "ok": True}

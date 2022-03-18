@@ -37,6 +37,11 @@ class Ok(Schema):
     ok: bool = True
 
 
+class WatchUpdateResponse(Schema):
+    ok: bool = True
+    subscription_limit_reached: bool = False
+
+
 class NotOk(Schema):
     ok: bool = False
     error: str
@@ -246,7 +251,9 @@ class UpdateWatch(Schema):
     update_custom_default: bool = False
 
 
-@watch_router.post("/watching/", response={200: Ok, 400: NotOk, 400: NotOk})
+@watch_router.post(
+    "/watching/", response={200: WatchUpdateResponse, 400: NotOk, 400: NotOk}
+)
 def update_watch(request, url: str, data: UpdateWatch):
     url = DocumentURL.normalize_uri(url)
     profile: UserProfile = request.auth
@@ -256,19 +263,19 @@ def update_watch(request, url: str, data: UpdateWatch):
         .first()
     )
     user = watched.user if watched else request.user
+    watched_count = request.user.userwatch_set.count()
+    print("watched count %s " % watched_count)
+    subscription_limit_reached = watched_count >= MAX_NON_SUBSCRIBED["notification"]
 
     if data.unwatch:
         if watched:
             watched.delete()
-        return 200, True
-
-    if (
-        not profile.is_subscriber
-        and request.user.userwatch_set.count() >= MAX_NON_SUBSCRIBED["notification"]
-    ):
-        return 400, {
-            "error": "max_subscriptions",
-            "info": {"max_allowed": MAX_NON_SUBSCRIBED["notification"]},
+        subscription_limit_reached = (watched_count - 1) >= MAX_NON_SUBSCRIBED[
+            "notification"
+        ]
+        return 200, {
+            "subscription_limit_reached": subscription_limit_reached,
+            "ok": True,
         }
 
     title = data.title
@@ -277,6 +284,7 @@ def update_watch(request, url: str, data: UpdateWatch):
 
     path = data.path or ""
     watched_data = {"custom": data.custom is not None}
+
     if data.custom:
         custom_default = bool(data.custom_default)
         watched_data["custom_default"] = custom_default
@@ -303,9 +311,21 @@ def update_watch(request, url: str, data: UpdateWatch):
             watch.path = path
             watch.save()
     else:
+        # Check on creation if allowed.
+        if (
+            watched_count >= MAX_NON_SUBSCRIBED["notification"]
+            and not profile.is_subscriber
+        ):
+            return 400, {
+                "error": "max_subscriptions",
+                "info": {"max_allowed": MAX_NON_SUBSCRIBED["notification"]},
+            }
         watch = Watch.objects.get_or_create(url=url, title=title, path=path)[0]
+        subscription_limit_reached = (watched_count + 1) >= MAX_NON_SUBSCRIBED[
+            "notification"
+        ]
     user.userwatch_set.update_or_create(watch=watch, defaults=watched_data)
-    return 200, True
+    return 200, {"subscription_limit_reached": subscription_limit_reached, "ok": True}
 
 
 class UnwatchMany(Schema):
@@ -313,15 +333,22 @@ class UnwatchMany(Schema):
 
 
 @watch_router.post(
-    "/unwatch-many/", response={200: Ok, 400: NotOk}, url_name="unwatch_many"
+    "/unwatch-many/",
+    response={200: WatchUpdateResponse, 400: NotOk},
+    url_name="unwatch_many",
 )
 def unwatch(request, data: UnwatchMany):
 
     request.user.userwatch_set.select_related("watch", "user__watch").filter(
         watch__url__in=data.unwatch
     ).delete()
+    profile: UserProfile = request.auth
+    if not profile.is_subscriber:
+        subscription_limit_reached = (
+            request.user.userwatch_set.count() >= MAX_NON_SUBSCRIBED["notification"]
+        )
 
-    return 200, True
+    return 200, {"subscription_limit_reached": subscription_limit_reached, "ok": True}
 
 
 class CreateNotificationSchema(Schema):
