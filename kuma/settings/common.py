@@ -586,4 +586,4 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # MDN Plus section
 MDN_PLUS_SUBSCRIPTION = config("MDN_PLUS_SUBSCRIPTION", default="mdn_plus")
-MAX_NON_SUBSCRIBED = {"Notification": 3, "Bookmark": 3}
+MAX_NON_SUBSCRIBED = {"notification": 3, "collection": 5}
