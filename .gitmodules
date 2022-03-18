@@ -1,3 +1,3 @@
 [submodule "locale"]
 	path = locale
-	url = git://github.com/mozilla-l10n/mdn-l10n.git
+	url = https://github.com/mozilla-l10n/mdn-l10n.git
