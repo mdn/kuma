@@ -57,7 +57,7 @@ flake8-import-order = "^0.18.1"
 dennis = "^0.9" # Used by `make localetest` to lint po files
 
 # Pinned Dependencies
-coverage = {extras = ["toml"], version = "^5"} # Use optional toml support
+coverage = {extras = ["toml"], version = "^6"} # Use optional toml support
 pytest-watch = "^4.2.0"
 honcho = "^1.0.1"
 ipdb = "^0.13.9"
