@@ -10,4 +10,4 @@ pytz==2018.5
 # These requirements are unique to docs
 Pygments==2.10.0
 Sphinx==4.2.0
-snowballstemmer==2.1.0
+snowballstemmer==2.2.0
