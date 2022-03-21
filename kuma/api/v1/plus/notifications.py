@@ -264,7 +264,6 @@ def update_watch(request, url: str, data: UpdateWatch):
     )
     user = watched.user if watched else request.user
     watched_count = request.user.userwatch_set.count()
-    print("watched count %s " % watched_count)
     subscription_limit_reached = watched_count >= MAX_NON_SUBSCRIBED["notification"]
 
     if data.unwatch:
@@ -343,7 +342,9 @@ def unwatch(request, data: UnwatchMany):
         watch__url__in=data.unwatch
     ).delete()
     profile: UserProfile = request.auth
-    if not profile.is_subscriber:
+    if profile.is_subscriber:
+        subscription_limit_reached = False
+    else:
         subscription_limit_reached = (
             request.user.userwatch_set.count() >= MAX_NON_SUBSCRIBED["notification"]
         )
