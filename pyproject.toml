@@ -61,7 +61,7 @@ coverage = {extras = ["toml"], version = "^6"} # Use optional toml support
 pytest-watch = "^4.2.0"
 honcho = "^1.0.1"
 ipdb = "^0.13.9"
-ipython = "^7.27.0"
+ipython = "^7.31.1"
 
 [tool.black]
 target-version = ["py38"]
