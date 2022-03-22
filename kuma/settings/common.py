@@ -5,7 +5,7 @@ from pathlib import Path
 
 import dj_database_url
 import sentry_sdk
-from decouple import config, Csv
+from decouple import Csv, config
 from sentry_sdk.integrations.django import DjangoIntegration
 
 DEBUG = config("DEBUG", default=False, cast=bool)
@@ -260,11 +260,17 @@ INSTALLED_APPS = [
     "kuma.plus.apps.PlusConfig",
     "kuma.documenturls.apps.DocumentURLsConfig",
     "kuma.bookmarks.apps.BookmarksConfig",
+    "kuma.notifications.apps.NotificationsConfig",
     # 3rd party
     "mozilla_django_oidc",
     "django_extensions",
 ]
 
+NOTIFICATIONS_ADMIN_TOKEN = config("NOTIFICATIONS_ADMIN_TOKEN", default="")
+NOTIFICATIONS_CHANGES_URL = config(
+    "NOTIFICATIONS_CHANGES_URL",
+    default="https://updates.developer.allizom.org/notifications/",
+)
 
 TEMPLATES = [
     {
@@ -320,7 +326,9 @@ OIDC_RP_SIGN_ALGO = config("OIDC_RP_SIGN_ALGO", default="RS256")
 OIDC_USE_NONCE = config("OIDC_USE_NONCE", cast=bool, default=False)
 # The default is 'openid email' but according to openid-configuration they
 # will send 'openid profile email'.
-OIDC_RP_SCOPES = config("OIDC_RP_SCOPES", default="openid profile email")
+OIDC_RP_SCOPES = config(
+    "OIDC_RP_SCOPES", default="openid profile email profile:subscriptions"
+)
 # If you're doing local development with Yari, it's recommened that you add
 #   echo 'OIDC_REDIRECT_ALLOWED_HOSTS=localhost:3000' >> .env
 # so you get redirected back to http://localhost:3000/... after signing in.
@@ -563,6 +571,7 @@ BOOKMARKS_BASE_URL = config(
     "BOOKMARKS_BASE_URL", default="https://developer.mozilla.org"
 )
 API_V1_BOOKMARKS_PAGE_SIZE = config("API_V1_BOOKMARKS_PAGE_SIZE", cast=int, default=20)
+API_V1_PAGE_SIZE = config("API_V1_PAGE_SIZE", cast=int, default=20)
 
 SENTRY_DSN = config("SENTRY_DSN", default="")
 if SENTRY_DSN:
@@ -577,3 +586,4 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # MDN Plus section
 MDN_PLUS_SUBSCRIPTION = config("MDN_PLUS_SUBSCRIPTION", default="mdn_plus")
+MAX_NON_SUBSCRIBED = {"notification": 3, "collection": 5}

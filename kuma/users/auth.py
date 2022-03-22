@@ -5,6 +5,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 
+from kuma.users.utils import get_valid_subscription_type_or_none
+
 from .models import UserProfile
 
 
@@ -102,6 +104,11 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         profile.is_subscriber = settings.MDN_PLUS_SUBSCRIPTION in claims.get(
             "subscriptions", []
         ) or settings.MDN_PLUS_SUBSCRIPTION == claims.get("fxa-subscriptions", "")
+
+        profile.subscription_type = get_valid_subscription_type_or_none(
+            claims.get("subscriptions", [])
+        )
+
         profile.save()
 
         return user

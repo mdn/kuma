@@ -5,6 +5,15 @@ from django.db import models
 
 
 class UserProfile(models.Model):
+    class SubscriptionType(models.TextChoices):
+        """Choices for MDN Subscription Types, add new subscription plans to be supported here"""
+
+        MDN_PLUS_5M = "mdn_plus_5m", "MDN Plus 5M"
+        MDN_PLUS_5Y = "mdn_plus_5y", "MDN Plus 5Y"
+        MDN_PLUS_10M = "mdn_plus_10m", "MDN Plus 10M"
+        MDN_PLUS_10Y = "mdn_plus_10y", "MDN Plus 10Y"
+        NONE = "", "None"
+
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
     locale = models.CharField(max_length=6, null=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -12,6 +21,12 @@ class UserProfile(models.Model):
     avatar = models.URLField(max_length=512, blank=True, default="")
     fxa_refresh_token = models.CharField(blank=True, default="", max_length=128)
     is_subscriber = models.BooleanField(default=False)
+    subscription_type = models.CharField(
+        max_length=512,
+        blank=True,
+        choices=SubscriptionType.choices,
+        default=SubscriptionType.NONE,
+    )
 
     class Meta:
         verbose_name = "User profile"
@@ -21,6 +36,7 @@ class UserProfile(models.Model):
             {
                 "uid": self.user.username,
                 "is_subscriber": self.is_subscriber,
+                "subscription_type": self.subscription_type,
                 "email": self.user.email,
                 "avatar": self.avatar,
             }

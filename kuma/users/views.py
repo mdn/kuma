@@ -1,14 +1,10 @@
 import json
 
 import requests
-
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import SuspiciousOperation
-from django.http import (
-    Http404,
-    HttpResponse,
-)
+from django.http import Http404, HttpResponse
 from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes
 from django.views.decorators.csrf import csrf_exempt

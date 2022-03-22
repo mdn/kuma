@@ -9,16 +9,14 @@ from kuma.users.models import UserProfile
 
 @pytest.mark.django_db
 def test_bookmarked_anonymous(client):
-    response = client.get(
-        reverse("api.v1.plus.bookmarks"),
-    )
-    assert response.status_code == 403
-    assert "not signed in" in response.content.decode("utf-8")
+    response = client.get(reverse("api-v1:collections"))
+    assert response.status_code == 401
+    assert "Unauthorized" in response.content.decode("utf-8")
 
 
 @pytest.mark.django_db
 def test_is_bookmarked_signed_in(user_client, wiki_user):
-    url = reverse("api.v1.plus.bookmarks")
+    url = reverse("api-v1:collections")
     response = user_client.get(url)
     assert response.status_code == 200
 
@@ -29,18 +27,18 @@ def test_is_bookmarked_signed_in(user_client, wiki_user):
 
 @pytest.mark.django_db
 def test_is_bookmarked_signed_in_subscriber(subscriber_client):
-    url = reverse("api.v1.plus.bookmarks")
+    url = reverse("api-v1:collections")
     response = subscriber_client.get(url, {"url": "some junk"})
-    assert response.status_code == 400
-    assert "invalid 'url'" in response.content.decode("utf-8")
+    assert response.status_code == 422
+    assert "invalid collection item url" in response.content.decode("utf-8")
 
     response = subscriber_client.get(url, {"url": "/not/a/mdny/url"})
-    assert response.status_code == 400
-    assert "invalid 'url'" in response.content.decode("utf-8")
+    assert response.status_code == 422
+    assert "invalid collection item url" in response.content.decode("utf-8")
 
     response = subscriber_client.get(url, {"url": "/docs/://ftphack"})
-    assert response.status_code == 400
-    assert "invalid 'url'" in response.content.decode("utf-8")
+    assert response.status_code == 422
+    assert "invalid collection item url" in response.content.decode("utf-8")
 
     response = subscriber_client.get(url, {"url": "/en-US/docs/Web"})
     assert response.status_code == 200
@@ -57,7 +55,7 @@ def test_toggle_bookmarked(subscriber_client, mock_requests, settings):
         "GET", settings.BOOKMARKS_BASE_URL + "/en-US/docs/Web/index.json", json=doc_data
     )
 
-    url = reverse("api.v1.plus.bookmarks")
+    url = reverse("api-v1:collections")
     get_url = f'{url}?{urlencode({"url": "/en-US/docs/Web"})}'
     response = subscriber_client.post(get_url)
     assert response.status_code == 201
@@ -74,6 +72,11 @@ def test_toggle_bookmarked(subscriber_client, mock_requests, settings):
     assert response.status_code == 201
 
     # Soft deleted
+    response = subscriber_client.post(get_url, {"delete": True})
+    assert response.status_code == 200
+    assert response.json()["ok"]
+
+    # Not in response
     response = subscriber_client.get(get_url)
     assert response.status_code == 200
     assert not response.json()["bookmarked"]
@@ -97,36 +100,25 @@ def test_toggle_bookmarked(subscriber_client, mock_requests, settings):
 
 @pytest.mark.django_db
 def test_bookmarks_anonymous(client):
-    response = client.get(
-        reverse("api.v1.plus.bookmarks"),
-    )
-    assert response.status_code == 403
-    assert "not signed in" in response.content.decode("utf-8")
+    response = client.get(reverse("api-v1:collections"))
+    assert response.status_code == 401
+    assert "Unauthorized" in response.content.decode("utf-8")
 
 
 @pytest.mark.django_db
 def test_bookmarks_signed_in_subscriber(subscriber_client):
-    url = reverse("api.v1.plus.bookmarks")
+    url = reverse("api-v1:collections")
     response = subscriber_client.get(url)
     assert response.status_code == 200
     assert len(response.json()["items"]) == 0
-    assert response.json()["metadata"]["total"] == 0
-    assert response.json()["metadata"]["page"] == 1
-    assert response.json()["metadata"]["per_page"] > 0
 
     # Try to mess with the `page` and `per_page`
-    response = subscriber_client.get(url, {"page": "xxx"})
-    assert response.status_code == 400
-    assert "invalid 'page'" in response.content.decode("utf-8")
-    response = subscriber_client.get(url, {"page": "-1"})
-    assert response.status_code == 400
-    assert "invalid 'page'" in response.content.decode("utf-8")
-    response = subscriber_client.get(url, {"page": "999"})
-    assert response.status_code == 400
-    assert "invalid 'page'" in response.content.decode("utf-8")
-    response = subscriber_client.get(url, {"per_page": "999"})
-    assert response.status_code == 400
-    assert "invalid 'per_page'" in response.content.decode("utf-8")
+    response = subscriber_client.get(url, {"offset": "xxx"})
+    assert response.status_code == 422
+    assert "type_error.integer" in response.content.decode("utf-8")
+    response = subscriber_client.get(url, {"limit": "-1"})
+    assert response.status_code == 422
+    assert "value_error.number.not_gt" in response.content.decode("utf-8")
 
 
 @pytest.mark.django_db
@@ -156,19 +148,22 @@ def test_bookmarks_pagination(subscriber_client, mock_requests, settings):
         clone["doc"]["parents"][-1]["uri"] = mdn_url
         return clone
 
-    url = reverse("api.v1.plus.bookmarks")
+    url = reverse("api-v1:collections")
 
     for i in range(1, 21):
         mdn_url = f"/en-US/docs/Web/Doc{i}"
         doc_absolute_url = settings.BOOKMARKS_BASE_URL + mdn_url + "/index.json"
+        print(doc_absolute_url)
         mock_requests.register_uri(
             "GET", doc_absolute_url, json=create_doc_data(mdn_url, f"Doc {i}")
         )
         get_url = f'{url}?{urlencode({"url": mdn_url})}'
+        print(get_url)
         response = subscriber_client.post(get_url)
-        assert response.status_code == 201
+        print(response)
+        assert response.status_code == 201, response.json()
 
-    # Add one extra but this one toggle twice so it becomes soft-deleted
+    # Add one extra but then delete it
     i += 1
     mdn_url = f"/en-US/docs/Web/Doc{i}"
     doc_absolute_url = settings.BOOKMARKS_BASE_URL + mdn_url + "/index.json"
@@ -178,22 +173,16 @@ def test_bookmarks_pagination(subscriber_client, mock_requests, settings):
     get_url = f'{url}?{urlencode({"url": mdn_url})}'
     response = subscriber_client.post(get_url)
     assert response.status_code == 201
-    response = subscriber_client.post(get_url)
-    assert response.status_code == 201
+    response = subscriber_client.post(get_url, {"delete": 1})
+    assert response.status_code == 200
 
-    response = subscriber_client.get(url, {"per_page": "5"})
+    response = subscriber_client.get(url, {"limit": "5"})
     assert response.status_code == 200
     assert len(response.json()["items"]) == 5
-    assert response.json()["metadata"]["total"] == 20
-    assert response.json()["metadata"]["page"] == 1
-    assert response.json()["metadata"]["per_page"] == 5
 
-    response = subscriber_client.get(url, {"per_page": "5", "page": "2"})
+    response = subscriber_client.get(url, {"limit": "5", "offset": "5"})
     assert response.status_code == 200
     assert len(response.json()["items"]) == 5
-    assert response.json()["metadata"]["total"] == 20
-    assert response.json()["metadata"]["page"] == 2
-    assert response.json()["metadata"]["per_page"] == 5
 
 
 def test_undo_bookmark(subscriber_client, mock_requests, settings):
@@ -237,7 +226,7 @@ def test_undo_bookmark(subscriber_client, mock_requests, settings):
         json=create_doc_data("/en-US/docs/Buzz", "Buzz!"),
     )
 
-    url = reverse("api.v1.plus.bookmarks")
+    url = reverse("api-v1:collections")
 
     assert (
         subscriber_client.post(
@@ -273,12 +262,10 @@ def test_undo_bookmark(subscriber_client, mock_requests, settings):
         "/en-US/docs/Foo",
     ]
     # Suppose you decide to un-bookmark the first one.
-    assert (
-        subscriber_client.post(
-            f'{url}?{urlencode({"url": "/en-US/docs/Foo"})}'
-        ).status_code
-        == 201
+    response = subscriber_client.post(
+        f'{url}?{urlencode({"url": "/en-US/docs/Foo"})}', {"delete": True}
     )
+    assert response.status_code == 200
 
     # Check that it disappears from the listing
     response = subscriber_client.get(url)
@@ -313,15 +300,15 @@ def test_undo_bookmark(subscriber_client, mock_requests, settings):
     # This time, un-bookmark two but re-bookmark them in the wrong order.
     assert (
         subscriber_client.post(
-            f'{url}?{urlencode({"url": "/en-US/docs/Buzz"})}'
+            f'{url}?{urlencode({"url": "/en-US/docs/Buzz"})}', {"delete": True}
         ).status_code
-        == 201
+        == 200
     )
     assert (
         subscriber_client.post(
-            f'{url}?{urlencode({"url": "/en-US/docs/Bar"})}'
+            f'{url}?{urlencode({"url": "/en-US/docs/Bar"})}', {"delete": True}
         ).status_code
-        == 201
+        == 200
     )
 
     # The last one to be touched was "Bar", let's now bookmark them back
@@ -344,9 +331,9 @@ def test_undo_bookmark(subscriber_client, mock_requests, settings):
     items = response.json()["items"]
     assert len(items) == 3
     assert [x["url"] for x in items] == [
-        # Note the these two have changed order! The most recently bookmarked
-        # on top. Because it wasn't an act over undo.
-        "/en-US/docs/Bar",
+        # Note the the order of these two is the same. Because we only care about the creation
+        # order, not the deletion time.
         "/en-US/docs/Buzz",
+        "/en-US/docs/Bar",
         "/en-US/docs/Foo",
     ]

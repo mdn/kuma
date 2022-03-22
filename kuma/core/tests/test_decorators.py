@@ -1,14 +1,13 @@
 import pytest
-
 from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
 
-from . import assert_no_cache_header
 from ..decorators import (
     redirect_in_maintenance_mode,
     shared_cache_control,
     skip_in_maintenance_mode,
 )
+from . import assert_no_cache_header
 
 
 def simple_view(request):
