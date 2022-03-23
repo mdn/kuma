@@ -204,8 +204,8 @@ def save_or_delete_bookmark(
             "ok": True,
         }
 
-    subscription_limit_reached = bookmark_count >= MAX_NON_SUBSCRIBED["collection"]
     profile: UserProfile = request.auth
+    subscription_limit_reached = bookmark_count >= MAX_NON_SUBSCRIBED["collection"]
 
     # Update logic
     if bookmark and not bookmark.deleted:
@@ -215,7 +215,8 @@ def save_or_delete_bookmark(
             bookmark.notes = notes[:500]
         bookmark.save()
         return 201, {
-            "subscription_limit_reached": subscription_limit_reached,
+            "subscription_limit_reached": subscription_limit_reached
+            and not profile.is_subscriber,
             "ok": True,
         }
 
@@ -239,5 +240,8 @@ def save_or_delete_bookmark(
         bookmark.notes = notes[:500]
 
     bookmark.save()
-    subscription_limit_reached = bookmark_count + 1 >= MAX_NON_SUBSCRIBED["collection"]
+    subscription_limit_reached = (
+        bookmark_count + 1 >= MAX_NON_SUBSCRIBED["collection"]
+        and not profile.is_subscriber
+    )
     return 201, {"subscription_limit_reached": subscription_limit_reached, "ok": True}
