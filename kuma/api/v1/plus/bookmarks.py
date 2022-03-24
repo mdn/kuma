@@ -190,21 +190,23 @@ def save_or_delete_bookmark(
         documenturl=documenturl
     ).first()
 
+    profile: UserProfile = request.auth
+
     bookmark_count = request.user.bookmark_set.filter(deleted=None).count()
     if delete:
         if bookmark and not bookmark.deleted:
             bookmark.deleted = timezone.now()
             bookmark.save()
             # Having deleted it's unlikely that the limit will still be reached but check anyway.
-            subscription_limit_reached = (bookmark_count - 1) >= MAX_NON_SUBSCRIBED[
-                "collection"
-            ]
+            subscription_limit_reached = (
+                (bookmark_count - 1) >= MAX_NON_SUBSCRIBED["collection"]
+                and not profile.is_subscriber,
+            )
         return 200, {
             "subscription_limit_reached": subscription_limit_reached,
             "ok": True,
         }
 
-    profile: UserProfile = request.auth
     subscription_limit_reached = bookmark_count >= MAX_NON_SUBSCRIBED["collection"]
 
     # Update logic
