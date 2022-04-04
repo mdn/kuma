@@ -412,7 +412,7 @@ def create_pr(request, body: CreatePRNotificationSchema):
 
     content = f"Page updated (see PR!{body.repo.strip('/')}!{body.pr}!!)"
     notification_data, _ = NotificationData.objects.get_or_create(
-        text=content, title=watchers[0].title, type="content"
+        text=content, title=watchers[0].title, type="content", page_url=body.raw_url
     )
 
     for watcher in watchers:
