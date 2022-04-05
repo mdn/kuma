@@ -76,7 +76,7 @@ COPY = {
 }
 
 
-def publish_content_notification(url, text, dry_run=False, data=None):
+def publish_content_notification(url, text, dry_run=False):
     watchers = Watch.objects.filter(url=url)
 
     if not watchers:
@@ -151,7 +151,6 @@ def process_changes(changes, dry_run=False):
                 {
                     "url": change["page_url"],
                     "text": f"Page updated (see PR!{m.group(1)}!{m.group(2)}!!)",
-                    "data": change,
                 }
             )
 
