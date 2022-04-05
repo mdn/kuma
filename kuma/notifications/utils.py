@@ -1,6 +1,7 @@
 import re
 from collections import defaultdict
 
+from kuma.documenturls.models import DocumentURL
 from kuma.notifications.browsers import browsers
 from kuma.notifications.models import Notification, NotificationData, Watch
 
@@ -146,10 +147,11 @@ def process_changes(changes, dry_run=False):
             )
 
         elif change["event"] == "content_updated":
+            url = DocumentURL.normalize_uri(change["page_url"])
             m = re.match(r"^https://github.com/(.+)/pull/(\d+)$", change["pr_url"])
             content_notifications.append(
                 {
-                    "url": change["page_url"],
+                    "url": url,
                     "text": f"Page updated (see PR!{m.group(1)}!{m.group(2)}!!)",
                 }
             )
