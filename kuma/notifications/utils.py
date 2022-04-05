@@ -76,8 +76,8 @@ COPY = {
 }
 
 
-def publish_content_notification(slug, text, dry_run=False, data=None):
-    watchers = Watch.objects.filter(url=slug)
+def publish_content_notification(url, text, dry_run=False, data=None):
+    watchers = Watch.objects.filter(url=url)
 
     if not watchers:
         return
@@ -86,7 +86,7 @@ def publish_content_notification(slug, text, dry_run=False, data=None):
         return
 
     notification_data, _ = NotificationData.objects.get_or_create(
-        text=text, title=watchers[0].title, type="content", page_url=slug
+        text=text, title=watchers[0].title, type="content", page_url=url
     )
 
     for watcher in watchers:
@@ -146,10 +146,10 @@ def process_changes(changes, dry_run=False):
             )
 
         elif change["event"] == "content_updated":
-            m = re.match(r"^https://github.com/(.+)/pull/(\d+)$", change["pr"]["url"])
+            m = re.match(r"^https://github.com/(.+)/pull/(\d+)$", change["pr_url"])
             content_notifications.append(
                 {
-                    "url": change["url"],
+                    "url": change["page_url"],
                     "text": f"Page updated (see PR!{m.group(1)}!{m.group(2)}!!)",
                     "data": change,
                 }

@@ -397,21 +397,20 @@ def update(request, body: UpdateNotificationSchema):
     return 200, True
 
 
-class CreatePRNotificationSchema(Schema):
+class ContentUpdateNotificationSchema(Schema):
     raw_url: str = Field(..., alias="page")
-    repo: str = Field(..., alias="repo")
-    pr: int
+    pr_url: str = Field(..., alias="pr")
 
 
-@admin_router.post("/create/pr/", response={200: Ok, 400: NotOk, 401: NotOk})
-def create_pr(request, body: CreatePRNotificationSchema):
+@admin_router.post("/update/content/", response={200: Ok, 400: NotOk, 401: NotOk})
+def create_pr(request, body: ContentUpdateNotificationSchema):
     try:
         url = DocumentURL.normalize_uri(body.raw_url)
         changes = [
             {
                 "event": "content_updated",
-                "url": url,
-                "pr": {"url": f"{body.repo.strip('/')}/pull/{body.pr}"},
+                "page_url": url,
+                "pr_url": body.pr_url,
             }
         ]
         process_changes(changes)
