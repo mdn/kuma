@@ -4,7 +4,7 @@ from kuma.notifications.browsers import browsers
 from kuma.notifications.models import Notification, NotificationData, Watch
 
 
-def publish_notification(path, text, dry_run=False, data=None):
+def publish_bcd_notification(path, text, dry_run=False, data=None):
     # This traverses down the path to see if there's top level watchers
     parts = path.split(".")
     suffix = []
@@ -76,7 +76,7 @@ COPY = {
 
 
 def process_changes(changes, dry_run=False):
-    notifications = []
+    bcd_notifications = []
     for change in changes:
         if change["event"] in ["added_stable", "removed_stable", "added_preview"]:
             groups = defaultdict(list)
@@ -93,7 +93,7 @@ def process_changes(changes, dry_run=False):
                 )
             for group in groups.values():
                 browser_list = pluralize([i["browser"] for i in group])
-                notifications.append(
+                bcd_notifications.append(
                     {
                         "path": change["path"],
                         "text": COPY[change["event"]] + browser_list,
@@ -103,7 +103,7 @@ def process_changes(changes, dry_run=False):
 
         elif change["event"] == "added_subfeatures":
             n = len(change["subfeatures"])
-            notifications.append(
+            bcd_notifications.append(
                 {
                     "path": change["path"],
                     "text": f"{n} compatibility subfeature{'s'[:n ^ 1]} added",
@@ -115,7 +115,7 @@ def process_changes(changes, dry_run=False):
                 get_browser_info(i["browser"]) for i in change["support_changes"]
             ]
             text = pluralize(browser_list)
-            notifications.append(
+            bcd_notifications.append(
                 {
                     "path": change["path"],
                     "text": f"More complete compatibility data added for {text}",
@@ -123,5 +123,5 @@ def process_changes(changes, dry_run=False):
                 }
             )
 
-    for notification in notifications:
-        publish_notification(**notification, dry_run=dry_run)
+    for notification in bcd_notifications:
+        publish_bcd_notification(**notification, dry_run=dry_run)
