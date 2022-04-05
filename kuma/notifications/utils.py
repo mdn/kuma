@@ -1,3 +1,4 @@
+import re
 from collections import defaultdict
 
 from kuma.notifications.browsers import browsers
@@ -75,8 +76,29 @@ COPY = {
 }
 
 
+def publish_content_notification(slug, text, dry_run=False, data=None):
+    watchers = Watch.objects.filter(url=slug)
+
+    if not watchers:
+        return
+
+    if dry_run:
+        return
+
+    notification_data, _ = NotificationData.objects.get_or_create(
+        text=text, title=watchers[0].title, type="content", page_url=slug
+    )
+
+    for watcher in watchers:
+        # considering the possibility of multiple pages existing for the same path
+        for user in watcher.users.all():
+            Notification.objects.create(notification=notification_data, user=user)
+
+
 def process_changes(changes, dry_run=False):
     bcd_notifications = []
+    content_notifications = []
+
     for change in changes:
         if change["event"] in ["added_stable", "removed_stable", "added_preview"]:
             groups = defaultdict(list)
@@ -123,5 +145,18 @@ def process_changes(changes, dry_run=False):
                 }
             )
 
+        elif change["event"] == "content_updated":
+            m = re.match(r"^https://github.com/(.+)/pull/(\d+)$", change["pr"]["url"])
+            content_notifications.append(
+                {
+                    "url": change["url"],
+                    "text": f"Page updated (see PR!{m.group(1)}!{m.group(2)}!!)",
+                    "data": change,
+                }
+            )
+
     for notification in bcd_notifications:
         publish_bcd_notification(**notification, dry_run=dry_run)
+
+    for notification in content_notifications:
+        publish_content_notification(**notification, dry_run=dry_run)
