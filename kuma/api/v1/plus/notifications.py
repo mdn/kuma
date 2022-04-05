@@ -45,7 +45,7 @@ class WatchUpdateResponse(Schema):
 class NotOk(Schema):
     ok: bool = False
     error: str
-    info: dict
+    info: dict = None
 
 
 class NotificationSchema(Schema):
