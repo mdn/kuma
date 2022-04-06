@@ -407,7 +407,7 @@ class ContentUpdateNotificationSchema(Schema):
     response={200: Ok, 400: NotOk, 401: NotOk},
     url_name="admin.update_content",
 )
-def create_pr(request, body: ContentUpdateNotificationSchema):
+def update_content(request, body: ContentUpdateNotificationSchema):
     try:
         url = DocumentURL.normalize_uri(body.raw_url)
         changes = [
