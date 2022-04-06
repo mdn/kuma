@@ -6,7 +6,7 @@ from kuma.notifications.browsers import browsers
 from kuma.notifications.models import Notification, NotificationData, Watch
 
 
-def publish_bcd_notification(path, text, dry_run=False, data=None):
+def publish_bcd_notification(path, text, data=None):
     # This traverses down the path to see if there's top level watchers
     parts = path.split(".")
     suffix = []
@@ -23,16 +23,16 @@ def publish_bcd_notification(path, text, dry_run=False, data=None):
         # we use the suffix as title (after reversing the order).
         title = reversed(suffix)
         title = ".".join(title)
-        if not dry_run:
-            notification_data, _ = NotificationData.objects.get_or_create(
-                title=title,
-                text=text,
-                data=data,
-                type="compat",
-                page_url=watcher.url,
-            )
-            for user in watcher.users.all():
-                Notification.objects.create(notification=notification_data, user=user)
+
+        notification_data, _ = NotificationData.objects.get_or_create(
+            title=title,
+            text=text,
+            data=data,
+            type="compat",
+            page_url=watcher.url,
+        )
+        for user in watcher.users.all():
+            Notification.objects.create(notification=notification_data, user=user)
 
 
 def get_browser_info(browser, preview=False):
@@ -77,13 +77,10 @@ COPY = {
 }
 
 
-def publish_content_notification(url, text, dry_run=False):
+def publish_content_notification(url, text):
     watchers = Watch.objects.filter(url=url)
 
     if not watchers:
-        return
-
-    if dry_run:
         return
 
     notification_data, _ = NotificationData.objects.get_or_create(
@@ -96,7 +93,7 @@ def publish_content_notification(url, text, dry_run=False):
             Notification.objects.create(notification=notification_data, user=user)
 
 
-def process_changes(changes, dry_run=False):
+def process_changes(changes):
     bcd_notifications = []
     content_notifications = []
 
@@ -157,7 +154,7 @@ def process_changes(changes, dry_run=False):
             )
 
     for notification in bcd_notifications:
-        publish_bcd_notification(**notification, dry_run=dry_run)
+        publish_bcd_notification(**notification)
 
     for notification in content_notifications:
-        publish_content_notification(**notification, dry_run=dry_run)
+        publish_content_notification(**notification)
