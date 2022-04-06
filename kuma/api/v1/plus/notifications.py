@@ -402,7 +402,11 @@ class ContentUpdateNotificationSchema(Schema):
     pr_url: str = Field(..., alias="pr")
 
 
-@admin_router.post("/update/content/", response={200: Ok, 400: NotOk, 401: NotOk})
+@admin_router.post(
+    "/update/content/",
+    response={200: Ok, 400: NotOk, 401: NotOk},
+    url_name="admin.update_content",
+)
 def create_pr(request, body: ContentUpdateNotificationSchema):
     try:
         url = DocumentURL.normalize_uri(body.raw_url)
