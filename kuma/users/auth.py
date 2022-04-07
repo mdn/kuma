@@ -109,6 +109,10 @@ class KumaOIDCAuthenticationBackend(OIDCAuthenticationBackend):
             claims.get("subscriptions", [])
         )
 
+        if user.is_staff:
+            profile.is_subscriber = True
+            profile.subscription_type = UserProfile.SubscriptionType.MDN_PLUS_10Y
+
         profile.save()
 
         return user
