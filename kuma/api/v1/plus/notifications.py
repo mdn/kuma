@@ -397,27 +397,28 @@ def update(request, body: UpdateNotificationSchema):
     return 200, True
 
 
-class CreatePRNotificationSchema(Schema):
+class ContentUpdateNotificationSchema(Schema):
     raw_url: str = Field(..., alias="page")
-    repo: str = Field(..., alias="repo")
-    pr: int
+    pr_url: str = Field(..., alias="pr")
 
 
-@admin_router.post("/create/pr/", response={200: Ok, 400: NotOk, 401: NotOk})
-def create_pr(request, body: CreatePRNotificationSchema):
-    url = DocumentURL.normalize_uri(body.raw_url)
-    watchers = Watch.objects.filter(url=url)
-    if not watchers:
-        return 400, {"error": "No watchers found"}
-
-    content = f"Page updated (see PR!{body.repo.strip('/')}!{body.pr}!!)"
-    notification_data, _ = NotificationData.objects.get_or_create(
-        text=content, title=watchers[0].title, type="content", page_url=body.raw_url
-    )
-
-    for watcher in watchers:
-        # considering the possibility of multiple pages existing for the same path
-        for user in watcher.users.all():
-            Notification.objects.create(notification=notification_data, user=user)
+@admin_router.post(
+    "/update/content/",
+    response={200: Ok, 400: NotOk, 401: NotOk},
+    url_name="admin.update_content",
+)
+def update_content(request, body: ContentUpdateNotificationSchema):
+    try:
+        url = DocumentURL.normalize_uri(body.raw_url)
+        changes = [
+            {
+                "event": "content_updated",
+                "page_url": url,
+                "pr_url": body.pr_url,
+            }
+        ]
+        process_changes(changes)
+    except Exception as e:
+        return 400, {"error": f"Error while processing PR: {repr(e)}"}
 
     return 200, True

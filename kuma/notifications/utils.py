@@ -1,10 +1,12 @@
+import re
 from collections import defaultdict
 
+from kuma.documenturls.models import DocumentURL
 from kuma.notifications.browsers import browsers
 from kuma.notifications.models import Notification, NotificationData, Watch
 
 
-def publish_notification(path, text, dry_run=False, data=None):
+def publish_bcd_notification(path, text, data=None):
     # This traverses down the path to see if there's top level watchers
     parts = path.split(".")
     suffix = []
@@ -21,16 +23,16 @@ def publish_notification(path, text, dry_run=False, data=None):
         # we use the suffix as title (after reversing the order).
         title = reversed(suffix)
         title = ".".join(title)
-        if not dry_run:
-            notification_data, _ = NotificationData.objects.get_or_create(
-                title=title,
-                text=text,
-                data=data,
-                type="compat",
-                page_url=watcher.url,
-            )
-            for user in watcher.users.all():
-                Notification.objects.create(notification=notification_data, user=user)
+
+        notification_data, _ = NotificationData.objects.get_or_create(
+            title=title,
+            text=text,
+            data=data,
+            type="compat",
+            page_url=watcher.url,
+        )
+        for user in watcher.users.all():
+            Notification.objects.create(notification=notification_data, user=user)
 
 
 def get_browser_info(browser, preview=False):
@@ -75,8 +77,26 @@ COPY = {
 }
 
 
-def process_changes(changes, dry_run=False):
-    notifications = []
+def publish_content_notification(url, text):
+    watchers = Watch.objects.filter(url=url)
+
+    if not watchers:
+        return
+
+    notification_data, _ = NotificationData.objects.get_or_create(
+        text=text, title=watchers[0].title, type="content", page_url=url
+    )
+
+    for watcher in watchers:
+        # considering the possibility of multiple pages existing for the same path
+        for user in watcher.users.all():
+            Notification.objects.create(notification=notification_data, user=user)
+
+
+def process_changes(changes):
+    bcd_notifications = []
+    content_notifications = []
+
     for change in changes:
         if change["event"] in ["added_stable", "removed_stable", "added_preview"]:
             groups = defaultdict(list)
@@ -93,7 +113,7 @@ def process_changes(changes, dry_run=False):
                 )
             for group in groups.values():
                 browser_list = pluralize([i["browser"] for i in group])
-                notifications.append(
+                bcd_notifications.append(
                     {
                         "path": change["path"],
                         "text": COPY[change["event"]] + browser_list,
@@ -103,7 +123,7 @@ def process_changes(changes, dry_run=False):
 
         elif change["event"] == "added_subfeatures":
             n = len(change["subfeatures"])
-            notifications.append(
+            bcd_notifications.append(
                 {
                     "path": change["path"],
                     "text": f"{n} compatibility subfeature{'s'[:n ^ 1]} added",
@@ -115,7 +135,7 @@ def process_changes(changes, dry_run=False):
                 get_browser_info(i["browser"]) for i in change["support_changes"]
             ]
             text = pluralize(browser_list)
-            notifications.append(
+            bcd_notifications.append(
                 {
                     "path": change["path"],
                     "text": f"More complete compatibility data added for {text}",
@@ -123,5 +143,18 @@ def process_changes(changes, dry_run=False):
                 }
             )
 
-    for notification in notifications:
-        publish_notification(**notification, dry_run=dry_run)
+        elif change["event"] == "content_updated":
+            url = DocumentURL.normalize_uri(change["page_url"])
+            m = re.match(r"^https://github.com/(.+)/pull/(\d+)$", change["pr_url"])
+            content_notifications.append(
+                {
+                    "url": url,
+                    "text": f"Page updated (see PR!{m.group(1)}!{m.group(2)}!!)",
+                }
+            )
+
+    for notification in bcd_notifications:
+        publish_bcd_notification(**notification)
+
+    for notification in content_notifications:
+        publish_content_notification(**notification)
