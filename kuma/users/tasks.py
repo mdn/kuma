@@ -65,7 +65,7 @@ def process_event_subscription_state_change(event_id):
 @task
 def process_event_password_change(event_id):
     event = AccountEvent.objects.get(id=event_id)
-    event.status = AccountEvent.PROCESSED
+    event.status = AccountEvent.EventStatus.PROCESSED
     event.save()
 
 
