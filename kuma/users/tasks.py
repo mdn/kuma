@@ -46,14 +46,15 @@ def process_event_subscription_state_change(event_id):
             event.save()
             return
 
-    if "mdn_plus" in payload["capabilities"] and not user.is_staff:
-
+    subscription_type = get_valid_subscription_type_or_none(
+        payload.get("capabilities", [])
+    )
+    if not user.is_staff:
         if payload["isActive"]:
+            profile.subscription_type = subscription_type
             profile.is_subscriber = True
-            profile.subscription_type = get_valid_subscription_type_or_none(
-                payload["capabilities"]
-            )
         else:
+            profile.subscription_type = ""
             profile.is_subscriber = False
         profile.save()
 

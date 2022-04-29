@@ -15,12 +15,52 @@ def test_process_event_subscription_state_change(wiki_user):
         status=AccountEvent.EventStatus.PENDING,
         fxa_uid=wiki_user.username,
         id=1,
-        payload='{"capabilities": ["mdn_plus", "mdn_plus_5y"], "isActive": true}',
+        payload='{"capabilities": ["mdn_plus_5y"], "isActive": true}',
     )
 
     process_event_subscription_state_change(created_event.id)
     profile.refresh_from_db()
     assert profile.subscription_type == "mdn_plus_5y"
+
+
+@pytest.mark.django_db
+def test_empty_subscription_inactive_change(wiki_user):
+
+    profile = UserProfile.objects.create(user=wiki_user)
+    assert profile.subscription_type == ""
+
+    created_event = AccountEvent.objects.create(
+        event_type=AccountEvent.EventType.SUBSCRIPTION_CHANGED,
+        status=AccountEvent.EventStatus.PENDING,
+        fxa_uid=wiki_user.username,
+        id=1,
+        payload='{"capabilities": [], "isActive": false}',
+    )
+
+    process_event_subscription_state_change(created_event.id)
+    profile.refresh_from_db()
+    assert profile.subscription_type == ""
+    assert not profile.is_subscriber
+
+
+@pytest.mark.django_db
+def test_valid_subscription_inactive_change(wiki_user):
+
+    profile = UserProfile.objects.create(user=wiki_user)
+    assert profile.subscription_type == ""
+
+    created_event = AccountEvent.objects.create(
+        event_type=AccountEvent.EventType.SUBSCRIPTION_CHANGED,
+        status=AccountEvent.EventStatus.PENDING,
+        fxa_uid=wiki_user.username,
+        id=1,
+        payload='{"capabilities": ["mdn_plus_5m"], "isActive": false}',
+    )
+
+    process_event_subscription_state_change(created_event.id)
+    profile.refresh_from_db()
+    assert profile.subscription_type == ""
+    assert not profile.is_subscriber
 
 
 @pytest.mark.django_db
@@ -34,7 +74,7 @@ def test_invalid_subscription_change(wiki_user):
         status=AccountEvent.EventStatus.PENDING,
         fxa_uid=wiki_user.username,
         id=1,
-        payload='{"capabilities": ["mdn_plus", "invalid_subscription"], "isActive": true}',
+        payload='{"capabilities": ["invalid_subscription"], "isActive": true}',
     )
 
     process_event_subscription_state_change(created_event.id)
