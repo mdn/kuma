@@ -40,7 +40,7 @@ def test_empty_subscription_inactive_change(wiki_user):
     process_event_subscription_state_change(created_event.id)
     profile.refresh_from_db()
     assert profile.subscription_type == ""
-    assert profile.is_subscriber == False
+    assert not profile.is_subscriber
 
 
 @pytest.mark.django_db
@@ -60,7 +60,7 @@ def test_valid_subscription_inactive_change(wiki_user):
     process_event_subscription_state_change(created_event.id)
     profile.refresh_from_db()
     assert profile.subscription_type == ""
-    assert profile.is_subscriber == False
+    assert not profile.is_subscriber
 
 
 @pytest.mark.django_db
