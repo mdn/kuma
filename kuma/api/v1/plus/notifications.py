@@ -11,6 +11,7 @@ from django.db.models import Q
 from django.middleware.csrf import get_token
 from ninja import Field, Router
 from ninja.pagination import paginate
+from sentry_sdk import capture_exception
 
 from kuma.documenturls.models import DocumentURL
 from kuma.notifications.models import (
@@ -386,12 +387,14 @@ def update(request, body: UpdateNotificationSchema):
         changes = json.loads(
             requests.get(settings.NOTIFICATIONS_CHANGES_URL + body.filename).content
         )
-    except Exception:
+    except Exception as e:
+        capture_exception(e)
         return 400, {"error": "Error while processing file"}
 
     try:
         process_changes(changes)
-    except Exception:
+    except Exception as e:
+        capture_exception(e)
         return 400, {"ok": False, "error": "Error while processing file"}
 
     return 200, True
@@ -419,6 +422,7 @@ def update_content(request, body: ContentUpdateNotificationSchema):
         ]
         process_changes(changes)
     except Exception as e:
+        capture_exception(e)
         return 400, {"error": f"Error while processing PR: {repr(e)}"}
 
     return 200, True
