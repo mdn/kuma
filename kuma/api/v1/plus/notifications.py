@@ -389,13 +389,13 @@ def update(request, body: UpdateNotificationSchema):
         )
     except Exception as e:
         capture_exception(e)
-        return 400, {"error": "Error while processing file"}
+        return 400, {"error": f"Error while processing file: {repr(e)}"}
 
     try:
         process_changes(changes)
     except Exception as e:
         capture_exception(e)
-        return 400, {"ok": False, "error": "Error while processing file"}
+        return 400, {"ok": False, "error": f"Error while processing file: {repr(e)}"}
 
     return 200, True
 
