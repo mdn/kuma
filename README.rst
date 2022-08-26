@@ -1,6 +1,10 @@
-====
-Kuma
-====
+=================
+Kuma (deprecated)
+=================
+
+**Note**: In July 2022, Kuma was superseded by `Rumba`_.
+
+.. _Rumba: https://github.com/mdn/rumba
 
 .. image:: https://github.com/mdn/kuma/workflows/Docker%20testing/badge.svg
    :target: https://github.com/mdn/kuma/actions?query=workflow%3A%22Docker+testing%22
